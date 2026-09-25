@@ -141,12 +141,10 @@ class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-4 py-3 r
 <script>
 const formattedWa = "963982572810";
 
-// دالة تحويل رابط الصورة عبر بروكسيات متعددة لضمان التحميل والسرعة
-function getProxyUrl(url, attempt = 1) {
+// دالة تحويل رابط الصورة عبر Proxy
+function getProxyUrl(url) {
   if (!url) return '';
-  if (attempt === 1) return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=75&output=webp`;
-  if (attempt === 2) return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-  return url;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=75&output=webp`;
 }
 
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
@@ -208,7 +206,10 @@ const products = [
   { name: "تشكيلة بسكوت جنتي", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/mlfweeTo.jpg", description: "جنتي كراميلو ـ شنكي ـ ميلكو - شوكو كرنش- هم هم ـ صباح" },
   { name: "واوو كريمز", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.phototourl.com/member/2026-09-21-c875effc-40f0-4a54-ad7e-e3e0989a81dd.jpg", description: "النكهات فريز - شوكالا - برتقال ـ حليب ـ بندق" },
   { name: "كريمز اردو", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.phototourl.com/member/2026-09-21-d5e09e72-ad36-48bc-8f22-fb677158e539.jpg", description: "حليب- شوكالا" },
-  { name: "سنوكا", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.phototourl.com/member/2026-09-21-f772de75-b228-4e2b-81bf-e653ccf86b3a.jpg", description: "سنوكا دارك 6 قطع" },
+  
+  // --- تم تحديث رابط صورة منتج سنوكا برابط ImgBB المباشر الجديد ---
+  { name: "سنوكا", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/HLJnMKJs/Screenshot-2026-09-25-13-16-08-850-com-miui-gallery.jpg", description: "سنوكا دارك 6 قطع" },
+  
   { name: "3 ميني رول فريز", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.phototourl.com/member/2026-09-21-01a2267f-2337-4c09-a07d-c78cdb24139c.jpg", description: "شوكالا ـ فريز" },
   { name: "موفيندو كيك", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/C2LntUpB.jpg", description: "كيك موفيندو الطري" },
   { name: "كيك كيكتي كافه النكهات", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/BWZg1YP9.jpg", description: "النكهات حليب ـ شوكالا ـ حليب وشوكالا ـ فريز" },
@@ -306,15 +307,7 @@ function hideLoader(element) {
   element.classList.add('opacity-100');
 }
 
-function handleImgError(element, originalUrl, productName) {
-  const currentAttempt = parseInt(element.getAttribute('data-attempt') || '1');
-  if (currentAttempt < 3) {
-    const nextAttempt = currentAttempt + 1;
-    element.setAttribute('data-attempt', nextAttempt.toString());
-    element.src = getProxyUrl(originalUrl, nextAttempt);
-    return;
-  }
-  
+function handleImgError(element, productName) {
   const cardContainer = element.closest('.relative');
   if (cardContainer) {
     const loader = cardContainer.querySelector('.loader-wrapper');
@@ -349,7 +342,7 @@ function displayProducts(items) {
     const waText = encodeURIComponent(`السلام عليكم، أود الاستفسار عن المنتج: ${product.name}`);
     const waLink = `https://wa.me/${formattedWa}?text=${waText}`;
 
-    const proxiedImageUrl = getProxyUrl(product.image, 1);
+    const proxiedImageUrl = getProxyUrl(product.image);
 
     const card = document.createElement('div');
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between";
@@ -364,10 +357,9 @@ function displayProducts(items) {
 
           <img src="${proxiedImageUrl}" 
                alt="${product.name}" 
-               data-attempt="1"
                loading="lazy"
                onload="hideLoader(this)"
-               onerror="handleImgError(this, '${product.image.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}')" 
+               onerror="handleImgError(this, '${product.name.replace(/'/g, "\\'")}')" 
                class="w-full h-full object-cover transition-opacity duration-500 opacity-0 transform hover:scale-105">
           
           <span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 z-20">
