@@ -97,7 +97,7 @@ body {
 أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span>
 </h2>
 <p class="text-slate-400 text-sm sm:text-lg max-w-2xl mx-auto mb-8">
-استعرض تشكيلتنا من المنتجات المتنوعة بأسعار تنافسية.
+استعرض تشكيلتنا  من المنتجات المتنوعة بأسعار تنافسية.
 </p>
 <div class="max-w-md mx-auto relative">
 <input type="text" id="searchInput" placeholder="ابحث عن منتج..."
@@ -135,16 +135,18 @@ class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-4 py-3 r
 <footer class="bg-slate-900 border-t border-slate-800 py-8 text-center text-slate-400 text-sm mt-12">
 <p class="font-bold text-slate-200 mb-1">مركز عاشور للتجارة</p>
 <p class="text-xs text-amber-400/80 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
-<p>جميع الحقوق محفوظة تم إنشاء الموقع بواسطة ياسر عاشور © 2026</p>
+<p>جميع الحقوق محفوظة © 2026</p>
 </footer>
 
 <script>
 const formattedWa = "963982572810";
 
-// دالة تحويل رابط الصورة إلى رابط Proxy سريع ومضغوط لصيغة WebP
-function getProxyUrl(url) {
+// دالة تحويل رابط الصورة عبر بروكسيات متعددة لضمان التحميل والسرعة
+function getProxyUrl(url, attempt = 1) {
   if (!url) return '';
-  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=75&output=webp`;
+  if (attempt === 1) return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=75&output=webp`;
+  if (attempt === 2) return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+  return url;
 }
 
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
@@ -304,7 +306,15 @@ function hideLoader(element) {
   element.classList.add('opacity-100');
 }
 
-function handleImgError(element, productName) {
+function handleImgError(element, originalUrl, productName) {
+  const currentAttempt = parseInt(element.getAttribute('data-attempt') || '1');
+  if (currentAttempt < 3) {
+    const nextAttempt = currentAttempt + 1;
+    element.setAttribute('data-attempt', nextAttempt.toString());
+    element.src = getProxyUrl(originalUrl, nextAttempt);
+    return;
+  }
+  
   const cardContainer = element.closest('.relative');
   if (cardContainer) {
     const loader = cardContainer.querySelector('.loader-wrapper');
@@ -339,8 +349,7 @@ function displayProducts(items) {
     const waText = encodeURIComponent(`السلام عليكم، أود الاستفسار عن المنتج: ${product.name}`);
     const waLink = `https://wa.me/${formattedWa}?text=${waText}`;
 
-    // تحويل رابط الصورة عبر خدمة الـ Proxy لتأمين وسرعة عرضها
-    const proxiedImageUrl = getProxyUrl(product.image);
+    const proxiedImageUrl = getProxyUrl(product.image, 1);
 
     const card = document.createElement('div');
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between";
@@ -355,9 +364,10 @@ function displayProducts(items) {
 
           <img src="${proxiedImageUrl}" 
                alt="${product.name}" 
+               data-attempt="1"
                loading="lazy"
                onload="hideLoader(this)"
-               onerror="handleImgError(this, '${product.name.replace(/'/g, "\\'")}')" 
+               onerror="handleImgError(this, '${product.image.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}')" 
                class="w-full h-full object-cover transition-opacity duration-500 opacity-0 transform hover:scale-105">
           
           <span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 z-20">
