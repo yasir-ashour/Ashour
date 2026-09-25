@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent-color: #f59e0b;
+      --text-color: #f8fafc;
+      --text-secondary: #94a3b8;
+      --whatsapp-color: #25d366;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px; }
+    header { background-color: #1a2332; text-align: center; padding: 20px 10px; border-bottom: 2px solid var(--accent-color); }
+    header h1 { color: var(--accent-color); font-size: 1.8rem; }
+    header p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px; }
+    
+    .search-container { max-width: 600px; margin: 15px auto; padding: 0 15px; }
+    .search-container input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; outline: none; font-size: 1rem; }
+    
+    .categories { display: flex; overflow-x: auto; gap: 10px; padding: 10px 15px; max-width: 1200px; margin: 0 auto; scrollbar-width: none; }
+    .category-btn { background: #334155; color: white; border: none; padding: 8px 16px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-size: 0.9rem; }
+    .category-btn.active { background: var(--accent-color); color: #000; font-weight: bold; }
+    
+    .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+    .product-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #334155; }
+    .product-img { width: 100%; height: 150px; object-fit: cover; background: #1e293b; }
+    .product-info { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+    .product-desc { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 10px; }
+    .order-btn { display: flex; align-items: center; justify-content: center; gap: 5px; background: var(--whatsapp-color); color: white; text-decoration: none; padding: 8px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+    
+    .floating-wa { position: fixed; bottom: 20px; left: 20px; background: var(--whatsapp-color); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none; }
+    footer { text-align: center; padding: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>مركز عاشور للتجارة</h1>
+  <p>دمشق، أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
+</header>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="ابحث عن منتج..." onkeyup="filterProducts()">
+</div>
+
+<div class="categories">
+  <button class="category-btn active" onclick="filterCategory('all', this)">الكل</button>
+  <button class="category-btn" onclick="filterCategory('biscuits', this)">بسكويت</button>
+  <button class="category-btn" onclick="filterCategory('coffee', this)">قهوة</button>
+  <button class="category-btn" onclick="filterCategory('sweets', this)">سكاكر وعلكة</button>
+  <button class="category-btn" onclick="filterCategory('drinks', this)">عصائر ومشروبات</button>
+  <button class="category-btn" onclick="filterCategory('chips', this)">شيبس</button>
+</div>
+
+<div class="catalog" id="productGrid">
+
+  <!-- قسم البسكويت -->
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سلفيتو+كاكاو" class="product-img" alt="سلفيتو بسكويت الكاكاو">
+    <div class="product-info">
+      <div class="product-title">سلفيتو بسكويت الكاكاو</div>
+      <div class="product-desc">بسكويت كاكاو مميز</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سلفيتو%20بسكويت%20الكاكاو" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=برنسيس+مكسرات" class="product-img" alt="برنسيس مكسرات ٤">
+    <div class="product-info">
+      <div class="product-title">برنسيس مكسرات ٤</div>
+      <div class="product-desc">حليب وشوكالا وكرميلو</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20برنسيس%20مكسرات%20٤" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سلفيتو+لايت" class="product-img" alt="سلفيتو لايت اوجينال 2">
+    <div class="product-info">
+      <div class="product-title">سلفيتو لايت اوجينال 2</div>
+      <div class="product-desc">شوكالا وحليب</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سلفيتو%20لايت%20اوجينال%202" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بسكوت+مي+تو" class="product-img" alt="بسكوت البشير مي تو">
+    <div class="product-info">
+      <div class="product-title">بسكوت البشير مي تو</div>
+      <div class="product-desc">بسكويت فاخر</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بسكوت%20البشير%20مي%20تو" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=البشير+تاندا" class="product-img" alt="البشير تاندا">
+    <div class="product-info">
+      <div class="product-title">البشير تاندا</div>
+      <div class="product-desc">حليب وشوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20البشير%20تاندا" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بسكوت+رالاس" class="product-img" alt="بسكوت رالاس">
+    <div class="product-info">
+      <div class="product-title">بسكوت رالاس</div>
+      <div class="product-desc">جوز هند - كابتشينو - بندق</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بسكوت%20رالاس" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=رالاس+جوز+الهند" class="product-img" alt="رالاس لوس بجوز الهند">
+    <div class="product-info">
+      <div class="product-title">رالاس لوس بجوز الهند</div>
+      <div class="product-desc">بسكويت بجوز الهند</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20رالاس%20لوس%20بجوز%20الهند" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=كريمبي" class="product-img" alt="كريمبي">
+    <div class="product-info">
+      <div class="product-title">كريمبي</div>
+      <div class="product-desc">نكهات مميزة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20كريمبي" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=رالاس+نوغاتي" class="product-img" alt="رالاس نوغاتي بنكهة الفستق">
+    <div class="product-info">
+      <div class="product-title">رالاس نوغاتي بنكهة الفستق</div>
+      <div class="product-desc">نوغاتي بنكهة الفستق</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20رالاس%20نوغاتي%20بنكهة%20الفستق" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=اورلي+الفاخر" class="product-img" alt="اورلي الفاخر">
+    <div class="product-info">
+      <div class="product-title">اورلي الفاخر</div>
+      <div class="product-desc">حليب وشوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20اورلي%20الفاخر" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=تشيلو+plus" class="product-img" alt="تشيلو new plus">
+    <div class="product-info">
+      <div class="product-title">تشيلو new plus</div>
+      <div class="product-desc">شوكالا وحليب</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20تشيلو%20new%20plus" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=دريم+لاند+8" class="product-img" alt="دريم لاند 8 قطع">
+    <div class="product-info">
+      <div class="product-title">دريم لاند (8 قطع)</div>
+      <div class="product-desc">8 قطع محشوة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20دريم%20لاند%208%20قطع" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=دريم+لاند+4" class="product-img" alt="دريم لاند 4 قطع">
+    <div class="product-info">
+      <div class="product-title">دريم لاند (4 قطع)</div>
+      <div class="product-desc">4 قطع محشوة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20دريم%20لاند%204%20قطع" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=رولانا" class="product-img" alt="رولانا">
+    <div class="product-info">
+      <div class="product-title">رولانا</div>
+      <div class="product-desc">شوكالا - حليب</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20رولانا" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سوبر+سندويش" class="product-img" alt="سوبر سندويش">
+    <div class="product-info">
+      <div class="product-title">سوبر سندويش</div>
+      <div class="product-desc">فانيلا - شوكالا - فريز</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سوبر%20سندويش" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=شوكو+ستار" class="product-img" alt="شوكو ستار">
+    <div class="product-info">
+      <div class="product-title">شوكو ستار</div>
+      <div class="product-desc">فريز - حليب - شوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20شوكو%20ستار" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سميري+سانتال" class="product-img" alt="سميري سانتال">
+    <div class="product-info">
+      <div class="product-title">سميري سانتال</div>
+      <div class="product-desc">بسكويت سانتال</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سميري%20سانتال" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سميري+سمارتيز" class="product-img" alt="سميري سمارتيز">
+    <div class="product-info">
+      <div class="product-title">سميري سمارتيز</div>
+      <div class="product-desc">بسكويت سمارتيز</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سميري%20سمارتيز" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+كيك" class="product-img" alt="بونو كيك">
+    <div class="product-info">
+      <div class="product-title">بونو كيك</div>
+      <div class="product-desc">حليب وشوكولا - داكنة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20كيك" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+رول" class="product-img" alt="بونو رول">
+    <div class="product-info">
+      <div class="product-title">بونو رول</div>
+      <div class="product-desc">كيك رول مميز</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20رول" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+ستار" class="product-img" alt="بونو ستار">
+    <div class="product-info">
+      <div class="product-title">بونو ستار</div>
+      <div class="product-desc">بسكويت بونو ستار</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20ستار" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+كاندي" class="product-img" alt="بونو كاندي">
+    <div class="product-info">
+      <div class="product-title">بونو كاندي</div>
+      <div class="product-desc">بسكويت بونو كاندي</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20كاندي" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=ماكس+تايم" class="product-img" alt="ماكس تايم">
+    <div class="product-info">
+      <div class="product-title">ماكس تايم</div>
+      <div class="product-desc">حليب - شوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20ماكس%20تايم" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+كريم" class="product-img" alt="بونو كريم">
+    <div class="product-info">
+      <div class="product-title">بونو كريم</div>
+      <div class="product-desc">شوكالا - حليب - فريز</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20كريم" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بونو+فرويت" class="product-img" alt="بونو فرويت">
+    <div class="product-info">
+      <div class="product-title">بونو فرويت</div>
+      <div class="product-desc">فريز - مشمش - شوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بونو%20فرويت" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=سميري+مسطرة" class="product-img" alt="سميري شوكالا مسطرة">
+    <div class="product-info">
+      <div class="product-title">سميري شوكالا مسطرة</div>
+      <div class="product-desc">شوكالا فاخرة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20سميري%20شوكالا%20مسطرة" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=فيروتكس+ايكسترا" class="product-img" alt="فيروتكس ايكسترا">
+    <div class="product-info">
+      <div class="product-title">فيروتكس ايكسترا</div>
+      <div class="product-desc">حليب وشوكالا</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20فيروتكس%20ايكسترا" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=فيروتيكس+ويفر" class="product-img" alt="فيروتيكس ويفر">
+    <div class="product-info">
+      <div class="product-title">فيروتيكس ويفر</div>
+      <div class="product-desc">شوكالا - حليب - شوكالا داكنة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20فيروتيكس%20ويفر" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=جيلي+كوب" class="product-img" alt="جيلي كوب كارز">
+    <div class="product-info">
+      <div class="product-title">جيلي كوب كارز</div>
+      <div class="product-desc">جيلي مع لعبة</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20جيلي%20كوب%20كارز" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+  <div class="product-card" data-category="biscuits">
+    <img src="https://placehold.co/300x200/1e293b/f59e0b?text=بسكوت+ب+ب" class="product-img" alt="بسكوت ب ب حليب">
+    <div class="product-info">
+      <div class="product-title">بسكوت ب ب حليب</div>
+      <div class="product-desc">بسكويت حليب مغذي</div>
+      <a href="https://wa.me/?text=مرحباً،%20أرغب%20طلب:%20بسكوت%20ب%20ب%20حليب" class="order-btn" target="_blank">اطلب عبر واتساب</a>
+    </div>
+  </div>
+
+</div>
+
+<a href="https://wa.me/?text=مرحباً،%20أود%20الاستفسار" class="floating-wa" target="_blank">
+  <span style="font-size:25px; color:white;">💬</span>
+</a>
+
+<footer>
+  جميع الحقوق محفوظة تم إنشاء الموقع بواسطة ياسر عاشور  © مركز عاشور للتجارة
+</footer>
+
+<script>
+  function filterCategory(cat, btn) {
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach(card => {
+      if (cat === 'all' || card.dataset.category === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function filterProducts() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach(card => {
+      const title = card.querySelector('.product-title').innerText.toLowerCase();
+      const desc = card.querySelector('.product-desc').innerText.toLowerCase();
+      if (title.includes(input) || desc.includes(input)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
