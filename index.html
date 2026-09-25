@@ -56,6 +56,11 @@ body {
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
+
+/* كلاسات التدوير المباشر */
+.rot-90 { transform: rotate(90deg) scale(0.7); }
+.rot-180 { transform: rotate(180deg); }
+.rot-270 { transform: rotate(270deg) scale(0.7); }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -153,10 +158,9 @@ body {
 <script>
 const formattedWa = "963982572810";
 
-function getProxyUrl(url, rotate = 0) {
+function getProxyUrl(url) {
   if (!url) return '';
-  let rotParam = rotate ? `&rotate=${rotate}` : '';
-  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=600&q=85&output=webp${rotParam}`;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=600&q=85&output=webp`;
 }
 
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
@@ -248,22 +252,22 @@ const products = [
   { name: "سيما بسكويت مالح 1000", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.phototourl.com/member/2026-09-21-5c2b27f7-cccb-4013-a210-60a41cf6ec46.jpg", description: "سيما بسكويت قطعة 10 مالح للضيافة" },
   { name: "اصابع مالح", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/39jk4Nnx/Screenshot-2026-09-25-13-15-33-139-com-miui-gallery.jpg", description: "أصابع بسكويت مالح كراكس الشهية للضيافة" },
   { name: "بيسكويت بيتيفور", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/HD2jc0BP/Screenshot-2026-09-25-13-16-11-991-com-miui-gallery.jpg", description: "بيتي فور فاخر بنكهة الشوكولا الممتازة" },
-  { name: "ماكس كيك", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1gFKtZJlQ.jpg", rotate: 270, description: "ماكس كيك بحشوة الحليب والشوكولا" },
+  { name: "ماكس كيك", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1gFKtZJlQ.jpg", rotateClass: "rot-270", description: "ماكس كيك بحشوة الحليب والشوكولا" },
   { name: "توب كوفريت", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/PrfdvsoG.jpg", description: "ويفر توب كوفريت المقرمش والفاخر" },
-  { name: "كراكيب شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/YK8zuhZc.jpg", rotate: 90, description: "كرات كراكيب مقرمشة ومغطاة بشوكولاتة غنية" },
+  { name: "كراكيب شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/YK8zuhZc.jpg", rotateClass: "rot-90", description: "كرات كراكيب مقرمشة ومغطاة بشوكولاتة غنية" },
   { name: "سلفيتو شاي", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/55CIY6ul.jpg", description: "بسكويت شاي سلفيتو المفضل مع الشاي والقهوة" },
-  { name: "سلفيتو جوز هند", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/UIBCL61n.jpg", rotate: 90, description: "بسكويت سلفيتو الهش برائحة وطعم جوز الهند" },
-  { name: "سلسيتو بسكوت مالح كراكرز", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/8hRqS8Xr.jpg", rotate: 90, description: "كراكرز مالح خفيف ومقرمش من سلفيتو" },
+  { name: "سلفيتو جوز هند", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/UIBCL61n.jpg", rotateClass: "rot-90", description: "بسكويت سلفيتو الهش برائحة وطعم جوز الهند" },
+  { name: "سلسيتو بسكوت مالح كراكرز", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/8hRqS8Xr.jpg", rotateClass: "rot-90", description: "كراكرز مالح خفيف ومقرمش من سلفيتو" },
   { name: "سيما بسكوت ساده", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/igfLddrk.jpg", description: "بسكويت سيما سادة لكافة الاستخدامات والوجبات" },
   { name: "توت توت ويفر بسكوت", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/3wfPw4HB.jpg", description: "ويفر توت توت المقرمش والطري" },
   { name: "عجوة بالتمر", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/vDXMHKSX.jpg", description: "اصابع العجوة - عجوة سمايل - عجوة راحة بالتمر الطبيعي" },
   { name: "توت توت اكياس بسكوت والعاب", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1czj9UhD8.jpg", description: "أكياس بسكويت توت توت المحبوبة مع ألعاب ومفاجآت" },
-  { name: "موندو بريميوم", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/gLGfB9JW/Screenshot-2026-09-25-14-05-21-203-com-miui-gallery.jpg", rotate: 90, description: "بسكويت موندو بريميوم فاخر وهش" },
-  { name: "كوكو موندو", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/gLGfB9JW/Screenshot-2026-09-25-14-05-21-203-com-miui-gallery.jpg", rotate: 90, description: "بسكويت كوكو موندو غني بالطعم اللذيذ" },
+  { name: "موندو بريميوم", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/gLGfB9JW/Screenshot-2026-09-25-14-05-21-203-com-miui-gallery.jpg", rotateClass: "rot-270", description: "بسكويت موندو بريميوم فاخر وهش" },
+  { name: "كوكو موندو", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/gLGfB9JW/Screenshot-2026-09-25-14-05-21-203-com-miui-gallery.jpg", rotateClass: "rot-270", description: "بسكويت كوكو موندو غني بالطعم اللذيذ" },
   { name: "كروسان برشا", category: "بسكويت", price: "التواصل مع المبيعات", image: "https://i.ibb.co/23CPVBGR/images-36.jpg", description: "كروسان برشا طري ومحشو بالشوكولا الغنية" },
 
   // --- فئة القهوة ---
-  { name: "فيرتيكا قهوة", category: "قهوة", price: "التواصل مع المبيعات", image: "https://i.ibb.co/BVxgZWkq/IMG-20260924-122723.jpg", rotate: 90, description: "قهوة فيرتيكا سريعة التحضير غنية بالنكهة والمذاق الأصيل" },
+  { name: "فيرتيكا قهوة", category: "قهوة", price: "التواصل مع المبيعات", image: "https://i.ibb.co/BVxgZWkq/IMG-20260924-122723.jpg", rotateClass: "rot-270", description: "قهوة فيرتيكا سريعة التحضير غنية بالنكهة والمذاق الأصيل" },
   { name: "بن الحموي غلوة", category: "قهوة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/15wi7WbUd.jpg", description: "بن الحموي الغلوة الأصيل المحمص بدقة" },
   { name: "سيتي كافية كابتشينو 3-1", category: "قهوة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/47R6LSNN.jpg", description: "ظروف كابتشينو سيتي كافيه الرغوية السريعة" },
   { name: "سيتي كافية سريعه", category: "قهوة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/PduMcSIL.jpg", description: "قهوة سريعة الذوبان ذات نكهة قوية وقاطعة" },
@@ -273,19 +277,19 @@ const products = [
   { name: "بن الحموي قهوه اكسترا هال 100g", category: "قهوة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/18GOqOAv1.jpg", description: "بن الحموي الفاخر مع نسبة هيل مضاعفة وزن 100 غرام" },
 
   // --- فئة السكاكر والعلكة ---
-  { name: "ليكي ريكو مكس شريطه", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/18WZ0qFWP.jpg", rotate: 180, description: "شريطة سكاكر مكس حامض وحلو بطول نصف متر" },
-  { name: "جيلي ريكس", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/ASGtrUfp.jpg", rotate: 90, description: "سكاكر جيلي ريكس بكافة النكهات والأشكال الممتعة" },
+  { name: "ليكي ريكو مكس شريطه", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/18WZ0qFWP.jpg", rotateClass: "rot-180", description: "شريطة سكاكر مكس حامض وحلو بطول نصف متر" },
+  { name: "جيلي ريكس", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/ASGtrUfp.jpg", rotateClass: "rot-90", description: "سكاكر جيلي ريكس بكافة النكهات والأشكال الممتعة" },
   { name: "جيلي رماز", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/bWeiFrMX.jpg", description: "جيلي رماز طري وغني بنكهات الفواكه" },
-  { name: "جيلي رموزة", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1fHMuijFd.jpg", rotate: 90, description: "جيلي رموزة الشهي بمختلف الطعمات" },
-  { name: "شريطة جيجي مكس", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/6u3RFf7y.jpg", rotate: 90, description: "شريطة جيلي مشكلة بنكهات منعشة" },
+  { name: "جيلي رموزة", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1fHMuijFd.jpg", rotateClass: "rot-90", description: "جيلي رموزة الشهي بمختلف الطعمات" },
+  { name: "شريطة جيجي مكس", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/6u3RFf7y.jpg", rotateClass: "rot-90", description: "شريطة جيلي مشكلة بنكهات منعشة" },
   { name: "مارشميليو روسيل", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/6j8sEfnC.jpg", description: "مارشميلو هشة وناعمة ولذيذة جداً" },
   { name: "اسكا البكتين", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1aZA0Hw2J.jpg", description: "سكاكر بكتين طبيعية وصحية بمذاق الفواكه" },
   { name: "سميري سكاكر", category: "سكاكر وعلكة", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/181LBUdQ8.jpg", description: "تشكيلة سكاكر سميري الممتازة" },
 
   // --- فئة العصائر والمشروبات ---
-  { name: "شراب الكاكو", category: "عصائر ومشروبات", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/18eRJWhq5.jpg", rotate: 90, description: "مشروب كاكاو غني ولذيذ للتقديم البارد أو الساخن" },
+  { name: "شراب الكاكو", category: "عصائر ومشروبات", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/18eRJWhq5.jpg", rotateClass: "rot-90", description: "مشروب كاكاو غني ولذيذ للتقديم البارد أو الساخن" },
   { name: "وينر عصير ظروف", category: "عصائر ومشروبات", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/12Js0eOBZ.jpg", description: "ظروف عصير وينر بنكهات توت - اناناس - فيمتو - مانجو - ليمون - برتقال" },
-  { name: "ياهلا عصير ظروف", category: "عصائر ومشروبات", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1getpgjcU.jpg", description: "عصير ياهلا ظروف بنكهات البرتقال، المانجو، التفاح، والتمر هندي" }
+  { name: "ياهلا عصير ظروف", category: "عصائر ومشروبات", price: "التواصل مع المبيعات", image: "https://cdn.imagetourls.com/uploads/tyImg/1getpgjcU.jpg", description: "عصير ياهلا ظروف بنكهات البرتقال، المانجو، والتفاح، والتمر هندي" }
 ];
 
 let currentCategory = 'الكل';
@@ -338,7 +342,8 @@ function displayProducts(items) {
     const waText = encodeURIComponent(`السلام عليكم، أود الاستفسار عن المنتج: ${product.name}`);
     const waLink = `https://wa.me/${formattedWa}?text=${waText}`;
 
-    const proxiedImageUrl = getProxyUrl(product.image, product.rotate || 0);
+    const proxiedImageUrl = getProxyUrl(product.image);
+    const rotateClass = product.rotateClass || '';
 
     const card = document.createElement('div');
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-xl";
@@ -356,7 +361,7 @@ function displayProducts(items) {
                loading="lazy"
                onload="hideLoader(this)"
                onerror="handleImgError(this, '${product.name.replace(/'/g, "\\'")}')" 
-               class="w-full h-full object-contain transition-opacity duration-300 opacity-0 transform hover:scale-105 drop-shadow-md">
+               class="w-full h-full object-contain transition-opacity duration-300 opacity-0 transform hover:scale-105 drop-shadow-md ${rotateClass}">
           
           <span class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1 z-20">
             <i class="fas fa-check-circle"></i> متوفر
