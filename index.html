@@ -63,16 +63,16 @@ body {
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
 </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between relative pb-20 sm:pb-0">
 
 <!-- الشريط العلوّي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs sm:text-sm text-amber-300 flex justify-between items-center flex-wrap gap-2">
-  <span><i class="fas fa-clock ml-1"></i> يتم تحديث المنتجات على موقعنا كل يوم خميس</span>
+  <span><i class="fas fa-sync-alt ml-1"></i> تم تحديث الموقع 26/10/1 بواسطة ياسر عاشور</span>
   <span><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</span>
 </div>
 
 <!-- رأس الصفحة -->
-<header class="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
+<header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
 <div class="flex items-center gap-3">
 <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-400/60 shadow-lg flex-shrink-0 bg-slate-800 flex items-center justify-center">
@@ -83,10 +83,17 @@ body {
 <p class="text-xs sm:text-sm text-slate-400">أجود أنواع الشيبس، البسكويت، العصائر، العلكة، السكاكر والقهوة</p>
 </div>
 </div>
-<a id="headerWaBtn" target="_blank" class="hidden sm:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2.5 rounded-full shadow-lg transition duration-200 text-sm">
-<i class="fab fa-whatsapp text-xl"></i>
-<span>تواصل معنا مباشر</span>
-</a>
+<div class="flex items-center gap-3">
+  <button onclick="openCartModal()" class="relative bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 text-sm">
+    <i class="fas fa-shopping-basket text-lg"></i>
+    <span class="hidden sm:inline">إنشاء طلب</span>
+    <span id="cartBadgeCount" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
+  </button>
+  <a id="headerWaBtn" target="_blank" class="hidden md:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-full shadow-lg transition text-sm">
+    <i class="fab fa-whatsapp text-lg"></i>
+    <span>استفسار مباشر</span>
+  </a>
+</div>
 </div>
 </header>
 
@@ -100,7 +107,7 @@ body {
 أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span>
 </h2>
 <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">
-استعرض تشكيلتنا الشاملة والفاخرة من المنتجات المتنوعة بأسعار تنافسية.
+استعرض تشكيلتنا الشاملة والفاخرة واطلب كمياتك مباشرة عبر نظام الطلب السريع.
 </p>
 
 <!-- شريط البحث مع عداد المنتجات -->
@@ -140,23 +147,70 @@ body {
 </div>
 </section>
 
-<!-- زر واتساب عائم -->
-<a id="floatWaBtn" target="_blank" class="float-wa fixed bottom-6 left-6 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center z-50 transition transform hover:scale-110">
-<i class="fab fa-whatsapp text-3xl"></i>
-</a>
+<!-- زر عائم لسلة الطلبات (إنشاء طلب) -->
+<button onclick="openCartModal()" class="fixed bottom-6 right-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black p-4 rounded-full shadow-2xl flex items-center justify-center gap-2 z-40 transition transform hover:scale-105 border-2 border-amber-300">
+  <i class="fas fa-clipboard-list text-2xl"></i>
+  <span class="text-sm font-black hidden sm:inline">إنشاء طلب</span>
+  <span id="floatCartBadge" class="bg-slate-950 text-amber-400 text-xs px-2.5 py-1 rounded-full font-extrabold border border-amber-500/40">0</span>
+</button>
+
+<!-- نافذة إنشاء الطلب المنبثقة (Cart Modal) -->
+<div id="cartModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden justify-center items-center z-50 p-4 overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl p-6 shadow-2xl relative my-8">
+    
+    <button onclick="closeCartModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white text-xl">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <h3 class="text-2xl font-black gold-gradient-text mb-4 flex items-center gap-2">
+      <i class="fas fa-shopping-cart text-amber-400"></i> إنشاء طلب جديد
+    </h3>
+
+    <!-- بيانات العميل -->
+    <div class="space-y-4 mb-6">
+      <div>
+        <label class="block text-slate-300 font-bold mb-1 text-sm">الاسم الكامل <span class="text-rose-500">*</span></label>
+        <input type="text" id="custName" placeholder="أدخل اسمك الكامل..." class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1 text-sm">العنوان التفصيلي <span class="text-rose-500">*</span></label>
+        <input type="text" id="custAddress" placeholder="المنطقة - الشارع - علامة مميزة..." class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      </div>
+    </div>
+
+    <!-- قائمة المنتجات المختارة -->
+    <h4 class="text-slate-200 font-bold text-base mb-3 border-b border-slate-800 pb-2 flex justify-between items-center">
+      <span>المنتجات المحددة</span>
+      <span class="text-xs text-amber-400 font-normal">حدد الكميات المطلوبة</span>
+    </h4>
+
+    <div id="cartItemsList" class="max-h-60 overflow-y-auto space-y-3 pr-1 mb-6">
+      <p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>
+    </div>
+
+    <!-- زر تمام / الإرسال للواتساب -->
+    <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+      <button onclick="closeCartModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm transition">إلغاء</button>
+      <button onclick="sendOrderToWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-6 py-2.5 rounded-xl text-sm shadow-lg flex items-center gap-2 transition">
+        <i class="fab fa-whatsapp text-lg"></i>
+        <span>تمام (إرسال الطلب)</span>
+      </button>
+    </div>
+
+  </div>
+</div>
 
 <!-- تذييل الصفحة -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 text-center text-slate-400 text-sm mt-12">
 <p class="font-bold text-slate-200 mb-1 text-base">مركز عاشور للتجارة</p>
-<p class="text-xs sm:text-sm text-amber-400/80 mb-3"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
-<p class="text-xs text-slate-500 mb-2">جميع الحقوق محفوظة © 2026</p>
-<div class="inline-block bg-slate-800/80 border border-slate-700/80 rounded-full px-4 py-1 text-xs text-amber-300/90 shadow-sm mt-1">
-  <i class="fas fa-code ml-1 text-amber-400"></i> تم إنشاء الموقع بواسطة <span class="font-bold text-amber-400">ياسر عاشور</span>
-</div>
+<p class="text-xs sm:text-sm text-amber-400/80 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
+<p class="text-xs text-amber-300/90 font-semibold mb-2"><i class="fas fa-history ml-1"></i> تم تحديث الموقع 26/10/1 بواسطة ياسر عاشور</p>
+<p class="text-xs text-slate-500">جميع الحقوق محفوظة © 2026</p>
 </footer>
 
 <script>
 const formattedWa = "963982572810";
+let cart = {}; // { productName: quantity }
 
 function getProxyUrl(url) {
   if (!url) return '';
@@ -166,7 +220,6 @@ function getProxyUrl(url) {
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
 document.getElementById('logoImg').src = getProxyUrl(logoUrl);
 document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
-document.getElementById('floatWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
 
 const products = [
   // --- فئة الشيبس ---
@@ -376,6 +429,100 @@ function handleImgError(element, productName) {
   }
 }
 
+function addToCart(pName) {
+  if (!cart[pName]) {
+    cart[pName] = 1;
+  } else {
+    cart[pName] += 1;
+  }
+  updateCartUI();
+}
+
+function changeQty(pName, delta) {
+  if (cart[pName]) {
+    cart[pName] += delta;
+    if (cart[pName] <= 0) {
+      delete cart[pName];
+    }
+  }
+  updateCartUI();
+}
+
+function setQty(pName, val) {
+  const num = parseInt(val);
+  if (isNaN(num) || num <= 0) {
+    delete cart[pName];
+  } else {
+    cart[pName] = num;
+  }
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const totalItems = Object.keys(cart).length;
+  document.getElementById('cartBadgeCount').innerText = totalItems;
+  document.getElementById('floatCartBadge').innerText = totalItems;
+
+  const listContainer = document.getElementById('cartItemsList');
+  if (totalItems === 0) {
+    listContainer.innerHTML = `<p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>`;
+    return;
+  }
+
+  let html = '';
+  for (const [name, qty] of Object.entries(cart)) {
+    html += `
+      <div class="flex items-center justify-between bg-slate-800 p-3 rounded-xl border border-slate-700/80">
+        <span class="text-white text-sm font-bold truncate max-w-[180px] sm:max-w-[240px]">${name}</span>
+        <div class="flex items-center gap-2">
+          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">-</button>
+          <input type="number" min="1" value="${qty}" onchange="setQty('${name.replace(/'/g, "\\'")}', this.value)" class="w-12 bg-slate-900 border border-slate-600 text-amber-400 text-center font-bold text-sm rounded-lg p-1 focus:outline-none">
+          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', 1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">+</button>
+          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -100)" class="text-rose-400 hover:text-rose-300 ml-1 text-sm"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>
+    `;
+  }
+  listContainer.innerHTML = html;
+}
+
+function openCartModal() {
+  updateCartUI();
+  document.getElementById('cartModal').classList.remove('hidden');
+  document.getElementById('cartModal').classList.add('flex');
+}
+
+function closeCartModal() {
+  document.getElementById('cartModal').classList.add('hidden');
+  document.getElementById('cartModal').classList.remove('flex');
+}
+
+function sendOrderToWhatsApp() {
+  const name = document.getElementById('custName').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+
+  if (!name || !address) {
+    alert("يرجى إدخال الاسم الكامل والعنوان لإكمال الطلب.");
+    return;
+  }
+
+  const keys = Object.keys(cart);
+  if (keys.length === 0) {
+    alert("يرجى اختيار منتج واحد على الأقل قبل الإرسال.");
+    return;
+  }
+
+  // بناء الرسالة الديناميكية بالضبط بالتنسيق المطلوب
+  let msg = `الاسم :${name}\nالعران :${address}\n\n`;
+
+  keys.forEach((pName) => {
+    msg += `المنتج : | ${pName} | العدد : ${cart[pName]} \n----------------\n`;
+  });
+
+  const url = `https://wa.me/${formattedWa}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
@@ -394,8 +541,6 @@ function displayProducts(items) {
   items.forEach(product => {
     const isAvail = product.available !== false;
     const isLow = product.lowStock === true && isAvail;
-    const waText = encodeURIComponent(`السلام عليكم، أود الاستفسار عن المنتج: ${product.name}`);
-    const waLink = isAvail ? `https://wa.me/${formattedWa}?text=${waText}` : '#';
 
     const proxiedImageUrl = getProxyUrl(product.image);
     const rotateClass = product.rotateClass || '';
@@ -415,7 +560,7 @@ function displayProducts(items) {
     }
 
     const buttonHtml = isAvail 
-      ? `<a href="${waLink}" target="_blank" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition duration-200 text-base shadow-md"><i class="fab fa-whatsapp text-xl"></i><span>اطلب عبر الواتساب</span></a>`
+      ? `<button onclick="addToCart('${product.name.replace(/'/g, "\\'")}')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition duration-200 text-base shadow-md"><i class="fas fa-plus-circle text-lg"></i><span>إضافة إلى الطلب</span></button>`
       : `<button disabled class="w-full bg-slate-700 text-slate-400 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed opacity-60"><i class="fas fa-ban text-lg"></i><span>غير متوفر حالياً</span></button>`;
 
     const card = document.createElement('div');
