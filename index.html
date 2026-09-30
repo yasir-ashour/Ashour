@@ -180,8 +180,8 @@ body {
 
     <!-- قائمة المنتجات المختارة -->
     <h4 class="text-slate-200 font-bold text-base mb-3 border-b border-slate-800 pb-2 flex justify-between items-center">
-      <span>المنتجات المحددة</span>
-      <span class="text-xs text-amber-400 font-normal">حدد الكميات المطلوبة</span>
+      <span>المنتجات المحددة والنكهة</span>
+      <span class="text-xs text-amber-400 font-normal">حدد النكهة والكمية المطلوبة</span>
     </h4>
 
     <div id="cartItemsList" class="max-h-60 overflow-y-auto space-y-3 pr-1 mb-6">
@@ -210,7 +210,7 @@ body {
 
 <script>
 const formattedWa = "963982572810";
-let cart = {}; // { productName: quantity }
+let cart = {}; // { productName: { qty: number, flavor: string } }
 
 function getProxyUrl(url) {
   if (!url) return '';
@@ -223,21 +223,22 @@ document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text
 
 const products = [
   // --- فئة الشيبس ---
-  { name: "دارنيتو إكس فورتين صغير وجامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/LXJdBkvX/Screenshot-2026-09-25-13-15-22-032-com-miui-gallery.jpg", description: "النكهات جبنه - والبهارات" },
-  { name: "دارنيتو فور", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/PvN6nydT/Screenshot-2026-09-25-13-15-45-053-com-miui-gallery.jpg", description: "باربكيو" },
-  { name: "دارنيتو طبيعي صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/zqzjbCV/Screenshot-2026-09-25-13-14-52-839-com-miui-gallery.jpg", description: "النكهات خل - جبنة - باربكيو حار وحلو - ملح - كاتشب" },
-  { name: "دارنيتو طبيعي كبير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/GfGs9kDm/Screenshot-2026-09-25-13-15-01-645-com-miui-gallery.jpg", description: "النكهات خل - جبنة - باربكيو حار وحلو - ملح - كاتشب" },
-  { name: "دارنيتو توركس", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/9kD4VzWL/Screenshot-2026-09-25-13-14-48-361-com-miui-gallery.jpg", description: "النكهات جبنة الناتشو - سور الكريم والبصل - الحار والحلو - ليمون - خل" },
-  { name: "دارنيتو بوشار جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/JWKFPpR9/Screenshot-2026-09-25-13-15-11-761-com-miui-gallery.jpg", description: "بنكهة جبنة الشيدر" },
-  { name: "شيبتوز صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/JW4wLq1r/Screenshot-2026-09-25-13-15-58-907-com-miui-gallery.jpg", description: "النكهات جبنة - كاتشب - خل - ذرة حلوة - حار وحلو - كزبرة" },
-  { name: "برنس بوب كورن بوشار", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/R4JPXMkf/Screenshot-2026-09-25-13-15-00-209-com-miui-gallery.jpg", description: "النكهات جبنة - حار وحلو - ذرة الحلوة" },
-  { name: "غولدن تاتش جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/ccdXM06X/Screenshot-2026-09-25-13-15-57-323-com-miui-gallery.jpg", description: "النكهات كتشب - حار وحلو - جبنة ـ خضار ـ بيتزا ـ الفستق" },
-  { name: "غولدن تاتش صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/pBXt8MpN/Screenshot-2026-09-25-13-15-08-718-com-miui-gallery.jpg", description: "النكهات كتشب - حار وحلو - جبنة ـ خضار ـ بيتزا ـ الفستق" },
-  { name: "غولدن تاتش شبك صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/ccdXM06X/Screenshot-2026-09-25-13-15-57-323-com-miui-gallery.jpg", description: "خل - كتشب - حار" },
-  { name: "كرسبيانا رقائق", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.ibb.co/L4twLMV/Screenshot-2026-09-25-13-15-27-696-com-miui-gallery.jpg", description: "النكهات جبنة - حار وحلو - خضار ـ خل" },
-  { name: "رقائق شيرإت", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.ibb.co/MyKFcK9T/Screenshot-2026-09-25-13-15-36-107-com-miui-gallery.jpg", description: "النكهات خضار - بيتزا - جبنه - حار وحلو - وكتشب" },
-  { name: "شيبتوز كبير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/pB8pVMwt/Screenshot-2026-09-25-13-15-31-746-com-miui-gallery.jpg", description: "النكهات جبنة - خل - ذرة - خضار - حار وحلو -كاتشب" },
-  { name: "شيبس لاند 1 كغ", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.ibb.co/JgHjMKt/17903702848272298161631129192310.jpg", description: "1 كغ - النكهات ذرة وحلو ـ خل ـ حار ـ كتشب" },
+  { name: "دارنيتو إكس فورتين جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/5d0bc848-135d-45c8-8f09-4a47b5f318cc.jpg", description: "النكهات : جبنة و مميزة", flavors: ["جبنة", "مميزة"] },
+  { name: "دارنيتو إكس فورتين", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/5d0bc848-135d-45c8-8f09-4a47b5f318cc.jpg", description: "النكهات : جبنة و مميزة", flavors: ["جبنة", "مميزة"] },
+  { name: "دارنيتو فور", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/6b96b4ee-72b2-40c6-a0f4-101b47d073bf.jpg", description: "النكهات : باربكيو", flavors: ["باربكيو"] },
+  { name: "دارنيتو طبيعي صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/d6f994c0-4dcb-4e7a-8dc2-5bd2428ac27e.jpg", description: "النكهات : خل و باربكيو و كتشب و ملح وجبنه وحار", flavors: ["خل", "باربكيو", "كتشب", "ملح", "جبنه", "حار"] },
+  { name: "دارنيتو طبيعي جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/39429b71-d1a0-4e96-9ab7-e7b0682757ce.jpg", description: "النكهات : خل و باربكيو و كتشب و ملح وجبنه وحار", flavors: ["خل", "باربكيو", "كتشب", "ملح", "جبنه", "حار"] },
+  { name: "دارنيتو توركس", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/1abadd2a-862c-49ca-bc5e-5f12230f7248.jpg", description: "النكهات : جبنة -و البصل -واليمون -والحار وحلو", flavors: ["جبنة", "البصل", "اليمون", "الحار وحلو"] },
+  { name: "دارنيتو بوشار جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/a512e410-371f-442f-9919-2f5d1702b1f1.jpg", description: "النكهات : جبنة وليمون", flavors: ["جبنة", "ليمون"] },
+  { name: "شيبتوز صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/343b0fb2-a7e9-4a2d-84b9-342185ab3852.jpg", description: "النكهات : كتشب وخل وباربكيو وحار وجبنه وذرة حلوة", flavors: ["كتشب", "خل", "باربكيو", "حار", "جبنه", "ذرة حلوة"] },
+  { name: "شيبتوز كبير 3", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/b6520bdb-74bc-4d5a-b66e-7a124cb3415c.jpg", description: "النكهات : كتشب -وذرة حلوة -وجبنة- وخل- وحار وحلو -وحار", flavors: ["كتشب", "ذرة حلوة", "جبنة", "خل", "حار وحلو", "حار"] },
+  { name: "برنس بوب كورن بوشار", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/f3eab4b1-f7d8-46c3-92db-2745845bf938.jpg", description: "النكهات : ذرة حلوة - حار وحلو - جبنة", flavors: ["ذرة حلوة", "حار وحلو", "جبنة"] },
+  { name: "غولدن تاتش جامبو", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/6b5a7aa0-ef73-43eb-969d-1c8851005f0e.jpg", description: "النكهات : بيتزا - كتشب - حار وحلو - خضار - الفستق - ياباني", flavors: ["بيتزا", "كتشب", "حار وحلو", "خضار", "الفستق", "ياباني"] },
+  { name: "غولدن تاتش صغير 1", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/343b0fb2-a7e9-4a2d-84b9-342185ab3852.jpg", description: "النكهات : كتشب وخل وبيتزا", flavors: ["كتشب", "خل", "بيتزا"] },
+  { name: "شيبسو طبيعي 1", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/ac96aa6d-729a-4a79-85ec-708e6a4411da.jpg", description: "النكهات : خل وملح - حار - ملح", flavors: ["خل وملح", "حار", "ملح"] },
+  { name: "كرسبيانا رقائق", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/1428edb8-5ae7-49b7-a799-90c5aa25ebc8.jpg", description: "النكهات : حار وحلو - خضار - خل - جبنة", flavors: ["حار وحلو", "خضار", "خل", "جبنة"] },
+  { name: "رقائق شير إت", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/e11ee754-c75d-42a5-a130-8a0b4baf0b30.jpg", description: "النكهات : خضار - جبنة - حار وحلو - كتشب - بيتزا", flavors: ["خضار", "جبنة", "حار وحلو", "كتشب", "بيتزا"] },
+  { name: "شيبس لاند 1 كغ", category: "شيبس", price: "التواصل مع المبيعات", available: false, image: "https://i.ibb.co/JgHjMKt/17903702848272298161631129192310.jpg", description: "1 كغ - النكهات ذرة وحلو ـ خل ـ حار ـ كتشب", flavors: ["ذرة وحلو", "خل", "حار", "كتشب"] },
   { name: "لب بذر دوار الشمس", category: "شيبس", price: "التواصل مع المبيعات", available: true, lowStock: true, image: "https://i.ibb.co/HDf6Y2JD/IMG-20260926-184721.jpg", description: "بذور دوار الشمس المحمصة والمملحة بعناية" },
 
   // --- فئة البسكويت ---
@@ -335,7 +336,7 @@ const products = [
   { name: "كرات الشوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/ZztZ5XMV/IMG-20260926-164651.jpg", description: "كرات الشوكولاتة المقرمشة المحشوة بالكريمة الغنية" },
   { name: "ارغو شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/PGGmjkVG/IMG-20260928-133324.jpg", description: "بسكويت أرغو المغطى بشوكولاتة الحليب الغنية" },
   { name: "بسكوت شوكو ليغهيت", category: "بسكويت", price: "التواصل مع المبيعات", available: true, lowStock: true, image: "https://i.ibb.co/fV25TKQb/IMG-20260926-184507.jpg", description: "بسكويت خفيف ومقرمش بنكهة الشوكولاتة اللذيذة" },
-  { name: "Show اصابع شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/4ZFhgd1C/IMG-20260926-184917.jpg", description: "أصابع شوكولاتة شو الفاخرة المحشوة بالكريمة" },
+  { name: "Show اصابع شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/4ZFhgd1C/IMG-20260928-184917.jpg", description: "أصابع شوكولاتة شو الفاخرة المحشوة بالكريمة" },
   { name: "جادو اصابع شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/1fQyZt6x/IMG-20260926-184750.jpg", description: "أصابع شوكولاتة جادو الشهية والغنية بطعم الكاكاو" },
   { name: "بيتي فور", category: "بسكويت", price: "التواصل مع المبيعات", available: false, image: "https://i.ibb.co/rKjWFWnn/IMG-20260922-172909.jpg", description: "تشكيلة بيتي فور فاخرة ومقرمشة للضيافة" },
   { name: "بسكويت إينجوي", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/s9VZm1b3/IMG-20260928-122328.jpg", description: "بسكويت إينجوي اللذيذ والمقرمش مع كريمة مميزة" },
@@ -430,18 +431,22 @@ function handleImgError(element, productName) {
 }
 
 function addToCart(pName) {
+  const productObj = products.find(p => p.name === pName);
+  const defaultFlavor = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors[0] : 'عادي / حسب المتوفر';
+
   if (!cart[pName]) {
-    cart[pName] = 1;
+    cart[pName] = { qty: 1, flavor: defaultFlavor };
   } else {
-    cart[pName] += 1;
+    cart[pName].qty += 1;
   }
   updateCartUI();
+  openCartModal();
 }
 
 function changeQty(pName, delta) {
   if (cart[pName]) {
-    cart[pName] += delta;
-    if (cart[pName] <= 0) {
+    cart[pName].qty += delta;
+    if (cart[pName].qty <= 0) {
       delete cart[pName];
     }
   }
@@ -453,9 +458,15 @@ function setQty(pName, val) {
   if (isNaN(num) || num <= 0) {
     delete cart[pName];
   } else {
-    cart[pName] = num;
+    cart[pName].qty = num;
   }
   updateCartUI();
+}
+
+function setFlavor(pName, flavorVal) {
+  if (cart[pName]) {
+    cart[pName].flavor = flavorVal;
+  }
 }
 
 function updateCartUI() {
@@ -470,16 +481,34 @@ function updateCartUI() {
   }
 
   let html = '';
-  for (const [name, qty] of Object.entries(cart)) {
-    html += `
-      <div class="flex items-center justify-between bg-slate-800 p-3 rounded-xl border border-slate-700/80">
-        <span class="text-white text-sm font-bold truncate max-w-[180px] sm:max-w-[240px]">${name}</span>
-        <div class="flex items-center gap-2">
-          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">-</button>
-          <input type="number" min="1" value="${qty}" onchange="setQty('${name.replace(/'/g, "\\'")}', this.value)" class="w-12 bg-slate-900 border border-slate-600 text-amber-400 text-center font-bold text-sm rounded-lg p-1 focus:outline-none">
-          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', 1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">+</button>
-          <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -100)" class="text-rose-400 hover:text-rose-300 ml-1 text-sm"><i class="fas fa-trash-alt"></i></button>
+  for (const [name, itemData] of Object.entries(cart)) {
+    const productObj = products.find(p => p.name === name);
+    let flavorSelectHtml = '';
+
+    if (productObj && productObj.flavors && productObj.flavors.length > 0) {
+      let options = productObj.flavors.map(f => `<option value="${f}" ${itemData.flavor === f ? 'selected' : ''}>${f}</option>`).join('');
+      flavorSelectHtml = `
+        <div class="mt-2 flex items-center gap-2">
+          <span class="text-xs text-amber-400 font-bold">النكهة:</span>
+          <select onchange="setFlavor('${name.replace(/'/g, "\\'")}', this.value)" class="bg-slate-900 border border-amber-500/40 text-amber-300 text-xs rounded-lg p-1.5 focus:outline-none flex-grow">
+            ${options}
+          </select>
         </div>
+      `;
+    }
+
+    html += `
+      <div class="bg-slate-800 p-3 rounded-xl border border-slate-700/80 flex flex-col gap-1">
+        <div class="flex items-center justify-between">
+          <span class="text-white text-sm font-bold truncate max-w-[180px] sm:max-w-[240px]">${name}</span>
+          <div class="flex items-center gap-2">
+            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">-</button>
+            <input type="number" min="1" value="${itemData.qty}" onchange="setQty('${name.replace(/'/g, "\\'")}', this.value)" class="w-12 bg-slate-900 border border-slate-600 text-amber-400 text-center font-bold text-sm rounded-lg p-1 focus:outline-none">
+            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', 1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">+</button>
+            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -100)" class="text-rose-400 hover:text-rose-300 ml-1 text-sm"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+        ${flavorSelectHtml}
       </div>
     `;
   }
@@ -512,10 +541,12 @@ function sendOrderToWhatsApp() {
     return;
   }
 
-  let msg = `الاسم :${name}\nالعران :${address}\n\n`;
+  let msg = `الاسم :${name}\nالعنوان :${address}\n\n`;
 
   keys.forEach((pName) => {
-    msg += `المنتج : | ${pName} | العدد : ${cart[pName]} \n----------------\n`;
+    const item = cart[pName];
+    const flavorText = item.flavor ? ` | النكهة: ${item.flavor}` : '';
+    msg += `المنتج : | ${pName}${flavorText} | العدد : ${item.qty} \n----------------\n`;
   });
 
   const url = `https://wa.me/${formattedWa}?text=${encodeURIComponent(msg)}`;
