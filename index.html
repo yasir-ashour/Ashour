@@ -180,11 +180,11 @@ body {
 
     <!-- قائمة المنتجات المختارة -->
     <h4 class="text-slate-200 font-bold text-base mb-3 border-b border-slate-800 pb-2 flex justify-between items-center">
-      <span>المنتجات المحددة والنكهة</span>
-      <span class="text-xs text-amber-400 font-normal">حدد النكهة والكمية المطلوبة</span>
+      <span>المنتجات المحددة وتفاصيل النكهات</span>
+      <span class="text-xs text-amber-400 font-normal">حدد الكمية لكل نكهة</span>
     </h4>
 
-    <div id="cartItemsList" class="max-h-60 overflow-y-auto space-y-3 pr-1 mb-6">
+    <div id="cartItemsList" class="max-h-72 overflow-y-auto space-y-4 pr-1 mb-6">
       <p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>
     </div>
 
@@ -210,7 +210,8 @@ body {
 
 <script>
 const formattedWa = "963982572810";
-let cart = {}; // { productName: { qty: number, flavor: string } }
+// الهيكل الجديد للسلة: { productName: { flavorName: qty } }
+let cart = {};
 
 function getProxyUrl(url) {
   if (!url) return '';
@@ -430,85 +431,102 @@ function handleImgError(element, productName) {
   }
 }
 
+// إضافة منتج بالسلة
 function addToCart(pName) {
   const productObj = products.find(p => p.name === pName);
-  const defaultFlavor = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors[0] : 'عادي / حسب المتوفر';
+  const defaultFlavor = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors[0] : 'عادي';
 
   if (!cart[pName]) {
-    cart[pName] = { qty: 1, flavor: defaultFlavor };
-  } else {
-    cart[pName].qty += 1;
+    cart[pName] = {};
   }
+  
+  if (!cart[pName][defaultFlavor]) {
+    cart[pName][defaultFlavor] = 1;
+  } else {
+    cart[pName][defaultFlavor] += 1;
+  }
+
   updateCartUI();
   openCartModal();
 }
 
-function changeQty(pName, delta) {
-  if (cart[pName]) {
-    cart[pName].qty += delta;
-    if (cart[pName].qty <= 0) {
+function changeFlavorQty(pName, flavor, delta) {
+  if (cart[pName] && cart[pName][flavor] !== undefined) {
+    cart[pName][flavor] += delta;
+    if (cart[pName][flavor] <= 0) {
+      delete cart[pName][flavor];
+    }
+    if (Object.keys(cart[pName]).length === 0) {
       delete cart[pName];
     }
   }
   updateCartUI();
 }
 
-function setQty(pName, val) {
+function setFlavorQty(pName, flavor, val) {
   const num = parseInt(val);
   if (isNaN(num) || num <= 0) {
-    delete cart[pName];
+    if (cart[pName]) {
+      delete cart[pName][flavor];
+      if (Object.keys(cart[pName]).length === 0) {
+        delete cart[pName];
+      }
+    }
   } else {
-    cart[pName].qty = num;
+    if (!cart[pName]) cart[pName] = {};
+    cart[pName][flavor] = num;
   }
   updateCartUI();
 }
 
-function setFlavor(pName, flavorVal) {
-  if (cart[pName]) {
-    cart[pName].flavor = flavorVal;
-  }
+function removeProduct(pName) {
+  delete cart[pName];
+  updateCartUI();
 }
 
 function updateCartUI() {
-  const totalItems = Object.keys(cart).length;
-  document.getElementById('cartBadgeCount').innerText = totalItems;
-  document.getElementById('floatCartBadge').innerText = totalItems;
+  const productNames = Object.keys(cart);
+  document.getElementById('cartBadgeCount').innerText = productNames.length;
+  document.getElementById('floatCartBadge').innerText = productNames.length;
 
   const listContainer = document.getElementById('cartItemsList');
-  if (totalItems === 0) {
+  if (productNames.length === 0) {
     listContainer.innerHTML = `<p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>`;
     return;
   }
 
   let html = '';
-  for (const [name, itemData] of Object.entries(cart)) {
+  for (const name of productNames) {
     const productObj = products.find(p => p.name === name);
-    let flavorSelectHtml = '';
+    const flavorsList = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors : ['عادي'];
 
-    if (productObj && productObj.flavors && productObj.flavors.length > 0) {
-      let options = productObj.flavors.map(f => `<option value="${f}" ${itemData.flavor === f ? 'selected' : ''}>${f}</option>`).join('');
-      flavorSelectHtml = `
-        <div class="mt-2 flex items-center gap-2">
-          <span class="text-xs text-amber-400 font-bold">النكهة:</span>
-          <select onchange="setFlavor('${name.replace(/'/g, "\\'")}', this.value)" class="bg-slate-900 border border-amber-500/40 text-amber-300 text-xs rounded-lg p-1.5 focus:outline-none flex-grow">
-            ${options}
-          </select>
-        </div>
-      `;
-    }
+    let flavorsRowsHtml = '';
 
-    html += `
-      <div class="bg-slate-800 p-3 rounded-xl border border-slate-700/80 flex flex-col gap-1">
-        <div class="flex items-center justify-between">
-          <span class="text-white text-sm font-bold truncate max-w-[180px] sm:max-w-[240px]">${name}</span>
+    flavorsList.forEach(flavor => {
+      const currentQty = cart[name][flavor] || 0;
+      flavorsRowsHtml += `
+        <div class="flex items-center justify-between bg-slate-900/80 p-2 px-3 rounded-lg border border-slate-700/60 mt-1">
+          <span class="text-xs text-amber-300 font-bold">نكهة: ${flavor}</span>
           <div class="flex items-center gap-2">
-            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">-</button>
-            <input type="number" min="1" value="${itemData.qty}" onchange="setQty('${name.replace(/'/g, "\\'")}', this.value)" class="w-12 bg-slate-900 border border-slate-600 text-amber-400 text-center font-bold text-sm rounded-lg p-1 focus:outline-none">
-            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', 1)" class="w-7 h-7 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center justify-center font-bold text-xs transition">+</button>
-            <button onclick="changeQty('${name.replace(/'/g, "\\'")}', -100)" class="text-rose-400 hover:text-rose-300 ml-1 text-sm"><i class="fas fa-trash-alt"></i></button>
+            <button onclick="changeFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', -1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">-</button>
+            <input type="number" min="0" value="${currentQty}" onchange="setFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', this.value)" class="w-10 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded p-0.5 focus:outline-none">
+            <button onclick="changeFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', 1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">+</button>
           </div>
         </div>
-        ${flavorSelectHtml}
+      `;
+    });
+
+    html += `
+      <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 flex flex-col gap-2">
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-2">
+          <span class="text-white text-sm font-black">${name}</span>
+          <button onclick="removeProduct('${name.replace(/'/g, "\\'")}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1">
+            <i class="fas fa-trash-alt"></i> حذف المنتج
+          </button>
+        </div>
+        <div class="space-y-1">
+          ${flavorsRowsHtml}
+        </div>
       </div>
     `;
   }
@@ -535,18 +553,31 @@ function sendOrderToWhatsApp() {
     return;
   }
 
-  const keys = Object.keys(cart);
-  if (keys.length === 0) {
+  const pNames = Object.keys(cart);
+  if (pNames.length === 0) {
     alert("يرجى اختيار منتج واحد على الأقل قبل الإرسال.");
     return;
   }
 
   let msg = `الاسم :${name}\nالعنوان :${address}\n\n`;
 
-  keys.forEach((pName) => {
-    const item = cart[pName];
-    const flavorText = item.flavor ? ` | النكهة: ${item.flavor}` : '';
-    msg += `المنتج : | ${pName}${flavorText} | العدد : ${item.qty} \n----------------\n`;
+  pNames.forEach((pName) => {
+    const flavorsObj = cart[pName];
+    let flavorDetails = [];
+    
+    for (const [flv, qty] of Object.entries(flavorsObj)) {
+      if (qty > 0) {
+        if (flv === 'عادي') {
+          flavorDetails.push(`العدد : ${qty}`);
+        } else {
+          flavorDetails.push(`${flv}: ${qty}`);
+        }
+      }
+    }
+
+    if (flavorDetails.length > 0) {
+      msg += `المنتج : | ${pName} |\nالنكهات : (${flavorDetails.join(' - ')}) \n----------------\n`;
+    }
   });
 
   const url = `https://wa.me/${formattedWa}?text=${encodeURIComponent(msg)}`;
