@@ -513,7 +513,7 @@ function sendOrderToWhatsApp() {
   }
 
   // بناء الرسالة الديناميكية بالضبط بالتنسيق المطلوب
-  let msg = `الاسم :${name}\nالعران :${address}\n\n`;
+  let msg = `الاسم :${name}\nالعنوان :${address}\n\n`;
 
   keys.forEach((pName) => {
     msg += `المنتج : | ${pName} | العدد : ${cart[pName]} \n----------------\n`;
