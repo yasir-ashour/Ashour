@@ -454,6 +454,8 @@ function addToCart(pName) {
 }
 
 function changeFlavorQty(pName, flavor, delta) {
+  pName = decodeURIComponent(pName);
+  flavor = decodeURIComponent(flavor);
   if (cart[pName] && cart[pName][flavor] !== undefined) {
     cart[pName][flavor] += delta;
     if (cart[pName][flavor] <= 0) {
@@ -467,6 +469,8 @@ function changeFlavorQty(pName, flavor, delta) {
 }
 
 function setFlavorQty(pName, flavor, val) {
+  pName = decodeURIComponent(pName);
+  flavor = decodeURIComponent(flavor);
   const num = parseInt(val);
   if (isNaN(num) || num <= 0) {
     if (cart[pName]) {
@@ -483,6 +487,7 @@ function setFlavorQty(pName, flavor, val) {
 }
 
 function removeProduct(pName) {
+  pName = decodeURIComponent(pName);
   delete cart[pName];
   updateCartUI();
 }
@@ -505,15 +510,19 @@ function updateCartUI() {
 
     let flavorsRowsHtml = '';
 
+    const encName = encodeURIComponent(name);
+
     flavorsList.forEach(flavor => {
       const currentQty = cart[name][flavor] || 0;
+      const encFlavor = encodeURIComponent(flavor);
+
       flavorsRowsHtml += `
         <div class="flex items-center justify-between bg-slate-900/80 p-2 px-3 rounded-lg border border-slate-700/60 mt-1">
           <span class="text-xs text-amber-300 font-bold">نكهة: ${flavor}</span>
           <div class="flex items-center gap-2">
-            <button onclick="changeFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', -1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">-</button>
-            <input type="number" min="0" value="${currentQty}" onchange="setFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', this.value)" class="w-10 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded p-0.5 focus:outline-none">
-            <button onclick="changeFlavorQty('${name.replace(/'/g, "\\'")}', '${flavor.replace(/'/g, "\\'")}', 1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">+</button>
+            <button onclick="changeFlavorQty('${encName}', '${encFlavor}', -1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">-</button>
+            <input type="number" min="0" value="${currentQty}" onchange="setFlavorQty('${encName}', '${encFlavor}', this.value)" class="w-10 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded p-0.5 focus:outline-none">
+            <button onclick="changeFlavorQty('${encName}', '${encFlavor}', 1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-bold text-xs">+</button>
           </div>
         </div>
       `;
@@ -523,7 +532,7 @@ function updateCartUI() {
       <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 flex flex-col gap-2">
         <div class="flex items-center justify-between border-b border-slate-700/60 pb-2">
           <span class="text-white text-sm font-black">${name}</span>
-          <button onclick="removeProduct('${name.replace(/'/g, "\\'")}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1">
+          <button onclick="removeProduct('${encName}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1">
             <i class="fas fa-trash-alt"></i> حذف المنتج
           </button>
         </div>
