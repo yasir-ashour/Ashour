@@ -6,8 +6,8 @@
 <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
 <!-- كود التحقق من ملكية الموقع لجوجل (Google Search Console) -->
 <meta name="google-site-verification" content="WurO32I1zJjVM8Wj1p7rVYuE_QFqSeocqBQbHr3oKHI" />
-<!-- Google Fonts: Tajawal -->
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<!-- Google Fonts: Tajawal & Amiri -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <!-- أيقونات FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Tailwind CSS -->
@@ -18,6 +18,7 @@ tailwind.config = {
     extend: {
       fontFamily: {
         sans: ['Tajawal', 'sans-serif'],
+        arabicCallig: ['Amiri', 'serif'],
       },
       colors: {
         brand: {
@@ -50,13 +51,10 @@ body {
   border-color: rgba(212, 175, 55, 0.8);
   box-shadow: 0 12px 28px -5px rgba(212, 175, 55, 0.2);
 }
-.float-wa {
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+
+/* حركة انيميشن شاشة التحميل */
+#preloaderBar {
+  transition: width 5s linear;
 }
 
 /* كلاسات التدوير المباشر */
@@ -65,7 +63,48 @@ body {
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
 </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative pb-20 sm:pb-0">
+<body class="min-h-screen flex flex-col justify-between relative pb-20 sm:pb-0 overflow-x-hidden">
+
+<!-- شاشة التحميل الاحترافية عند دخول الموقع -->
+<div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center select-none transition-opacity duration-700">
+  <!-- تأثير التوهج الخلفي -->
+  <div class="absolute w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-md w-full flex flex-col items-center">
+    <!-- الشعار مع تأثير النبض -->
+    <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-amber-400/80 shadow-[0_0_35px_rgba(212,175,55,0.35)] mb-6 bg-slate-900 flex items-center justify-center animate-pulse">
+      <img id="loaderLogoImg" class="w-full h-full object-cover" alt="مركز عاشور للتجارة">
+    </div>
+
+    <!-- اسم المتجر بتصميم راقي -->
+    <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-2 drop-shadow-md">
+      مركز عاشور للتجارة
+    </h1>
+    <p class="text-xs sm:text-sm text-slate-400 font-medium mb-8">
+      عالم من الأذواق الرفيعة والمنتجات المتميزة
+    </p>
+
+    <!-- عبارة الصلاة على النبي بتنسيق حديث -->
+    <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/40 rounded-2xl p-4 mb-8 w-full backdrop-blur-sm shadow-xl">
+      <div class="flex items-center justify-center gap-2 text-amber-300 font-extrabold text-lg sm:text-xl font-arabicCallig">
+        <i class="fas fa-moon text-amber-400 text-base animate-bounce"></i>
+        <span>صلِّ على سيدنا محمد</span>
+        <i class="fas fa-moon text-amber-400 text-base animate-bounce"></i>
+      </div>
+    </div>
+
+    <!-- شريط التقدم بملء 5 ثواني -->
+    <div class="w-full bg-slate-800/80 rounded-full h-3 p-0.5 border border-slate-700/80 overflow-hidden shadow-inner mb-3">
+      <div id="preloaderBar" class="bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 h-full rounded-full w-0 shadow-[0_0_12px_rgba(212,175,55,0.8)]"></div>
+    </div>
+
+    <!-- نص جاري التحميل -->
+    <div class="flex items-center gap-2 text-xs font-bold text-slate-400">
+      <i class="fas fa-spinner fa-spin text-amber-400 text-sm"></i>
+      <span>جاري تحميل المنتجات...</span>
+    </div>
+  </div>
+</div>
 
 <!-- الشريط العلوّي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs sm:text-sm text-amber-300 flex justify-between items-center flex-wrap gap-2">
@@ -251,7 +290,24 @@ function getProxyUrl(url) {
 
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
 document.getElementById('logoImg').src = getProxyUrl(logoUrl);
-document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
+document.getElementById('loaderLogoImg').src = getProxyUrl(logoUrl);
+
+document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
+
+// تشغيل شريط التقدم 5 ثواني ثم إخفاء شاشة التحميل
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.getElementById('preloaderBar').style.width = '100%';
+  }, 100);
+
+  setTimeout(() => {
+    const preloader = document.getElementById('sitePreloader');
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+      preloader.style.display = 'none';
+    }, 700);
+  }, 5000);
+});
 
 const products = [
   // --- المنتجات الجديدة المضافة ---
@@ -628,7 +684,8 @@ function sendOrderToWhatsApp() {
     return;
   }
 
-  let msg = `الاسم :${name}\n`;
+  // إضافة السلام عليكم ورحمة الله وبركاته في البداية
+  let msg = `السلام عليكم ورحمة الله وبركاته\n\nالاسم :${name}\n`;
   if (shop) {
     msg += `اسم المحل/المتجر :${shop}\n`;
   }
