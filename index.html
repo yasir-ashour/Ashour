@@ -121,6 +121,17 @@ body {
   </div>
 </div>
 
+<!-- تنبيه تحذيري عند محاولة الإضافة بدون نكهة/كمية -->
+<div id="alertNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-rose-950 border-2 border-rose-500 text-white px-5 py-3 rounded-2xl shadow-xl animate-slide-up">
+  <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-sm shadow-md">
+    <i class="fas fa-exclamation"></i>
+  </div>
+  <div>
+    <p class="text-xs font-bold text-rose-300">تنبيه الطلب</p>
+    <p class="text-sm font-black text-white">يرجى تحديد الكمية أو النكهة المطلوبة أولاً!</p>
+  </div>
+</div>
+
 <!-- الشريط العلوّي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs sm:text-sm text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
@@ -173,7 +184,7 @@ body {
   <!-- شريط البحث الفوري مع زر إرجاع المنتجات -->
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative w-full">
-      <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="handleSearchInput()"
+      <input type="text" id="searchInput" placeholder="ابحث عن منتج (بسكويت، شيبس...)" oninput="handleSearchInput()"
       class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 transition shadow-inner text-base">
       <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
       <!-- زر مسح وإرجاع جميع المنتجات -->
@@ -262,24 +273,24 @@ body {
       </div>
     </div>
 
-    <!-- بيانات العميل -->
+    <!-- بيانات العميل (محفوظة محلياً على الجهاز) -->
     <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-5 mb-6 space-y-4">
       <h3 class="text-base font-black text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-        <i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم والمتجر
+        <i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم والمتجر (محفوظة على جهازك)
       </h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل <span class="text-rose-500">*</span></label>
-          <input type="text" id="custName" placeholder="أدخل اسمك الكامل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          <input type="text" id="custName" oninput="saveCustomerData()" placeholder="أدخل اسمك الكامل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
         </div>
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل / المتجر <span class="text-slate-400 font-normal text-xs">(اختياري)</span></label>
-          <input type="text" id="shopName" placeholder="أدخل اسم محلك أو متجرك..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          <input type="text" id="shopName" oninput="saveCustomerData()" placeholder="أدخل اسم محلك أو متجرك..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
         </div>
       </div>
       <div>
         <label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي <span class="text-rose-500">*</span></label>
-        <input type="text" id="custAddress" placeholder="المنطقة - الشارع - علامة مميزة..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        <input type="text" id="custAddress" oninput="saveCustomerData()" placeholder="المنطقة - الشارع - علامة مميزة..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
       </div>
     </div>
 
@@ -345,7 +356,9 @@ body {
 
 <script>
 const formattedWa = "963959248901";
-let cart = {};
+
+// استرجاع السلة من الذاكرة المحلية (localStorage) إن وجدت
+let cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
 let productSelections = {};
 
 function getProxyUrl(url) {
@@ -359,6 +372,9 @@ document.getElementById('loaderLogoImg').src = getProxyUrl(logoUrl);
 document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
 
 window.addEventListener('DOMContentLoaded', () => {
+  loadCustomerData();
+  updateCartUI();
+
   setTimeout(() => {
     document.getElementById('preloaderBar').style.width = '100%';
   }, 100);
@@ -371,6 +387,25 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 700);
   }, 5000);
 });
+
+// حفظ واسترجاع بيانات الزبون
+function saveCustomerData() {
+  localStorage.setItem('ashour_cust_name', document.getElementById('custName').value);
+  localStorage.setItem('ashour_shop_name', document.getElementById('shopName').value);
+  localStorage.setItem('ashour_cust_addr', document.getElementById('custAddress').value);
+}
+
+function loadCustomerData() {
+  if (localStorage.getItem('ashour_cust_name')) {
+    document.getElementById('custName').value = localStorage.getItem('ashour_cust_name');
+  }
+  if (localStorage.getItem('ashour_shop_name')) {
+    document.getElementById('shopName').value = localStorage.getItem('ashour_shop_name');
+  }
+  if (localStorage.getItem('ashour_cust_addr')) {
+    document.getElementById('custAddress').value = localStorage.getItem('ashour_cust_addr');
+  }
+}
 
 const products = [
   { name: "اربيكا طبيعي صغير", category: "شيبس", price: "التواصل مع المبيعات", available: true, image: "https://i.ibb.co/prfRDSvB/1791902542596.jpg", description: "النكهات : مكسيكي - فلفل حار - جبنة - ملح وخل - باربكيو - مالح - كتشب", flavors: ["مكسيكي", "فلفل حار", "جبنة", "ملح وخل", "باربكيو", "مالح", "كتشب"] },
@@ -604,22 +639,39 @@ function updateCardSelection(pName, flavor, delta) {
   }
 }
 
+function showAlert() {
+  const alertBox = document.getElementById('alertNotification');
+  alertBox.classList.remove('hidden');
+  alertBox.classList.add('flex');
+  setTimeout(() => {
+    alertBox.classList.remove('flex');
+    alertBox.classList.add('hidden');
+  }, 2500);
+}
+
 function addSelectionToCart(pName) {
   const selections = productSelections[pName];
   if (!selections || Object.keys(selections).length === 0) {
-    const productObj = products.find(p => p.name === pName);
-    const defFlv = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors[0] : 'عادي';
-    
-    if (!cart[pName]) cart[pName] = {};
-    cart[pName][defFlv] = (cart[pName][defFlv] || 0) + 1;
-  } else {
-    if (!cart[pName]) cart[pName] = {};
-    for (const [flv, qty] of Object.entries(selections)) {
+    showAlert();
+    return;
+  }
+  
+  if (!cart[pName]) cart[pName] = {};
+  let addedAny = false;
+  for (const [flv, qty] of Object.entries(selections)) {
+    if (qty > 0) {
       cart[pName][flv] = (cart[pName][flv] || 0) + qty;
+      addedAny = true;
     }
-    delete productSelections[pName];
   }
 
+  if (!addedAny) {
+    showAlert();
+    return;
+  }
+
+  delete productSelections[pName];
+  localStorage.setItem('ashour_cart', JSON.stringify(cart));
   updateCartUI();
   showToast(pName);
   filterProducts();
@@ -650,6 +702,7 @@ function changeFlavorQty(pName, flavor, delta) {
   } else {
     cart[pName][flavor] = newQty;
   }
+  localStorage.setItem('ashour_cart', JSON.stringify(cart));
   updateCartUI();
 }
 
@@ -664,11 +717,13 @@ function setFlavorQty(pName, flavor, val) {
     if (!cart[pName]) cart[pName] = {};
     cart[pName][flavor] = num;
   }
+  localStorage.setItem('ashour_cart', JSON.stringify(cart));
   updateCartUI();
 }
 
 function removeProduct(pName) {
   delete cart[pName];
+  localStorage.setItem('ashour_cart', JSON.stringify(cart));
   updateCartUI();
 }
 
@@ -690,9 +745,6 @@ function updateCartUI() {
 
   let html = '';
   for (const name of productNames) {
-    const productObj = products.find(p => p.name === name);
-    const flavorsList = (productObj && productObj.flavors && productObj.flavors.length > 0) ? productObj.flavors : ['عادي'];
-
     let flavorsRowsHtml = '';
     const safeName = escapeJS(name);
 
@@ -700,7 +752,7 @@ function updateCartUI() {
       const safeFlavor = escapeJS(flv);
       flavorsRowsHtml += `
         <div class="flex items-center justify-between bg-slate-900 p-2.5 px-3.5 rounded-xl border border-slate-700/60 mt-2">
-          <span class="text-xs text-amber-300 font-bold">${flv === 'عادي' ? 'الكمية' : 'نكهة: ' + flv}</span>
+          <span class="text-xs text-amber-300 font-bold">${flv}</span>
           <div class="flex items-center gap-2">
             <button type="button" onclick="changeFlavorQty('${safeName}', '${safeFlavor}', -1)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white active:text-slate-950 rounded-lg flex items-center justify-center font-black text-sm select-none transition cursor-pointer border border-slate-600">-</button>
             <input type="number" min="0" value="${qty}" onchange="setFlavorQty('${safeName}', '${safeFlavor}', this.value)" class="w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded-lg py-1.5 focus:outline-none">
@@ -768,11 +820,8 @@ function sendOrderToWhatsApp() {
     
     for (const [flv, qty] of Object.entries(flavorsObj)) {
       if (qty > 0) {
-        if (flv === 'عادي') {
-          flavorDetails.push(`العدد : ${qty}`);
-        } else {
-          flavorDetails.push(`${flv} (-${qty}+)`);
-        }
+        // الصيغة المطلوبة مثل: جبنة × 3
+        flavorDetails.push(`${flv} × ${qty}`);
       }
     }
 
@@ -823,7 +872,8 @@ function displayProducts(items) {
 
     let selectorsHtml = '';
     if (isAvail) {
-      const flavorsList = (product.flavors && product.flavors.length > 0) ? product.flavors : ['الكمية'];
+      // إذا لم يكن هناك نكهات محددة للمنتج، نجعلها "عادي" تلقائياً
+      const flavorsList = (product.flavors && product.flavors.length > 0) ? product.flavors : ['عادي'];
       
       let flavorsRows = '';
       flavorsList.forEach(flv => {
@@ -905,6 +955,16 @@ function filterCategory(category) {
   filterProducts();
 }
 
+function normalizeSearchText(text) {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .replace(/[أإآا]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/بسكوت/g, 'بسكويت'); // توحيد بسكوت وبسكويت ليعطوا نفس النتائج
+}
+
 function handleSearchInput() {
   const searchVal = document.getElementById('searchInput').value;
   const clearBtn = document.getElementById('clearSearchBtn');
@@ -926,11 +986,13 @@ function clearSearch() {
 }
 
 function filterProducts() {
-  const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+  const searchTerm = normalizeSearchText(document.getElementById('searchInput').value.trim());
   
   const filtered = products.filter(p => {
     const matchesCat = currentCategory === 'الكل' || p.category === currentCategory;
-    const matchesSearch = p.name.toLowerCase().includes(searchTerm) || (p.description && p.description.toLowerCase().includes(searchTerm));
+    const nameNorm = normalizeSearchText(p.name);
+    const descNorm = normalizeSearchText(p.description || '');
+    const matchesSearch = nameNorm.includes(searchTerm) || descNorm.includes(searchTerm);
     return matchesCat && matchesSearch;
   });
 
