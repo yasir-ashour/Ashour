@@ -321,7 +321,7 @@ body {
 
 <!-- زر واتساب عائم بارز وثابت في الزاوية باسم ياسر عاشور -->
 <div class="fixed bottom-6 right-6 z-40 flex items-center gap-2">
-  <a href="https://wa.me/963959248901?text=السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-3.5 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.4)] flex items-center gap-3 transition transform hover:scale-105 border-2 border-emerald-400">
+  <a id="floatWaInquiryBtn" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-3.5 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.4)] flex items-center gap-3 transition transform hover:scale-105 border-2 border-emerald-400">
     <i class="fab fa-whatsapp text-2xl animate-pulse"></i>
     <div class="text-right leading-tight hidden sm:block">
       <p class="text-xs font-semibold text-emerald-100">استفسار مباشر</p>
@@ -355,7 +355,10 @@ body {
 </footer>
 
 <script>
-const formattedWa = "963959248901";
+// رقم الواتساب المخصص للطلب
+const orderWhatsApp = "963982572810";
+// رقم الواتساب المخصص للاستفسار
+const inquiryWhatsApp = "963959248901";
 
 // استرجاع السلة من الذاكرة المحلية (localStorage) إن وجدت
 let cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
@@ -369,7 +372,11 @@ function getProxyUrl(url) {
 const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
 document.getElementById('logoImg').src = getProxyUrl(logoUrl);
 document.getElementById('loaderLogoImg').src = getProxyUrl(logoUrl);
-document.getElementById('headerWaBtn').href = `https://wa.me/${formattedWa}?text=${encodeURIComponent("السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة")}`;
+
+// تعيين أرقام الواتساب لأزرار الاستفسار
+const inquiryText = encodeURIComponent("السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة");
+document.getElementById('headerWaBtn').href = `https://wa.me/${inquiryWhatsApp}?text=${inquiryText}`;
+document.getElementById('floatWaInquiryBtn').href = `https://wa.me/${inquiryWhatsApp}?text=${inquiryText}`;
 
 window.addEventListener('DOMContentLoaded', () => {
   loadCustomerData();
@@ -808,11 +815,10 @@ function sendOrderToWhatsApp() {
     return;
   }
 
-  let msg = `السلام عليكم ورحمة الله وبركاته، أود إرسال طلب جديد لمركز عاشور:\n\nالاسم : ${name}\n`;
-  if (shop) {
-    msg += `اسم المحل/المتجر : ${shop}\n`;
-  }
-  msg += `العنوان : ${address}\n\n`;
+  let msg = `~السلام عليكم ورحمه الله وبركاته ...\n\n *بدي اطلب طلب*\n\n *الاسم :* ${name}\n *اسم المحل :* ${shop || 'لا يوجد'}\n *العنوان :* ${address}\n\n *~*المنتجات :~** \n\n`;
+
+  let totalQtySum = 0;
+  let index = 1;
 
   pNames.forEach((pName) => {
     const flavorsObj = cart[pName];
@@ -820,16 +826,20 @@ function sendOrderToWhatsApp() {
     
     for (const [flv, qty] of Object.entries(flavorsObj)) {
       if (qty > 0) {
-        flavorDetails.push(`${flv} × ${qty}`);
+        flavorDetails.push(`(${flv} × ${qty})`);
+        totalQtySum += qty;
       }
     }
 
     if (flavorDetails.length > 0) {
-      msg += `المنتج : | ${pName} |\nالتفاصيل : (${flavorDetails.join(' | ')}) \n----------------\n`;
+      msg += `${index}• *${pName}* \n العدد والنكهات : \n ${flavorDetails.join('  ')}\nــــــــــــــــــــــــــــــــــــــــــــ\n`;
+      index++;
     }
   });
 
-  const url = `https://wa.me/${formattedWa}?text=${encodeURIComponent(msg)}`;
+  msg += `\n *إجمالي عدد المنتجات* :\n( *${totalQtySum}* )`;
+
+  const url = `https://wa.me/${orderWhatsApp}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 }
 
@@ -911,7 +921,7 @@ function displayProducts(items) {
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-xl";
     card.innerHTML = `
       <div>
-        <!-- إطار الصورة بنسبة العرض 740 إلى الطول 645 (عرض 740px / طول 645px) -->
+        <!-- إطار الصورة بنسبة العرض 740 إلى الطول 645 -->
         <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center p-0">
           <div class="loader-wrapper absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-900 text-amber-400 text-xs font-semibold z-10">
             <i class="fas fa-spinner fa-spin text-xl"></i>
