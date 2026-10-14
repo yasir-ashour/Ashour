@@ -820,7 +820,6 @@ function sendOrderToWhatsApp() {
     
     for (const [flv, qty] of Object.entries(flavorsObj)) {
       if (qty > 0) {
-        // الصيغة المطلوبة مثل: جبنة × 3
         flavorDetails.push(`${flv} × ${qty}`);
       }
     }
@@ -912,8 +911,8 @@ function displayProducts(items) {
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-xl";
     card.innerHTML = `
       <div>
-        <!-- إطار الصورة بالعرض 740px والطول 645px -->
-        <div class="w-full max-w-[740px] h-[645px] bg-[#0f172a] overflow-hidden relative flex items-center justify-center mx-auto p-0">
+        <!-- إطار الصورة بنسبة العرض 740 إلى الطول 645 (عرض 740px / طول 645px) -->
+        <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center p-0">
           <div class="loader-wrapper absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-900 text-amber-400 text-xs font-semibold z-10">
             <i class="fas fa-spinner fa-spin text-xl"></i>
             <span>جاري التحميل...</span>
