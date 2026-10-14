@@ -72,7 +72,7 @@ body {
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
 </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative pb-20 sm:pb-0 overflow-x-hidden">
+<body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
 <!-- شاشة التحميل الاحترافية عند دخول الموقع -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center select-none transition-opacity duration-700">
@@ -123,8 +123,8 @@ body {
 
 <!-- الشريط العلوّي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs sm:text-sm text-amber-300 flex justify-between items-center flex-wrap gap-2">
-  <span><i class="fas fa-sync-alt ml-1"></i> تم تحديث الموقع بواسطة ياسر عاشور</span>
-  <a href="https://maps.google.com/?q=F7CJ+P3V" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow transition">
+  <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
+  <a href="https://www.google.com/maps/search/?api=1&query=F7CJ+P3V" target="_blank" rel="noopener" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow transition">
     <i class="fas fa-map-marked-alt"></i> موقع المحل على الخرائط (F7CJ+P3V)
   </a>
 </div>
@@ -142,179 +142,209 @@ body {
 </div>
 </div>
 <div class="flex items-center gap-3">
-  <button onclick="openCartModal()" class="relative bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 text-sm">
+  <button onclick="switchToCartView()" class="relative bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 text-sm">
     <i class="fas fa-shopping-basket text-lg"></i>
     <span class="hidden sm:inline">إنشاء طلب</span>
     <span id="cartBadgeCount" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
   </button>
-  <a id="headerWaBtn" target="_blank" class="hidden md:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-full shadow-lg transition text-sm">
+  <a id="headerWaBtn" target="_blank" rel="noopener" class="hidden md:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-full shadow-lg transition text-sm">
     <i class="fab fa-whatsapp text-lg"></i>
-    <span>استفسار مباشر</span>
+    <span>ياسر عاشور</span>
   </a>
 </div>
 </div>
 </header>
 
-<!-- قسم البطل مع شريط البحث وزر الإرجاع -->
-<section class="relative py-10 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
-<div class="max-w-4xl mx-auto">
-<span class="inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-4">
-كتالوج منتجات مركز عاشور
-</span>
-<h2 class="text-3xl sm:text-5xl font-extrabold mb-3 text-white leading-tight">
-أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span>
-</h2>
-<p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">
-استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة وبكل سهولة.
-</p>
+<!-- قسم محتوى الكتالوج الرئيسي -->
+<div id="catalogMainView" class="w-full flex flex-col flex-grow">
+  <!-- قسم البطل مع شريط البحث وزر الإرجاع -->
+  <section class="relative py-10 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
+  <div class="max-w-4xl mx-auto">
+  <span class="inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-4">
+  كتالوج منتجات مركز عاشور
+  </span>
+  <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 text-white leading-tight">
+  أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span>
+  </h2>
+  <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">
+  استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة وبكل سهولة.
+  </p>
 
-<!-- شريط البحث الفوري مع زر إرجاع المنتجات -->
-<div class="max-w-md mx-auto flex flex-col gap-3">
-  <div class="relative w-full">
-    <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="handleSearchInput()"
-    class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 transition shadow-inner text-base">
-    <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
-    <!-- زر مسح وإرجاع جميع المنتجات -->
-    <button id="clearSearchBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hover:text-white hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full flex items-center justify-center transition" title="إرجاع جميع المنتجات">
-      <i class="fas fa-times text-xs"></i>
-    </button>
-  </div>
-  
-  <div class="flex items-center justify-between px-2">
-    <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs sm:text-sm shadow-md">
-      <i class="fas fa-boxes text-amber-400 text-base"></i>
-      <span class="text-slate-300 font-medium">عدد المنتجات:</span>
-      <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2.5 py-0.5 rounded-md text-sm">0</span>
+  <!-- شريط البحث الفوري مع زر إرجاع المنتجات -->
+  <div class="max-w-md mx-auto flex flex-col gap-3">
+    <div class="relative w-full">
+      <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="handleSearchInput()"
+      class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 transition shadow-inner text-base">
+      <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
+      <!-- زر مسح وإرجاع جميع المنتجات -->
+      <button id="clearSearchBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hover:text-white hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full flex items-center justify-center transition" title="إرجاع جميع المنتجات">
+        <i class="fas fa-times text-xs"></i>
+      </button>
     </div>
     
-    <!-- زر إرجاع الكل السريع -->
-    <button onclick="clearSearch()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
-      <i class="fas fa-rotate-left"></i> إرجاع كل المنتجات
-    </button>
+    <div class="flex items-center justify-between px-2">
+      <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs sm:text-sm shadow-md">
+        <i class="fas fa-boxes text-amber-400 text-base"></i>
+        <span class="text-slate-300 font-medium">عدد المنتجات:</span>
+        <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2.5 py-0.5 rounded-md text-sm">0</span>
+      </div>
+      
+      <!-- زر إرجاع الكل السريع -->
+      <button onclick="clearSearch()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+        <i class="fas fa-rotate-left"></i> إرجاع كل المنتجات
+      </button>
+    </div>
   </div>
+  </div>
+  </section>
+
+  <!-- علامات تبويب الفئات -->
+  <section class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+  <div class="flex flex-wrap justify-center gap-3 mb-10" id="categoryContainer">
+  <button onclick="filterCategory('الكل')" class="filter-btn active bg-amber-500 text-slate-950 font-extrabold px-6 py-2.5 rounded-full text-base shadow-md transition">الكل</button>
+  <button onclick="filterCategory('بسكويت')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">بسكويت</button>
+  <button onclick="filterCategory('شيبس')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">شيبس</button>
+  <button onclick="filterCategory('سكاكر وعلكة')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">سكاكر وعلكة</button>
+  <button onclick="filterCategory('عصائر ومشروبات')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">عصائر ومشروبات</button>
+  <button onclick="filterCategory('قهوة')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">قهوة</button>
+  </div>
+
+  <!-- شبكة عرض المنتجات -->
+  <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
+
+  <div id="noResults" class="hidden text-center py-16 text-slate-500">
+  <i class="fas fa-box-open text-6xl mb-4 text-amber-500/50"></i>
+  <p class="text-xl font-semibold">لا توجد منتجات تطابق بحثك حالياً.</p>
+  </div>
+  </section>
 </div>
-</div>
-</section>
 
-<!-- علامات تبويب الفئات -->
-<section class="max-w-7xl mx-auto px-4 py-8 flex-grow">
-<div class="flex flex-wrap justify-center gap-3 mb-10" id="categoryContainer">
-<button onclick="filterCategory('الكل')" class="filter-btn active bg-amber-500 text-slate-950 font-extrabold px-6 py-2.5 rounded-full text-base shadow-md transition">الكل</button>
-<button onclick="filterCategory('بسكويت')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">بسكويت</button>
-<button onclick="filterCategory('شيبس')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">شيبس</button>
-<button onclick="filterCategory('سكاكر وعلكة')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">سكاكر وعلكة</button>
-<button onclick="filterCategory('عصائر ومشروبات')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">عصائر ومشروبات</button>
-<button onclick="filterCategory('قهوة')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition">قهوة</button>
-</div>
-
-<!-- شبكة عرض المنتجات -->
-<div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
-
-<div id="noResults" class="hidden text-center py-16 text-slate-500">
-<i class="fas fa-box-open text-6xl mb-4 text-amber-500/50"></i>
-<p class="text-xl font-semibold">لا توجد منتجات تطابق بحثك حالياً.</p>
-</div>
-</section>
-
-<!-- زر عائم لسلة الطلبات -->
-<button onclick="openCartModal()" class="fixed bottom-6 right-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black p-4 rounded-full shadow-2xl flex items-center justify-center gap-2 z-40 transition transform hover:scale-105 border-2 border-amber-300">
-  <i class="fas fa-clipboard-list text-2xl"></i>
-  <span class="text-sm font-black hidden sm:inline">إنشاء طلب</span>
-  <span id="floatCartBadge" class="bg-slate-950 text-amber-400 text-xs px-2.5 py-1 rounded-full font-extrabold border border-amber-500/40">0</span>
-</button>
-
-<!-- نافذة إنشاء الطلب المنبثقة (Cart Modal) -->
-<div id="cartModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden justify-center items-center z-50 p-4 overflow-y-auto">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl p-6 shadow-2xl relative my-8">
+<!-- صفحة السلة الكاملة (Cart Full Page View) -->
+<div id="cartPageView" class="hidden max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+  <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
     
-    <!-- زر رجوع علوي في النافذة -->
-    <button onclick="closeCartModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white text-lg flex items-center gap-1 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700 transition">
-      <i class="fas fa-arrow-right text-sm"></i> رجوع
-    </button>
-
-    <div class="flex items-center justify-between mb-4 pl-20">
-      <h3 class="text-2xl font-black gold-gradient-text flex items-center gap-2">
-        <i class="fas fa-shopping-cart text-amber-400"></i> إنشاء طلب جديد
-      </h3>
-      <button onclick="toggleInstructions()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/40 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
-        <i class="fas fa-circle-question text-sm"></i>
-        <span>كيف أطلب؟</span>
+    <!-- رأس صفحة السلة -->
+    <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-800 flex-wrap gap-4">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black gold-gradient-text flex items-center gap-3">
+          <i class="fas fa-shopping-cart text-amber-400"></i> صفحة إنشاء الطلب
+        </h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">قم بمراجعة منتجاتك وإدخال معلومات التوصيل لإرسال طلبك مباشرة عبر الواتساب.</p>
+      </div>
+      <button onclick="switchToCatalogView()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
+        <i class="fas fa-arrow-right"></i> متابعة التسوق
       </button>
     </div>
 
-    <!-- قسم دليل إرشادات الطلب -->
-    <div id="instructionsBox" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-4 mb-5 text-xs text-slate-300 space-y-2">
-      <p class="font-extrabold text-amber-400 text-sm border-b border-slate-700 pb-1 mb-2 flex items-center gap-1.5">
-        <i class="fas fa-list-check"></i> طريقة طلب المنتجات:
-      </p>
-      <ol class="space-y-1.5 list-decimal list-inside text-slate-200 font-medium">
-        <li>اختر المنتجات والكميات أو النكهات المطلوبة من الكتالوج.</li>
-        <li>اكتب اسمك واسم متجرك والعنوان التفصيلي.</li>
-        <li>اضغط على إتمام الطلب (واتساب).</li>
-        <li>سيتم إرسال رسالة الطلب منسقة وجاهزة مباشرة لمركز عاشور.</li>
-      </ol>
-    </div>
-
-    <!-- تنبيه موقع المحل والتوصيل -->
-    <div class="bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold p-2.5 rounded-xl mb-4 flex items-center justify-between flex-wrap gap-2">
-      <div class="flex items-center gap-2">
-        <i class="fas fa-truck text-amber-400 text-sm"></i>
-        <span>التوصيل ضمن دمشق وحي القدم وما حولها.</span>
+    <!-- قسم دليل إرشادات الطلب والتوصيل -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-slate-800/80 border border-amber-500/30 rounded-2xl p-4 text-xs text-slate-300 space-y-2">
+        <p class="font-extrabold text-amber-400 text-sm border-b border-slate-700 pb-1 mb-2 flex items-center gap-1.5">
+          <i class="fas fa-list-check"></i> طريقة طلب المنتجات:
+        </p>
+        <ol class="space-y-1.5 list-decimal list-inside text-slate-200 font-medium">
+          <li>راجع منتجاتك ونكهاتها في الأسفل.</li>
+          <li>اكتب اسمك واسم متجرك والعنوان التفصيلي بدقة.</li>
+          <li>اضغط على إتمام وإرسال الطلب (واتساب).</li>
+        </ol>
       </div>
-      <a href="https://maps.google.com/?q=F7CJ+P3V" target="_blank" class="text-amber-400 underline font-semibold flex items-center gap-1">
-        <i class="fas fa-map-marker-alt"></i> فتح الخريطة
-      </a>
+
+      <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 text-xs text-amber-300 flex flex-col justify-between">
+        <div>
+          <p class="font-black text-amber-400 text-sm mb-1 flex items-center gap-1.5">
+            <i class="fas fa-truck text-amber-400"></i> معلومات التوصيل:
+          </p>
+          <p class="text-slate-300 mb-3">التوصيل متوفر ضمن دمشق وحي القدم وما حولها بكفاءة عالية.</p>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=F7CJ+P3V" target="_blank" rel="noopener" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2 px-4 rounded-xl text-center shadow transition flex items-center justify-center gap-2">
+          <i class="fas fa-map-marked-alt"></i> فتح موقع المحل على خرائط جوجل (F7CJ+P3V)
+        </a>
+      </div>
     </div>
 
     <!-- بيانات العميل -->
-    <div class="space-y-4 mb-6">
-      <div>
-        <label class="block text-slate-300 font-bold mb-1 text-sm">الاسم الكامل <span class="text-rose-500">*</span></label>
-        <input type="text" id="custName" placeholder="أدخل اسمك الكامل..." class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+    <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-5 mb-6 space-y-4">
+      <h3 class="text-base font-black text-white border-b border-slate-800 pb-2 flex items-center gap-2">
+        <i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم والمتجر
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل <span class="text-rose-500">*</span></label>
+          <input type="text" id="custName" placeholder="أدخل اسمك الكامل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل / المتجر <span class="text-slate-400 font-normal text-xs">(اختياري)</span></label>
+          <input type="text" id="shopName" placeholder="أدخل اسم محلك أو متجرك..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
       </div>
       <div>
-        <label class="block text-slate-300 font-bold mb-1 text-sm">اسم المحل / المتجر <span class="text-slate-400 font-normal text-xs">(اختياري)</span></label>
-        <input type="text" id="shopName" placeholder="أدخل اسم محلك أو متجرك..." class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
-      </div>
-      <div>
-        <label class="block text-slate-300 font-bold mb-1 text-sm">العنوان التفصيلي <span class="text-rose-500">*</span></label>
-        <input type="text" id="custAddress" placeholder="المنطقة - الشارع - علامة مميزة..." class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي <span class="text-rose-500">*</span></label>
+        <input type="text" id="custAddress" placeholder="المنطقة - الشارع - علامة مميزة..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
       </div>
     </div>
 
-    <!-- قائمة المنتجات المختارة -->
-    <h4 class="text-slate-200 font-bold text-base mb-3 border-b border-slate-800 pb-2 flex justify-between items-center">
-      <span>المنتجات المحددة وتفاصيل النكهات والكميات</span>
-    </h4>
-
-    <div id="cartItemsList" class="max-h-72 overflow-y-auto space-y-4 pr-1 mb-6">
-      <p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>
+    <!-- قائمة المنتجات المختارة في السلة -->
+    <div class="mb-6">
+      <h3 class="text-base font-black text-white mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
+        <span>المنتجات والنكهات المحددة في طلبك</span>
+        <span id="cartTotalItemsBadge" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span>
+      </h3>
+      <div id="cartItemsList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+        <p class="text-center text-slate-500 text-sm py-8 bg-slate-950/40 rounded-2xl border border-slate-800">لم تقم بإضافة أي منتج للطلب بعد.</p>
+      </div>
     </div>
 
-    <!-- أزرار الإجراء السفلي -->
-    <div class="flex justify-between items-center pt-4 border-t border-slate-800">
-      <button onclick="closeCartModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <i class="fas fa-arrow-right"></i> رجوع
+    <!-- أزرار الإجراء السفلي للطلب -->
+    <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
+      <button onclick="switchToCatalogView()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-3 rounded-xl text-sm transition flex items-center gap-2">
+        <i class="fas fa-arrow-right"></i> العودة للكتالوج
       </button>
-      <button onclick="sendOrderToWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-6 py-2.5 rounded-xl text-sm shadow-lg flex items-center gap-2 transition">
-        <i class="fab fa-whatsapp text-lg"></i>
-        <span>إتمام وإرسال الطلب</span>
+      <button onclick="sendOrderToWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-8 py-3 rounded-xl text-sm shadow-xl flex items-center gap-2.5 transition transform hover:scale-105">
+        <i class="fab fa-whatsapp text-xl"></i>
+        <span>إتمام وإرسال الطلب عبر الواتساب</span>
       </button>
     </div>
 
   </div>
 </div>
 
+<!-- زر واتساب عائم بارز وثابت في الزاوية باسم ياسر عاشور -->
+<div class="fixed bottom-6 right-6 z-40 flex items-center gap-2">
+  <a href="https://wa.me/963959248901?text=السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن منتجات مركز عاشور للتجارة" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-3.5 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.4)] flex items-center gap-3 transition transform hover:scale-105 border-2 border-emerald-400">
+    <i class="fab fa-whatsapp text-2xl animate-pulse"></i>
+    <div class="text-right leading-tight hidden sm:block">
+      <p class="text-xs font-semibold text-emerald-100">استفسار مباشر</p>
+      <p class="text-sm font-black">ياسر عاشور</p>
+    </div>
+  </a>
+
+  <button onclick="switchToCartView()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black p-4 rounded-full shadow-2xl flex items-center justify-center gap-2 transition transform hover:scale-105 border-2 border-amber-300">
+    <i class="fas fa-clipboard-list text-2xl"></i>
+    <span id="floatCartBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
+  </button>
+</div>
+
 <!-- تذييل الصفحة -->
-<footer class="bg-slate-900 border-t border-slate-800 py-8 text-center text-slate-400 text-sm mt-12">
-<p class="font-bold text-slate-200 mb-1 text-base">مركز عاشور للتجارة</p>
-<p class="text-xs sm:text-sm text-amber-400/80 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة (F7CJ+P3V)</p>
-<p class="text-xs text-amber-300/90 font-semibold mb-2"><i class="fas fa-history ml-1"></i> تم تحديث الموقع بواسطة ياسر عاشور</p>
-<p class="text-xs text-slate-500">جميع الحقوق محفوظة © 2026</p>
+<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-12">
+<div class="max-w-4xl mx-auto space-y-3">
+  <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
+  <p class="text-xs sm:text-sm text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة (F7CJ+P3V)</p>
+  
+  <!-- زر خرائط جوجل مباشر ومميز في التذييل -->
+  <div class="pt-1">
+    <a href="https://www.google.com/maps/search/?api=1&query=F7CJ+P3V" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold transition shadow">
+      <i class="fas fa-map-marked-alt text-amber-400 text-sm"></i>
+      <span>فتح موقع المحل المباشر على خريطة جوجل</span>
+    </a>
+  </div>
+
+  <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
+  <p class="text-xs text-slate-500">جميع الحقوق محفوظة © 2026</p>
+</div>
 </footer>
 
 <script>
-const formattedWa = "963982572810";
+const formattedWa = "963959248901";
 let cart = {};
 let productSelections = {};
 
@@ -407,7 +437,7 @@ const products = [
   { name: "سوبر اردو شوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg", description: "بسكويت سوبر اردو المغطى بشوكولاتة الحليب الغنية" },
   { name: "سوبر اردو حليب", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg", description: "بسكويت سوبر اردو الفاخر والمقرمش بنكهة الحليب" },
   { name: "كيكتي الكاكاو بالحليب", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/04bd5cf4-ce75-4861-be7d-7c46dcd8b422.jpg", description: "كيك كيكتي الهش بالكاكاو والمليء بكريمة الحليب" },
-  { name: "كيكتي فانيلا بالشوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/7e6494b9-e2a4-48f6-a771-7ee0f8f44104.jpg", description: "كيك كيكتي الفانيلا الطري المحشو بالشوكولا" },
+  { name: "كيكتي فانيلا بالشوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/7e6494b9-e2a4-48f6-a771-7ee0f8f44104.jpg", description: "كيك كيكتي الفانيلا الطري المحشو بالشوكالا" },
   { name: "كيكتي بالفريز", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/b192d6f7-9ec4-4860-bb40-0f26a3171d74.jpg", description: "كيك كيكتي الشهي بمربى وكريمة الفريز" },
   { name: "كيكتي كاكاو بالشوكالا", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/0859f52d-a93a-4985-98f9-0cbc37eff590.jpg", description: "كيك كيكتي الكاكاو المحشو بالشوكولاتة الغنية" },
   { name: "كيكتي فانيلا بالحليب", category: "بسكويت", price: "التواصل مع المبيعات", available: true, image: "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/f80c1fc8-081a-499a-b386-4f3d11e57fcc.jpg", description: "كيك كيكتي الفانيلا مع كريمة الحليب الناعمة" },
@@ -650,10 +680,11 @@ function updateCartUI() {
   const productNames = Object.keys(cart);
   document.getElementById('cartBadgeCount').innerText = productNames.length;
   document.getElementById('floatCartBadge').innerText = productNames.length;
+  document.getElementById('cartTotalItemsBadge').innerText = `${productNames.length} أصناف`;
 
   const listContainer = document.getElementById('cartItemsList');
   if (productNames.length === 0) {
-    listContainer.innerHTML = `<p class="text-center text-slate-500 text-sm py-4">لم تقم بإضافة أي منتج للطلب بعد.</p>`;
+    listContainer.innerHTML = `<p class="text-center text-slate-500 text-sm py-8 bg-slate-950/40 rounded-2xl border border-slate-800">لم تقم بإضافة أي منتج للطلب بعد.</p>`;
     return;
   }
 
@@ -668,23 +699,23 @@ function updateCartUI() {
     for (const [flv, qty] of Object.entries(cart[name])) {
       const safeFlavor = escapeJS(flv);
       flavorsRowsHtml += `
-        <div class="flex items-center justify-between bg-slate-900/80 p-2 px-3 rounded-lg border border-slate-700/60 mt-1">
+        <div class="flex items-center justify-between bg-slate-900 p-2.5 px-3.5 rounded-xl border border-slate-700/60 mt-2">
           <span class="text-xs text-amber-300 font-bold">${flv === 'عادي' ? 'الكمية' : 'نكهة: ' + flv}</span>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="changeFlavorQty('${safeName}', '${safeFlavor}', -1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white active:text-slate-950 rounded flex items-center justify-center font-black text-sm select-none transition cursor-pointer border border-slate-600">-</button>
-            <input type="number" min="0" value="${qty}" onchange="setFlavorQty('${safeName}', '${safeFlavor}', this.value)" class="w-11 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded py-1 focus:outline-none">
-            <button type="button" onclick="changeFlavorQty('${safeName}', '${safeFlavor}', 1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white active:text-slate-950 rounded flex items-center justify-center font-black text-sm select-none transition cursor-pointer border border-slate-600">+</button>
+            <button type="button" onclick="changeFlavorQty('${safeName}', '${safeFlavor}', -1)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white active:text-slate-950 rounded-lg flex items-center justify-center font-black text-sm select-none transition cursor-pointer border border-slate-600">-</button>
+            <input type="number" min="0" value="${qty}" onchange="setFlavorQty('${safeName}', '${safeFlavor}', this.value)" class="w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center font-bold text-xs rounded-lg py-1.5 focus:outline-none">
+            <button type="button" onclick="changeFlavorQty('${safeName}', '${safeFlavor}', 1)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white active:text-slate-950 rounded-lg flex items-center justify-center font-black text-sm select-none transition cursor-pointer border border-slate-600">+</button>
           </div>
         </div>
       `;
     }
 
     html += `
-      <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 flex flex-col gap-2">
-        <div class="flex items-center justify-between border-b border-slate-700/60 pb-2">
+      <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80 flex flex-col gap-2 shadow-md">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
           <span class="text-white text-sm font-black">${name}</span>
-          <button type="button" onclick="removeProduct('${safeName}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1">
-            <i class="fas fa-trash-alt"></i> حذف
+          <button type="button" onclick="removeProduct('${safeName}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1 bg-rose-950/40 border border-rose-500/30 px-2.5 py-1 rounded-lg transition">
+            <i class="fas fa-trash-alt"></i> حذف المنتج
           </button>
         </div>
         <div class="space-y-1">
@@ -696,20 +727,17 @@ function updateCartUI() {
   listContainer.innerHTML = html;
 }
 
-function openCartModal() {
+function switchToCartView() {
   updateCartUI();
-  document.getElementById('cartModal').classList.remove('hidden');
-  document.getElementById('cartModal').classList.add('flex');
+  document.getElementById('catalogMainView').classList.add('hidden');
+  document.getElementById('cartPageView').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function closeCartModal() {
-  document.getElementById('cartModal').classList.add('hidden');
-  document.getElementById('cartModal').classList.remove('flex');
-}
-
-function toggleInstructions() {
-  const box = document.getElementById('instructionsBox');
-  box.classList.toggle('hidden');
+function switchToCatalogView() {
+  document.getElementById('cartPageView').classList.add('hidden');
+  document.getElementById('catalogMainView').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function sendOrderToWhatsApp() {
@@ -728,7 +756,7 @@ function sendOrderToWhatsApp() {
     return;
   }
 
-  let msg = `السلام عليكم ورحمة الله وبركاته\n\nالاسم : ${name}\n`;
+  let msg = `السلام عليكم ورحمة الله وبركاته، أود إرسال طلب جديد لمركز عاشور:\n\nالاسم : ${name}\n`;
   if (shop) {
     msg += `اسم المحل/المتجر : ${shop}\n`;
   }
