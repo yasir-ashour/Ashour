@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>اختبار تحميل البيانات</title>
+</head>
+<body style="font-family:sans-serif;padding:20px;background:#111;color:#fff;font-size:20px;line-height:1.8">
+<h2>🔬 اختبار تحميل catalog-data.json</h2>
+<div id="result">⏳ جاري الاختبار...</div>
+
+<script>
+fetch('catalog-data.json', { cache: 'no-store' })
+  .then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' - ' + r.statusText);
+    return r.json();
+  })
+  .then(d => {
+    if (!d.products) throw new Error('الحقل products غير موجود');
+    document.getElementById('result').innerHTML = 
+      '✅ نجح التحميل!<br>' +
+      '• عدد المنتجات: <b>' + d.products.length + '</b><br>' +
+      '• عدد الفئات: <b>' + (d.categories ? d.categories.length : 'غير محدد') + '</b><br>' +
+      '• اسم المتجر: <b>' + (d.settings ? d.settings.storeName : 'غير محدد') + '</b>';
+  })
+  .catch(e => {
+    document.getElementById('result').innerHTML = 
+      '❌ فشل التحميل<br>' +
+      '• السبب: <b style="color:red">' + e.message + '</b><br>' +
+      '• الرابط المُجرَّب: catalog-data.json';
+  });
+</script>
+</body>
+</html>
