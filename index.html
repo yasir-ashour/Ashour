@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
-<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق. اطلب مباشرة عبر واتساب.">
+<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق.">
 <meta name="theme-color" content="#d4af37">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -232,9 +232,29 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+/* ============ نظام الصور متعدد المستويات ============ */
+// المستوى 1: weserv (سريع)
 function getProxyUrl(url) {
   if (!url) return '';
   return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=800&q=90&output=webp`;
+}
+
+// المستوى 2: wsrv (نسخة بديلة)
+function getWsrvUrl(url) {
+  if (!url) return '';
+  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=800&q=90`;
+}
+
+// المستوى 3: allorigins (بروكسي)
+function getAllOriginsUrl(url) {
+  if (!url) return '';
+  return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+}
+
+// المستوى 4: codetabs (بروكسي بديل)
+function getCodeTabsUrl(url) {
+  if (!url) return '';
+  return `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
 }
 
 /* ==================== الشعار ==================== */
@@ -278,7 +298,7 @@ function loadCustomerData() {
   if (a) document.getElementById('custAddress').value = a;
 }
 
-/* ==================== دوال الصور (المعدلة) ==================== */
+/* ==================== دوال الصور ==================== */
 function hideLoader(el) {
   const c = el.closest('.relative');
   if (c) { const l = c.querySelector('.loader-wrapper'); if (l) l.style.display = 'none'; }
@@ -287,27 +307,44 @@ function hideLoader(el) {
 }
 
 function handleImgError(el, name) {
-  // المحاولة 1: استخدم الرابط المباشر (بدون وسيط)
-  if (!el.dataset.triedDirect) {
-    el.dataset.triedDirect = '1';
-    const originalUrl = el.dataset.originalSrc || '';
-    if (originalUrl) {
-      el.src = originalUrl;
-      return;
-    }
+  const attempt = parseInt(el.dataset.attempt || '0');
+  const originalUrl = el.dataset.originalSrc || '';
+
+  if (!originalUrl) {
+    showImgPlaceholder(el, name);
+    return;
   }
-  
-  // المحاولة 2: فشل الاثنان → أظهر البديل
+
+  // ترتيب المحاولات: مباشر → wsrv → allorigins → codetabs
+  const sources = [
+    originalUrl,
+    getWsrvUrl(originalUrl),
+    getAllOriginsUrl(originalUrl),
+    getCodeTabsUrl(originalUrl)
+  ];
+
+  const nextAttempt = attempt + 1;
+
+  if (nextAttempt < sources.length) {
+    el.dataset.attempt = nextAttempt;
+    el.src = sources[nextAttempt];
+    return;
+  }
+
+  // كل المحاولات فشلت
+  showImgPlaceholder(el, name);
+}
+
+function showImgPlaceholder(el, name) {
   const c = el.closest('.relative');
-  if (c) {
-    const l = c.querySelector('.loader-wrapper');
-    if (l) l.style.display = 'none';
-    c.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center">
-      <i class="fas fa-box-open text-4xl text-amber-400 mb-2"></i>
-      <span class="text-sm text-amber-300 font-bold">مركز عاشور للتجارة</span>
-      <span class="text-xs text-slate-400 mt-1">${escapeHtml(name)}</span>
-    </div>`;
-  }
+  if (!c) return;
+  const l = c.querySelector('.loader-wrapper');
+  if (l) l.style.display = 'none';
+  c.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center">
+    <i class="fas fa-box-open text-4xl text-amber-400 mb-2"></i>
+    <span class="text-sm text-amber-300 font-bold">مركز عاشور للتجارة</span>
+    <span class="text-xs text-slate-400 mt-1">${escapeHtml(name)}</span>
+  </div>`;
 }
 
 /* ==================== إشعارات ==================== */
