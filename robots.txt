@@ -1,0 +1,14 @@
+# robots.txt - مركز عاشور للتجارة
+# يوجه محركات البحث
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /logo.png
+
+# منع فهرسة لوحة التحكم
+Disallow: /admin.html
+Disallow: /test.html
+
+# خريطة الموقع
+Sitemap: https://yasir-ashour.github.io/Ashour/sitemap.xml
