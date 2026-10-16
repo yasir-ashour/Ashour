@@ -30,13 +30,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .rot-90 { transform: rotate(90deg); scale: 1.2; }
 .rot-180 { transform: rotate(180deg); }
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
-/* تحسين: الصور تظهر فورًا حتى بدون onload */
-.product-img { opacity: 1; transition: opacity 0.3s ease; }
+.product-img { opacity: 1; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
-<!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
   <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-amber-400/80 mb-6 bg-slate-900 flex items-center justify-center animate-pulse">
     <img id="loaderLogoImg" class="w-full h-full object-cover" alt="Logo">
@@ -48,7 +46,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
-<!-- إشعار النجاح -->
 <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
   <div class="w-8 h-8 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold"><i class="fas fa-check"></i></div>
   <div>
@@ -57,7 +54,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- تنبيه -->
 <div id="alertNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-rose-950 border-2 border-rose-500 text-white px-5 py-3 rounded-2xl shadow-xl">
   <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold"><i class="fas fa-exclamation"></i></div>
   <div>
@@ -66,7 +62,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- الشريط العلوي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
   <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full text-xs flex items-center gap-1.5">
@@ -74,7 +69,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </a>
 </div>
 
-<!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
 <div class="flex items-center gap-3">
@@ -234,17 +228,41 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+/* ==================== تحويل base64 إلى Blob URL ==================== */
+function base64ToBlobUrl(base64) {
+  try {
+    const parts = base64.split(',');
+    if (parts.length !== 2) return base64;
+    const mimeMatch = parts[0].match(/:(.*?);/);
+    if (!mimeMatch) return base64;
+    const mime = mimeMatch[1];
+    const bstr = atob(parts[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
+    const blob = new Blob([u8arr], { type: mime });
+    return URL.createObjectURL(blob);
+  } catch (e) {
+    console.warn('فشل تحويل base64 إلى Blob:', e);
+    return base64;
+  }
+}
+
 /* ==================== تجهيز رابط الصورة ==================== */
 function prepareImage(img) {
   if (!img) return '';
-  // إذا كانت base64، استخدمها كما هي
-  if (img.startsWith('data:')) return img;
-  // إذا كانت رابط عادي، استخدم الوسيط
+  // إذا كانت base64 → حوّلها إلى Blob URL
+  if (img.startsWith('data:')) {
+    return base64ToBlobUrl(img);
+  }
+  // وإلا استخدم الوسيط
   return `https://images.weserv.nl/?url=${encodeURIComponent(img)}&w=800&q=90&output=webp`;
 }
 
 function getProxyUrl(url) {
-  return prepareImage(url);
+  if (!url) return '';
+  // للشعار: رابط عادي، استخدم الوسيط
+  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=90&output=webp`;
 }
 
 /* ==================== الشعار ==================== */
@@ -297,14 +315,13 @@ function hideLoader(el) {
 function handleImgError(el, name) {
   const originalUrl = el.dataset.originalSrc || '';
 
-  // لو كانت base64، لا نجرب شيئًا آخر
-  if (originalUrl.startsWith('data:')) {
+  // إذا كانت base64 أو blob → لا نجرب شيئًا آخر
+  if (originalUrl.startsWith('data:') || el.src.startsWith('blob:')) {
     showImgPlaceholder(el, name);
     return;
   }
 
   const attempt = parseInt(el.dataset.attempt || '0');
-
   if (!originalUrl) {
     showImgPlaceholder(el, name);
     return;
@@ -318,7 +335,6 @@ function handleImgError(el, name) {
   ];
 
   const nextAttempt = attempt + 1;
-
   if (nextAttempt < sources.length) {
     el.dataset.attempt = nextAttempt;
     el.src = sources[nextAttempt];
@@ -357,7 +373,7 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
-}/* ==================== عرض المنتجات (إصلاح نهائي للصور) ==================== */
+}/* ==================== عرض المنتجات ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
@@ -379,7 +395,7 @@ function displayProducts(items) {
     const pid = product._pid;
     const isAvail = product.available !== false;
     const isLow = product.lowStock === true && isAvail;
-    // استخدام الصورة الجاهزة (base64 أو وسيط)
+    // الصورة النهائية: blob URL (base64) أو رابط عبر وسيط
     const finalImageUrl = product._proxiedImage || prepareImage(product.image);
     const originalImageUrl = product.image || '';
     const rotateClass = product.rotateClass || '';
@@ -433,6 +449,9 @@ function displayProducts(items) {
     card.innerHTML = `
       <div>
         <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center">
+          <div class="loader-wrapper absolute inset-0 flex items-center justify-center bg-slate-900 text-amber-400 text-xs z-10 pointer-events-none">
+            <i class="fas fa-spinner fa-spin text-xl"></i>
+          </div>
           <img src="${finalImageUrl}" 
                data-original-src="${escapeHtml(originalImageUrl)}"
                alt="${escapeHtml(product.name)}"
@@ -757,14 +776,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   // 1) تحميل البيانات
   await loadCatalogData();
 
-  // 2) تجهيز المنتجات: معرّف + رابط الصورة الجاهز
+  // 2) تجهيز المنتجات: معرّف + تحويل base64 إلى Blob URL
   products.forEach((p, i) => {
     p._pid = i;
-    // إذا كانت base64 → استخدمها مباشرة (بدون وسيط)
-    // إذا كانت رابط → استخدم الوسيط
     if (p.image && p.image.startsWith('data:')) {
-      p._proxiedImage = p.image;
+      // base64 → Blob URL (أسرع وأكثر موثوقية)
+      p._proxiedImage = base64ToBlobUrl(p.image);
     } else {
+      // رابط عادي → وسيط
       p._proxiedImage = prepareImage(p.image);
     }
   });
