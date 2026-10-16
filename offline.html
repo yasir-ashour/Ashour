@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>غير متصل - مركز عاشور للتجارة</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: #0b0f19;
+    color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
+  }
+  
+  .container {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .logo-wrapper {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: logoGlow 2.5s ease-in-out infinite;
+  }
+  
+  @keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5)); }
+    50% { filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.85)); }
+  }
+  
+  .logo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .offline-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+  }
+  
+  .offline-icon i {
+    font-size: 36px;
+    color: #d4af37;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #997415 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  
+  .info-box {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    text-align: right;
+  }
+  
+  .info-box .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .info-box li {
+    font-size: 13px;
+    color: #cbd5e1;
+    padding: 6px 0;
+    padding-right: 24px;
+    position: relative;
+    line-height: 1.6;
+  }
+  
+  .info-box li::before {
+    content: "✓";
+    position: absolute;
+    right: 0;
+    color: #10b981;
+    font-weight: 900;
+  }
+  
+  .retry-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #d4af37 0%, #b89528 100%);
+    color: #0b0f19;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    width: 100%;
+    max-width: 280px;
+    margin-bottom: 16px;
+  }
+  
+  .retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  }
+  
+  .retry-btn:active {
+    transform: translateY(0);
+  }
+  
+  .retry-btn i {
+    font-size: 18px;
+    transition: transform 0.6s ease;
+  }
+  
+  .retry-btn.loading i {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #10b981;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .whatsapp-link:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+  
+  .footer {
+    margin-top: 32px;
+    font-size: 12px;
+    color: #64748b;
+  }
+  
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    color: #fca5a5;
+    margin-bottom: 24px;
+  }
+  
+  .status.online {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+  }
+  
+  .status .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  
+  .status.online .dot {
+    background: #10b981;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- الشعار -->
+  <div class="logo-wrapper">
+    <img src="logo.png" alt="مركز عاشور للتجارة">
+  </div>
+  
+  <!-- حالة الاتصال -->
+  <div class="status" id="statusBadge">
+    <span class="dot"></span>
+    <span id="statusText">لا يوجد اتصال بالإنترنت</span>
+  </div>
+  
+  <!-- الأيقونة -->
+  <div class="offline-icon">
+    <i class="fas fa-wifi"></i>
+  </div>
+  
+  <h1>انقطع الاتصال</h1>
+  <p class="subtitle">
+    يبدو أنك غير متصل بالإنترنت حاليًا.<br>
+    لا تقلق — يمكنك تصفح المنتجات المحفوظة.
+  </p>
+  
+  <!-- صندوق المعلومات -->
+  <div class="info-box">
+    <div class="title">
+      <i class="fas fa-info-circle"></i>
+      <span>ما يمكنك فعله:</span>
+    </div>
+    <ul>
+      <li>تصفح المنتجات المحفوظة سابقًا</li>
+      <li>إضافة المنتجات إلى السلة</li>
+      <li>تحضير الطلب وإرساله لاحقًا</li>
+      <li>استخدام كافة الميزات الأساسية</li>
+    </ul>
+  </div>
+  
+  <!-- زر إعادة المحاولة -->
+  <button class="retry-btn" id="retryBtn" onclick="retryConnection()">
+    <i class="fas fa-redo"></i>
+    <span>إعادة المحاولة</span>
+  </button>
+  
+  <br>
+  
+  <!-- رابط واتساب -->
+  <a href="https://wa.me/963959248901?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1" 
+     target="_blank" 
+     rel="noopener"
+     class="whatsapp-link">
+    <i class="fab fa-whatsapp"></i>
+    <span>تواصل معنا عبر الواتساب</span>
+  </a>
+  
+  <div class="footer">
+    مركز عاشور للتجارة © 2026
+  </div>
+  
+</div>
+
+<script>
+  /* فحص حالة الاتصال */
+  function updateStatus() {
+    const badge = document.getElementById('statusBadge');
+    const text = document.getElementById('statusText');
+    
+    if (navigator.onLine) {
+      badge.classList.add('online');
+      text.innerText = 'الاتصال متاح — جاري التحويل...';
+      
+      // إعادة التوجيه للصفحة الرئيسية
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1000);
+    } else {
+      badge.classList.remove('online');
+      text.innerText = 'لا يوجد اتصال بالإنترنت';
+    }
+  }
+  
+  /* إعادة المحاولة */
+  function retryConnection() {
+    const btn = document.getElementById('retryBtn');
+    btn.classList.add('loading');
+    
+    setTimeout(() => {
+      if (navigator.onLine) {
+        window.location.href = 'index.html';
+      } else {
+        btn.classList.remove('loading');
+        // اهتزاز الزر
+        btn.style.animation = 'shake 0.4s ease-in-out';
+        setTimeout(() => { btn.style.animation = ''; }, 400);
+      }
+    }, 800);
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  
+  /* مراقبة حالة الاتصال */
+  window.addEventListener('online', updateStatus);
+  window.addEventListener('offline', updateStatus);
+  
+  /* فحص أولي */
+  window.addEventListener('DOMContentLoaded', () => {
+    if (navigator.onLine) {
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+  });
+</script>
+
+</body>
+</html>
