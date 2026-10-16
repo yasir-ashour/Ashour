@@ -9,8 +9,6 @@
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,25 +16,18 @@
 <meta name="apple-mobile-web-app-title" content="عاشور">
 <meta name="application-name" content="مركز عاشور">
 
-<!-- Open Graph -->
 <meta property="og:title" content="مركز عاشور للتجارة - الكتالوج الإلكتروني">
 <meta property="og:description" content="أجود أنواع الشيبس، البسكويت، العصائر، والقهوة - اطلب مباشرة عبر واتساب.">
 <meta property="og:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yasir-ashour.github.io/Ashour/">
 <meta property="og:locale" content="ar_SY">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="مركز عاشور للتجارة">
-<meta name="twitter:description" content="كتالوج المنتجات - شيبس، بسكويت، عصائر، قهوة">
-<meta name="twitter:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
 
-<!-- Schema.org -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "مركز عاشور للتجارة",
-  "description": "أجود أنواع الشيبس، البسكويت، العصائر، القهوة، والحلويات في دمشق.",
   "image": "https://yasir-ashour.github.io/Ashour/logo.png",
   "logo": "https://yasir-ashour.github.io/Ashour/logo.png",
   "url": "https://yasir-ashour.github.io/Ashour/",
@@ -83,6 +74,17 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 @keyframes modalPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .star-active { color: #d4af37; }
 .star-empty { color: #475569; }
+/* شريط تمرير أفقي أنيق */
+.horizontal-scroll::-webkit-scrollbar { height: 6px; }
+.horizontal-scroll::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 10px; }
+.horizontal-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.5); border-radius: 10px; }
+.horizontal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.8); }
+/* تأثير نبض للعروض */
+@keyframes offerPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+.offer-pulse { animation: offerPulse 2s ease-in-out infinite; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
@@ -147,6 +149,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </div>
 </header><!-- الكتالوج -->
 <div id="catalogMainView" class="w-full flex flex-col flex-grow">
+
+  <!-- قسم البطل -->
   <section class="relative py-8 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
 
@@ -181,7 +185,56 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
   </section>
 
+  <!-- قسم العروض الخاصة -->
+  <section id="offersSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
+    <div class="bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-40 h-40 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex items-center justify-between mb-4 relative z-10">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center flex-shrink-0 offer-pulse">
+            <i class="fas fa-fire text-rose-400 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-2xl font-black text-white leading-tight">عروض خاصة</h3>
+            <p class="text-xs text-rose-300/80">وفّر أكثر على منتجاتك المفضلة</p>
+          </div>
+        </div>
+        <span id="offersCount" class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0 عرض</span>
+      </div>
+
+      <div id="offersGrid" class="flex gap-3 sm:gap-4 overflow-x-auto horizontal-scroll pb-2 snap-x snap-mandatory relative z-10"></div>
+    </div>
+  </section>
+
+  <!-- قسم وصل حديثًا -->
+  <section id="newSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
+    <div class="bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex items-center justify-between mb-4 relative z-10">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-sparkles text-emerald-400 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-2xl font-black text-white leading-tight">وصل حديثًا</h3>
+            <p class="text-xs text-emerald-300/80">أحدث المنتجات في متجرنا</p>
+          </div>
+        </div>
+        <span id="newCount" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0 منتج</span>
+      </div>
+
+      <div id="newGrid" class="flex gap-3 sm:gap-4 overflow-x-auto horizontal-scroll pb-2 snap-x snap-mandatory relative z-10"></div>
+    </div>
+  </section>
+
+  <!-- شبكة المنتجات الرئيسية -->
   <section class="max-w-7xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
+  <h3 class="text-xl sm:text-2xl font-black text-white mb-4 flex items-center gap-2">
+    <i class="fas fa-th-large text-amber-400"></i>
+    <span>كل المنتجات</span>
+  </h3>
   <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6" id="categoryContainer"></div>
   <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
   <div id="noResults" class="hidden text-center py-16 text-slate-500">
@@ -519,18 +572,16 @@ function showToast(name) {
 function renderStars(count) {
   return '★'.repeat(count) + '☆'.repeat(5 - count);
 }
-
 function getAverageStars(reviews) {
   if (!reviews || reviews.length === 0) return 0;
   const sum = reviews.reduce((acc, r) => acc + (r.stars || 0), 0);
   return (sum / reviews.length).toFixed(1);
 }
 
-/* ==================== نافذة عرض التقييمات ==================== */
+/* ==================== نافذة التقييمات ==================== */
 function openReviewsModal(productName) {
   const product = products.find(p => p.name === productName);
   if (!product) return;
-
   currentReviewsProduct = product;
   document.getElementById('reviewsProductName').innerText = product.name;
 
@@ -578,11 +629,9 @@ function openReviewForm() {
   attachPublicStarListeners();
   document.getElementById('addReviewModal').classList.remove('hidden');
 }
-
 function closeReviewForm() {
   document.getElementById('addReviewModal').classList.add('hidden');
 }
-
 function attachPublicStarListeners() {
   document.querySelectorAll('.public-review-star').forEach(btn => {
     btn.onclick = () => {
@@ -591,7 +640,6 @@ function attachPublicStarListeners() {
     };
   });
 }
-
 function updatePublicStars(count) {
   document.querySelectorAll('.public-review-star').forEach(btn => {
     const s = Number(btn.dataset.star);
@@ -604,17 +652,14 @@ function updatePublicStars(count) {
     }
   });
 }
-
 function submitReview() {
   if (publicReviewStars === 0) {
     alert('يرجى اختيار عدد النجوم أولًا');
     return;
   }
-
   const productName = currentReviewsProduct.name;
   const name = document.getElementById('publicReviewName').value.trim() || 'عميل';
   const comment = document.getElementById('publicReviewComment').value.trim();
-
   const starsStr = '⭐'.repeat(publicReviewStars);
 
   let msg = `🌟 *تقييم جديد*\n\n`;
@@ -629,7 +674,106 @@ function submitReview() {
 
   closeReviewForm();
   closeReviewsModal();
-}/* ==================== عرض المنتجات ==================== */
+}/* ==================== دالة مساعدة: بناء بطاقة منتج مختصرة (للأقسام) ==================== */
+function buildMiniCard(product, badgeType) {
+  const pid = product._pid;
+  const finalImageUrl = product._proxiedImage || prepareImage(product.image);
+  const originalImageUrl = product.image || '';
+  const rotateClass = product.rotateClass || '';
+
+  let badgeHtml = '';
+  if (badgeType === 'offer') {
+    badgeHtml = `<span class="absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] px-2 py-0.5 rounded-full z-20 offer-pulse"><i class="fas fa-fire"></i> عرض</span>`;
+  } else if (badgeType === 'new') {
+    badgeHtml = `<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full z-20"><i class="fas fa-sparkles"></i> جديد</span>`;
+  }
+
+  return `
+    <div class="snap-start flex-shrink-0 w-40 sm:w-48 bg-slate-950/60 border border-slate-700/80 rounded-2xl overflow-hidden hover:border-amber-500/60 transition cursor-pointer" data-action="scroll-to-product" data-pname="${escapeHtml(product.name)}">
+      <div class="aspect-square bg-[#0f172a] overflow-hidden relative">
+        <img src="${finalImageUrl}" 
+             data-original-src="${escapeHtml(originalImageUrl)}"
+             alt="${escapeHtml(product.name)}"
+             class="product-img w-full h-full object-cover ${rotateClass}"
+             onload="hideLoader(this)" 
+             onerror="handleImgError(this, '${escapeHtml(product.name)}')" 
+             loading="lazy">
+        ${badgeHtml}
+      </div>
+      <div class="p-2">
+        <h4 class="text-white font-black text-xs leading-snug mb-1 line-clamp-2">${escapeHtml(product.name)}</h4>
+        ${badgeType === 'offer' && product.oldPrice ? `
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <span class="text-rose-400 text-[10px] line-through">${escapeHtml(product.oldPrice)}</span>
+            <span class="text-amber-400 text-xs font-black">${escapeHtml(product.price || '')}</span>
+          </div>
+        ` : `
+          <p class="text-amber-400 text-xs font-bold">${escapeHtml(product.price || 'التواصل مع المبيعات')}</p>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+/* ==================== عرض العروض والجديد ==================== */
+function renderOffersAndNew() {
+  const offersSection = document.getElementById('offersSection');
+  const newSection = document.getElementById('newSection');
+  const offersGrid = document.getElementById('offersGrid');
+  const newGrid = document.getElementById('newGrid');
+  const offersCount = document.getElementById('offersCount');
+  const newCount = document.getElementById('newCount');
+
+  const offersProducts = products.filter(p => p.hasOffer && p.available !== false);
+  const newProducts = products.filter(p => p.isNew && p.available !== false);
+
+  // العروض
+  if (offersProducts.length > 0) {
+    offersSection.classList.remove('hidden');
+    offersCount.innerText = offersProducts.length + (offersProducts.length === 1 ? ' عرض' : ' عروض');
+    offersGrid.innerHTML = offersProducts.map(p => buildMiniCard(p, 'offer')).join('');
+  } else {
+    offersSection.classList.add('hidden');
+  }
+
+  // الجديد
+  if (newProducts.length > 0) {
+    newSection.classList.remove('hidden');
+    newCount.innerText = newProducts.length + (newProducts.length === 1 ? ' منتج' : ' منتجات');
+    newGrid.innerHTML = newProducts.map(p => buildMiniCard(p, 'new')).join('');
+  } else {
+    newSection.classList.add('hidden');
+  }
+}
+
+/* ==================== التمرير إلى منتج معين ==================== */
+function scrollToProduct(productName) {
+  // البحث في الشبكة الرئيسية
+  const allProducts = document.querySelectorAll('.product-card');
+  for (const card of allProducts) {
+    const h3 = card.querySelector('h3');
+    if (h3 && h3.textContent.trim() === productName) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.border = '2px solid #d4af37';
+      card.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.6)';
+      setTimeout(() => {
+        card.style.border = '';
+        card.style.boxShadow = '';
+      }, 2500);
+      return;
+    }
+  }
+  // إذا لم يكن معروضًا، ابحث عنه وأظهره
+  const product = products.find(p => p.name === productName);
+  if (product) {
+    currentCategory = 'الكل';
+    document.getElementById('searchInput').value = productName;
+    filterProducts();
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  }
+}
+
+/* ==================== عرض المنتجات الرئيسية ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
@@ -714,8 +858,15 @@ function displayProducts(items) {
       selectorsHtml = `<button disabled class="w-full bg-slate-700 text-slate-400 font-bold py-2 px-2 rounded-xl text-xs sm:text-sm opacity-60">نفد</button>`;
     }
 
+    // بادج عرض/جديد على البطاقة الرئيسية
+    const topLeftBadges = [];
+    if (product.hasOffer) topLeftBadges.push(`<span class="bg-rose-600 text-white text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black"><i class="fas fa-fire"></i> عرض</span>`);
+    if (product.isNew) topLeftBadges.push(`<span class="bg-emerald-500 text-slate-950 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black"><i class="fas fa-sparkles"></i> جديد</span>`);
+    const extraBadges = topLeftBadges.length > 0 ? `<div class="absolute bottom-2 left-2 flex gap-1 flex-wrap z-20">${topLeftBadges.join('')}</div>` : '';
+
     const card = document.createElement('div');
     card.className = "product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-xl";
+    card.dataset.productName = product.name;
     card.innerHTML = `
       <div>
         <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center">
@@ -728,6 +879,7 @@ function displayProducts(items) {
                loading="lazy">
           ${statusBadge}
           ${reviewsBadgeHtml}
+          ${extraBadges}
         </div>
         <div class="p-2 sm:p-4">
           <div class="flex items-center justify-between mb-1 flex-wrap gap-1">
@@ -801,6 +953,17 @@ document.getElementById('productsGrid').addEventListener('click', (e) => {
     updateCartUI();
     showToast(product.name);
   }
+});
+
+/* ==================== Event Delegation للعروض والجديد ==================== */
+['offersGrid', 'newGrid'].forEach(gridId => {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-action="scroll-to-product"]');
+    if (!card) return;
+    scrollToProduct(card.dataset.pname);
+  });
 });
 
 /* ==================== السلة ==================== */
@@ -978,7 +1141,7 @@ document.body.addEventListener('click', (e) => {
   const b = e.target.closest('[data-action]');
   if (!b) return;
   const a = b.dataset.action;
-  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove','show-reviews'].includes(a)) return;
+  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove','show-reviews','scroll-to-product'].includes(a)) return;
   if (a === 'open-cart') { e.preventDefault(); switchToCartView(); }
   else if (a === 'back-to-catalog') { e.preventDefault(); switchToCatalogView(); }
   else if (a === 'send-order') { e.preventDefault(); sendOrderToWhatsApp(); }
@@ -1062,6 +1225,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   updateCartUI();
 
   renderCategoryButtons();
+  renderOffersAndNew();
   displayProducts(products);
 
   setTimeout(() => {
@@ -1077,7 +1241,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   console.log('✅ تم تحميل ' + products.length + ' منتجًا');
 });
 
-/* ==================== إغلاق النوافذ بـ Escape ==================== */
+/* ==================== Escape ==================== */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeReviewsModal();
@@ -1091,7 +1255,6 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js', { scope: '/Ashour/' })
       .then((registration) => {
         console.log('✅ Service Worker registered:', registration.scope);
-
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
           newWorker.addEventListener('statechange', () => {
