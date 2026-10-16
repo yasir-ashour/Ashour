@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة إدارة الكتالوج - مركز عاشور</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; }
+.gold-gradient-text {
+  background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #997415 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.flavor-tag { display: inline-flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- شاشة تسجيل الدخول -->
+<div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
+  <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
+    <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
+      <i class="fas fa-lock text-3xl text-amber-400"></i>
+    </div>
+    <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
+    <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
+    <input type="password" id="loginPassword" placeholder="كلمة المرور"
+      class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-lg mb-4"
+      onkeydown="if(event.key==='Enter') tryLogin()">
+    <button onclick="tryLogin()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition">
+      <i class="fas fa-sign-in-alt ml-2"></i> دخول
+    </button>
+    <p id="loginError" class="hidden text-rose-400 text-sm mt-3 font-bold">كلمة المرور غير صحيحة</p>
+    <p class="text-slate-600 text-xs mt-6">الافتراضية: <span class="text-amber-400 font-mono">ashour2026</span></p>
+  </div>
+</div>
+
+<!-- الواجهة الرئيسية -->
+<div id="adminApp" class="hidden">
+
+<header class="sticky top-0 z-30 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl">
+        <i class="fas fa-sliders-h"></i>
+      </div>
+      <div>
+        <h1 class="text-lg sm:text-xl font-black gold-gradient-text">لوحة إدارة الكتالوج</h1>
+        <p class="text-xs text-slate-400">مركز عاشور للتجارة</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-3 py-1.5 rounded-full font-bold">
+        <i class="fas fa-circle text-[6px]"></i> تغييرات غير محفوظة
+      </span>
+      <button onclick="saveAll()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-save"></i> حفظ
+      </button>
+      <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-external-link-alt"></i> عرض الموقع
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-4 pt-6">
+  <div class="flex gap-2 mb-6 flex-wrap">
+    <button data-tab="products" class="tab-btn active bg-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition">
+      <i class="fas fa-boxes"></i> المنتجات
+    </button>
+    <button data-tab="settings" class="tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition">
+      <i class="fas fa-cog"></i> الإعدادات
+    </button>
+    <button data-tab="backup" class="tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition">
+      <i class="fas fa-database"></i> النسخ الاحتياطي
+    </button>
+  </div>
+</div><!-- ============= تبويب المنتجات ============= -->
+<div id="tab-products" class="tab-content max-w-7xl mx-auto px-4 pb-16">
+
+  <!-- شريط الأدوات -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
+    <div class="relative flex-grow min-w-[200px]">
+      <input type="text" id="adminSearch" placeholder="ابحث عن منتج..." oninput="renderProductList()"
+        class="w-full bg-slate-950 text-white placeholder-slate-500 pr-10 pl-3 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      <i class="fas fa-search absolute right-3 top-3.5 text-slate-500"></i>
+    </div>
+    <select id="adminFilterCat" onchange="renderProductList()"
+      class="bg-slate-950 text-white py-2.5 px-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      <option value="">كل الفئات</option>
+    </select>
+    <select id="adminFilterStatus" onchange="renderProductList()"
+      class="bg-slate-950 text-white py-2.5 px-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      <option value="">كل الحالات</option>
+      <option value="available">متوفر</option>
+      <option value="lowStock">كمية محدودة</option>
+      <option value="unavailable">غير متوفر</option>
+    </select>
+    <button onclick="openProductModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm flex items-center gap-2">
+      <i class="fas fa-plus"></i> منتج جديد
+    </button>
+  </div>
+
+  <!-- إحصاءات -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+      <p class="text-slate-400 text-xs mb-1">إجمالي المنتجات</p>
+      <p id="statTotal" class="text-2xl font-black text-white">0</p>
+    </div>
+    <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-4">
+      <p class="text-slate-400 text-xs mb-1">متوفرة</p>
+      <p id="statAvailable" class="text-2xl font-black text-emerald-400">0</p>
+    </div>
+    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-4">
+      <p class="text-slate-400 text-xs mb-1">كمية محدودة</p>
+      <p id="statLow" class="text-2xl font-black text-amber-400">0</p>
+    </div>
+    <div class="bg-slate-900 border border-rose-500/30 rounded-2xl p-4">
+      <p class="text-slate-400 text-xs mb-1">غير متوفرة</p>
+      <p id="statUnavailable" class="text-2xl font-black text-rose-400">0</p>
+    </div>
+  </div>
+
+  <!-- قائمة المنتجات -->
+  <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  <div id="emptyState" class="hidden text-center py-16 text-slate-500">
+    <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
+    <p class="text-lg">لا توجد منتجات تطابق البحث</p>
+  </div>
+</div>
+
+<!-- ============= تبويب الإعدادات ============= -->
+<div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-4 pb-16">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
+    <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+      <i class="fas fa-store text-amber-400"></i> إعدادات المتجر
+    </h2>
+
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المتجر</label>
+      <input type="text" id="setStoreName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+    </div>
+
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الشعار (Logo URL)</label>
+      <input type="text" id="setLogoUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
+      <img id="logoPreview" class="mt-3 w-20 h-20 rounded-full object-cover border-2 border-amber-500/40" onerror="this.style.display='none'">
+    </div>
+
+    <div class="border-t border-slate-800 pt-5">
+      <h3 class="text-base font-black text-white mb-3 flex items-center gap-2">
+        <i class="fab fa-whatsapp text-emerald-400"></i> أرقام الواتساب
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم استقبال الطلبات</label>
+          <input type="text" id="setOrderWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono">
+          <p class="text-slate-500 text-xs mt-1">بصيغة دولية بدون + وبدون مسافات</p>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم الاستفسار</label>
+          <input type="text" id="setInquiryWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono">
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-slate-800 pt-5">
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان المتجر</label>
+      <input type="text" id="setAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+    </div>
+
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط موقع المتجر على الخرائط</label>
+      <input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
+    </div>
+
+    <div class="border-t border-slate-800 pt-5">
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">كلمة مرور اللوحة</label>
+      <input type="text" id="setPassword" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono">
+      <p class="text-amber-400/80 text-xs mt-1"><i class="fas fa-exclamation-triangle"></i> احتفظ بها في مكان آمن.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============= تبويب النسخ الاحتياطي ============= -->
+<div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-4 pb-16 space-y-5">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+    <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
+      <i class="fas fa-file-export text-emerald-400"></i> تصدير البيانات
+    </h2>
+    <p class="text-slate-400 text-sm mb-4">حمّل ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> وارفعه في مستودع GitHub بجانب <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">index.html</code>.</p>
+    <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2">
+      <i class="fas fa-download"></i> تنزيل ملف JS
+    </button>
+  </div>
+
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+    <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
+      <i class="fas fa-file-import text-amber-400"></i> استيراد البيانات
+    </h2>
+    <p class="text-slate-400 text-sm mb-4">استورد ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> لاستعادة نسخة سابقة.</p>
+    <input type="file" id="importFile" accept=".js,.json,application/javascript,application/json" class="hidden" onchange="importData(event)">
+    <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2">
+      <i class="fas fa-upload"></i> اختيار ملف للاستيراد
+    </button>
+    <div class="mt-4 p-3 bg-rose-950/40 border border-rose-500/30 rounded-xl text-xs text-rose-300">
+      <i class="fas fa-exclamation-triangle ml-1"></i> سيتم استبدال جميع البيانات الحالية.
+    </div>
+  </div>
+</div><!-- نافذة تعديل/إضافة منتج -->
+<div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-4">
+  <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-8 shadow-2xl">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h2 id="modalTitle" class="text-xl font-black gold-gradient-text">تعديل منتج</h2>
+      <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+      <input type="hidden" id="fPid">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="md:col-span-2">
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المنتج <span class="text-rose-500">*</span></label>
+          <input type="text" id="fName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">الفئة <span class="text-rose-500">*</span></label>
+          <input type="text" id="fCategory" list="categoriesList" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          <datalist id="categoriesList"></datalist>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">السعر</label>
+          <input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الصورة <span class="text-rose-500">*</span></label>
+        <input type="text" id="fImage" oninput="previewImage()" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
+        <div class="mt-3 flex items-start gap-4">
+          <div class="w-32 h-28 rounded-xl border-2 border-slate-700 bg-slate-950 overflow-hidden flex items-center justify-center flex-shrink-0">
+            <img id="fImagePreview" class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col gap-2">
+            <p class="text-slate-400 text-xs">تصحيح اتجاه الصورة:</p>
+            <div class="flex gap-2 flex-wrap">
+              <button type="button" onclick="setRotation('')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="">0°</button>
+              <button type="button" onclick="setRotation('rot-90')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-90">90°</button>
+              <button type="button" onclick="setRotation('rot-180')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-180">180°</button>
+              <button type="button" onclick="setRotation('rot-270')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-270">270°</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-sm">الوصف</label>
+        <textarea id="fDescription" rows="3" placeholder="وصف مختصر..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-sm">النكهات (اختياري)</label>
+        <div id="flavorsContainer" class="flex flex-wrap gap-2 mb-2 min-h-[40px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
+        <div class="flex gap-2">
+          <input type="text" id="newFlavorInput" placeholder="أضف نكهة..." onkeydown="if(event.key==='Enter'){event.preventDefault();addFlavor();}"
+            class="flex-grow bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          <button type="button" onclick="addFlavor()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700">
+            <i class="fas fa-plus"></i> إضافة
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t border-slate-800">
+        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-700 cursor-pointer">
+          <input type="checkbox" id="fAvailable" class="w-5 h-5 accent-emerald-500">
+          <span class="text-slate-200 font-bold text-sm"><i class="fas fa-check-circle text-emerald-400 ml-1"></i> متوفر للبيع</span>
+        </label>
+        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-700 cursor-pointer">
+          <input type="checkbox" id="fLowStock" class="w-5 h-5 accent-amber-500">
+          <span class="text-slate-200 font-bold text-sm"><i class="fas fa-exclamation-circle text-amber-400 ml-1"></i> كمية محدودة</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center p-5 border-t border-slate-800 gap-3 flex-wrap">
+      <button type="button" onclick="deleteProductFromModal()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-trash-alt"></i> حذف المنتج
+      </button>
+      <div class="flex gap-2">
+        <button onclick="closeProductModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm">إلغاء</button>
+        <button onclick="saveProduct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-2.5 rounded-xl text-sm flex items-center gap-2">
+          <i class="fas fa-save"></i> حفظ المنتج
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
+  <p id="toastMsg" class="text-sm font-bold"></p>
+</div>
+
+</div><!-- /adminApp -->
+
+<script>
+/* ============================ الحالة العامة ============================ */
+const STORAGE_KEY = 'ashour_catalog_data_v1';
+let catalogData = { products: [], settings: {}, categories: [] };
+let editingFlavors = [];
+let currentRotation = '';
+
+/* ============================ أدوات ============================ */
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  toastMsg.innerText = msg;
+  toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-2xl border-2 ' +
+    (type === 'error' ? 'bg-rose-950 border-rose-500' : 'bg-slate-900 border-amber-500');
+  toast.classList.remove('hidden');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.add('hidden'), 2500);
+}
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData));
+  document.getElementById('dirtyBadge').classList.remove('hidden');
+}
+
+function clearDirty() {
+  document.getElementById('dirtyBadge').classList.add('hidden');
+}/* ============================ تحميل البيانات ============================ */
+function loadInitialData() {
+  return new Promise((resolve) => {
+    // 1) حاول من localStorage أولًا (تعديلات محفوظة سابقًا)
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const d = JSON.parse(stored);
+        if (d && Array.isArray(d.products)) {
+          catalogData = d;
+          return resolve();
+        }
+      } catch (e) { /* تجاهل */ }
+    }
+
+    // 2) حاول من catalog-data.js
+    const script = document.createElement('script');
+    script.src = 'catalog-data.js?v=' + Date.now();
+    script.onload = () => {
+      if (window.catalogData && Array.isArray(window.catalogData.products)) {
+        catalogData = {
+          products: window.catalogData.products,
+          settings: window.catalogData.settings || {},
+          categories: window.catalogData.categories || []
+        };
+      }
+      resolve();
+    };
+    script.onerror = () => {
+      catalogData = {
+        products: [],
+        settings: {
+          storeName: 'مركز عاشور للتجارة',
+          logoUrl: 'https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg',
+          orderWhatsApp: '963982572810',
+          inquiryWhatsApp: '963959248901',
+          address: 'دمشق أوتوستراد درعا الدولي',
+          mapUrl: 'https://maps.app.goo.gl/djUWNAnBhh3pPwfn6',
+          password: 'ashour2026'
+        },
+        categories: ['بسكويت', 'شيبس', 'سكاكر وعلكة', 'عصائر ومشروبات', 'قهوة']
+      };
+      resolve();
+    };
+    document.head.appendChild(script);
+  });
+}
+
+/* ============================ الدخول ============================ */
+function tryLogin() {
+  const pwd = document.getElementById('loginPassword').value;
+  const expected = catalogData.settings.password || 'ashour2026';
+  if (pwd === expected) {
+    sessionStorage.setItem('ashour_admin_ok', '1');
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminApp').classList.remove('hidden');
+    initAdmin();
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
+    setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 2500);
+  }
+}
+
+/* ============================ التهيئة ============================ */
+function initAdmin() {
+  renderCategories();
+  renderSettingsInputs();
+  renderProductList();
+  renderStats();
+}
+
+/* ============================ التبويبات ============================ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.className = b.dataset.tab === tab
+        ? 'tab-btn active bg-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition'
+        : 'tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition';
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    document.getElementById('tab-' + tab).classList.remove('hidden');
+  });
+});
+
+/* ============================ الفئات ============================ */
+function renderCategories() {
+  const set = new Set(catalogData.categories || []);
+  catalogData.products.forEach(p => p.category && set.add(p.category));
+  catalogData.categories = Array.from(set).sort();
+
+  const datalist = document.getElementById('categoriesList');
+  datalist.innerHTML = catalogData.categories.map(c => `<option value="${escapeHtml(c)}">`).join('');
+
+  const filterSelect = document.getElementById('adminFilterCat');
+  const current = filterSelect.value;
+  filterSelect.innerHTML = '<option value="">كل الفئات</option>' +
+    catalogData.categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  filterSelect.value = current;
+}
+
+/* ============================ الإعدادات ============================ */
+function renderSettingsInputs() {
+  const s = catalogData.settings;
+  document.getElementById('setStoreName').value = s.storeName || '';
+  document.getElementById('setLogoUrl').value = s.logoUrl || '';
+  document.getElementById('setOrderWa').value = s.orderWhatsApp || '';
+  document.getElementById('setInquiryWa').value = s.inquiryWhatsApp || '';
+  document.getElementById('setAddress').value = s.address || '';
+  document.getElementById('setMapUrl').value = s.mapUrl || '';
+  document.getElementById('setPassword').value = s.password || '';
+
+  const logo = document.getElementById('logoPreview');
+  if (s.logoUrl) { logo.src = s.logoUrl; logo.style.display = 'block'; }
+  else logo.style.display = 'none';
+}
+
+['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setPassword'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    const map = {
+      setStoreName: 'storeName', setLogoUrl: 'logoUrl',
+      setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp',
+      setAddress: 'address', setMapUrl: 'mapUrl', setPassword: 'password'
+    };
+    catalogData.settings[map[id]] = document.getElementById(id).value;
+    if (id === 'setLogoUrl') {
+      const logo = document.getElementById('logoPreview');
+      logo.src = document.getElementById(id).value;
+      logo.style.display = 'block';
+    }
+    persist();
+  });
+});
+
+/* ============================ عرض المنتجات ============================ */
+function getFilteredProducts() {
+  const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
+  const cat = document.getElementById('adminFilterCat').value;
+  const status = document.getElementById('adminFilterStatus').value;
+
+  return catalogData.products.filter(p => {
+    if (cat && p.category !== cat) return false;
+    if (status === 'available' && (p.available === false || p.lowStock)) return false;
+    if (status === 'lowStock' && !p.lowStock) return false;
+    if (status === 'unavailable' && p.available !== false) return false;
+    if (q) {
+      const hay = (p.name + ' ' + (p.description || '') + ' ' + (p.category || '')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderProductList() {
+  const list = document.getElementById('productList');
+  const empty = document.getElementById('emptyState');
+  const items = getFilteredProducts();
+
+  if (items.length === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  list.innerHTML = items.map(p => {
+    const pid = catalogData.products.indexOf(p);
+    const isAvail = p.available !== false;
+    const isLow = p.lowStock === true && isAvail;
+
+    let badge = '';
+    if (!isAvail) badge = '<span class="bg-rose-600 text-white text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-times-circle"></i> غير متوفر</span>';
+    else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-exclamation-circle"></i> كمية محدودة</span>';
+    else badge = '<span class="bg-emerald-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-check-circle"></i> متوفر</span>';
+
+    const flavorsBadge = (p.flavors && p.flavors.length)
+      ? `<span class="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md"><i class="fas fa-tags"></i> ${p.flavors.length} نكهة</span>`
+      : `<span class="text-xs text-slate-500 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">بدون نكهات</span>`;
+
+    return `
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
+        <div class="aspect-[740/645] bg-slate-950 relative overflow-hidden">
+          <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" loading="lazy"
+            class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}"
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-4xl\\'></i></div>'">
+          <div class="absolute top-2 right-2">${badge}</div>
+        </div>
+        <div class="p-3">
+          <h3 class="text-white font-black text-sm leading-snug mb-2">${escapeHtml(p.name)}</h3>
+          <div class="flex items-center gap-2 flex-wrap mb-3">
+            <span class="text-xs text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${escapeHtml(p.category || 'بدون فئة')}</span>
+            ${flavorsBadge}
+          </div>
+          <button onclick="openProductModal(${pid})" class="w-full bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 font-bold py-2 rounded-xl text-sm flex items-center justify-center gap-2">
+            <i class="fas fa-edit"></i> تعديل
+          </button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderStats() {
+  const all = catalogData.products;
+  document.getElementById('statTotal').innerText = all.length;
+  document.getElementById('statAvailable').innerText = all.filter(p => p.available !== false && !p.lowStock).length;
+  document.getElementById('statLow').innerText = all.filter(p => p.lowStock && p.available !== false).length;
+  document.getElementById('statUnavailable').innerText = all.filter(p => p.available === false).length;
+}
+
+/* ============================ نافذة المنتج ============================ */
+function openProductModal(pid = null) {
+  const modal = document.getElementById('productModal');
+  editingFlavors = [];
+
+  if (pid === null) {
+    document.getElementById('modalTitle').innerText = 'إضافة منتج جديد';
+    document.getElementById('fPid').value = '';
+    document.getElementById('fName').value = '';
+    document.getElementById('fCategory').value = '';
+    document.getElementById('fPrice').value = 'التواصل مع المبيعات';
+    document.getElementById('fImage').value = '';
+    document.getElementById('fDescription').value = '';
+    document.getElementById('fAvailable').checked = true;
+    document.getElementById('fLowStock').checked = false;
+    setRotation('');
+  } else {
+    const p = catalogData.products[pid];
+    if (!p) return;
+    document.getElementById('modalTitle').innerText = 'تعديل: ' + p.name;
+    document.getElementById('fPid').value = pid;
+    document.getElementById('fName').value = p.name || '';
+    document.getElementById('fCategory').value = p.category || '';
+    document.getElementById('fPrice').value = p.price || 'التواصل مع المبيعات';
+    document.getElementById('fImage').value = p.image || '';
+    document.getElementById('fDescription').value = p.description || '';
+    document.getElementById('fAvailable').checked = p.available !== false;
+    document.getElementById('fLowStock').checked = p.lowStock === true;
+    editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
+    setRotation(p.rotateClass || '');
+  }
+
+  renderFlavors();
+  previewImage();
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function previewImage() {
+  const url = document.getElementById('fImage').value.trim();
+  const img = document.getElementById('fImagePreview');
+  if (url) { img.src = url; img.style.display = 'block'; }
+  else img.style.display = 'none';
+}
+
+function setRotation(rot) {
+  currentRotation = rot || '';
+  document.querySelectorAll('.rot-btn').forEach(b => {
+    const active = (b.dataset.rot || '') === currentRotation;
+    b.className = 'rot-btn ' + (active
+      ? 'bg-amber-500 text-slate-950 font-black border border-amber-400'
+      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700') + ' px-3 py-1.5 rounded-lg text-xs';
+  });
+}
+
+/* ============================ النكهات ============================ */
+function renderFlavors() {
+  const c = document.getElementById('flavorsContainer');
+  if (editingFlavors.length === 0) {
+    c.innerHTML = '<span class="text-slate-500 text-xs py-1">لا توجد نكهات — المنتج سيُعامل كـ "عادي"</span>';
+    return;
+  }
+  c.innerHTML = editingFlavors.map((f, i) => `
+    <span class="flavor-tag bg-amber-500/15 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full text-xs font-bold">
+      ${escapeHtml(f)}
+      <button type="button" onclick="removeFlavor(${i})" class="w-4 h-4 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center text-[10px]">
+        <i class="fas fa-times"></i>
+      </button>
+    </span>`).join('');
+}
+
+function addFlavor() {
+  const input = document.getElementById('newFlavorInput');
+  const v = input.value.trim();
+  if (!v) return;
+  if (editingFlavors.includes(v)) { showToast('النكهة موجودة مسبقًا', 'error'); return; }
+  editingFlavors.push(v);
+  input.value = '';
+  renderFlavors();
+  input.focus();
+}
+
+function removeFlavor(i) {
+  editingFlavors.splice(i, 1);
+  renderFlavors();
+}/* ============================ حفظ المنتج ============================ */
+function saveProduct() {
+  const name = document.getElementById('fName').value.trim();
+  const category = document.getElementById('fCategory').value.trim();
+  const image = document.getElementById('fImage').value.trim();
+
+  if (!name) { showToast('اسم المنتج مطلوب', 'error'); return; }
+  if (!category) { showToast('الفئة مطلوبة', 'error'); return; }
+  if (!image) { showToast('رابط الصورة مطلوب', 'error'); return; }
+
+  const data = {
+    name, category,
+    price: document.getElementById('fPrice').value.trim() || 'التواصل مع المبيعات',
+    image,
+    description: document.getElementById('fDescription').value.trim(),
+    available: document.getElementById('fAvailable').checked,
+    lowStock: document.getElementById('fLowStock').checked,
+    flavors: editingFlavors.length ? [...editingFlavors] : undefined,
+    rotateClass: currentRotation || undefined
+  };
+
+  Object.keys(data).forEach(k => data[k] === undefined && delete data[k]);
+
+  const pidVal = document.getElementById('fPid').value;
+  if (pidVal === '') {
+    catalogData.products.push(data);
+    showToast('تمت إضافة المنتج بنجاح');
+  } else {
+    catalogData.products[Number(pidVal)] = data;
+    showToast('تم تحديث المنتج بنجاح');
+  }
+
+  persist();
+  renderCategories();
+  renderProductList();
+  renderStats();
+  closeProductModal();
+}
+
+function deleteProductFromModal() {
+  const pidVal = document.getElementById('fPid').value;
+  if (pidVal === '') { closeProductModal(); return; }
+  const p = catalogData.products[Number(pidVal)];
+  if (!p) return;
+  if (!confirm(`هل تريد حذف "${p.name}"؟ لا يمكن التراجع.`)) return;
+  catalogData.products.splice(Number(pidVal), 1);
+  persist();
+  renderProductList();
+  renderStats();
+  closeProductModal();
+  showToast('تم حذف المنتج');
+}
+
+/* ============================ حفظ شامل ============================ */
+function saveAll() {
+  persist();
+  clearDirty();
+  showToast('تم حفظ كل التغييرات في المتصفح');
+}
+
+/* ============================ تصدير ============================ */
+function exportData() {
+  const clean = {
+    products: catalogData.products.map(p => {
+      const o = { ...p };
+      if (!o.flavors || o.flavors.length === 0) delete o.flavors;
+      return o;
+    }),
+    settings: { ...catalogData.settings },
+    categories: [...(catalogData.categories || [])]
+  };
+
+  // إنتاج ملف JS (متوافق مع index.html الجديد)
+  let jsContent = '/* ================================\n';
+  jsContent += '   ملف بيانات الكتالوج\n';
+  jsContent += '   مركز عاشور للتجارة\n';
+  jsContent += '   تم التصدير في: ' + new Date().toLocaleString('ar-SY') + '\n';
+  jsContent += '   ================================ */\n\n';
+  jsContent += 'window.catalogData = {\n';
+  jsContent += '  products: [],\n';
+  jsContent += '  settings: ' + JSON.stringify(clean.settings, null, 2) + ',\n';
+  jsContent += '  categories: ' + JSON.stringify(clean.categories) + '\n';
+  jsContent += '};\n\n';
+  jsContent += '// ============ المنتجات ============\n\n';
+
+  clean.products.forEach(p => {
+    jsContent += 'window.catalogData.products.push(' + JSON.stringify(p, null, 2) + ');\n\n';
+  });
+
+  jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n';
+
+  const blob = new Blob([jsContent], { type: 'application/javascript' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'catalog-data.js';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('تم تنزيل الملف — ارفعه في GitHub');
+}
+
+/* ============================ استيراد ============================ */
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const text = ev.target.result;
+      let data = null;
+
+      // محاولة 1: JSON مباشر
+      try { data = JSON.parse(text); } catch (err) { /* ليس JSON */ }
+
+      // محاولة 2: ملف JS مع window.catalogData
+      if (!data) {
+        const tempWindow = {};
+        try {
+          new Function('window', text)(tempWindow);
+          if (tempWindow.catalogData) data = tempWindow.catalogData;
+        } catch (err) {
+          showToast('ملف غير صالح: ' + err.message, 'error');
+          return;
+        }
+      }
+
+      if (!data || !Array.isArray(data.products)) {
+        showToast('الملف لا يحتوي على قائمة منتجات', 'error');
+        return;
+      }
+
+      applyImportedData(data);
+    } catch (err) {
+      showToast('فشل قراءة الملف', 'error');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function applyImportedData(data) {
+  if (!confirm('سيتم استبدال جميع البيانات الحالية. متابعة؟')) return;
+  catalogData = {
+    products: data.products,
+    settings: data.settings && typeof data.settings === 'object'
+      ? { ...catalogData.settings, ...data.settings }
+      : catalogData.settings,
+    categories: Array.isArray(data.categories) ? data.categories : []
+  };
+  persist();
+  renderCategories();
+  renderSettingsInputs();
+  renderProductList();
+  renderStats();
+  showToast('تم استيراد البيانات بنجاح');
+}
+
+/* ============================ إغلاق بزر Escape ============================ */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeProductModal();
+});
+
+/* ============================ الإقلاع ============================ */
+(async function boot() {
+  await loadInitialData();
+  if (sessionStorage.getItem('ashour_admin_ok') === '1') {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminApp').classList.remove('hidden');
+    initAdmin();
+  }
+})();
+</script>
+</body>
+</html>
