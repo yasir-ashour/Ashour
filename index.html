@@ -11,7 +11,15 @@
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 
-<!-- Open Graph (مشاركة على السوشيال ميديا) -->
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="عاشور">
+<meta name="application-name" content="مركز عاشور">
+
+<!-- Open Graph -->
 <meta property="og:title" content="مركز عاشور للتجارة - الكتالوج الإلكتروني">
 <meta property="og:description" content="أجود أنواع الشيبس، البسكويت، العصائر، والقهوة - اطلب مباشرة عبر واتساب.">
 <meta property="og:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
@@ -23,7 +31,7 @@
 <meta name="twitter:description" content="كتالوج المنتجات - شيبس، بسكويت، عصائر، قهوة">
 <meta name="twitter:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
 
-<!-- Schema.org - بيانات المتجر لـ Google -->
+<!-- Schema.org -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,9 +77,7 @@
       { "@type": "OfferCatalog", "name": "قهوة" }
     ]
   },
-  "sameAs": [
-    "https://wa.me/963959248901"
-  ]
+  "sameAs": ["https://wa.me/963959248901"]
 }
 </script>
 
@@ -109,7 +115,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
-<!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
   <div class="w-56 h-56 sm:w-72 sm:h-72 mb-6 flex items-center justify-center logo-glow">
     <img id="loaderLogoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
@@ -122,7 +127,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
-<!-- إشعار النجاح -->
 <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
   <div class="w-8 h-8 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold"><i class="fas fa-check"></i></div>
   <div>
@@ -131,7 +135,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- تنبيه -->
 <div id="alertNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-rose-950 border-2 border-rose-500 text-white px-5 py-3 rounded-2xl shadow-xl">
   <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold"><i class="fas fa-exclamation"></i></div>
   <div>
@@ -140,7 +143,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- الشريط العلوي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
   <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full text-xs flex items-center gap-1.5">
@@ -148,7 +150,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </a>
 </div>
 
-<!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
 <div class="flex items-center gap-2 min-w-0">
@@ -177,7 +178,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <section class="relative py-8 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
 
-  <!-- الشعار الكبير في القسم الرئيسي -->
   <div class="w-72 h-72 sm:w-96 sm:h-96 max-w-full flex items-center justify-center mx-auto mb-4 logo-glow">
     <img src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
   </div>
@@ -875,6 +875,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   console.log('✅ تم تحميل ' + products.length + ' منتجًا');
 });
+
+/* ==================== Service Worker (PWA) ==================== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js', { scope: '/Ashour/' })
+      .then((registration) => {
+        console.log('✅ Service Worker registered:', registration.scope);
+
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('🔄 نسخة جديدة متوفرة');
+            }
+          });
+        });
+      })
+      .catch((err) => {
+        console.warn('⚠️ فشل تسجيل Service Worker:', err);
+      });
+  });
+}
 </script>
 </body>
 </html>
