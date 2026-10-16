@@ -3,81 +3,1435 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختبار - مركز عاشور</title>
+<title>مركز عاشور للتجارة</title>
+<meta name="theme-color" content="#d4af37">
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: Tahoma, sans-serif; background: #0b0f19; color: white; padding: 20px; }
-.status { padding: 20px; margin: 10px 0; border-radius: 10px; font-size: 18px; }
-.ok { background: #065f46; border: 2px solid #10b981; }
-.err { background: #7f1d1d; border: 2px solid #ef4444; }
-.info { background: #1e293b; border: 2px solid #475569; }
-button { background: #d4af37; color: #000; padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; margin: 10px 0; }
-.prod { background: #1e293b; padding: 15px; margin: 10px 0; border-radius: 10px; }
+body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8fafc; }
+.gold-text { background: linear-gradient(135deg,#fce08f,#d4af37,#997415); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#preBar { transition: width 2s linear; }
+@keyframes glow { 0%,100% { filter: drop-shadow(0 0 15px rgba(212,175,55,.5)); } 50% { filter: drop-shadow(0 0 30px rgba(212,175,55,.9)); } }
+.glow { animation: glow 2.5s ease-in-out infinite; }
+.star-on { background: #d4af37 !important; color: #0b0f19 !important; }
 </style>
 </head>
-<body>
+<body class="min-h-screen pb-20 sm:pb-0">
 
-<h1 style="color: #d4af37;">🔍 اختبار تحميل catalog-data.js</h1>
+<div id="preloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center">
+  <div class="w-72 h-72 sm:w-96 sm:h-96 mb-2 flex items-center justify-center glow">
+    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+  </div>
+  <h1 class="text-3xl font-black gold-text mb-1">مركز عاشور للتجارة</h1>
+  <p class="text-xs text-slate-400 mb-6">عالم من الأذواق الرفيعة</p>
+  <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3">
+    <div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div>
+  </div>
+  <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
+</div>
 
-<div id="log" class="info">جاري الفحص...</div>
+<div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
+  <p class="text-sm font-bold" id="toastMsg">تمت الإضافة!</p>
+</div>
 
-<div id="productsList"></div>
+<div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
+  <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full text-xs">موقع المحل</a>
+</div>
+
+<header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
+  <div class="max-w-7xl mx-auto px-3 py-2 flex justify-between items-center gap-2">
+    <div class="flex items-center gap-2 min-w-0">
+      <div class="w-20 h-20 sm:w-28 sm:h-28 flex-shrink-0">
+        <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+      </div>
+      <div class="min-w-0">
+        <h1 class="text-lg sm:text-2xl font-black gold-text truncate">مركز عاشور للتجارة</h1>
+        <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">أجود الأنواع</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <button onclick="showCart()" class="bg-amber-500 text-slate-950 font-black px-3 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-sm">
+        <i class="fas fa-shopping-basket text-lg"></i>
+        <span class="hidden sm:inline">إنشاء طلب</span>
+        <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
+      </button>
+      <a id="headerWa" target="_blank" rel="noopener" class="hidden md:flex items-center gap-2 bg-emerald-600 text-white font-bold px-4 py-2.5 rounded-full text-sm">
+        <i class="fab fa-whatsapp text-lg"></i>
+        <span>ياسر عاشور</span>
+      </a>
+    </div>
+  </div>
+</header><div id="catalogView" class="w-full flex flex-col flex-grow">
+
+  <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
+  <div class="max-w-4xl mx-auto">
+  <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full mx-auto mb-1 glow">
+    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+  </div>
+  <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-2">كتالوج منتجات مركز عاشور</span>
+  <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white">أهلاً وسهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
+  <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-4 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
+
+  <div class="max-w-md mx-auto flex flex-col gap-3">
+    <div class="relative">
+      <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()"
+      class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500">
+      <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
+      <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hover:text-white hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full items-center justify-center">
+        <i class="fas fa-times text-xs"></i>
+      </button>
+    </div>
+    <div class="flex items-center justify-between px-2">
+      <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
+        <i class="fas fa-boxes text-amber-400"></i>
+        <span class="text-slate-300">عدد المنتجات:</span>
+        <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2.5 py-0.5 rounded-md">0</span>
+      </div>
+      <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold">
+        <i class="fas fa-rotate-left"></i> إرجاع الكل
+      </button>
+    </div>
+  </div>
+  </div>
+  </section>
+
+  <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
+    <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-12 h-12 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center">
+            <i class="fas fa-fire text-rose-400 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-black text-white">عروض خاصة</h3>
+            <p class="text-xs text-rose-300/80">وفّر أكثر</p>
+          </div>
+        </div>
+        <span id="offersCount" class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
+      </div>
+      <div id="offersGrid" class="flex gap-3 overflow-x-auto pb-2"></div>
+    </div>
+  </section>
+
+  <section id="newBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
+    <div class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-12 h-12 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center">
+            <i class="fas fa-sparkles text-emerald-400 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-black text-white">وصل حديثًا</h3>
+            <p class="text-xs text-emerald-300/80">أحدث المنتجات</p>
+          </div>
+        </div>
+        <span id="newCount" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
+      </div>
+      <div id="newGrid" class="flex gap-3 overflow-x-auto pb-2"></div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-3 py-6 flex-grow w-full">
+    <h3 class="text-xl sm:text-2xl font-black text-white mb-4"><i class="fas fa-th-large text-amber-400"></i> كل المنتجات</h3>
+    <div class="flex flex-wrap justify-center gap-2 mb-6" id="categories"></div>
+    <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+    <div id="noResults" class="hidden text-center py-16 text-slate-500">
+      <i class="fas fa-box-open text-6xl mb-4 text-amber-500/50"></i>
+      <p class="text-xl">لا توجد منتجات</p>
+    </div>
+  </section>
+</div>
+
+<div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
+  <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
+    <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-28 h-28 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
+        <div>
+          <h2 class="text-lg sm:text-2xl font-black gold-text">صفحة إنشاء الطلب</h2>
+          <p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل</p>
+        </div>
+      </div>
+      <button onclick="showCatalog()" class="bg-slate-800 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm">
+        <i class="fas fa-arrow-right"></i> متابعة التسوق
+      </button>
+    </div>
+
+    <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mb-5 space-y-3">
+      <h3 class="text-base font-black text-white border-b border-slate-800 pb-2"><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label>
+          <input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label>
+          <input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+        </div>
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label>
+        <input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <h3 class="text-base font-black text-white mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
+        <span>المنتجات المحددة</span>
+        <span id="cartTotal" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span>
+      </h3>
+      <div id="cartList" class="space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+    </div>
+
+    <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
+      <button onclick="showCatalog()" class="bg-slate-800 text-slate-300 font-bold px-5 py-3 rounded-xl text-sm">
+        <i class="fas fa-arrow-right"></i> العودة
+      </button>
+      <button onclick="sendOrder()" class="bg-emerald-600 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl">
+        <i class="fab fa-whatsapp text-xl"></i> إتمام الطلب
+      </button>
+    </div>
+  </div>
+</div><div class="fixed bottom-4 right-4 z-40 flex items-center gap-2">
+  <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black px-3.5 py-3 rounded-full shadow-xl flex items-center gap-2 border-2 border-emerald-400">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+  <button onclick="showCart()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black p-3.5 rounded-full shadow-2xl border-2 border-amber-300">
+    <i class="fas fa-clipboard-list text-2xl"></i>
+    <span id="floatBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
+  </button>
+</div>
+
+<div id="productModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md overflow-y-auto">
+  <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4">
+      <div class="flex items-center justify-between p-4 border-b border-slate-800">
+        <h3 class="text-lg font-black gold-text"><i class="fas fa-box-open text-amber-400"></i> تفاصيل المنتج</h3>
+        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="productContent" class="p-4"></div>
+    </div>
+  </div>
+</div>
+
+<div id="reviewsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-text"><i class="fas fa-star text-amber-400"></i> التقييمات</h3>
+      <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="p-5 max-h-96 overflow-y-auto">
+      <p id="revTitle" class="text-white font-black text-center mb-4"></p>
+      <div id="revList" class="space-y-3"></div>
+    </div>
+    <div class="p-5 border-t border-slate-800">
+      <button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl">
+        <i class="fas fa-pen"></i> أضف تقييمك
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="addReviewModal" class="hidden fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-text">أضف تقييمك</h3>
+      <button onclick="closeAddReview()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <p id="addRevTitle" class="text-white font-bold text-center text-sm bg-slate-950/60 rounded-xl p-3"></p>
+      <div>
+        <label class="block text-slate-300 font-bold mb-2 text-sm text-center">تقييمك</label>
+        <div class="flex gap-2 justify-center">
+          <button onclick="setStar(1)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="1"><i class="fas fa-star"></i></button>
+          <button onclick="setStar(2)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="2"><i class="fas fa-star"></i></button>
+          <button onclick="setStar(3)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="3"><i class="fas fa-star"></i></button>
+          <button onclick="setStar(4)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="4"><i class="fas fa-star"></i></button>
+          <button onclick="setStar(5)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
+        </div>
+      </div>
+      <input type="text" id="revName" placeholder="اسمك (اختياري)" maxlength="30" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
+      <textarea id="revComment" rows="3" placeholder="تعليقك (اختياري)" maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+      <div class="flex gap-2">
+        <button onclick="closeAddReview()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
+        <button onclick="submitReview()" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm">
+          <i class="fab fa-whatsapp"></i> إرسال
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="max-w-4xl mx-auto px-3 py-8 w-full">
+  <div class="bg-gradient-to-br from-amber-950/30 to-slate-900 border-2 border-amber-500/40 rounded-3xl p-6 text-center">
+    <div class="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/50 flex items-center justify-center mx-auto mb-4 glow">
+      <i class="fas fa-star text-amber-400 text-3xl"></i>
+    </div>
+    <h3 class="text-2xl sm:text-3xl font-black gold-text mb-2">قيّم تجربتك معنا</h3>
+    <p class="text-slate-400 text-sm mb-5">رأيك يهمنا</p>
+    <div class="flex gap-2 justify-center mb-5">
+      <button onclick="setStoreStar(1)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="1"><i class="fas fa-star"></i></button>
+      <button onclick="setStoreStar(2)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="2"><i class="fas fa-star"></i></button>
+      <button onclick="setStoreStar(3)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="3"><i class="fas fa-star"></i></button>
+      <button onclick="setStoreStar(4)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="4"><i class="fas fa-star"></i></button>
+      <button onclick="setStoreStar(5)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
+    </div>
+    <p id="storeMsg" class="text-slate-500 text-sm mb-5">اضغط على النجوم لتقييمنا</p>
+    <button onclick="submitStoreReview()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black px-6 py-3.5 rounded-xl">
+      <i class="fab fa-whatsapp text-xl"></i> إرسال التقييم
+    </button>
+  </div>
+</section>
+
+<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6">
+<div class="max-w-4xl mx-auto space-y-3">
+  <div class="w-40 h-40 flex items-center justify-center mx-auto">
+    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+  </div>
+  <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
+  <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر</p>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold">
+    <i class="fas fa-map-marked-alt"></i> موقع المحل
+  </a>
+  <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
+  <p class="text-xs text-slate-500">جميع الحقوق محفوظة 2026</p>
+</div>
+</footer>
 
 <script>
-var log = document.getElementById('log');
+var orderWa = "963982572810";
+var inquiryWa = "963959248901";
+var products = [];
+var cart = {};
+var selections = {};
+var currentCat = 'الكل';
+var curRevProduct = null;
+var curRevStars = 0;
+var storeStars = 0;
+var _searchTimer;
 
-function show(msg, type) {
-  log.className = 'status ' + type;
-  log.innerHTML = msg;
+try {
+  cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
+  if (!cart || typeof cart !== 'object') cart = {};
+} catch(e) { cart = {}; }
+
+// تهريب آمن للنصوص
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  s = String(s);
+  var out = '';
+  for (var i = 0; i < s.length; i++) {
+    var c = s.charAt(i);
+    if (c === '&') out += '&amp;';
+    else if (c === '<') out += '&lt;';
+    else if (c === '>') out += '&gt;';
+    else if (c === '"') out += '&quot;';
+    else if (c === "'") out += '&#39;';
+    else out += c;
+  }
+  return out;
 }
 
-// محاولة تحميل catalog-data.js
-var s = document.createElement('script');
-s.src = 'catalog-data.js?v=' + Date.now();
+// تهريب للنص داخل onclick
+function jsStr(s) {
+  if (s === null || s === undefined) return '';
+  s = String(s);
+  var out = '';
+  for (var i = 0; i < s.length; i++) {
+    var c = s.charAt(i);
+    if (c === '\\') out += '\\\\';
+    else if (c === "'") out += "\\'";
+    else if (c === '"') out += '\\"';
+    else if (c === '\n') out += '\\n';
+    else if (c === '\r') out += '\\r';
+    else out += c;
+  }
+  return out;
+}
 
-s.onload = function() {
-  if (typeof window.catalogData === 'undefined') {
-    show('❌ المشكلة: الملف حُمّل، لكن window.catalogData غير موجود!<br>الملف لا يحتوي على بيانات صحيحة.', 'err');
-    return;
-  }
-  
-  if (!window.catalogData.products) {
-    show('❌ المشكلة: window.catalogData موجود، لكن products غير موجودة!', 'err');
-    return;
-  }
-  
-  if (!Array.isArray(window.catalogData.products)) {
-    show('❌ المشكلة: products ليست مصفوفة!', 'err');
-    return;
-  }
-  
-  var count = window.catalogData.products.length;
-  
-  if (count === 0) {
-    show('⚠️ الملف حُمّل بنجاح، لكن قائمة المنتجات فارغة!', 'err');
-    return;
-  }
-  
-  show('✅ نجح التحميل!<br><br>عدد المنتجات: <b>' + count + '</b><br>عدد الفئات: <b>' + (window.catalogData.categories ? window.catalogData.categories.length : 0) + '</b>', 'ok');
-  
-  // عرض أول 5 منتجات
-  var list = document.getElementById('productsList');
-  var html = '<h3 style="color:#d4af37;">أول 5 منتجات:</h3>';
-  for (var i = 0; i < Math.min(5, count); i++) {
-    var p = window.catalogData.products[i];
-    html += '<div class="prod"><b>' + (p.name || 'بدون اسم') + '</b><br>';
-    html += 'الفئة: ' + (p.category || 'بدون') + '<br>';
-    html += 'السعر: ' + (p.price || 'بدون') + '<br>';
-    html += 'الصورة: ' + (p.image ? 'موجودة ✓' : 'مفقودة ✗') + '</div>';
-  }
-  list.innerHTML = html;
-};
+function toBlob(b64) {
+  try {
+    var parts = b64.split(',');
+    if (parts.length !== 2) return b64;
+    var m = parts[0].match(/:(.*?);/);
+    if (!m) return b64;
+    var bstr = atob(parts[1]);
+    var n = bstr.length;
+    var arr = new Uint8Array(n);
+    while (n--) arr[n] = bstr.charCodeAt(n);
+    return URL.createObjectURL(new Blob([arr], { type: m[1] }));
+  } catch(e) { return b64; }
+}
 
-s.onerror = function() {
-  show('❌ فشل تحميل catalog-data.js<br><br>السبب المحتمل:<br>1. الملف غير موجود<br>2. الاسم خاطئ<br>3. لا يوجد اتصال', 'err');
-};
+function imgUrl(u) {
+  if (!u) return '';
+  if (u.indexOf('data:') === 0) return toBlob(u);
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(u) + '&w=800&q=90&output=webp';
+}
 
-document.head.appendChild(s);
+function hidePre() {
+  var p = document.getElementById('preloader');
+  if (!p) return;
+  p.style.opacity = '0';
+  p.style.pointerEvents = 'none';
+  setTimeout(function() { p.style.display = 'none'; }, 700);
+}
+
+setTimeout(hidePre, 2500);
+
+function applyWa() {
+  var t = encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور");
+  var h = document.getElementById('headerWa');
+  var f = document.getElementById('floatWa');
+  if (h) h.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
+  if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
+}
+
+function saveCust() {
+  try {
+    localStorage.setItem('c_name', document.getElementById('custName').value);
+    localStorage.setItem('c_shop', document.getElementById('shopName').value);
+    localStorage.setItem('c_addr', document.getElementById('custAddr').value);
+  } catch(e) {}
+}
+
+function loadCust() {
+  try {
+    var n = localStorage.getItem('c_name');
+    var s = localStorage.getItem('c_shop');
+    var a = localStorage.getItem('c_addr');
+    if (n) document.getElementById('custName').value = n;
+    if (s) document.getElementById('shopName').value = s;
+    if (a) document.getElementById('custAddr').value = a;
+  } catch(e) {}
+}
+
+function showToast(name) {
+  var t = document.getElementById('toast');
+  document.getElementById('toastMsg').innerText = 'تمت إضافة "' + name + '"';
+  t.classList.remove('hidden');
+  setTimeout(function() { t.classList.add('hidden'); }, 2000);
+}
+
+function stars(n) {
+  var s = '';
+  for (var i = 0; i < n; i++) s += '★';
+  for (var j = n; j < 5; j++) s += '☆';
+  return s;
+}
+
+function avgStars(r) {
+  if (!r || !r.length) return '0.0';
+  var sum = 0;
+  for (var i = 0; i < r.length; i++) sum += (r[i].stars || 0);
+  return (sum / r.length).toFixed(1);
+}
+
+applyWa();
+</script>/* ==================== عرض المنتجات بـ createElement ==================== */
+function displayProducts(items) {
+  try {
+    var grid = document.getElementById('productsGrid');
+    var noRes = document.getElementById('noResults');
+    var cnt = document.getElementById('productCount');
+    if (!grid) return;
+
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+    cnt.innerText = items.length;
+
+    if (items.length === 0) {
+      noRes.classList.remove('hidden');
+      return;
+    }
+    noRes.classList.add('hidden');
+
+    for (var i = 0; i < items.length; i++) {
+      grid.appendChild(buildCard(items[i]));
+    }
+  } catch(e) { console.error('displayProducts:', e); }
+}
+
+function buildCard(p) {
+  var pid = p._pid;
+  var avail = p.available !== false;
+  var low = p.lowStock === true && avail;
+  var revs = p.reviews || [];
+  var avg = avgStars(revs);
+
+  // البطاقة
+  var card = document.createElement('div');
+  card.className = 'bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-xl';
+  card.setAttribute('data-name', p.name);
+
+  // منطقة الصورة
+  var imgBox = document.createElement('div');
+  imgBox.className = 'w-full aspect-square bg-[#0f172a] relative cursor-pointer';
+  imgBox.onclick = (function(name) { return function() { openProduct(name); }; })(p.name);
+
+  var img = document.createElement('img');
+  img.src = p._proxyImg || imgUrl(p.image);
+  img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
+  img.loading = 'lazy';
+  img.alt = p.name;
+  img.onerror = function() { imgErr(this); };
+  imgBox.appendChild(img);
+
+  // شارة الحالة
+  var stBadge = document.createElement('span');
+  if (!avail) {
+    stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] px-2 py-0.5 rounded-full z-10';
+    stBadge.innerHTML = '<i class="fas fa-times-circle"></i>';
+  } else if (low) {
+    stBadge.className = 'absolute top-2 right-2 bg-amber-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full z-10';
+    stBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+  } else {
+    stBadge.className = 'absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full z-10';
+    stBadge.innerHTML = '<i class="fas fa-check-circle"></i>';
+  }
+  imgBox.appendChild(stBadge);
+
+  // شارة التقييمات
+  if (revs.length > 0) {
+    var revBadge = document.createElement('button');
+    revBadge.type = 'button';
+    revBadge.className = 'absolute top-2 left-2 bg-slate-950/90 border border-amber-500/50 text-amber-300 text-[10px] px-2 py-0.5 rounded-full font-black z-10';
+    revBadge.innerHTML = '<i class="fas fa-star text-amber-400"></i> ' + avg;
+    revBadge.onclick = (function(e, name) {
+      return function() { e.stopPropagation(); openReviews(name); };
+    })(event, p.name);
+    imgBox.appendChild(revBadge);
+  }
+
+  // شارات إضافية
+  var extras = document.createElement('div');
+  extras.className = 'absolute bottom-2 left-2 flex gap-1 z-10';
+  if (p.hasOffer) {
+    var b1 = document.createElement('span');
+    b1.className = 'bg-rose-600 text-white text-[9px] px-1.5 py-0.5 rounded font-black';
+    b1.innerText = 'عرض';
+    extras.appendChild(b1);
+  }
+  if (p.isNew) {
+    var b2 = document.createElement('span');
+    b2.className = 'bg-emerald-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded font-black';
+    b2.innerText = 'جديد';
+    extras.appendChild(b2);
+  }
+  imgBox.appendChild(extras);
+
+  card.appendChild(imgBox);
+
+  // منطقة المحتوى
+  var body = document.createElement('div');
+  body.className = 'p-2 sm:p-3';
+
+  var topRow = document.createElement('div');
+  topRow.className = 'flex items-center justify-between mb-1 flex-wrap gap-1';
+
+  var catSpan = document.createElement('span');
+  catSpan.className = 'text-[10px] font-bold text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20';
+  catSpan.innerText = p.category || '';
+  topRow.appendChild(catSpan);
+
+  var stText = document.createElement('span');
+  if (!avail) {
+    stText.className = 'text-rose-400 text-[10px] font-bold bg-rose-950/80 px-2 py-0.5 rounded';
+    stText.innerText = 'نفد';
+  } else if (low) {
+    stText.className = 'text-amber-400 text-[10px] font-bold bg-amber-950/80 px-2 py-0.5 rounded';
+    stText.innerText = 'قليل';
+  } else {
+    stText.className = 'text-emerald-400 text-[10px] font-bold bg-emerald-950/80 px-2 py-0.5 rounded';
+    stText.innerText = 'متوفر';
+  }
+  topRow.appendChild(stText);
+  body.appendChild(topRow);
+
+  var title = document.createElement('h3');
+  title.className = 'text-xs sm:text-sm font-black text-white mb-1 cursor-pointer';
+  title.innerText = p.name;
+  title.onclick = (function(name) { return function() { openProduct(name); }; })(p.name);
+  body.appendChild(title);
+
+  var desc = document.createElement('p');
+  desc.className = 'text-slate-400 text-[10px] mb-2';
+  desc.style.cssText = 'display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden';
+  desc.innerText = p.description || 'منتج مميز من مركز عاشور';
+  body.appendChild(desc);
+
+  // قسم النكهات والإضافة
+  var footer = document.createElement('div');
+  footer.className = 'border-t border-slate-700/60 pt-2 mt-auto';
+
+  if (avail) {
+    var fls = (p.flavors && p.flavors.length > 0) ? p.flavors : ['عادي'];
+
+    var flBox = document.createElement('div');
+    flBox.className = 'space-y-1 mb-2 bg-slate-950/40 p-1.5 rounded-lg border border-slate-800';
+
+    var flTitle = document.createElement('div');
+    flTitle.className = 'text-[10px] text-slate-400 font-semibold mb-1';
+    flTitle.innerText = 'النكهات:';
+    flBox.appendChild(flTitle);
+
+    var flList = document.createElement('div');
+    flList.className = 'max-h-24 overflow-y-auto space-y-1';
+
+    for (var f = 0; f < fls.length; f++) {
+      var flv = fls[f];
+      var cur = (selections[p.name] && selections[p.name][flv]) || 0;
+
+      var row = document.createElement('div');
+      row.className = 'flex items-center justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-700/80';
+
+      var flvName = document.createElement('span');
+      flvName.className = 'text-[10px] text-amber-300 font-bold truncate';
+      flvName.style.maxWidth = '80px';
+      flvName.innerText = flv;
+      row.appendChild(flvName);
+
+      var ctrl = document.createElement('div');
+      ctrl.className = 'flex items-center gap-1';
+
+      var btnMinus = document.createElement('button');
+      btnMinus.type = 'button';
+      btnMinus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
+      btnMinus.innerText = '-';
+      btnMinus.onclick = (function(name, id, fidx, fl, d) {
+        return function(e) { e.stopPropagation(); changeSel(name, id, fidx, fl, d); };
+      })(p.name, pid, f, flv, -1);
+      ctrl.appendChild(btnMinus);
+
+      var countSpan = document.createElement('span');
+      countSpan.id = 'sel-' + pid + '-' + f;
+      countSpan.className = 'w-5 text-center font-bold text-amber-400 text-xs';
+      countSpan.innerText = cur;
+      ctrl.appendChild(countSpan);
+
+      var btnPlus = document.createElement('button');
+      btnPlus.type = 'button';
+      btnPlus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
+      btnPlus.innerText = '+';
+      btnPlus.onclick = (function(name, id, fidx, fl, d) {
+        return function(e) { e.stopPropagation(); changeSel(name, id, fidx, fl, d); };
+      })(p.name, pid, f, flv, 1);
+      ctrl.appendChild(btnPlus);
+
+      row.appendChild(ctrl);
+      flList.appendChild(row);
+    }
+    flBox.appendChild(flList);
+    footer.appendChild(flBox);
+
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'w-full bg-amber-500 text-slate-950 font-black py-2 rounded-xl text-xs';
+    addBtn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة';
+    addBtn.onclick = (function(e, name) {
+      return function() { e.stopPropagation(); addToCart(name); };
+    })(event, p.name);
+    footer.appendChild(addBtn);
+  } else {
+    var noBtn = document.createElement('button');
+    noBtn.disabled = true;
+    noBtn.className = 'w-full bg-slate-700 text-slate-400 font-bold py-2 rounded-xl text-xs opacity-60';
+    noBtn.innerText = 'نفد';
+    footer.appendChild(noBtn);
+  }
+
+  var revBtn = document.createElement('button');
+  revBtn.type = 'button';
+  revBtn.className = 'w-full mt-1.5 bg-slate-800/60 text-amber-400 border border-slate-700/80 font-bold py-1.5 rounded-lg text-[10px]';
+  revBtn.innerHTML = '<i class="fas fa-star text-amber-400"></i> ' + (revs.length > 0 ? 'التقييمات (' + revs.length + ')' : 'أضف تقييمك');
+  revBtn.onclick = (function(e, name) {
+    return function() { e.stopPropagation(); openReviews(name); };
+  })(event, p.name);
+  footer.appendChild(revBtn);
+
+  body.appendChild(footer);
+  card.appendChild(body);
+  return card;
+}
+
+/* ==================== تغيير التحديد ==================== */
+function changeSel(pName, pid, fIdx, flavor, delta) {
+  if (!selections[pName]) selections[pName] = {};
+  var cur = selections[pName][flavor] || 0;
+  var next = Math.max(0, cur + delta);
+  if (next === 0) {
+    delete selections[pName][flavor];
+    if (Object.keys(selections[pName]).length === 0) delete selections[pName];
+  } else {
+    selections[pName][flavor] = next;
+  }
+  var el = document.getElementById('sel-' + pid + '-' + fIdx);
+  if (el) el.innerText = next;
+}
+
+/* ==================== إضافة للسلة ==================== */
+function addToCart(pName) {
+  var sels = selections[pName];
+  if (!sels || Object.keys(sels).length === 0) { showToast('حدد الكمية'); return; }
+  if (!cart[pName]) cart[pName] = {};
+  for (var flv in sels) {
+    if (sels.hasOwnProperty(flv)) cart[pName][flv] = (cart[pName][flv] || 0) + sels[flv];
+  }
+  delete selections[pName];
+  try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
+  updateCart();
+  showToast(pName);
+  var cards = document.querySelectorAll('[data-name]');
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].getAttribute('data-name') === pName) {
+      var sps = cards[i].querySelectorAll('[id^="sel-"]');
+      for (var j = 0; j < sps.length; j++) sps[j].innerText = '0';
+    }
+  }
+}
+
+/* ==================== السلة ==================== */
+function updateCart() {
+  var names = Object.keys(cart);
+  document.getElementById('cartBadge').innerText = names.length;
+  document.getElementById('floatBadge').innerText = names.length;
+  document.getElementById('cartTotal').innerText = names.length + ' أصناف';
+
+  var c = document.getElementById('cartList');
+  while (c.firstChild) c.removeChild(c.firstChild);
+
+  if (names.length === 0) {
+    var empty = document.createElement('p');
+    empty.className = 'text-center text-slate-500 text-sm py-8 bg-slate-950/40 rounded-2xl border border-slate-800';
+    empty.innerText = 'لم تقم بإضافة أي منتج';
+    c.appendChild(empty);
+    return;
+  }
+
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var box = document.createElement('div');
+    box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
+
+    var head = document.createElement('div');
+    head.className = 'flex items-center justify-between border-b border-slate-800 pb-2';
+
+    var n = document.createElement('span');
+    n.className = 'text-white text-sm font-black';
+    n.innerText = name;
+    head.appendChild(n);
+
+    var delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'text-rose-400 text-xs bg-rose-950/40 border border-rose-500/30 px-2 py-1 rounded';
+    delBtn.innerText = 'حذف';
+    delBtn.onclick = (function(nm) { return function() { delete cart[nm]; saveCart(); updateCart(); }; })(name);
+    head.appendChild(delBtn);
+
+    box.appendChild(head);
+
+    for (var flv in cart[name]) {
+      if (!cart[name].hasOwnProperty(flv)) continue;
+      var qty = cart[name][flv];
+      var row = document.createElement('div');
+      row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700/60 mt-2';
+
+      var flvSpan = document.createElement('span');
+      flvSpan.className = 'text-xs text-amber-300 font-bold';
+      flvSpan.innerText = flv;
+      row.appendChild(flvSpan);
+
+      var ctrl = document.createElement('div');
+      ctrl.className = 'flex items-center gap-2';
+
+      var minus = document.createElement('button');
+      minus.type = 'button';
+      minus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+      minus.innerText = '-';
+      minus.onclick = (function(nm, fl) { return function() { chQty(nm, fl, -1); }; })(name, flv);
+      ctrl.appendChild(minus);
+
+      var inp = document.createElement('input');
+      inp.type = 'number';
+      inp.min = '0';
+      inp.value = qty;
+      inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-xs rounded-lg py-1';
+      inp.onchange = (function(nm, fl) { return function() { setQty(nm, fl, this.value); }; })(name, flv);
+      ctrl.appendChild(inp);
+
+      var plus = document.createElement('button');
+      plus.type = 'button';
+      plus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+      plus.innerText = '+';
+      plus.onclick = (function(nm, fl) { return function() { chQty(nm, fl, 1); }; })(name, flv);
+      ctrl.appendChild(plus);
+
+      row.appendChild(ctrl);
+      box.appendChild(row);
+    }
+    c.appendChild(box);
+  }
+}
+
+function saveCart() {
+  try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
+}
+
+function chQty(pName, flavor, delta) {
+  if (!cart[pName]) return;
+  var cur = cart[pName][flavor] || 0;
+  var n = cur + delta;
+  if (n <= 0) {
+    delete cart[pName][flavor];
+    if (Object.keys(cart[pName]).length === 0) delete cart[pName];
+  } else {
+    cart[pName][flavor] = n;
+  }
+  saveCart();
+  updateCart();
+}
+
+function setQty(pName, flavor, val) {
+  var n = parseInt(val);
+  if (isNaN(n) || n <= 0) {
+    if (cart[pName]) {
+      delete cart[pName][flavor];
+      if (Object.keys(cart[pName]).length === 0) delete cart[pName];
+    }
+  } else {
+    if (!cart[pName]) cart[pName] = {};
+    cart[pName][flavor] = n;
+  }
+  saveCart();
+  updateCart();
+}
+
+/* ==================== التنقل ==================== */
+function showCart() {
+  updateCart();
+  document.getElementById('catalogView').classList.add('hidden');
+  document.getElementById('cartView').classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+function showCatalog() {
+  document.getElementById('cartView').classList.add('hidden');
+  document.getElementById('catalogView').classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+/* ==================== إرسال الطلب ==================== */
+function sendOrder() {
+  var n = document.getElementById('custName').value.trim();
+  var s = document.getElementById('shopName').value.trim();
+  var a = document.getElementById('custAddr').value.trim();
+  if (!n || !a) { showToast('أدخل الاسم والعنوان'); return; }
+  var names = Object.keys(cart);
+  if (names.length === 0) { showToast('السلة فارغة'); return; }
+
+  var msg = 'السلام عليكم، بدي اطلب طلب\n\nالاسم: ' + n + '\nاسم المحل: ' + (s || 'لا يوجد') + '\nالعنوان: ' + a + '\n\nالمنتجات:\n\n';
+  var total = 0;
+  var idx = 1;
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var details = [];
+    for (var flv in cart[name]) {
+      if (!cart[name].hasOwnProperty(flv)) continue;
+      var qty = cart[name][flv];
+      if (qty > 0) { details.push('(' + flv + ' × ' + qty + ')'); total += qty; }
+    }
+    if (details.length > 0) {
+      msg += idx + '• ' + name + '\n' + details.join('  ') + '\n----------------\n';
+      idx++;
+    }
+  }
+  msg += '\nإجمالي الكميات: ' + total;
+  window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+/* ==================== البحث ==================== */
+function onSearch() {
+  var v = document.getElementById('searchBox').value;
+  var c = document.getElementById('clearBtn');
+  if (v.trim().length > 0) { c.classList.remove('hidden'); c.classList.add('flex'); }
+  else { c.classList.add('hidden'); c.classList.remove('flex'); }
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(filterProducts, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchBox').value = '';
+  document.getElementById('clearBtn').classList.add('hidden');
+  filterProducts();
+}
+
+function norm(t) {
+  if (!t) return '';
+  return t.toLowerCase().replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+}
+
+function filterProducts() {
+  var term = norm(document.getElementById('searchBox').value.trim());
+  var filtered = [];
+  for (var i = 0; i < products.length; i++) {
+    var p = products[i];
+    var mc = currentCat === 'الكل' || p.category === currentCat;
+    var n = norm(p.name);
+    var d = norm(p.description || '');
+    var ms = term === '' || n.indexOf(term) !== -1 || d.indexOf(term) !== -1;
+    if (mc && ms) filtered.push(p);
+  }
+  displayProducts(filtered);
+}
+
+/* ==================== الفئات ==================== */
+function filterCat(cat) {
+  currentCat = cat;
+  var btns = document.querySelectorAll('.catBtn');
+  for (var i = 0; i < btns.length; i++) {
+    if (btns[i].getAttribute('data-cat') === cat) {
+      btns[i].className = 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm';
+    } else {
+      btns[i].className = 'catBtn bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700';
+    }
+  }
+  filterProducts();
+}
+
+function renderCategories() {
+  var c = document.getElementById('categories');
+  while (c.firstChild) c.removeChild(c.firstChild);
+  var cats = ['الكل'];
+  var seen = { 'الكل': 1 };
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].category && !seen[products[i].category]) {
+      seen[products[i].category] = 1;
+      cats.push(products[i].category);
+    }
+  }
+  for (var j = 0; j < cats.length; j++) {
+    var btn = document.createElement('button');
+    btn.className = (j === 0)
+      ? 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm'
+      : 'catBtn bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700';
+    btn.setAttribute('data-cat', cats[j]);
+    btn.innerText = cats[j];
+    btn.onclick = (function(cat) { return function() { filterCat(cat); }; })(cats[j]);
+    c.appendChild(btn);
+  }
+}
+
+/* ==================== صفحة المنتج ==================== */
+function openProduct(pName) {
+  var p = null;
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].name === pName) { p = products[i]; break; }
+  }
+  if (!p) return;
+
+  var avail = p.available !== false;
+  var low = p.lowStock === true && avail;
+  var revs = p.reviews || [];
+  var avg = avgStars(revs);
+
+  var content = document.getElementById('productContent');
+  while (content.firstChild) content.removeChild(content.firstChild);
+
+  var grid = document.createElement('div');
+  grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-5';
+
+  // الصورة
+  var imgWrap = document.createElement('div');
+  var imgBox = document.createElement('div');
+  imgBox.className = 'w-full aspect-square bg-[#0f172a] rounded-2xl overflow-hidden relative';
+  var img = document.createElement('img');
+  img.src = p._proxyImg || imgUrl(p.image);
+  img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
+  img.onerror = function() { imgErr(this); };
+  imgBox.appendChild(img);
+  imgWrap.appendChild(imgBox);
+
+  // المعلومات
+  var info = document.createElement('div');
+
+  var catEl = document.createElement('span');
+  catEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-3';
+  catEl.innerText = p.category || '';
+  info.appendChild(catEl);
+
+  var h2 = document.createElement('h2');
+  h2.className = 'text-2xl font-black text-white mb-3';
+  h2.innerText = p.name;
+  info.appendChild(h2);
+
+  if (parseFloat(avg) > 0) {
+    var starsDiv = document.createElement('div');
+    starsDiv.className = 'flex items-center gap-2 mb-3';
+    starsDiv.innerHTML = '<span class="text-amber-400">' + stars(Math.round(parseFloat(avg))) + '</span><span class="text-amber-400 font-black">' + avg + '</span><span class="text-slate-500 text-xs">(' + revs.length + ')</span>';
+    info.appendChild(starsDiv);
+  }
+
+  var priceBox = document.createElement('div');
+  priceBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-4 mb-4';
+  priceBox.innerHTML = '<p class="text-slate-400 text-xs mb-1">السعر</p><p class="text-2xl font-black text-amber-400">' + esc(p.price || 'حسب الطلب') + '</p>';
+  if (p.hasOffer && p.oldPrice) {
+    var offerP = document.createElement('p');
+    offerP.className = 'text-xs mt-2';
+    offerP.innerHTML = '<span class="line-through text-rose-400">' + esc(p.oldPrice) + '</span> <span class="text-amber-400 font-black">← ' + esc(p.price || '') + '</span>';
+    priceBox.appendChild(offerP);
+  }
+  info.appendChild(priceBox);
+
+  if (p.description) {
+    var descBox = document.createElement('div');
+    descBox.className = 'mb-4';
+    descBox.innerHTML = '<p class="text-white font-black text-sm mb-2">الوصف:</p>';
+    var descP = document.createElement('p');
+    descP.className = 'text-slate-300 text-sm leading-relaxed';
+    descP.innerText = p.description;
+    descBox.appendChild(descP);
+    info.appendChild(descBox);
+  }
+
+  var detailsBox = document.createElement('div');
+  detailsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm';
+  detailsBox.innerHTML = '<p class="text-white font-black text-sm mb-2">تفاصيل المنتج:</p>';
+  detailsBox.appendChild(detailRow('الفئة', p.category || ''));
+  if (p.company) detailsBox.appendChild(detailRow('الشركة', p.company));
+  if (p.packageInfo) detailsBox.appendChild(detailRow('عدد الطرد', p.packageInfo));
+  detailsBox.appendChild(detailRow('التوفر', !avail ? 'غير متوفر' : (low ? 'كمية محدودة' : 'متوفر')));
+  info.appendChild(detailsBox);
+
+  grid.appendChild(imgWrap);
+  grid.appendChild(info);
+  content.appendChild(grid);
+
+  // قسم النكهات
+  if (avail) {
+    var flsBox = document.createElement('div');
+    flsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4';
+    flsBox.innerHTML = '<p class="text-white font-black text-sm mb-3">اختر الكمية والنكهات:</p>';
+
+    var flsList = (p.flavors && p.flavors.length > 0) ? p.flavors : ['عادي'];
+    var listDiv = document.createElement('div');
+    listDiv.className = 'space-y-2 max-h-48 overflow-y-auto';
+
+    for (var f = 0; f < flsList.length; f++) {
+      var flv = flsList[f];
+      var cur = (selections[p.name] && selections[p.name][flv]) || 0;
+      var row = document.createElement('div');
+      row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80';
+
+      var flvName = document.createElement('span');
+      flvName.className = 'text-sm text-amber-300 font-bold';
+      flvName.innerText = flv;
+      row.appendChild(flvName);
+
+      var ctrl = document.createElement('div');
+      ctrl.className = 'flex items-center gap-2';
+
+      var minus = document.createElement('button');
+      minus.type = 'button';
+      minus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+      minus.innerText = '-';
+      minus.onclick = (function(pid, idx, fl) { return function() { prodSel(pid, idx, fl, -1); }; })(p._pid, f, flv);
+      ctrl.appendChild(minus);
+
+      var span = document.createElement('span');
+      span.id = 'pSel-' + f;
+      span.className = 'w-10 text-center font-bold text-amber-400';
+      span.innerText = cur;
+      ctrl.appendChild(span);
+
+      var plus = document.createElement('button');
+      plus.type = 'button';
+      plus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+      plus.innerText = '+';
+      plus.onclick = (function(pid, idx, fl) { return function() { prodSel(pid, idx, fl, 1); }; })(p._pid, f, flv);
+      ctrl.appendChild(plus);
+
+      row.appendChild(ctrl);
+      listDiv.appendChild(row);
+    }
+    flsBox.appendChild(listDiv);
+    content.appendChild(flsBox);
+  }
+
+  // التقييمات
+  if (revs.length > 0) {
+    var revBox = document.createElement('div');
+    revBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4';
+    revBox.innerHTML = '<p class="text-white font-black text-sm mb-3">التقييمات (' + revs.length + '):</p>';
+    var revList = document.createElement('div');
+    revList.className = 'space-y-2 max-h-40 overflow-y-auto';
+    var startIdx = Math.max(0, revs.length - 5);
+    for (var r = revs.length - 1; r >= startIdx; r--) {
+      var rev = revs[r];
+      var revItem = document.createElement('div');
+      revItem.className = 'bg-slate-900 rounded-xl p-3 border border-slate-800';
+      revItem.innerHTML = '<div class="flex items-center gap-2 mb-1"><span class="text-amber-400 text-xs font-bold">' + stars(rev.stars || 0) + '</span><span class="text-white text-xs font-bold">' + esc(rev.name || 'عميل') + '</span></div>' + (rev.comment ? '<p class="text-slate-300 text-xs">' + esc(rev.comment) + '</p>' : '');
+      revList.appendChild(revItem);
+    }
+    revBox.appendChild(revList);
+    content.appendChild(revBox);
+  }
+
+  // الأزرار
+  var btnsBox = document.createElement('div');
+  btnsBox.className = 'mt-5 flex flex-col sm:flex-row gap-3';
+
+  if (avail) {
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'flex-grow bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black py-4 rounded-2xl text-lg';
+    addBtn.innerText = 'إضافة إلى السلة';
+    addBtn.onclick = (function(name) { return function() { addToCart(name); closeProduct(); }; })(p.name);
+    btnsBox.appendChild(addBtn);
+  } else {
+    var noBtn = document.createElement('button');
+    noBtn.disabled = true;
+    noBtn.className = 'flex-grow bg-slate-800 text-slate-500 font-black py-4 rounded-2xl text-lg';
+    noBtn.innerText = 'غير متوفر';
+    btnsBox.appendChild(noBtn);
+  }
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'bg-slate-800 text-slate-300 font-bold px-6 py-4 rounded-2xl';
+  closeBtn.innerText = 'رجوع';
+  closeBtn.onclick = closeProduct;
+  btnsBox.appendChild(closeBtn);
+
+  content.appendChild(btnsBox);
+  document.getElementById('productModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function detailRow(label, value) {
+  var d = document.createElement('div');
+  d.className = 'flex justify-between py-1.5 border-b border-slate-800';
+  d.innerHTML = '<span class="text-slate-400">' + esc(label) + ':</span><span class="text-white font-bold">' + esc(value) + '</span>';
+  return d;
+}
+
+function prodSel(pid, fIdx, flavor, delta) {
+  var p = products[pid];
+  if (!p) return;
+  if (!selections[p.name]) selections[p.name] = {};
+  var cur = selections[p.name][flavor] || 0;
+  var next = Math.max(0, cur + delta);
+  if (next === 0) {
+    delete selections[p.name][flavor];
+    if (Object.keys(selections[p.name]).length === 0) delete selections[p.name];
+  } else {
+    selections[p.name][flavor] = next;
+  }
+  var el = document.getElementById('pSel-' + fIdx);
+  if (el) el.innerText = next;
+  var mainEl = document.getElementById('sel-' + pid + '-' + fIdx);
+  if (mainEl) mainEl.innerText = next;
+}
+
+function closeProduct() {
+  document.getElementById('productModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ==================== التقييمات ==================== */
+function openReviews(pName) {
+  var p = null;
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].name === pName) { p = products[i]; break; }
+  }
+  if (!p) return;
+  curRevProduct = p;
+  document.getElementById('revTitle').innerText = p.name;
+
+  var revs = p.reviews || [];
+  var list = document.getElementById('revList');
+  while (list.firstChild) list.removeChild(list.firstChild);
+
+  if (revs.length === 0) {
+    var empty = document.createElement('p');
+    empty.className = 'text-center text-slate-500 text-sm py-6';
+    empty.innerText = 'لا توجد تقييمات بعد';
+    list.appendChild(empty);
+  } else {
+    for (var r = revs.length - 1; r >= 0; r--) {
+      var rev = revs[r];
+      var item = document.createElement('div');
+      item.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-3';
+      item.innerHTML = '<div class="flex items-center gap-2 mb-1.5"><span class="text-amber-400 text-sm font-bold">' + stars(rev.stars || 0) + '</span><span class="text-white text-xs font-bold">' + esc(rev.name || 'عميل') + '</span></div>' + (rev.comment ? '<p class="text-slate-300 text-xs">' + esc(rev.comment) + '</p>' : '');
+      list.appendChild(item);
+    }
+  }
+
+  document.getElementById('reviewsModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReviews() {
+  document.getElementById('reviewsModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function openAddReview() {
+  if (!curRevProduct) return;
+  document.getElementById('addRevTitle').innerText = curRevProduct.name;
+  document.getElementById('revName').value = '';
+  document.getElementById('revComment').value = '';
+  curRevStars = 0;
+  updateStarRow(0);
+  document.getElementById('addReviewModal').classList.remove('hidden');
+}
+
+function closeAddReview() {
+  document.getElementById('addReviewModal').classList.add('hidden');
+}
+
+function setStar(n) {
+  curRevStars = n;
+  updateStarRow(n);
+}
+
+function updateStarRow(n) {
+  var btns = document.querySelectorAll('.starBtn');
+  for (var i = 0; i < btns.length; i++) {
+    var s = Number(btns[i].getAttribute('data-s'));
+    if (s <= n) btns[i].classList.add('star-on');
+    else btns[i].classList.remove('star-on');
+  }
+}
+
+function submitReview() {
+  if (curRevStars === 0) { alert('اختر عدد النجوم'); return; }
+  var pName = curRevProduct.name;
+  var name = document.getElementById('revName').value.trim() || 'عميل';
+  var comment = document.getElementById('revComment').value.trim();
+  var s = '';
+  for (var i = 0; i < curRevStars; i++) s += '⭐';
+  var msg = 'تقييم جديد\n\nالمنتج: ' + pName + '\nالتقييم: ' + s + ' (' + curRevStars + '/5)\nالاسم: ' + name;
+  if (comment) msg += '\nالتعليق: ' + comment;
+  msg += '\n\nمن موقع مركز عاشور';
+  window.open('https://wa.me/' + inquiryWa + '?text=' + encodeURIComponent(msg), '_blank');
+  closeAddReview();
+  closeReviews();
+}
+
+/* ==================== تقييم الموقع ==================== */
+function setStoreStar(n) {
+  storeStars = n;
+  var btns = document.querySelectorAll('.storeStar');
+  for (var i = 0; i < btns.length; i++) {
+    var s = Number(btns[i].getAttribute('data-s'));
+    if (s <= n) btns[i].classList.add('star-on');
+    else btns[i].classList.remove('star-on');
+  }
+  var msg = document.getElementById('storeMsg');
+  var msgs = { 1: 'نأسف', 2: 'نريد أن نتحسن', 3: 'شكرًا', 4: 'شكرًا لك', 5: 'رائع جدًا' };
+  msg.innerText = msgs[n] || '';
+  msg.className = 'text-amber-400 text-sm font-bold mb-5';
+}
+
+function submitStoreReview() {
+  if (storeStars === 0) {
+    var msg = document.getElementById('storeMsg');
+    msg.innerText = 'اختر عدد النجوم أولًا';
+    msg.className = 'text-rose-400 text-sm font-bold mb-5';
+    return;
+  }
+  var s = '';
+  for (var i = 0; i < storeStars; i++) s += '⭐';
+  var txt = 'تقييم المتجر\n\nالتقييم: ' + s + ' (' + storeStars + '/5)\nالعنوان: https://yasir-ashour.github.io/Ashour/\n\nمن زائر الموقع';
+  window.open('https://wa.me/' + inquiryWa + '?text=' + encodeURIComponent(txt), '_blank');
+  storeStars = 0;
+  var btns = document.querySelectorAll('.storeStar');
+  for (var j = 0; j < btns.length; j++) btns[j].classList.remove('star-on');
+  var m = document.getElementById('storeMsg');
+  m.innerText = 'شكرًا لتقييمك!';
+  m.className = 'text-emerald-400 text-sm font-bold mb-5';
+}
+
+/* ==================== الصور ==================== */
+function imgErr(el) {
+  var orig = el.getAttribute('data-orig');
+  if (orig && !el.getAttribute('data-tried')) {
+    el.setAttribute('data-tried', '1');
+    el.src = orig;
+    return;
+  }
+  if (el.parentElement) {
+    el.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-slate-800 p-4"><i class="fas fa-box-open text-3xl text-amber-400"></i></div>';
+  }
+}
+
+/* ==================== تحميل البيانات ==================== */
+function loadData() {
+  return new Promise(function(resolve) {
+    var s = document.createElement('script');
+    s.src = 'catalog-data.js?v=' + Date.now();
+    s.onload = function() {
+      try {
+        if (window.catalogData && window.catalogData.products) {
+          products = window.catalogData.products;
+          if (window.catalogData.settings) {
+            if (window.catalogData.settings.orderWhatsApp) orderWa = window.catalogData.settings.orderWhatsApp;
+            if (window.catalogData.settings.inquiryWhatsApp) inquiryWa = window.catalogData.settings.inquiryWhatsApp;
+            applyWa();
+          }
+        }
+      } catch(e) { console.warn(e); }
+      resolve();
+    };
+    s.onerror = function() { console.warn('fail'); resolve(); };
+    document.head.appendChild(s);
+  });
+}
+
+/* ==================== الإقلاع ==================== */
+function boot() {
+  loadData().then(function() {
+    if (!Array.isArray(products)) products = [];
+    for (var i = 0; i < products.length; i++) {
+      products[i]._pid = i;
+      try {
+        if (products[i].image && products[i].image.indexOf('data:') === 0) {
+          products[i]._proxyImg = toBlob(products[i].image);
+        } else {
+          products[i]._proxyImg = imgUrl(products[i].image);
+        }
+      } catch(e) { products[i]._proxyImg = ''; }
+    }
+
+    loadCust();
+    updateCart();
+    renderCategories();
+    renderSpecial();
+    displayProducts(products);
+
+    setTimeout(function() {
+      var b = document.getElementById('preBar');
+      if (b) b.style.width = '100%';
+    }, 100);
+  }).catch(function(e) {
+    console.error(e);
+  }).then(function() {
+    setTimeout(hidePre, 300);
+  });
+}
+
+/* ==================== عرض العروض والجديد ==================== */
+function renderSpecial() {
+  var offers = [];
+  var news = [];
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].hasOffer && products[i].available !== false) offers.push(products[i]);
+    if (products[i].isNew && products[i].available !== false) news.push(products[i]);
+  }
+
+  if (offers.length > 0) {
+    document.getElementById('offersBox').classList.remove('hidden');
+    document.getElementById('offersCount').innerText = offers.length;
+    var og = document.getElementById('offersGrid');
+    while (og.firstChild) og.removeChild(og.firstChild);
+    for (var j = 0; j < offers.length; j++) og.appendChild(buildMiniCard(offers[j], 'offer'));
+  }
+
+  if (news.length > 0) {
+    document.getElementById('newBox').classList.remove('hidden');
+    document.getElementById('newCount').innerText = news.length;
+    var ng = document.getElementById('newGrid');
+    while (ng.firstChild) ng.removeChild(ng.firstChild);
+    for (var k = 0; k < news.length; k++) ng.appendChild(buildMiniCard(news[k], 'new'));
+  }
+}
+
+function buildMiniCard(p, type) {
+  var card = document.createElement('div');
+  card.className = 'flex-shrink-0 w-40 bg-slate-950/60 border border-slate-700/80 rounded-2xl overflow-hidden cursor-pointer';
+  card.onclick = (function(name) { return function() { scrollToProduct(name); }; })(p.name);
+
+  var imgBox = document.createElement('div');
+  imgBox.className = 'aspect-square bg-[#0f172a] relative';
+  var img = document.createElement('img');
+  img.src = p._proxyImg || imgUrl(p.image);
+  img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
+  img.onerror = function() { imgErr(this); };
+  imgBox.appendChild(img);
+
+  if (type === 'offer') {
+    var b = document.createElement('span');
+    b.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] px-2 py-0.5 rounded-full';
+    b.innerText = 'عرض';
+    imgBox.appendChild(b);
+  } else if (type === 'new') {
+    var b2 = document.createElement('span');
+    b2.className = 'absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full';
+    b2.innerText = 'جديد';
+    imgBox.appendChild(b2);
+  }
+
+  card.appendChild(imgBox);
+
+  var info = document.createElement('div');
+  info.className = 'p-2';
+  var h4 = document.createElement('h4');
+  h4.className = 'text-white font-black text-xs mb-1';
+  h4.style.cssText = 'display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden';
+  h4.innerText = p.name;
+  info.appendChild(h4);
+
+  if (type === 'offer' && p.oldPrice) {
+    var priceDiv = document.createElement('div');
+    priceDiv.innerHTML = '<span class="text-rose-400 text-[10px] line-through block">' + esc(p.oldPrice) + '</span><span class="text-amber-400 text-xs font-black">' + esc(p.price || '') + '</span>';
+    info.appendChild(priceDiv);
+  } else {
+    var pEl = document.createElement('p');
+    pEl.className = 'text-amber-400 text-xs font-bold';
+    pEl.innerText = p.price || 'حسب الطلب';
+    info.appendChild(pEl);
+  }
+
+  card.appendChild(info);
+  return card;
+}
+
+function scrollToProduct(name) {
+  var cards = document.querySelectorAll('[data-name]');
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].getAttribute('data-name') === name) {
+      cards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      cards[i].style.border = '2px solid #d4af37';
+      (function(c) { setTimeout(function() { c.style.border = ''; }, 2500); })(cards[i]);
+      return;
+    }
+  }
+}
+
+/* ==================== التشغيل ==================== */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+window.addEventListener('load', function() { setTimeout(hidePre, 400); });
+setTimeout(hidePre, 3500);
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    try { closeProduct(); } catch(e) {}
+    try { closeReviews(); } catch(e) {}
+    try { closeAddReview(); } catch(e) {}
+  }
+});
 </script>
-
 </body>
 </html>
