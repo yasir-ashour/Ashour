@@ -10,6 +10,18 @@
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <link rel="manifest" href="manifest.json">
+
+<!-- OneSignal Push Notifications -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "bbd1717d-8f66-4ad0-a61e-efd27c2e7284",
+    });
+  });
+</script>
+
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -74,12 +86,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 @keyframes modalPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .star-active { color: #d4af37; }
 .star-empty { color: #475569; }
-/* شريط تمرير أفقي أنيق */
 .horizontal-scroll::-webkit-scrollbar { height: 6px; }
 .horizontal-scroll::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 10px; }
 .horizontal-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.5); border-radius: 10px; }
-.horizontal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.8); }
-/* تأثير نبض للعروض */
 @keyframes offerPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
   50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
@@ -674,9 +683,8 @@ function submitReview() {
 
   closeReviewForm();
   closeReviewsModal();
-}/* ==================== دالة مساعدة: بناء بطاقة منتج مختصرة (للأقسام) ==================== */
+}/* ==================== دالة مساعدة: بطاقة مصغرة (للأقسام) ==================== */
 function buildMiniCard(product, badgeType) {
-  const pid = product._pid;
   const finalImageUrl = product._proxiedImage || prepareImage(product.image);
   const originalImageUrl = product.image || '';
   const rotateClass = product.rotateClass || '';
@@ -727,7 +735,6 @@ function renderOffersAndNew() {
   const offersProducts = products.filter(p => p.hasOffer && p.available !== false);
   const newProducts = products.filter(p => p.isNew && p.available !== false);
 
-  // العروض
   if (offersProducts.length > 0) {
     offersSection.classList.remove('hidden');
     offersCount.innerText = offersProducts.length + (offersProducts.length === 1 ? ' عرض' : ' عروض');
@@ -736,7 +743,6 @@ function renderOffersAndNew() {
     offersSection.classList.add('hidden');
   }
 
-  // الجديد
   if (newProducts.length > 0) {
     newSection.classList.remove('hidden');
     newCount.innerText = newProducts.length + (newProducts.length === 1 ? ' منتج' : ' منتجات');
@@ -748,11 +754,9 @@ function renderOffersAndNew() {
 
 /* ==================== التمرير إلى منتج معين ==================== */
 function scrollToProduct(productName) {
-  // البحث في الشبكة الرئيسية
   const allProducts = document.querySelectorAll('.product-card');
   for (const card of allProducts) {
-    const h3 = card.querySelector('h3');
-    if (h3 && h3.textContent.trim() === productName) {
+    if (card.dataset.productName === productName) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       card.style.border = '2px solid #d4af37';
       card.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.6)';
@@ -763,7 +767,6 @@ function scrollToProduct(productName) {
       return;
     }
   }
-  // إذا لم يكن معروضًا، ابحث عنه وأظهره
   const product = products.find(p => p.name === productName);
   if (product) {
     currentCategory = 'الكل';
@@ -800,7 +803,6 @@ function displayProducts(items) {
     const rotateClass = product.rotateClass || '';
     const reviews = product.reviews || [];
     const avgStars = getAverageStars(reviews);
-    const starsFull = Math.round(avgStars);
 
     let statusBadge = '', statusText = '';
     if (!isAvail) {
@@ -814,7 +816,6 @@ function displayProducts(items) {
       statusText  = `<span class="text-emerald-400 font-extrabold text-[10px] sm:text-xs bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-md">متوفر</span>`;
     }
 
-    // بادج التقييمات
     let reviewsBadgeHtml = '';
     if (reviews.length > 0) {
       reviewsBadgeHtml = `
@@ -858,7 +859,6 @@ function displayProducts(items) {
       selectorsHtml = `<button disabled class="w-full bg-slate-700 text-slate-400 font-bold py-2 px-2 rounded-xl text-xs sm:text-sm opacity-60">نفد</button>`;
     }
 
-    // بادج عرض/جديد على البطاقة الرئيسية
     const topLeftBadges = [];
     if (product.hasOffer) topLeftBadges.push(`<span class="bg-rose-600 text-white text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black"><i class="fas fa-fire"></i> عرض</span>`);
     if (product.isNew) topLeftBadges.push(`<span class="bg-emerald-500 text-slate-950 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black"><i class="fas fa-sparkles"></i> جديد</span>`);
