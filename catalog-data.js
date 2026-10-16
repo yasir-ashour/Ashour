@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ١٦‏/١٠‏/٢٠٢٦، ٤:٤٨:٢٠ ص
+   آخر تحديث: ١٦‏/١٠‏/٢٠٢٦، ٥:٢٨:٠١ ص
    ================================ */
 
 window.catalogData = {
@@ -275,16 +275,6 @@ window.catalogData.products.push({
   "available": true,
   "image": "https://i.ibb.co/dzWDKvZ/1791299825266.jpg",
   "description": "بسكويت جنتي هم هم الهش والمحبوب"
-});
-
-window.catalogData.products.push({
-  "name": "سلسيتو بسكويت مالح مع الزعتر",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/ycYcHL8Z/1791302658954.jpg",
-  "description": "بسكويت سلسيتو المالح مع طعم الزعتر الشهي",
-  "available": true,
-  "lowStock": true
 });
 
 window.catalogData.products.push({
@@ -835,9 +825,10 @@ window.catalogData.products.push({
   "name": "بسكوت البشير مي تو",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://i.ibb.co/8DHXshfb/17903736200207503086660731698315.jpg",
-  "description": "بسكويت مي تو المقرمش بحشوة الكريمة"
+  "description": "بسكويت مي تو المقرمش بحشوة الكريمة",
+  "available": true,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
@@ -1218,15 +1209,6 @@ window.catalogData.products.push({
     "توت",
     "فريز"
   ]
-});
-
-window.catalogData.products.push({
-  "name": "موفيندو كيك",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "available": false,
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/C2LntUpB.jpg",
-  "description": "كيك موفيندو الطري الرائع للوجبات الخفيفة"
 });
 
 window.catalogData.products.push({
@@ -1623,13 +1605,14 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "شريطة جيجي مكس",
+  "name": "شريطة نص متر",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/6u3RFf7y.jpg",
-  "rotateClass": "rot-90",
-  "description": "شريطة جيلي مشكلة بنكهات منعشة"
+  "description": "شريطة جيلي مشكلة بنكهات منعشة",
+  "available": true,
+  "lowStock": false,
+  "rotateClass": "rot-90"
 });
 
 window.catalogData.products.push({
@@ -1778,9 +1761,10 @@ window.catalogData.products.push({
   "name": "سيارة وعلكة",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "available": false,
   "image": "https://i.ibb.co/3yWHJqks/IMG-20260926-164547.jpg",
-  "description": "لعبة سيارة ممتعة مع علكة طيبة ومحبوبة للأطفال"
+  "description": "لعبة سيارة ممتعة مع علكة طيبة ومحبوبة للأطفال",
+  "available": false,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
@@ -1805,9 +1789,10 @@ window.catalogData.products.push({
   "name": "ببرونه جيلي",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://i.ibb.co/MkWcx0q4/IMG-20260930-145130.jpg",
-  "description": "حلوى جيلي مسلية على شكل ببرونة بطعم الفواكه الشهية"
+  "description": "حلوى جيلي مسلية على شكل ببرونة بطعم الفواكه الشهية",
+  "available": false,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
