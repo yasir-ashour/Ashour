@@ -18,7 +18,30 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .star-on { background: #d4af37 !important; color: #0b0f19 !important; }
 </style>
 </head>
-<body class="min-h-screen pb-20 sm:pb-0">
+<body class="min-h-screen pb-20 sm:pb-0"><div id="dbg" style="position:fixed;top:0;left:0;right:0;background:#dc2626;color:white;padding:10px;z-index:999999;font-size:13px;text-align:center;direction:ltr;font-weight:bold;">Loading...</div>
+<script>
+(function(){
+  var d = document.getElementById('dbg');
+  setTimeout(function() {
+    try {
+      var s = document.createElement('script');
+      s.src = 'catalog-data.js?t=' + Date.now();
+      s.onload = function() {
+        var msg = 'catalogData: ' + typeof window.catalogData;
+        if (window.catalogData) {
+          if (window.catalogData.products) {
+            msg += ' | products: ' + window.catalogData.products.length;
+            d.style.background = '#10b981';
+          } else { msg += ' | products: MISSING'; }
+        } else { msg += ' | catalogData UNDEFINED'; }
+        d.textContent = msg;
+      };
+      s.onerror = function() { d.textContent = 'ERROR: catalog-data.js FAILED'; };
+      document.head.appendChild(s);
+    } catch(e) { d.textContent = 'CATCH: ' + e.message; }
+  }, 100);
+})();
+</script>
 
 <div id="preloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center">
   <div class="w-72 h-72 sm:w-96 sm:h-96 mb-2 flex items-center justify-center glow">
