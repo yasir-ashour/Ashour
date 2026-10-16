@@ -18,6 +18,22 @@
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "bbd1717d-8f66-4ad0-a61e-efd27c2e7284",
+      allowLocalhostAsSecureOrigin: true,
+      notifyButton: { enable: false },
+      promptOptions: {
+        slidedown: {
+          prompts: [{
+            type: "push",
+            autoPrompt: true,
+            text: {
+              actionMessage: "احصل على أحدث العروض والمنتجات الجديدة من مركز عاشور",
+              acceptButton: "السماح",
+              cancelButton: "لاحقًا"
+            },
+            delay: { pageViews: 1, timeDelay: 3 }
+          }]
+        }
+      }
     });
   });
 </script>
@@ -94,6 +110,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
 }
 .offer-pulse { animation: offerPulse 2s ease-in-out infinite; }
+@keyframes notifPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); }
+}
+.notif-pulse { animation: notifPulse 2s ease-in-out infinite; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
@@ -198,7 +219,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <section id="offersSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
     <div class="bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      
+
       <div class="flex items-center justify-between mb-4 relative z-10">
         <div class="flex items-center gap-2">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center flex-shrink-0 offer-pulse">
@@ -220,7 +241,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <section id="newSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
     <div class="bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
       <div class="absolute top-0 left-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      
+
       <div class="flex items-center justify-between mb-4 relative z-10">
         <div class="flex items-center gap-2">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0">
@@ -323,6 +344,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <span id="floatCartBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
   </button>
 </div>
+
+<!-- زر تفعيل الإشعارات (يظهر إذا لم يكن المستخدم مشتركًا) -->
+<button id="enableNotificationsBtn" onclick="enableNotifications()" 
+  class="hidden fixed bottom-20 sm:bottom-24 left-4 z-40 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-4 py-3 rounded-full shadow-2xl border-2 border-amber-300 flex items-center gap-2 transition notif-pulse">
+  <i class="fas fa-bell text-xl"></i>
+  <span class="text-sm">فعّل الإشعارات</span>
+</button>
 
 <!-- نافذة عرض التقييمات -->
 <div id="reviewsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
@@ -490,6 +518,41 @@ function applyWhatsAppButtons() {
 }
 applyWhatsAppButtons();
 
+/* ==================== الإشعارات ==================== */
+function enableNotifications() {
+  if (window.OneSignal && window.OneSignal.Notifications) {
+    window.OneSignal.Notifications.requestPermission().then((granted) => {
+      if (granted) {
+        alert('✅ تم تفعيل الإشعارات بنجاح!\nستصلك أحدث العروض والمنتجات.');
+        const btn = document.getElementById('enableNotificationsBtn');
+        if (btn) btn.style.display = 'none';
+      } else {
+        alert('⚠️ لم يتم تفعيل الإشعارات. يمكنك المحاولة لاحقًا.');
+      }
+    }).catch(err => {
+      console.warn('OneSignal permission error:', err);
+      alert('حدث خطأ. حاول مرة أخرى.');
+    });
+  } else {
+    alert('⚠️ النظام لم يُحمَّل بعد. حاول مرة أخرى بعد ثوانٍ.');
+  }
+}
+
+// إظهار زر الإشعارات إذا لم يكن المستخدم مشتركًا
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (window.OneSignal && window.OneSignal.Notifications) {
+      const btn = document.getElementById('enableNotificationsBtn');
+      const permission = window.OneSignal.Notifications.permission;
+      
+      if (permission !== true && btn) {
+        btn.classList.remove('hidden');
+        btn.classList.add('flex');
+      }
+    }
+  }, 4000);
+});
+
 /* ==================== Preloader ==================== */
 let _preloaderHidden = false;
 function hidePreloader() {
@@ -563,7 +626,7 @@ function showImgPlaceholder(el, name) {
   c.appendChild(placeholder);
 }
 
-/* ==================== إشعارات ==================== */
+/* ==================== إشعارات الموقع ==================== */
 function showAlert() {
   const a = document.getElementById('alertNotification');
   a.classList.remove('hidden'); a.classList.add('flex');
@@ -683,7 +746,8 @@ function submitReview() {
 
   closeReviewForm();
   closeReviewsModal();
-}/* ==================== دالة مساعدة: بطاقة مصغرة (للأقسام) ==================== */
+}
+</script>/* ==================== دالة مساعدة: بطاقة مصغرة ==================== */
 function buildMiniCard(product, badgeType) {
   const finalImageUrl = product._proxiedImage || prepareImage(product.image);
   const originalImageUrl = product.image || '';
@@ -752,7 +816,7 @@ function renderOffersAndNew() {
   }
 }
 
-/* ==================== التمرير إلى منتج معين ==================== */
+/* ==================== التمرير إلى منتج ==================== */
 function scrollToProduct(productName) {
   const allProducts = document.querySelectorAll('.product-card');
   for (const card of allProducts) {
