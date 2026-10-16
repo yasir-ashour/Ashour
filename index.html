@@ -6,6 +6,8 @@
 <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
 <meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق.">
 <meta name="theme-color" content="#d4af37">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -30,16 +32,23 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .rot-90 { transform: rotate(90deg); scale: 1.2; }
 .rot-180 { transform: rotate(180deg); }
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
+.product-img { opacity: 1; }
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5)); }
+  50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.9)); }
+}
+.logo-glow { animation: logoGlow 2.5s ease-in-out infinite; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
 <!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
-  <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-amber-400/80 mb-6 bg-slate-900 flex items-center justify-center animate-pulse">
-    <img id="loaderLogoImg" class="w-full h-full object-cover" alt="Logo">
+  <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-2 border-amber-400/60 mb-6 bg-slate-900/50 flex items-center justify-center p-3 logo-glow">
+    <img id="loaderLogoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
   </div>
-  <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-8">مركز عاشور للتجارة</h1>
+  <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-2">مركز عاشور للتجارة</h1>
+  <p class="text-xs text-slate-400 mb-8">عالم من الأذواق الرفيعة</p>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3">
     <div id="preloaderBar" class="bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 h-full rounded-full w-0"></div>
   </div>
@@ -74,13 +83,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
-<div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
+<div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
 <div class="flex items-center gap-3">
-<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-400/60 bg-slate-800 flex items-center justify-center flex-shrink-0">
-<img id="logoImg" class="w-full h-full object-cover" alt="Logo">
+<div class="w-16 h-16 rounded-xl overflow-hidden border-2 border-amber-400/50 bg-slate-900/50 flex items-center justify-center flex-shrink-0 p-1">
+<img id="logoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
 </div>
 <div>
-<h1 class="text-xl sm:text-2xl font-black gold-gradient-text">مركز عاشور للتجارة</h1>
+<h1 class="text-lg sm:text-2xl font-black gold-gradient-text leading-tight">مركز عاشور للتجارة</h1>
 <p class="text-xs text-slate-400 hidden sm:block">أجود أنواع الشيبس، البسكويت، العصائر، والعلكة</p>
 </div>
 </div>
@@ -100,6 +109,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <div id="catalogMainView" class="w-full flex flex-col flex-grow">
   <section class="relative py-10 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
+  
+  <!-- الشعار الكبير في القسم الرئيسي -->
+  <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-amber-400/50 bg-slate-900/40 flex items-center justify-center mx-auto mb-6 p-3 logo-glow">
+    <img src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
+  </div>
+  
   <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-4">كتالوج منتجات مركز عاشور</span>
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 text-white leading-tight">أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span></h2>
   <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة.</p>
@@ -141,9 +156,14 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <div id="cartPageView" class="hidden max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-800 flex-wrap gap-4">
-      <div>
-        <h2 class="text-2xl font-black gold-gradient-text flex items-center gap-3"><i class="fas fa-shopping-cart text-amber-400"></i> صفحة إنشاء الطلب</h2>
-        <p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل لإرسال الطلب عبر الواتساب.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl overflow-hidden border border-amber-400/40 bg-slate-900/50 flex items-center justify-center p-1 flex-shrink-0">
+          <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black gold-gradient-text">صفحة إنشاء الطلب</h2>
+          <p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل.</p>
+        </div>
       </div>
       <button data-action="back-to-catalog" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
         <i class="fas fa-arrow-right"></i> متابعة التسوق
@@ -206,6 +226,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <!-- التذييل -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-12">
 <div class="max-w-4xl mx-auto space-y-3">
+  <div class="w-20 h-20 rounded-xl overflow-hidden border border-amber-400/40 bg-slate-950/60 flex items-center justify-center mx-auto p-1.5">
+    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+  </div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
   <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
   <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold">
@@ -232,35 +255,40 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/* ============ نظام الصور متعدد المستويات ============ */
-// المستوى 1: weserv (سريع)
+/* ==================== تحويل base64 إلى Blob URL ==================== */
+function base64ToBlobUrl(base64) {
+  try {
+    const parts = base64.split(',');
+    if (parts.length !== 2) return base64;
+    const mimeMatch = parts[0].match(/:(.*?);/);
+    if (!mimeMatch) return base64;
+    const mime = mimeMatch[1];
+    const bstr = atob(parts[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
+    const blob = new Blob([u8arr], { type: mime });
+    return URL.createObjectURL(blob);
+  } catch (e) {
+    console.warn('فشل تحويل base64 إلى Blob:', e);
+    return base64;
+  }
+}
+
+/* ==================== تجهيز رابط الصورة ==================== */
+function prepareImage(img) {
+  if (!img) return '';
+  if (img.startsWith('data:')) {
+    return base64ToBlobUrl(img);
+  }
+  return `https://images.weserv.nl/?url=${encodeURIComponent(img)}&w=800&q=90&output=webp`;
+}
+
 function getProxyUrl(url) {
   if (!url) return '';
-  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=800&q=90&output=webp`;
+  if (url.startsWith('data:')) return base64ToBlobUrl(url);
+  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&q=90&output=webp`;
 }
-
-// المستوى 2: wsrv (نسخة بديلة)
-function getWsrvUrl(url) {
-  if (!url) return '';
-  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=800&q=90`;
-}
-
-// المستوى 3: allorigins (بروكسي)
-function getAllOriginsUrl(url) {
-  if (!url) return '';
-  return `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-}
-
-// المستوى 4: codetabs (بروكسي بديل)
-function getCodeTabsUrl(url) {
-  if (!url) return '';
-  return `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
-}
-
-/* ==================== الشعار ==================== */
-const logoUrl = "https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg";
-document.getElementById('logoImg').src = getProxyUrl(logoUrl);
-document.getElementById('loaderLogoImg').src = getProxyUrl(logoUrl);
 
 /* ==================== الواتساب ==================== */
 function applyWhatsAppButtons() {
@@ -298,40 +326,40 @@ function loadCustomerData() {
   if (a) document.getElementById('custAddress').value = a;
 }
 
-/* ==================== دوال الصور ==================== */
+/* ==================== دوال الصور عند الفشل ==================== */
 function hideLoader(el) {
   const c = el.closest('.relative');
   if (c) { const l = c.querySelector('.loader-wrapper'); if (l) l.style.display = 'none'; }
-  el.classList.remove('opacity-0');
-  el.classList.add('opacity-100');
 }
 
 function handleImgError(el, name) {
-  const attempt = parseInt(el.dataset.attempt || '0');
   const originalUrl = el.dataset.originalSrc || '';
 
+  if (originalUrl.startsWith('data:') || el.src.startsWith('blob:')) {
+    showImgPlaceholder(el, name);
+    return;
+  }
+
+  const attempt = parseInt(el.dataset.attempt || '0');
   if (!originalUrl) {
     showImgPlaceholder(el, name);
     return;
   }
 
-  // ترتيب المحاولات: مباشر → wsrv → allorigins → codetabs
   const sources = [
     originalUrl,
-    getWsrvUrl(originalUrl),
-    getAllOriginsUrl(originalUrl),
-    getCodeTabsUrl(originalUrl)
+    `https://wsrv.nl/?url=${encodeURIComponent(originalUrl)}&w=800&q=90`,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(originalUrl)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(originalUrl)}`
   ];
 
   const nextAttempt = attempt + 1;
-
   if (nextAttempt < sources.length) {
     el.dataset.attempt = nextAttempt;
     el.src = sources[nextAttempt];
     return;
   }
 
-  // كل المحاولات فشلت
   showImgPlaceholder(el, name);
 }
 
@@ -340,11 +368,16 @@ function showImgPlaceholder(el, name) {
   if (!c) return;
   const l = c.querySelector('.loader-wrapper');
   if (l) l.style.display = 'none';
-  c.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center">
+  el.style.display = 'none';
+  if (c.querySelector('.img-placeholder')) return;
+  const placeholder = document.createElement('div');
+  placeholder.className = 'img-placeholder w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center';
+  placeholder.innerHTML = `
     <i class="fas fa-box-open text-4xl text-amber-400 mb-2"></i>
     <span class="text-sm text-amber-300 font-bold">مركز عاشور للتجارة</span>
     <span class="text-xs text-slate-400 mt-1">${escapeHtml(name)}</span>
-  </div>`;
+  `;
+  c.appendChild(placeholder);
 }
 
 /* ==================== إشعارات ==================== */
@@ -381,20 +414,20 @@ function displayProducts(items) {
     const pid = product._pid;
     const isAvail = product.available !== false;
     const isLow = product.lowStock === true && isAvail;
-    const proxiedImageUrl = product._proxiedImage || getProxyUrl(product.image);
+    const finalImageUrl = product._proxiedImage || prepareImage(product.image);
     const originalImageUrl = product.image || '';
     const rotateClass = product.rotateClass || '';
 
     let statusBadge = '', statusText = '';
     if (!isAvail) {
       statusBadge = `<span class="absolute top-3 right-3 bg-rose-600 text-white font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-times-circle"></i> غير متوفر</span>`;
-      statusText  = `<span class="text-rose-400 font-extrabold text-xs bg-rose-950/80 border border-rose-500/30 px-2.5 py-1 rounded-md">غير متوفر</span>`;
+      statusText  = `<span class="text-rose-400 font-extrabold text-xs bg-rose-950/80 border border-rose-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-times-circle"></i> غير متوفر</span>`;
     } else if (isLow) {
-      statusBadge = `<span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-exclamation-circle"></i> كمية محدودة</span>`;
-      statusText  = `<span class="text-amber-400 font-extrabold text-xs bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-md">متوفر</span>`;
+      statusBadge = `<span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>`;
+      statusText  = `<span class="text-amber-400 font-extrabold text-xs bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>`;
     } else {
       statusBadge = `<span class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-check-circle"></i> متوفر</span>`;
-      statusText  = `<span class="text-emerald-400 font-extrabold text-xs bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-1 rounded-md">متوفر</span>`;
+      statusText  = `<span class="text-emerald-400 font-extrabold text-xs bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-check-circle"></i> متوفر</span>`;
     }
 
     let selectorsHtml = '';
@@ -434,20 +467,17 @@ function displayProducts(items) {
     card.innerHTML = `
       <div>
         <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center">
-          <div class="loader-wrapper absolute inset-0 flex items-center justify-center bg-slate-900 text-amber-400 text-xs z-10">
-            <i class="fas fa-spinner fa-spin text-xl"></i>
-          </div>
-          <img src="${proxiedImageUrl}" 
+          <img src="${finalImageUrl}" 
                data-original-src="${escapeHtml(originalImageUrl)}"
                alt="${escapeHtml(product.name)}"
-               class="w-full h-full object-cover opacity-0 transition-opacity duration-300 ${rotateClass}"
+               class="product-img w-full h-full object-cover ${rotateClass}"
                onload="hideLoader(this)" 
                onerror="handleImgError(this, '${escapeHtml(product.name)}')" 
                loading="lazy">
           ${statusBadge}
         </div>
         <div class="p-4">
-          <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center justify-between mb-1.5 flex-wrap gap-2">
             <span class="text-[11px] font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${escapeHtml(product.category)}</span>
             ${statusText}
           </div>
@@ -707,7 +737,6 @@ function renderCategoryButtons() {
 /* ==================== تحميل البيانات ==================== */
 function loadCatalogData() {
   return new Promise((resolve) => {
-    // 1) حاول من localStorage أولًا (تعديلات لوحة التحكم)
     const local = localStorage.getItem('ashour_catalog_data_v1');
     if (local) {
       try {
@@ -720,7 +749,6 @@ function loadCatalogData() {
       } catch (e) { /* تجاهل */ }
     }
 
-    // 2) وإلا حمّل من catalog-data.js
     const script = document.createElement('script');
     script.src = 'catalog-data.js?v=' + Date.now();
     script.onload = () => {
@@ -746,36 +774,28 @@ function applyCatalogSettings(settings) {
     inquiryWhatsApp = settings.inquiryWhatsApp;
     applyWhatsAppButtons();
   }
-  if (settings.logoUrl) {
-    const proxied = getProxyUrl(settings.logoUrl);
-    const l1 = document.getElementById('logoImg');
-    const l2 = document.getElementById('loaderLogoImg');
-    if (l1) l1.src = proxied;
-    if (l2) l2.src = proxied;
-  }
   if (settings.storeName) document.title = settings.storeName + ' - الكتالوج الإلكتروني';
 }
 
 /* ==================== التهيئة ==================== */
 window.addEventListener('DOMContentLoaded', async () => {
-  // 1) تحميل البيانات
   await loadCatalogData();
 
-  // 2) إثراء المنتجات بمعرّف وصورة وسيطة
   products.forEach((p, i) => {
     p._pid = i;
-    p._proxiedImage = getProxyUrl(p.image);
+    if (p.image && p.image.startsWith('data:')) {
+      p._proxiedImage = base64ToBlobUrl(p.image);
+    } else {
+      p._proxiedImage = prepareImage(p.image);
+    }
   });
 
-  // 3) تحميل بيانات العميل
   loadCustomerData();
   updateCartUI();
 
-  // 4) عرض المنتجات والفئات
   renderCategoryButtons();
   displayProducts(products);
 
-  // 5) إخفاء شاشة التحميل
   setTimeout(() => {
     const bar = document.getElementById('preloaderBar');
     if (bar) bar.style.width = '100%';
