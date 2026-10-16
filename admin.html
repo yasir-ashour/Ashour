@@ -30,10 +30,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .rot-90 { transform: rotate(90deg); scale: 1.2; }
 .rot-180 { transform: rotate(180deg); }
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
+/* تحسين: الصور تظهر فورًا حتى بدون onload */
+.product-img { opacity: 1; transition: opacity 0.3s ease; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
+<!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
   <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-amber-400/80 mb-6 bg-slate-900 flex items-center justify-center animate-pulse">
     <img id="loaderLogoImg" class="w-full h-full object-cover" alt="Logo">
@@ -45,6 +48,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
+<!-- إشعار النجاح -->
 <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
   <div class="w-8 h-8 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold"><i class="fas fa-check"></i></div>
   <div>
@@ -53,6 +57,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- تنبيه -->
 <div id="alertNotification" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 bg-rose-950 border-2 border-rose-500 text-white px-5 py-3 rounded-2xl shadow-xl">
   <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold"><i class="fas fa-exclamation"></i></div>
   <div>
@@ -61,6 +66,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- الشريط العلوي -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
   <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full text-xs flex items-center gap-1.5">
@@ -68,6 +74,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </a>
 </div>
 
+<!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
 <div class="flex items-center gap-3">
@@ -227,13 +234,12 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/* ==================== دوال الصور (مع دعم base64) ==================== */
-// تجهيز رابط الصورة للتخزين
+/* ==================== تجهيز رابط الصورة ==================== */
 function prepareImage(img) {
   if (!img) return '';
-  // إذا كانت base64، استخدمها مباشرة
+  // إذا كانت base64، استخدمها كما هي
   if (img.startsWith('data:')) return img;
-  // وإلا استخدم الوسيط
+  // إذا كانت رابط عادي، استخدم الوسيط
   return `https://images.weserv.nl/?url=${encodeURIComponent(img)}&w=800&q=90&output=webp`;
 }
 
@@ -286,13 +292,12 @@ function loadCustomerData() {
 function hideLoader(el) {
   const c = el.closest('.relative');
   if (c) { const l = c.querySelector('.loader-wrapper'); if (l) l.style.display = 'none'; }
-  el.classList.remove('opacity-0');
-  el.classList.add('opacity-100');
 }
 
 function handleImgError(el, name) {
-  // إذا كانت الصورة base64، لا نجرب أي شيء آخر
   const originalUrl = el.dataset.originalSrc || '';
+
+  // لو كانت base64، لا نجرب شيئًا آخر
   if (originalUrl.startsWith('data:')) {
     showImgPlaceholder(el, name);
     return;
@@ -328,11 +333,16 @@ function showImgPlaceholder(el, name) {
   if (!c) return;
   const l = c.querySelector('.loader-wrapper');
   if (l) l.style.display = 'none';
-  c.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center">
+  el.style.display = 'none';
+  if (c.querySelector('.img-placeholder')) return;
+  const placeholder = document.createElement('div');
+  placeholder.className = 'img-placeholder w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center';
+  placeholder.innerHTML = `
     <i class="fas fa-box-open text-4xl text-amber-400 mb-2"></i>
     <span class="text-sm text-amber-300 font-bold">مركز عاشور للتجارة</span>
     <span class="text-xs text-slate-400 mt-1">${escapeHtml(name)}</span>
-  </div>`;
+  `;
+  c.appendChild(placeholder);
 }
 
 /* ==================== إشعارات ==================== */
@@ -347,7 +357,7 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
-}/* ==================== عرض المنتجات ==================== */
+}/* ==================== عرض المنتجات (إصلاح نهائي للصور) ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
@@ -369,8 +379,8 @@ function displayProducts(items) {
     const pid = product._pid;
     const isAvail = product.available !== false;
     const isLow = product.lowStock === true && isAvail;
-    // استخدام الصورة الجاهزة (base64 أو عبر وسيط)
-    const proxiedImageUrl = product._proxiedImage || prepareImage(product.image);
+    // استخدام الصورة الجاهزة (base64 أو وسيط)
+    const finalImageUrl = product._proxiedImage || prepareImage(product.image);
     const originalImageUrl = product.image || '';
     const rotateClass = product.rotateClass || '';
 
@@ -423,13 +433,10 @@ function displayProducts(items) {
     card.innerHTML = `
       <div>
         <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center">
-          <div class="loader-wrapper absolute inset-0 flex items-center justify-center bg-slate-900 text-amber-400 text-xs z-10">
-            <i class="fas fa-spinner fa-spin text-xl"></i>
-          </div>
-          <img src="${proxiedImageUrl}" 
+          <img src="${finalImageUrl}" 
                data-original-src="${escapeHtml(originalImageUrl)}"
                alt="${escapeHtml(product.name)}"
-               class="w-full h-full object-cover opacity-0 transition-opacity duration-300 ${rotateClass}"
+               class="product-img w-full h-full object-cover ${rotateClass}"
                onload="hideLoader(this)" 
                onerror="handleImgError(this, '${escapeHtml(product.name)}')" 
                loading="lazy">
@@ -750,11 +757,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   // 1) تحميل البيانات
   await loadCatalogData();
 
-  // 2) إثراء المنتجات بمعرّف + تجهيز الصورة (base64 أو وسيط)
+  // 2) تجهيز المنتجات: معرّف + رابط الصورة الجاهز
   products.forEach((p, i) => {
     p._pid = i;
-    // إذا كانت الصورة base64 → استخدمها مباشرة بدون وسيط
-    // إذا كانت رابط عادي → استخدم الوسيط
+    // إذا كانت base64 → استخدمها مباشرة (بدون وسيط)
+    // إذا كانت رابط → استخدم الوسيط
     if (p.image && p.image.startsWith('data:')) {
       p._proxiedImage = p.image;
     } else {
