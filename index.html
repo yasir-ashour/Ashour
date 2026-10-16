@@ -38,7 +38,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-sync-alt ml-1"></i> إدارة وإشراف: ياسر عاشور</span>
-  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full text-xs">موقع المحل</a>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full text-xs">موقع المركز مباشر</a>
 </div>
 
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
@@ -73,7 +73,15 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
   <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-2">كتالوج منتجات مركز عاشور</span>
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white">أهلاً وسهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
-  <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-4 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
+  <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-3 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
+
+  <!-- تقييم المتجر (يظهر للجميع) -->
+  <div id="storeRatingDisplay" class="hidden inline-flex items-center gap-2 bg-slate-950/60 border border-amber-500/30 rounded-full px-4 py-2 mb-4">
+    <span id="storeRatingStars" class="text-amber-400 text-lg">★★★★★</span>
+    <span id="storeRatingValue" class="text-white font-black text-lg">0.0</span>
+    <span class="text-slate-500 text-xs">|</span>
+    <span id="storeRatingCount" class="text-slate-400 text-xs">0 تقييم</span>
+  </div>
 
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative">
@@ -98,7 +106,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
   </section>
 
-  <!-- قسم العروض -->
   <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
     <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
@@ -119,7 +126,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </section>
 
-  <!-- قسم الجديد -->
   <section id="newBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
     <div class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
@@ -285,7 +291,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <i class="fas fa-star text-amber-400 text-3xl"></i>
     </div>
     <h3 class="text-2xl sm:text-3xl font-black gold-text mb-2">قيّم تجربتك معنا</h3>
-    <p class="text-slate-400 text-sm mb-5">رأيك يهمنا</p>
+    <p class="text-slate-400 text-sm mb-5">رأيك يهمنا ويساعدنا على التحسين</p>
     <div class="flex gap-2 justify-center mb-5">
       <button onclick="setStoreStar(1)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="1"><i class="fas fa-star"></i></button>
       <button onclick="setStoreStar(2)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="2"><i class="fas fa-star"></i></button>
@@ -295,7 +301,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
     <p id="storeMsg" class="text-slate-500 text-sm mb-5">اضغط على النجوم لتقييمنا</p>
     <button onclick="submitStoreReview()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black px-6 py-3.5 rounded-xl">
-      <i class="fab fa-whatsapp text-xl"></i> إرسال التقييم
+      <i class="fas fa-paper-plane text-xl"></i> إرسال التقييم
     </button>
   </div>
 </section>
@@ -308,7 +314,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
   <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر</p>
   <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold">
-    <i class="fas fa-map-marked-alt"></i> موقع المحل
+    <i class="fas fa-map-marked-alt"></i> موقع المركز مباشر
   </a>
   <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
   <p class="text-xs text-slate-500">جميع الحقوق محفوظة 2026</p>
@@ -566,46 +572,43 @@ function buildCard(p) {
     flList.className = 'max-h-24 overflow-y-auto space-y-1';
 
     for (var f = 0; f < fls.length; f++) {
-      var flv = fls[f];
-      var cur = (selections[p.name] && selections[p.name][flv]) || 0;
-      var row = document.createElement('div');
-      row.className = 'flex items-center justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-700/80';
+      (function(flv, fIdx) {
+        var cur = (selections[p.name] && selections[p.name][flv]) || 0;
+        var row = document.createElement('div');
+        row.className = 'flex items-center justify-between bg-slate-900/90 px-2 py-1 rounded border border-slate-700/80';
 
-      var flvName = document.createElement('span');
-      flvName.className = 'text-[10px] text-amber-300 font-bold truncate';
-      flvName.style.maxWidth = '80px';
-      flvName.innerText = flv;
-      row.appendChild(flvName);
+        var flvName = document.createElement('span');
+        flvName.className = 'text-[10px] text-amber-300 font-bold truncate';
+        flvName.style.maxWidth = '80px';
+        flvName.innerText = flv;
+        row.appendChild(flvName);
 
-      var ctrl = document.createElement('div');
-      ctrl.className = 'flex items-center gap-1';
+        var ctrl = document.createElement('div');
+        ctrl.className = 'flex items-center gap-1';
 
-      var minus = document.createElement('button');
-      minus.type = 'button';
-      minus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
-      minus.innerText = '-';
-      minus.onclick = (function(name, id, fidx, fl, d) {
-        return function(e) { e.stopPropagation(); changeSel(name, id, fidx, fl, d); };
-      })(p.name, pid, f, flv, -1);
-      ctrl.appendChild(minus);
+        var minus = document.createElement('button');
+        minus.type = 'button';
+        minus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
+        minus.innerText = '-';
+        minus.onclick = function(e) { e.stopPropagation(); changeSel(p.name, pid, fIdx, flv, -1); };
+        ctrl.appendChild(minus);
 
-      var countSpan = document.createElement('span');
-      countSpan.id = 'sel-' + pid + '-' + f;
-      countSpan.className = 'w-5 text-center font-bold text-amber-400 text-xs';
-      countSpan.innerText = cur;
-      ctrl.appendChild(countSpan);
+        var countSpan = document.createElement('span');
+        countSpan.id = 'sel-' + pid + '-' + fIdx;
+        countSpan.className = 'w-5 text-center font-bold text-amber-400 text-xs';
+        countSpan.innerText = cur;
+        ctrl.appendChild(countSpan);
 
-      var plus = document.createElement('button');
-      plus.type = 'button';
-      plus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
-      plus.innerText = '+';
-      plus.onclick = (function(name, id, fidx, fl, d) {
-        return function(e) { e.stopPropagation(); changeSel(name, id, fidx, fl, d); };
-      })(p.name, pid, f, flv, 1);
-      ctrl.appendChild(plus);
+        var plus = document.createElement('button');
+        plus.type = 'button';
+        plus.className = 'w-6 h-6 bg-slate-800 text-white rounded text-xs font-black';
+        plus.innerText = '+';
+        plus.onclick = function(e) { e.stopPropagation(); changeSel(p.name, pid, fIdx, flv, 1); };
+        ctrl.appendChild(plus);
 
-      row.appendChild(ctrl);
-      flList.appendChild(row);
+        row.appendChild(ctrl);
+        flList.appendChild(row);
+      })(fls[f], f);
     }
     flBox.appendChild(flList);
     footer.appendChild(flBox);
@@ -696,69 +699,69 @@ function updateCart() {
   }
 
   for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var box = document.createElement('div');
-    box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
+    (function(name) {
+      var box = document.createElement('div');
+      box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
 
-    var head = document.createElement('div');
-    head.className = 'flex items-center justify-between border-b border-slate-800 pb-2';
+      var head = document.createElement('div');
+      head.className = 'flex items-center justify-between border-b border-slate-800 pb-2';
 
-    var n = document.createElement('span');
-    n.className = 'text-white text-sm font-black';
-    n.innerText = name;
-    head.appendChild(n);
+      var n = document.createElement('span');
+      n.className = 'text-white text-sm font-black';
+      n.innerText = name;
+      head.appendChild(n);
 
-    var delBtn = document.createElement('button');
-    delBtn.type = 'button';
-    delBtn.className = 'text-rose-400 text-xs bg-rose-950/40 border border-rose-500/30 px-2 py-1 rounded';
-    delBtn.innerText = 'حذف';
-    delBtn.onclick = (function(nm) {
-      return function() { delete cart[nm]; saveCart(); updateCart(); };
-    })(name);
-    head.appendChild(delBtn);
+      var delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'text-rose-400 text-xs bg-rose-950/40 border border-rose-500/30 px-2 py-1 rounded';
+      delBtn.innerText = 'حذف';
+      delBtn.onclick = function() { delete cart[name]; saveCart(); updateCart(); };
+      head.appendChild(delBtn);
 
-    box.appendChild(head);
+      box.appendChild(head);
 
-    for (var flv in cart[name]) {
-      if (!cart[name].hasOwnProperty(flv)) continue;
-      var qty = cart[name][flv];
-      var row = document.createElement('div');
-      row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700/60 mt-2';
+      for (var flv in cart[name]) {
+        if (!cart[name].hasOwnProperty(flv)) continue;
+        (function(flv, qty) {
+          var row = document.createElement('div');
+          row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700/60 mt-2';
 
-      var flvSpan = document.createElement('span');
-      flvSpan.className = 'text-xs text-amber-300 font-bold';
-      flvSpan.innerText = flv;
-      row.appendChild(flvSpan);
+          var flvSpan = document.createElement('span');
+          flvSpan.className = 'text-xs text-amber-300 font-bold';
+          flvSpan.innerText = flv;
+          row.appendChild(flvSpan);
 
-      var ctrl = document.createElement('div');
-      ctrl.className = 'flex items-center gap-2';
+          var ctrl = document.createElement('div');
+          ctrl.className = 'flex items-center gap-2';
 
-      var minus = document.createElement('button');
-      minus.type = 'button';
-      minus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
-      minus.innerText = '-';
-      minus.onclick = (function(nm, fl) { return function() { chQty(nm, fl, -1); }; })(name, flv);
-      ctrl.appendChild(minus);
+          var minus = document.createElement('button');
+          minus.type = 'button';
+          minus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+          minus.innerText = '-';
+          minus.onclick = function() { chQty(name, flv, -1); };
+          ctrl.appendChild(minus);
 
-      var inp = document.createElement('input');
-      inp.type = 'number';
-      inp.min = '0';
-      inp.value = qty;
-      inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-xs rounded-lg py-1';
-      inp.onchange = (function(nm, fl) { return function() { setQty(nm, fl, this.value); }; })(name, flv);
-      ctrl.appendChild(inp);
+          var inp = document.createElement('input');
+          inp.type = 'number';
+          inp.min = '0';
+          inp.value = qty;
+          inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-xs rounded-lg py-1';
+          inp.onchange = function() { setQty(name, flv, this.value); };
+          ctrl.appendChild(inp);
 
-      var plus = document.createElement('button');
-      plus.type = 'button';
-      plus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
-      plus.innerText = '+';
-      plus.onclick = (function(nm, fl) { return function() { chQty(nm, fl, 1); }; })(name, flv);
-      ctrl.appendChild(plus);
+          var plus = document.createElement('button');
+          plus.type = 'button';
+          plus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+          plus.innerText = '+';
+          plus.onclick = function() { chQty(name, flv, 1); };
+          ctrl.appendChild(plus);
 
-      row.appendChild(ctrl);
-      box.appendChild(row);
-    }
-    c.appendChild(box);
+          row.appendChild(ctrl);
+          box.appendChild(row);
+        })(flv, cart[name][flv]);
+      }
+      c.appendChild(box);
+    })(names[i]);
   }
 }
 
@@ -891,14 +894,16 @@ function renderCategories() {
     }
   }
   for (var j = 0; j < cats.length; j++) {
-    var btn = document.createElement('button');
-    btn.className = (j === 0)
-      ? 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm'
-      : 'catBtn bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700';
-    btn.setAttribute('data-cat', cats[j]);
-    btn.innerText = cats[j];
-    btn.onclick = (function(cat) { return function() { filterCat(cat); }; })(cats[j]);
-    c.appendChild(btn);
+    (function(cat, idx) {
+      var btn = document.createElement('button');
+      btn.className = (idx === 0)
+        ? 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm'
+        : 'catBtn bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700';
+      btn.setAttribute('data-cat', cat);
+      btn.innerText = cat;
+      btn.onclick = function() { filterCat(cat); };
+      c.appendChild(btn);
+    })(cats[j], j);
   }
 }
 
@@ -994,41 +999,42 @@ function openProduct(pName) {
     listDiv.className = 'space-y-2 max-h-48 overflow-y-auto';
 
     for (var f = 0; f < flsList.length; f++) {
-      var flv = flsList[f];
-      var cur = (selections[p.name] && selections[p.name][flv]) || 0;
-      var row = document.createElement('div');
-      row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80';
+      (function(flv, fIdx) {
+        var cur = (selections[p.name] && selections[p.name][flv]) || 0;
+        var row = document.createElement('div');
+        row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80';
 
-      var flvName = document.createElement('span');
-      flvName.className = 'text-sm text-amber-300 font-bold';
-      flvName.innerText = flv;
-      row.appendChild(flvName);
+        var flvName = document.createElement('span');
+        flvName.className = 'text-sm text-amber-300 font-bold';
+        flvName.innerText = flv;
+        row.appendChild(flvName);
 
-      var ctrl = document.createElement('div');
-      ctrl.className = 'flex items-center gap-2';
+        var ctrl = document.createElement('div');
+        ctrl.className = 'flex items-center gap-2';
 
-      var minus = document.createElement('button');
-      minus.type = 'button';
-      minus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
-      minus.innerText = '-';
-      minus.onclick = (function(pid, idx, fl) { return function() { prodSel(pid, idx, fl, -1); }; })(p._pid, f, flv);
-      ctrl.appendChild(minus);
+        var minus = document.createElement('button');
+        minus.type = 'button';
+        minus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+        minus.innerText = '-';
+        minus.onclick = function() { prodSel(p._pid, fIdx, flv, -1); };
+        ctrl.appendChild(minus);
 
-      var span = document.createElement('span');
-      span.id = 'pSel-' + f;
-      span.className = 'w-10 text-center font-bold text-amber-400';
-      span.innerText = cur;
-      ctrl.appendChild(span);
+        var span = document.createElement('span');
+        span.id = 'pSel-' + fIdx;
+        span.className = 'w-10 text-center font-bold text-amber-400';
+        span.innerText = cur;
+        ctrl.appendChild(span);
 
-      var plus = document.createElement('button');
-      plus.type = 'button';
-      plus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
-      plus.innerText = '+';
-      plus.onclick = (function(pid, idx, fl) { return function() { prodSel(pid, idx, fl, 1); }; })(p._pid, f, flv);
-      ctrl.appendChild(plus);
+        var plus = document.createElement('button');
+        plus.type = 'button';
+        plus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+        plus.innerText = '+';
+        plus.onclick = function() { prodSel(p._pid, fIdx, flv, 1); };
+        ctrl.appendChild(plus);
 
-      row.appendChild(ctrl);
-      listDiv.appendChild(row);
+        row.appendChild(ctrl);
+        listDiv.appendChild(row);
+      })(flsList[f], f);
     }
     flsBox.appendChild(listDiv);
     content.appendChild(flsBox);
@@ -1060,7 +1066,7 @@ function openProduct(pName) {
     addBtn.type = 'button';
     addBtn.className = 'flex-grow bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black py-4 rounded-2xl text-lg';
     addBtn.innerText = 'إضافة إلى السلة';
-    addBtn.onclick = (function(name) { return function() { addToCart(name); closeProduct(); }; })(p.name);
+    addBtn.onclick = function() { addToCart(p.name); closeProduct(); };
     btnsBox.appendChild(addBtn);
   } else {
     var noBtn = document.createElement('button');
@@ -1111,6 +1117,7 @@ function closeProduct() {
   document.body.style.overflow = '';
 }
 
+/* ==================== التقييمات ==================== */
 function openReviews(pName) {
   var p = null;
   for (var i = 0; i < products.length; i++) {
@@ -1191,6 +1198,7 @@ function submitReview() {
   closeReviews();
 }
 
+/* ==================== تقييم المتجر (بدون واتساب) ==================== */
 function setStoreStar(n) {
   storeStars = n;
   var btns = document.querySelectorAll('.storeStar');
@@ -1212,16 +1220,79 @@ function submitStoreReview() {
     msg.className = 'text-rose-400 text-sm font-bold mb-5';
     return;
   }
-  var s = '';
-  for (var i = 0; i < storeStars; i++) s += '⭐';
-  var txt = 'تقييم المتجر\n\nالتقييم: ' + s + ' (' + storeStars + '/5)\nالعنوان: https://yasir-ashour.github.io/Ashour/\n\nمن زائر الموقع';
-  window.open('https://wa.me/' + inquiryWa + '?text=' + encodeURIComponent(txt), '_blank');
+
+  // حفظ في localStorage للعميل
+  try {
+    var reviews = JSON.parse(localStorage.getItem('ashour_store_reviews') || '[]');
+    reviews.push({
+      stars: storeStars,
+      date: new Date().toISOString().slice(0, 10)
+    });
+    localStorage.setItem('ashour_store_reviews', JSON.stringify(reviews));
+  } catch(e) {}
+
+  // عرض شكر
+  var m = document.getElementById('storeMsg');
+  var thanks = {
+    1: 'شكرًا لتقييمك — سنعمل على التحسين',
+    2: 'شكرًا لك — رأيك يهمنا',
+    3: 'شكرًا لتقييمك!',
+    4: 'شكرًا جزيلًا!',
+    5: '🤩 شكرًا لتقييمك الرائع!'
+  };
+  m.innerText = thanks[storeStars] || 'شكرًا لتقييمك!';
+  m.className = 'text-emerald-400 text-base font-black mb-5';
+
+  // إعادة تعيين
   storeStars = 0;
   var btns = document.querySelectorAll('.storeStar');
   for (var j = 0; j < btns.length; j++) btns[j].classList.remove('star-on');
-  var m = document.getElementById('storeMsg');
-  m.innerText = 'شكرًا لتقييمك!';
-  m.className = 'text-emerald-400 text-sm font-bold mb-5';
+
+  // تحديث عرض التقييم
+  updateStoreRatingDisplay();
+
+  setTimeout(function() {
+    m.innerText = 'اضغط على النجوم لتقييمنا';
+    m.className = 'text-slate-500 text-sm mb-5';
+  }, 5000);
+}
+
+/* ==================== عرض تقييم المتجر ==================== */
+function updateStoreRatingDisplay() {
+  // نقرأ التقييم الأساسي من catalog-data.settings.storeRating
+  // + نجمع مع التقييمات المحلية للزائر
+  var baseRating = 0;
+  var baseCount = 0;
+
+  if (window.catalogData && window.catalogData.settings) {
+    if (window.catalogData.settings.storeRating) baseRating = parseFloat(window.catalogData.settings.storeRating);
+    if (window.catalogData.settings.storeRatingCount) baseCount = parseInt(window.catalogData.settings.storeRatingCount);
+  }
+
+  var localReviews = [];
+  try {
+    localReviews = JSON.parse(localStorage.getItem('ashour_store_reviews') || '[]');
+  } catch(e) {}
+
+  var totalStars = baseRating * baseCount;
+  for (var i = 0; i < localReviews.length; i++) {
+    totalStars += (localReviews[i].stars || 0);
+  }
+  var totalCount = baseCount + localReviews.length;
+
+  var display = document.getElementById('storeRatingDisplay');
+  if (!display) return;
+
+  if (totalCount === 0) {
+    display.classList.add('hidden');
+    return;
+  }
+
+  var avg = (totalStars / totalCount).toFixed(1);
+  display.classList.remove('hidden');
+  document.getElementById('storeRatingValue').innerText = avg;
+  document.getElementById('storeRatingCount').innerText = totalCount + ' تقييم';
+  document.getElementById('storeRatingStars').innerText = stars(Math.round(parseFloat(avg)));
 }
 
 function imgErr(el) {
@@ -1230,32 +1301,11 @@ function imgErr(el) {
   }
 }
 
-function loadData() {
-  return new Promise(function(resolve) {
-    var s = document.createElement('script');
-    s.src = 'catalog-data.js?v=' + Date.now();
-    s.onload = function() {
-      try {
-        if (window.catalogData && window.catalogData.products) {
-          products = window.catalogData.products;
-          if (window.catalogData.settings) {
-            if (window.catalogData.settings.orderWhatsApp) orderWa = window.catalogData.settings.orderWhatsApp;
-            if (window.catalogData.settings.inquiryWhatsApp) inquiryWa = window.catalogData.settings.inquiryWhatsApp;
-            applyWa();
-          }
-        }
-      } catch(e) { console.warn(e); }
-      resolve();
-    };
-    s.onerror = function() { console.warn('fail'); resolve(); };
-    document.head.appendChild(s);
-  });
-}
-
+/* ==================== بطاقات مصغرة للعروض والجديد ==================== */
 function buildMiniCard(p, type) {
   var card = document.createElement('div');
   card.className = 'flex-shrink-0 w-40 bg-slate-950/60 border border-slate-700/80 rounded-2xl overflow-hidden cursor-pointer';
-  card.onclick = (function(name) { return function() { scrollToProduct(name); }; })(p.name);
+  card.onclick = function() { scrollToProduct(p.name); };
 
   var imgBox = document.createElement('div');
   imgBox.className = 'aspect-square bg-[#0f172a] relative';
@@ -1339,6 +1389,29 @@ function scrollToProduct(name) {
   }
 }
 
+/* ==================== تحميل البيانات ==================== */
+function loadData() {
+  return new Promise(function(resolve) {
+    var s = document.createElement('script');
+    s.src = 'catalog-data.js?v=' + Date.now();
+    s.onload = function() {
+      try {
+        if (window.catalogData && window.catalogData.products) {
+          products = window.catalogData.products;
+          if (window.catalogData.settings) {
+            if (window.catalogData.settings.orderWhatsApp) orderWa = window.catalogData.settings.orderWhatsApp;
+            if (window.catalogData.settings.inquiryWhatsApp) inquiryWa = window.catalogData.settings.inquiryWhatsApp;
+            applyWa();
+          }
+        }
+      } catch(e) { console.warn(e); }
+      resolve();
+    };
+    s.onerror = function() { console.warn('fail'); resolve(); };
+    document.head.appendChild(s);
+  });
+}
+
 function boot() {
   loadData().then(function() {
     if (!Array.isArray(products)) products = [];
@@ -1357,6 +1430,8 @@ function boot() {
     renderCategories();
     renderSpecial();
     displayProducts(products);
+    updateStoreRatingDisplay();
+
     setTimeout(function() {
       var b = document.getElementById('preBar');
       if (b) b.style.width = '100%';
