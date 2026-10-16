@@ -25,19 +25,18 @@
           slidedown: {
             prompts: [{
               type: "push",
-              autoPrompt: true,
+              autoPrompt: false,
               text: {
                 actionMessage: "احصل على أحدث العروض والمنتجات الجديدة من مركز عاشور",
                 acceptButton: "السماح",
                 cancelButton: "لاحقًا"
-              },
-              delay: { pageViews: 1, timeDelay: 3 }
+              }
             }]
           }
         }
       });
     } catch (e) {
-      console.warn('OneSignal error:', e);
+      console.warn('OneSignal init error:', e);
     }
   });
 </script>
@@ -118,7 +117,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
-  <div class="w-56 h-56 sm:w-72 sm:h-72 mb-6 flex items-center justify-center logo-glow">
+  <div class="w-64 h-64 sm:w-80 sm:h-80 mb-4 flex items-center justify-center logo-glow">
     <img src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور">
   </div>
   <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-2">مركز عاشور للتجارة</h1>
@@ -129,9 +128,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
-<!-- سكريبت إخفاء Preloader مضمون -->
+<!-- صمام أمان Preloader -->
 <script>
-  // إخفاء Preloader بعد 3 ثوانٍ كحد أقصى — بغض النظر عن أي شيء
   setTimeout(function() {
     var p = document.getElementById('sitePreloader');
     if (p && p.style.display !== 'none') {
@@ -175,11 +173,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
 <div class="flex items-center gap-2 min-w-0">
-<div class="w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center flex-shrink-0">
+<div class="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center flex-shrink-0">
 <img id="logoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور">
 </div>
 <div class="min-w-0">
-<h1 class="text-base sm:text-2xl font-black gold-gradient-text leading-tight truncate">مركز عاشور للتجارة</h1>
+<h1 class="text-lg sm:text-2xl font-black gold-gradient-text leading-tight truncate">مركز عاشور للتجارة</h1>
 <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">أجود أنواع الشيبس، البسكويت، العصائر، والعلكة</p>
 </div>
 </div>
@@ -199,16 +197,17 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <div id="catalogMainView" class="w-full flex flex-col flex-grow">
 
   <!-- قسم البطل -->
-  <section class="relative py-8 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
+  <section class="relative py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
 
-  <div class="w-72 h-72 sm:w-96 sm:h-96 max-w-full flex items-center justify-center mx-auto mb-4 logo-glow">
+  <!-- الشعار الكبير - مساحة أقل -->
+  <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full flex items-center justify-center mx-auto mb-2 logo-glow">
     <img src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور">
   </div>
 
-  <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-4">كتالوج منتجات مركز عاشور</span>
-  <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 text-white leading-tight">أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span></h2>
-  <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة.</p>
+  <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-3">كتالوج منتجات مركز عاشور</span>
+  <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white leading-tight">أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span></h2>
+  <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-5">استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة.</p>
 
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative w-full">
@@ -234,7 +233,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 
   <!-- قسم العروض -->
-  <section id="offersSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
+  <section id="offersSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-4 w-full">
     <div class="bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="flex items-center justify-between mb-4 relative z-10">
@@ -254,7 +253,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 
   <!-- قسم الجديد -->
-  <section id="newSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-6 w-full">
+  <section id="newSection" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-4 w-full">
     <div class="bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
       <div class="absolute top-0 left-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="flex items-center justify-between mb-4 relative z-10">
@@ -293,7 +292,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center flex-shrink-0">
+        <div class="w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center flex-shrink-0">
           <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
         </div>
         <div>
@@ -360,7 +359,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </div>
 
 <!-- زر تفعيل الإشعارات -->
-<button id="enableNotificationsBtn" onclick="enableNotifications()" 
+<button id="enableNotificationsBtn" type="button"
   class="hidden fixed bottom-20 sm:bottom-24 left-4 z-40 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-4 py-3 rounded-full shadow-2xl border-2 border-amber-300 flex items-center gap-2 transition notif-pulse">
   <i class="fas fa-bell text-xl"></i>
   <span class="text-sm">فعّل الإشعارات</span>
@@ -445,7 +444,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <!-- التذييل -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-10">
 <div class="max-w-4xl mx-auto space-y-3">
-  <div class="w-36 h-36 flex items-center justify-center mx-auto">
+  <div class="w-40 h-40 flex items-center justify-center mx-auto">
     <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
   </div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
@@ -481,7 +480,7 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/* ==================== تحويل base64 إلى Blob URL ==================== */
+/* ==================== تحويل base64 ==================== */
 function base64ToBlobUrl(base64) {
   try {
     const parts = base64.split(',');
@@ -500,7 +499,7 @@ function base64ToBlobUrl(base64) {
   }
 }
 
-/* ==================== تجهيز رابط الصورة ==================== */
+/* ==================== الصور ==================== */
 function prepareImage(img) {
   if (!img) return '';
   if (img.startsWith('data:')) return base64ToBlobUrl(img);
@@ -523,41 +522,80 @@ function applyWhatsAppButtons() {
 }
 applyWhatsAppButtons();
 
-/* ==================== الإشعارات ==================== */
-function enableNotifications() {
-  if (window.OneSignal && window.OneSignal.Notifications) {
-    window.OneSignal.Notifications.requestPermission().then(function(granted) {
-      if (granted) {
-        alert('✅ تم تفعيل الإشعارات بنجاح!\nستصلك أحدث العروض والمنتجات.');
-        var btn = document.getElementById('enableNotificationsBtn');
-        if (btn) btn.style.display = 'none';
-      } else {
-        alert('⚠️ لم يتم تفعيل الإشعارات. يمكنك المحاولة لاحقًا.');
-      }
-    }).catch(function(err) {
-      console.warn('OneSignal error:', err);
-      alert('حدث خطأ. حاول مرة أخرى.');
-    });
-  } else {
-    alert('⚠️ النظام لم يُحمَّل بعد. حاول مرة أخرى بعد ثوانٍ.');
+/* ==================== الإشعارات (نسخة محسّنة) ==================== */
+async function enableNotifications() {
+  console.log('🔔 Button clicked');
+
+  if (!window.OneSignal) {
+    alert('⚠️ النظام لم يُحمّل بعد.\n\nانتظر 5 ثوانٍ ثم حاول مرة أخرى.');
+    return;
+  }
+
+  if (!window.OneSignal.Notifications) {
+    alert('⚠️ خدمة الإشعارات غير متوفرة على متصفحك.');
+    return;
+  }
+
+  try {
+    const currentPermission = window.OneSignal.Notifications.permission;
+    console.log('📊 Current permission:', currentPermission);
+
+    if (currentPermission === true) {
+      alert('✅ الإشعارات مفعّلة بالفعل!\n\nستصلك أحدث العروض والمنتجات.');
+      const btn = document.getElementById('enableNotificationsBtn');
+      if (btn) btn.style.display = 'none';
+      return;
+    }
+
+    if (currentPermission === false) {
+      alert('⚠️ الإشعارات محظورة من إعدادات Chrome.\n\n📱 لإعادة تفعيلها:\n\n1. افتح Chrome\n2. اضغط ⋮\n3. الإعدادات\n4. إعدادات المواقع\n5. الإشعارات\n6. ابحث عن yasir-ashour.github.io\n7. اضغط "مسح وإعادة تعيين"\n8. أعد فتح الموقع');
+      return;
+    }
+
+    alert('⏳ سيظهر لك إشعار من Chrome.\n\nاضغط "السماح" لتفعيل الإشعارات.');
+
+    const granted = await window.OneSignal.Notifications.requestPermission();
+    console.log('✅ Granted:', granted);
+
+    if (granted) {
+      alert('🎉 ممتاز! تم تفعيل الإشعارات.\n\nستصلك أحدث العروض والمنتجات الجديدة.');
+      const btn = document.getElementById('enableNotificationsBtn');
+      if (btn) btn.style.display = 'none';
+    } else {
+      alert('⚠️ لم يتم تفعيل الإشعارات.\n\nيمكنك المحاولة لاحقًا.');
+    }
+
+  } catch (e) {
+    console.error('❌ Notification error:', e);
+    alert('حدث خطأ: ' + (e.message || 'غير معروف') + '\n\nحاول مرة أخرى.');
   }
 }
 
-// إظهار زر الإشعارات بعد التحميل
+// إظهار الزر + ربط الحدث
 setTimeout(function() {
   try {
+    var btn = document.getElementById('enableNotificationsBtn');
+    if (!btn) return;
+
+    if (!btn.dataset.bound) {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', enableNotifications);
+    }
+
     if (window.OneSignal && window.OneSignal.Notifications) {
-      var btn = document.getElementById('enableNotificationsBtn');
       var permission = window.OneSignal.Notifications.permission;
-      if (permission !== true && btn) {
+      if (permission !== true) {
         btn.classList.remove('hidden');
         btn.classList.add('flex');
       }
+    } else {
+      btn.classList.remove('hidden');
+      btn.classList.add('flex');
     }
   } catch(e) {
-    console.warn('Notification button check:', e);
+    console.warn('Notification button setup error:', e);
   }
-}, 4000);
+}, 3000);
 
 /* ==================== Preloader ==================== */
 let _preloaderHidden = false;
@@ -574,7 +612,7 @@ function hidePreloader() {
   }, 700);
 }
 
-/* ==================== بيانات العميل ==================== */
+/* ==================== العميل ==================== */
 function saveCustomerData() {
   try {
     localStorage.setItem('ashour_cust_name', document.getElementById('custName').value);
@@ -593,7 +631,7 @@ function loadCustomerData() {
   } catch(e) {}
 }
 
-/* ==================== دوال الصور ==================== */
+/* ==================== الصور ==================== */
 function hideLoader(el) {
   const c = el.closest('.relative');
   if (c) { const l = c.querySelector('.loader-wrapper'); if (l) l.style.display = 'none'; }
@@ -664,7 +702,7 @@ function getAverageStars(reviews) {
   return (sum / reviews.length).toFixed(1);
 }
 
-/* ==================== نافذة التقييمات ==================== */
+/* ==================== التقييمات ==================== */
 function openReviewsModal(productName) {
   const product = products.find(p => p.name === productName);
   if (!product) return;
@@ -704,7 +742,6 @@ function closeReviewsModal() {
   document.body.style.overflow = '';
 }
 
-/* ==================== إضافة تقييم ==================== */
 function openReviewForm() {
   if (!currentReviewsProduct) return;
   document.getElementById('reviewFormProductName').innerText = currentReviewsProduct.name;
@@ -760,7 +797,7 @@ function submitReview() {
 
   closeReviewForm();
   closeReviewsModal();
-}/* ==================== دالة مساعدة: بطاقة مصغرة ==================== */
+}/* ==================== بطاقة مصغرة ==================== */
 function buildMiniCard(product, badgeType) {
   const finalImageUrl = product._proxiedImage || prepareImage(product.image);
   const originalImageUrl = product.image || '';
@@ -859,7 +896,7 @@ function scrollToProduct(productName) {
   }
 }
 
-/* ==================== عرض المنتجات الرئيسية ==================== */
+/* ==================== عرض المنتجات ==================== */
 function displayProducts(items) {
   try {
     const grid = document.getElementById('productsGrid');
@@ -953,7 +990,7 @@ function displayProducts(items) {
       card.dataset.productName = product.name;
       card.innerHTML = `
         <div>
-          <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center">
+          <div class="w-full aspect-[740/645] bg-[#0f172a] overflow-hidden relative flex items-center justify-center cursor-pointer" data-action="open-product-page" data-pname="${escapeHtml(product.name)}">
             <img src="${finalImageUrl}" 
                  data-original-src="${escapeHtml(originalImageUrl)}"
                  alt="${escapeHtml(product.name)}"
@@ -970,7 +1007,7 @@ function displayProducts(items) {
               <span class="text-[10px] sm:text-[11px] font-bold text-amber-400/90 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">${escapeHtml(product.category)}</span>
               ${statusText}
             </div>
-            <h3 class="text-xs sm:text-base font-black text-white mb-1 leading-snug">${escapeHtml(product.name)}</h3>
+            <h3 class="text-xs sm:text-base font-black text-white mb-1 leading-snug cursor-pointer hover:text-amber-400 transition" data-action="open-product-page" data-pname="${escapeHtml(product.name)}">${escapeHtml(product.name)}</h3>
             <p class="text-slate-400 text-[10px] sm:text-xs mb-2 leading-relaxed line-clamp-2">${escapeHtml(product.description || 'منتج عالي الجودة من مركز عاشور.')}</p>
           </div>
         </div>
@@ -1005,6 +1042,11 @@ if (productsGridEl) {
 
     if (action === 'show-reviews') {
       openReviewsModal(btn.dataset.pname);
+      return;
+    }
+
+    if (action === 'open-product-page') {
+      openProductPage(btn.dataset.pname);
       return;
     }
 
@@ -1233,7 +1275,7 @@ document.body.addEventListener('click', (e) => {
   const b = e.target.closest('[data-action]');
   if (!b) return;
   const a = b.dataset.action;
-  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove','show-reviews','scroll-to-product'].includes(a)) return;
+  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove','show-reviews','scroll-to-product','open-product-page'].includes(a)) return;
   if (a === 'open-cart') { e.preventDefault(); switchToCartView(); }
   else if (a === 'back-to-catalog') { e.preventDefault(); switchToCatalogView(); }
   else if (a === 'send-order') { e.preventDefault(); sendOrderToWhatsApp(); }
@@ -1247,7 +1289,79 @@ if (catContainer) {
     if (!b) return;
     filterCategory(b.dataset.category);
   });
-}/* ==================== توليد أزرار الفئات ==================== */
+}<!-- نافذة صفحة المنتج الكاملة -->
+<div id="productPageModal" class="hidden fixed inset-0 z-[70] bg-black/95 backdrop-blur-md overflow-y-auto">
+  <div class="max-w-4xl mx-auto p-3 sm:p-6 min-h-full flex items-center justify-center">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4" style="animation: modalPop 0.4s ease-out;">
+      <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
+      
+      <!-- رأس النافذة -->
+      <div class="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
+        <h3 class="text-lg sm:text-xl font-black gold-gradient-text">
+          <i class="fas fa-box-open text-amber-400"></i> تفاصيل المنتج
+        </h3>
+        <button onclick="closeProductPage()" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- محتوى المنتج -->
+      <div id="productPageContent" class="p-4 sm:p-6"></div>
+    </div>
+  </div>
+</div>
+
+<!-- قسم تقييم الموقع -->
+<section class="max-w-4xl mx-auto px-3 sm:px-4 py-8 w-full">
+  <div class="bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-900 border-2 border-amber-500/40 rounded-3xl p-5 sm:p-8 shadow-2xl relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+    <div class="relative z-10 text-center">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/50 flex items-center justify-center mx-auto mb-4 logo-glow">
+        <i class="fas fa-star text-amber-400 text-3xl"></i>
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-black gold-gradient-text mb-2">قيّم تجربتك معنا</h3>
+      <p class="text-slate-400 text-sm sm:text-base mb-5">رأيك يهمنا — ساعدنا على تقديم خدمة أفضل</p>
+
+      <!-- نجوم التقييم للموقع -->
+      <div id="storeReviewStars" class="flex gap-2 justify-center mb-5" dir="ltr">
+        <button type="button" data-star="1" class="store-review-star w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 text-slate-600 text-2xl sm:text-3xl transition hover:bg-slate-700 hover:scale-110"><i class="fas fa-star"></i></button>
+        <button type="button" data-star="2" class="store-review-star w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 text-slate-600 text-2xl sm:text-3xl transition hover:bg-slate-700 hover:scale-110"><i class="fas fa-star"></i></button>
+        <button type="button" data-star="3" class="store-review-star w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 text-slate-600 text-2xl sm:text-3xl transition hover:bg-slate-700 hover:scale-110"><i class="fas fa-star"></i></button>
+        <button type="button" data-star="4" class="store-review-star w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 text-slate-600 text-2xl sm:text-3xl transition hover:bg-slate-700 hover:scale-110"><i class="fas fa-star"></i></button>
+        <button type="button" data-star="5" class="store-review-star w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 text-slate-600 text-2xl sm:text-3xl transition hover:bg-slate-700 hover:scale-110"><i class="fas fa-star"></i></button>
+      </div>
+
+      <p id="storeReviewMessage" class="text-slate-500 text-xs sm:text-sm mb-5">اضغط على النجوم لتقييمنا</p>
+
+      <!-- زر إرسال التقييم -->
+      <button id="storeReviewSubmitBtn" type="button" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-6 sm:px-8 py-3.5 rounded-xl transition shadow-xl inline-flex items-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed">
+        <i class="fab fa-whatsapp text-xl"></i>
+        <span>إرسال التقييم</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- التذييل -->
+<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6">
+<div class="max-w-4xl mx-auto space-y-3">
+  <div class="w-40 h-40 flex items-center justify-center mx-auto">
+    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+  </div>
+  <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
+  <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة</p>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold">
+    <i class="fas fa-map-marked-alt"></i> فتح موقع المحل على خرائط جوجل
+  </a>
+  <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
+  <p class="text-xs text-slate-500">جميع الحقوق محفوظة © 2026</p>
+</div>
+</footer>
+
+<script>
+/* ==================== توليد أزرار الفئات ==================== */
 function renderCategoryButtons() {
   const c = document.getElementById('categoryContainer');
   if (!c) return;
@@ -1260,10 +1374,308 @@ function renderCategoryButtons() {
   `).join('');
 }
 
+/* ==================== صفحة المنتج الكاملة ==================== */
+function openProductPage(productName) {
+  const product = products.find(p => p.name === productName);
+  if (!product) return;
+
+  const finalImageUrl = product._proxiedImage || prepareImage(product.image);
+  const originalImageUrl = product.image || '';
+  const rotateClass = product.rotateClass || '';
+  const reviews = product.reviews || [];
+  const avgStars = getAverageStars(reviews);
+  const starsFull = Math.round(avgStars);
+  const isAvail = product.available !== false;
+  const isLow = product.lowStock === true && isAvail;
+
+  let statusBadge = '';
+  if (!isAvail) {
+    statusBadge = `<span class="bg-rose-600 text-white font-black text-xs px-3 py-1.5 rounded-full"><i class="fas fa-times-circle"></i> غير متوفر</span>`;
+  } else if (isLow) {
+    statusBadge = `<span class="bg-amber-500 text-slate-950 font-black text-xs px-3 py-1.5 rounded-full"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>`;
+  } else {
+    statusBadge = `<span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1.5 rounded-full"><i class="fas fa-check-circle"></i> متوفر</span>`;
+  }
+
+  let offerHtml = '';
+  if (product.hasOffer && product.oldPrice) {
+    offerHtml = `
+      <div class="bg-rose-950/40 border border-rose-500/40 rounded-xl p-3 flex items-center gap-2 mt-3">
+        <i class="fas fa-fire text-rose-400 text-xl"></i>
+        <div class="flex-grow">
+          <p class="text-rose-300 text-xs font-bold">عرض خاص</p>
+          <p class="text-xs text-slate-400">
+            <span class="line-through text-rose-400">${escapeHtml(product.oldPrice)}</span>
+            <span class="text-amber-400 font-black mr-2">← ${escapeHtml(product.price || '')}</span>
+          </p>
+        </div>
+      </div>`;
+  }
+
+  let newBadge = '';
+  if (product.isNew) {
+    newBadge = `<span class="absolute top-3 left-3 bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1.5 rounded-full z-20"><i class="fas fa-sparkles"></i> جديد</span>`;
+  }
+
+  // النكهات
+  const flavorsList = (product.flavors && product.flavors.length > 0) ? product.flavors : ['عادي'];
+  let flavorsHtml = '';
+  if (isAvail) {
+    flavorsHtml = `
+      <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4">
+        <p class="text-white font-black text-sm mb-3"><i class="fas fa-tags text-amber-400"></i> اختر الكمية والنكهات:</p>
+        <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+          ${flavorsList.map((flv, fIdx) => {
+            const safeFlv = escapeHtml(flv);
+            return `
+              <div class="flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80">
+                <span class="text-sm text-amber-300 font-bold">${safeFlv}</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" data-action="page-dec" data-fidx="${fIdx}" data-flavor="${safeFlv}"
+                    class="w-9 h-9 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center font-black">-</button>
+                  <span id="page-sel-${fIdx}" class="w-10 text-center font-bold text-amber-400">0</span>
+                  <button type="button" data-action="page-inc" data-fidx="${fIdx}" data-flavor="${safeFlv}"
+                    class="w-9 h-9 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center font-black">+</button>
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+
+  let reviewsHtml = '';
+  if (reviews.length > 0) {
+    reviewsHtml = `
+      <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4">
+        <p class="text-white font-black text-sm mb-3"><i class="fas fa-star text-amber-400"></i> التقييمات (${reviews.length}):</p>
+        <div class="space-y-2 max-h-40 overflow-y-auto pr-1">
+          ${[...reviews].reverse().slice(0, 5).map(r => `
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-amber-400 text-xs font-bold" dir="ltr">${renderStars(r.stars || 0)}</span>
+                <span class="text-white text-xs font-bold">${escapeHtml(r.name || 'عميل')}</span>
+              </div>
+              ${r.comment ? `<p class="text-slate-300 text-xs">${escapeHtml(r.comment)}</p>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }
+
+  const content = document.getElementById('productPageContent');
+  content.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div>
+        <div class="w-full aspect-square bg-[#0f172a] rounded-2xl overflow-hidden relative">
+          <img src="${finalImageUrl}" 
+               data-original-src="${escapeHtml(originalImageUrl)}"
+               alt="${escapeHtml(product.name)}"
+               class="product-img w-full h-full object-cover ${rotateClass}"
+               onload="hideLoader(this)" 
+               onerror="handleImgError(this, '${escapeHtml(product.name)}')">
+          ${newBadge}
+          <div class="absolute bottom-3 right-3">${statusBadge}</div>
+        </div>
+      </div>
+
+      <div>
+        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-3">
+          <i class="fas fa-tag"></i> ${escapeHtml(product.category)}
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mb-3 leading-tight">${escapeHtml(product.name)}</h2>
+
+        ${avgStars > 0 ? `
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-amber-400 text-lg" dir="ltr">${renderStars(starsFull)}</span>
+            <span class="text-amber-400 font-black">${avgStars}</span>
+            <span class="text-slate-500 text-xs">(${reviews.length} تقييم)</span>
+          </div>
+        ` : ''}
+
+        <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-4 mb-4">
+          <p class="text-slate-400 text-xs mb-1">السعر</p>
+          <p class="text-2xl font-black text-amber-400">${escapeHtml(product.price || 'التواصل مع المبيعات')}</p>
+          ${offerHtml}
+        </div>
+
+        ${product.description ? `
+          <div class="mb-4">
+            <p class="text-white font-black text-sm mb-2"><i class="fas fa-info-circle text-amber-400"></i> الوصف:</p>
+            <p class="text-slate-300 text-sm leading-relaxed">${escapeHtml(product.description)}</p>
+          </div>
+        ` : ''}
+
+        <!-- تفاصيل إضافية -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 space-y-2 text-sm">
+          <p class="text-white font-black text-sm mb-2"><i class="fas fa-clipboard-list text-amber-400"></i> تفاصيل المنتج:</p>
+          <div class="flex justify-between py-1.5 border-b border-slate-800">
+            <span class="text-slate-400">الفئة:</span>
+            <span class="text-white font-bold">${escapeHtml(product.category)}</span>
+          </div>
+          ${product.company ? `
+            <div class="flex justify-between py-1.5 border-b border-slate-800">
+              <span class="text-slate-400">الشركة:</span>
+              <span class="text-white font-bold">${escapeHtml(product.company)}</span>
+            </div>
+          ` : ''}
+          ${product.packageInfo ? `
+            <div class="flex justify-between py-1.5 border-b border-slate-800">
+              <span class="text-slate-400">عدد الطرد:</span>
+              <span class="text-white font-bold">${escapeHtml(product.packageInfo)}</span>
+            </div>
+          ` : ''}
+          <div class="flex justify-between py-1.5">
+            <span class="text-slate-400">التوفر:</span>
+            <span class="font-bold ${isAvail ? (isLow ? 'text-amber-400' : 'text-emerald-400') : 'text-rose-400'}">
+              ${!isAvail ? 'غير متوفر' : (isLow ? 'كمية محدودة' : 'متوفر')}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    ${flavorsHtml}
+    ${reviewsHtml}
+
+    <div class="mt-5 flex flex-col sm:flex-row gap-3">
+      ${isAvail ? `
+        <button type="button" data-action="page-add-to-cart" data-pname="${escapeHtml(product.name)}"
+          class="flex-grow bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl transition shadow-xl flex items-center justify-center gap-2 text-lg">
+          <i class="fas fa-cart-plus"></i>
+          <span>إضافة إلى السلة</span>
+        </button>
+      ` : `
+        <button disabled class="flex-grow bg-slate-800 text-slate-500 font-black py-4 rounded-2xl cursor-not-allowed flex items-center justify-center gap-2 text-lg">
+          <i class="fas fa-ban"></i>
+          <span>غير متوفر حالياً</span>
+        </button>
+      `}
+      <button onclick="closeProductPage()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-4 rounded-2xl transition">
+        <i class="fas fa-arrow-right"></i> رجوع
+      </button>
+    </div>
+  `;
+
+  document.getElementById('productPageModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  // ربط أزرار النكهات داخل الصفحة
+  content.querySelectorAll('[data-action="page-inc"], [data-action="page-dec"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fIdx = Number(btn.dataset.fidx);
+      const flavor = btn.dataset.flavor;
+      const delta = btn.dataset.action === 'page-inc' ? 1 : -1;
+
+      if (!productSelections[product.name]) productSelections[product.name] = {};
+      const cur = productSelections[product.name][flavor] || 0;
+      const next = Math.max(0, cur + delta);
+      if (next === 0) {
+        delete productSelections[product.name][flavor];
+        if (Object.keys(productSelections[product.name]).length === 0) delete productSelections[product.name];
+      } else {
+        productSelections[product.name][flavor] = next;
+      }
+      const counter = document.getElementById(`page-sel-${fIdx}`);
+      if (counter) counter.textContent = next;
+
+      // تحديث العدّاد في الشبكة الرئيسية أيضًا
+      const mainCounter = document.getElementById(`sel-${product._pid}-${fIdx}`);
+      if (mainCounter) mainCounter.textContent = next;
+    });
+  });
+
+  // زر الإضافة للسلة
+  const addBtn = content.querySelector('[data-action="page-add-to-cart"]');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const sels = productSelections[product.name];
+      if (!sels || Object.keys(sels).length === 0) { showAlert(); return; }
+      if (!cart[product.name]) cart[product.name] = {};
+      for (const [flv, qty] of Object.entries(sels)) {
+        cart[product.name][flv] = (cart[product.name][flv] || 0) + qty;
+      }
+      delete productSelections[product.name];
+      try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
+      updateCartUI();
+      showToast(product.name);
+      closeProductPage();
+    });
+  }
+}
+
+function closeProductPage() {
+  document.getElementById('productPageModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ==================== تقييم الموقع ==================== */
+let storeReviewStars = 0;
+
+function initStoreReview() {
+  const stars = document.querySelectorAll('.store-review-star');
+  const msg = document.getElementById('storeReviewMessage');
+  const submitBtn = document.getElementById('storeReviewSubmitBtn');
+
+  stars.forEach(btn => {
+    btn.onclick = () => {
+      storeReviewStars = Number(btn.dataset.star);
+      stars.forEach(b => {
+        const s = Number(b.dataset.star);
+        if (s <= storeReviewStars) {
+          b.classList.add('star-active');
+          b.classList.remove('bg-slate-800', 'text-slate-600');
+          b.classList.add('bg-amber-500/20', 'text-amber-400');
+        } else {
+          b.classList.remove('star-active', 'bg-amber-500/20', 'text-amber-400');
+          b.classList.add('bg-slate-800', 'text-slate-600');
+        }
+      });
+
+      const messages = {
+        1: '😔 نأسف لسماع ذلك — أخبرنا كيف نحسّن',
+        2: '😐 تجربة عادية — نريد أن نتحسن',
+        3: '🙂 جيد — نطمح للأفضل',
+        4: '😊 ممتاز — شكرًا لك',
+        5: '🤩 رائع جدًا — شكرًا جزيلًا'
+      };
+      msg.innerText = messages[storeReviewStars] || '';
+      msg.className = 'text-amber-400 text-sm font-bold mb-5';
+    };
+  });
+
+  submitBtn.onclick = () => {
+    if (storeReviewStars === 0) {
+      msg.innerText = '⚠️ يرجى اختيار عدد النجوم أولًا';
+      msg.className = 'text-rose-400 text-sm font-bold mb-5';
+      return;
+    }
+
+    const starsStr = '⭐'.repeat(storeReviewStars);
+    let msgText = `⭐ *تقييم المتجر*\n\n`;
+    msgText += `*التقييم:* ${starsStr} (${storeReviewStars}/5)\n`;
+    msgText += `*العنوان:* https://yasir-ashour.github.io/Ashour/\n`;
+    msgText += `\n— من زائر موقع مركز عاشور`;
+
+    window.open(`https://wa.me/${inquiryWhatsApp}?text=${encodeURIComponent(msgText)}`, '_blank');
+
+    // إعادة تعيين
+    storeReviewStars = 0;
+    stars.forEach(b => {
+      b.classList.remove('star-active', 'bg-amber-500/20', 'text-amber-400');
+      b.classList.add('bg-slate-800', 'text-slate-600');
+    });
+    msg.innerText = '✅ شكرًا لتقييمك!';
+    msg.className = 'text-emerald-400 text-sm font-bold mb-5';
+    setTimeout(() => {
+      msg.innerText = 'اضغط على النجوم لتقييمنا';
+      msg.className = 'text-slate-500 text-xs sm:text-sm mb-5';
+    }, 4000);
+  };
+}
+
 /* ==================== تحميل البيانات ==================== */
 function loadCatalogData() {
   return new Promise((resolve) => {
-    // 1) محاولة من localStorage
     try {
       const local = localStorage.getItem('ashour_catalog_data_v1');
       if (local) {
@@ -1278,7 +1690,6 @@ function loadCatalogData() {
       console.warn('localStorage parse error:', e);
     }
 
-    // 2) محاولة من catalog-data.js
     const script = document.createElement('script');
     script.src = 'catalog-data.js?v=' + Date.now();
     script.onload = () => {
@@ -1315,13 +1726,11 @@ function applyCatalogSettings(settings) {
   }
 }
 
-/* ==================== التهيئة الرئيسية ==================== */
+/* ==================== التهيئة ==================== */
 async function initApp() {
   try {
-    // 1) تحميل البيانات
     await loadCatalogData();
 
-    // 2) إثراء المنتجات
     if (!Array.isArray(products)) products = [];
     products.forEach((p, i) => {
       p._pid = i;
@@ -1336,16 +1745,14 @@ async function initApp() {
       }
     });
 
-    // 3) تحميل بيانات العميل
     loadCustomerData();
     updateCartUI();
 
-    // 4) عرض المحتوى
     renderCategoryButtons();
     renderOffersAndNew();
     displayProducts(products);
+    initStoreReview();
 
-    // 5) شريط التقدم
     setTimeout(() => {
       const bar = document.getElementById('preloaderBar');
       if (bar) bar.style.width = '100%';
@@ -1356,25 +1763,18 @@ async function initApp() {
   } catch (err) {
     console.error('initApp error:', err);
   } finally {
-    // 6) إخفاء Preloader — مضمون 100%
     hidePreloader();
   }
 }
 
-/* ==================== التشغيل عند التحميل ==================== */
+/* ==================== التشغيل ==================== */
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  // الصفحة محمّلة بالفعل
   initApp();
 }
 
-// صمام أمان إضافي: إخفاء الـ Preloader في كل الحالات بعد 3 ثوان
-window.addEventListener('load', () => {
-  setTimeout(hidePreloader, 500);
-});
-
-// صمام أمان ثالث: بعد 4 ثوان من فتح الصفحة
+window.addEventListener('load', () => setTimeout(hidePreloader, 500));
 setTimeout(hidePreloader, 4000);
 
 /* ==================== Escape ==================== */
@@ -1382,10 +1782,11 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     try { closeReviewsModal(); } catch(e) {}
     try { closeReviewForm(); } catch(e) {}
+    try { closeProductPage(); } catch(e) {}
   }
 });
 
-/* ==================== Service Worker (PWA) ==================== */
+/* ==================== Service Worker ==================== */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     try {
@@ -1394,10 +1795,10 @@ if ('serviceWorker' in navigator) {
           console.log('✅ Service Worker registered:', registration.scope);
         })
         .catch((err) => {
-          console.warn('⚠️ فشل تسجيل Service Worker:', err);
+          console.warn('⚠️ SW error:', err);
         });
     } catch (e) {
-      console.warn('Service Worker error:', e);
+      console.warn('SW setup error:', e);
     }
   });
 }
