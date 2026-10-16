@@ -18,6 +18,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </head>
 <body class="min-h-screen">
 
+<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
@@ -36,6 +37,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- الواجهة الرئيسية -->
 <div id="adminApp" class="hidden">
 
 <header class="sticky top-0 z-30 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
@@ -51,8 +53,11 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <div class="flex items-center gap-2 flex-wrap">
       <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-3 py-1.5 rounded-full font-bold">
-        <i class="fas fa-circle text-[6px]"></i> تغييرات غير محفوظة
+        <i class="fas fa-circle text-[6px]"></i> غير منشور
       </span>
+      <button onclick="saveToGitHub()" id="publishBtn" class="bg-sky-600 hover:bg-sky-500 text-white font-black px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-cloud-upload-alt"></i> نشر إلى GitHub
+      </button>
       <button onclick="saveAll()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
         <i class="fas fa-save"></i> حفظ
       </button>
@@ -174,15 +179,52 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <input type="text" id="setPassword" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono">
     </div>
   </div>
+
+  <!-- قسم GitHub -->
+  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-6 space-y-4 mt-5">
+    <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+      <i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub
+    </h2>
+
+    <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200">
+      <i class="fas fa-lock mr-1"></i>
+      الـ Token يُحفظ في متصفحك فقط، ولا يُرفع إلى أي مكان. لا تشاركه مع أحد.
+    </div>
+
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">Personal Access Token</label>
+      <input type="password" id="setGithubToken" placeholder="github_pat_..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
+      <p class="text-slate-500 text-xs mt-1">أدخل التوكن مرة واحدة ثم اضغط حفظ</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المستخدم</label>
+        <input type="text" id="setGithubUser" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المستودع</label>
+        <input type="text" id="setGithubRepo" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">الفرع</label>
+        <input type="text" id="setGithubBranch" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono">
+      </div>
+    </div>
+
+    <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2">
+      <i class="fas fa-plug"></i> اختبار الاتصال
+    </button>
+  </div>
 </div>
 
 <!-- تبويب النسخ الاحتياطي -->
 <div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-4 pb-16 space-y-5">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
-      <i class="fas fa-file-export text-emerald-400"></i> تصدير البيانات
+      <i class="fas fa-file-export text-emerald-400"></i> تصدير يدوي
     </h2>
-    <p class="text-slate-400 text-sm mb-4">حمّل ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> وارفعه في GitHub بجانب <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">index.html</code>.</p>
+    <p class="text-slate-400 text-sm mb-4">حمّل ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> كنسخة احتياطية.</p>
     <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2">
       <i class="fas fa-download"></i> تنزيل ملف JS
     </button>
@@ -192,7 +234,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
       <i class="fas fa-file-import text-amber-400"></i> استيراد البيانات
     </h2>
-    <p class="text-slate-400 text-sm mb-4">استورد ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> لاستعادة نسخة سابقة.</p>
     <input type="file" id="importFile" accept=".js,.json" class="hidden" onchange="importData(event)">
     <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2">
       <i class="fas fa-upload"></i> اختيار ملف للاستيراد
@@ -227,7 +268,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
       </div>
 
-      <!-- قسم الصورة -->
       <div class="border-t border-slate-800 pt-4">
         <label class="block text-slate-300 font-bold mb-2 text-sm">صورة المنتج <span class="text-rose-500">*</span></label>
 
@@ -339,6 +379,14 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<div id="publishOverlay" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+  <div class="bg-slate-900 border-2 border-sky-500 rounded-2xl p-6 text-center max-w-sm">
+    <i class="fas fa-cloud-upload-alt text-4xl text-sky-400 mb-3 animate-pulse"></i>
+    <p id="publishStatusText" class="text-white font-bold">جاري النشر إلى GitHub...</p>
+    <p class="text-slate-400 text-xs mt-1">لا تغلق الصفحة</p>
+  </div>
+</div>
+
 </div><!-- /adminApp -->
 
 <script>
@@ -365,7 +413,7 @@ function showToast(msg, type = 'success') {
     (type === 'error' ? 'bg-rose-950 border-rose-500' : 'bg-slate-900 border-amber-500');
   toast.classList.remove('hidden');
   clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => toast.classList.add('hidden'), 2500);
+  showToast._t = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
 
 function persist() {
@@ -394,7 +442,6 @@ function handleImageUpload(event) {
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      // ضغط الصورة
       const canvas = document.createElement('canvas');
       const MAX_WIDTH = 800;
       const MAX_HEIGHT = 800;
@@ -423,7 +470,6 @@ function handleImageUpload(event) {
 
       document.getElementById('uploadStatusText').innerText = 'جاري رفع الصورة إلى السحابة... (~' + sizeKB + ' KB)';
 
-      // رفع إلى ImgBB
       const base64Only = compressedDataUrl.split(',')[1];
       const formData = new FormData();
       formData.append('key', IMGBB_API_KEY);
@@ -447,7 +493,7 @@ function handleImageUpload(event) {
           document.getElementById('fImage').value = '';
 
           const info = document.getElementById('imageSizeInfo');
-          info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB) — الرابط: ${data.data.url.substring(0, 40)}...`;
+          info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB)`;
           info.classList.remove('hidden');
 
           showToast('تم رفع الصورة بنجاح ✅');
@@ -527,7 +573,10 @@ function loadInitialData() {
           inquiryWhatsApp: '963959248901',
           address: 'دمشق أوتوستراد درعا الدولي',
           mapUrl: 'https://maps.app.goo.gl/djUWNAnBhh3pPwfn6',
-          password: 'ashour2026'
+          password: 'ashour2026',
+          githubUser: 'yasir-ashour',
+          githubRepo: 'Ashour',
+          githubBranch: 'main'
         },
         categories: ['بسكويت', 'شيبس', 'سكاكر وعلكة', 'عصائر ومشروبات', 'قهوة']
       };
@@ -600,18 +649,23 @@ function renderSettingsInputs() {
   document.getElementById('setAddress').value = s.address || '';
   document.getElementById('setMapUrl').value = s.mapUrl || '';
   document.getElementById('setPassword').value = s.password || '';
+  document.getElementById('setGithubUser').value = s.githubUser || 'yasir-ashour';
+  document.getElementById('setGithubRepo').value = s.githubRepo || 'Ashour';
+  document.getElementById('setGithubBranch').value = s.githubBranch || 'main';
+  document.getElementById('setGithubToken').value = localStorage.getItem('ashour_github_token') || '';
 
   const logo = document.getElementById('logoPreview');
   if (s.logoUrl) { logo.src = s.logoUrl; logo.style.display = 'block'; }
   else logo.style.display = 'none';
 }
 
-['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setPassword'].forEach(id => {
+['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setPassword','setGithubUser','setGithubRepo','setGithubBranch'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
     const map = {
       setStoreName: 'storeName', setLogoUrl: 'logoUrl',
       setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp',
-      setAddress: 'address', setMapUrl: 'mapUrl', setPassword: 'password'
+      setAddress: 'address', setMapUrl: 'mapUrl', setPassword: 'password',
+      setGithubUser: 'githubUser', setGithubRepo: 'githubRepo', setGithubBranch: 'githubBranch'
     };
     catalogData.settings[map[id]] = document.getElementById(id).value;
     if (id === 'setLogoUrl') {
@@ -621,6 +675,14 @@ function renderSettingsInputs() {
     }
     persist();
   });
+});
+
+document.getElementById('setGithubToken').addEventListener('input', () => {
+  const val = document.getElementById('setGithubToken').value.trim();
+  if (val) {
+    localStorage.setItem('ashour_github_token', val);
+    clearDirty();
+  }
 });
 
 /* ============================ عرض المنتجات ============================ */
@@ -668,17 +730,13 @@ function renderProductList() {
       ? `<span class="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md"><i class="fas fa-tags"></i> ${p.flavors.length} نكهة</span>`
       : `<span class="text-xs text-slate-500 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">بدون نكهات</span>`;
 
-    const imgSrc = p.image || '';
-    const isBase64 = imgSrc.startsWith('data:');
-
     return `
       <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
         <div class="aspect-[740/645] bg-slate-950 relative overflow-hidden">
-          <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.name)}" loading="lazy"
+          <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" loading="lazy"
             class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}"
             onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-4xl\\'></i></div>'">
           <div class="absolute top-2 right-2">${badge}</div>
-          ${isBase64 ? '<div class="absolute top-2 left-2 bg-rose-600 text-white text-xs px-2 py-0.5 rounded font-bold"><i class="fas fa-exclamation-triangle"></i> base64 قديم</div>' : ''}
         </div>
         <div class="p-3">
           <h3 class="text-white font-black text-sm leading-snug mb-2">${escapeHtml(p.name)}</h3>
@@ -758,14 +816,7 @@ function openProductModal(pid = null) {
       preview.src = p.image;
       preview.classList.remove('hidden');
       document.getElementById('fImagePlaceholder').classList.add('hidden');
-
-      if (p.image.startsWith('data:')) {
-        const info = document.getElementById('imageSizeInfo');
-        info.innerText = '⚠️ صورة base64 قديمة — يُنصح بإعادة رفعها من الاستوديو';
-        info.classList.remove('hidden');
-      } else {
-        document.getElementById('fImage').value = p.image;
-      }
+      document.getElementById('fImage').value = p.image;
     }
   }
 
@@ -895,9 +946,11 @@ function deleteProductFromModal() {
 function saveAll() {
   persist();
   clearDirty();
-  showToast('تم حفظ كل التغييرات');
-}/* ============================ تصدير ============================ */
-function exportData() {
+  showToast('تم حفظ التغييرات محليًا');
+}
+
+/* ============================ نشر إلى GitHub ============================ */
+function buildCatalogJS() {
   const clean = {
     products: catalogData.products.map(p => {
       const o = { ...p };
@@ -911,7 +964,7 @@ function exportData() {
   let jsContent = '/* ================================\n';
   jsContent += '   ملف بيانات الكتالوج\n';
   jsContent += '   مركز عاشور للتجارة\n';
-  jsContent += '   تم التصدير في: ' + new Date().toLocaleString('ar-SY') + '\n';
+  jsContent += '   آخر تحديث: ' + new Date().toLocaleString('ar-SY') + '\n';
   jsContent += '   ================================ */\n\n';
   jsContent += 'window.catalogData = {\n';
   jsContent += '  products: [],\n';
@@ -925,15 +978,117 @@ function exportData() {
   });
 
   jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n';
+  return jsContent;
+}
 
-  const blob = new Blob([jsContent], { type: 'application/javascript' });
+async function saveToGitHub() {
+  const token = localStorage.getItem('ashour_github_token') || '';
+  const user = catalogData.settings.githubUser || 'yasir-ashour';
+  const repo = catalogData.settings.githubRepo || 'Ashour';
+  const branch = catalogData.settings.githubBranch || 'main';
+  const filePath = 'catalog-data.js';
+
+  if (!token) {
+    showToast('يرجى إدخال GitHub Token في الإعدادات أولًا', 'error');
+    return;
+  }
+
+  document.getElementById('publishOverlay').classList.remove('hidden');
+  document.getElementById('publishStatusText').innerText = 'جاري التحضير...';
+
+  try {
+    // 1) احصل على SHA الحالي
+    document.getElementById('publishStatusText').innerText = 'جاري قراءة الملف الحالي...';
+    const getRes = await fetch(
+      `https://api.github.com/repos/${user}/${repo}/contents/${filePath}?ref=${branch}`,
+      { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
+    );
+
+    let sha = null;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    } else if (getRes.status !== 404) {
+      throw new Error('فشل الاتصال بـ GitHub: ' + getRes.status);
+    }
+
+    // 2) ارفع الملف
+    document.getElementById('publishStatusText').innerText = 'جاري الرفع إلى GitHub...';
+    const content = buildCatalogJS();
+    const base64Content = btoa(unescape(encodeURIComponent(content)));
+
+    const body = {
+      message: `تحديث الكتالوج - ${new Date().toLocaleString('ar-SY')}`,
+      content: base64Content,
+      branch: branch
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(
+      `https://api.github.com/repos/${user}/${repo}/contents/${filePath}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }
+    );
+
+    document.getElementById('publishOverlay').classList.add('hidden');
+
+    if (putRes.ok) {
+      clearDirty();
+      showToast('✅ تم النشر بنجاح — الموقع سيُحدَّث خلال دقيقة');
+    } else {
+      const errData = await putRes.json();
+      throw new Error(errData.message || 'فشل الرفع');
+    }
+  } catch (err) {
+    document.getElementById('publishOverlay').classList.add('hidden');
+    showToast('فشل النشر: ' + err.message, 'error');
+    console.error('GitHub error:', err);
+  }
+}
+
+async function testGithubConnection() {
+  const token = localStorage.getItem('ashour_github_token') || '';
+  const user = catalogData.settings.githubUser || 'yasir-ashour';
+  const repo = catalogData.settings.githubRepo || 'Ashour';
+
+  if (!token) {
+    showToast('يرجى إدخال GitHub Token أولًا', 'error');
+    return;
+  }
+
+  showToast('جاري الاختبار...');
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+      headers: { 'Authorization': `token ${token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      showToast('✅ الاتصال ناجح: ' + data.full_name);
+    } else {
+      showToast('❌ فشل الاتصال: ' + res.status, 'error');
+    }
+  } catch (err) {
+    showToast('❌ خطأ: ' + err.message, 'error');
+  }
+}/* ============================ تصدير يدوي ============================ */
+function exportData() {
+  const content = buildCatalogJS();
+  const blob = new Blob([content], { type: 'application/javascript' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = 'catalog-data.js';
   a.click();
   URL.revokeObjectURL(url);
-  showToast('تم تنزيل الملف — ارفعه في GitHub');
+  showToast('تم تنزيل الملف — ارفعه يدويًا في GitHub');
 }
 
 /* ============================ استيراد ============================ */
