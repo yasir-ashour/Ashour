@@ -278,21 +278,34 @@ function loadCustomerData() {
   if (a) document.getElementById('custAddress').value = a;
 }
 
-/* ==================== دوال عامة ==================== */
+/* ==================== دوال الصور (المعدلة) ==================== */
 function hideLoader(el) {
   const c = el.closest('.relative');
   if (c) { const l = c.querySelector('.loader-wrapper'); if (l) l.style.display = 'none'; }
   el.classList.remove('opacity-0');
   el.classList.add('opacity-100');
 }
+
 function handleImgError(el, name) {
+  // المحاولة 1: استخدم الرابط المباشر (بدون وسيط)
+  if (!el.dataset.triedDirect) {
+    el.dataset.triedDirect = '1';
+    const originalUrl = el.dataset.originalSrc || '';
+    if (originalUrl) {
+      el.src = originalUrl;
+      return;
+    }
+  }
+  
+  // المحاولة 2: فشل الاثنان → أظهر البديل
   const c = el.closest('.relative');
   if (c) {
     const l = c.querySelector('.loader-wrapper');
     if (l) l.style.display = 'none';
     c.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-800 p-4 text-center">
       <i class="fas fa-box-open text-4xl text-amber-400 mb-2"></i>
-      <span class="text-xs text-slate-400">${escapeHtml(name)}</span>
+      <span class="text-sm text-amber-300 font-bold">مركز عاشور للتجارة</span>
+      <span class="text-xs text-slate-400 mt-1">${escapeHtml(name)}</span>
     </div>`;
   }
 }
@@ -332,6 +345,7 @@ function displayProducts(items) {
     const isAvail = product.available !== false;
     const isLow = product.lowStock === true && isAvail;
     const proxiedImageUrl = product._proxiedImage || getProxyUrl(product.image);
+    const originalImageUrl = product.image || '';
     const rotateClass = product.rotateClass || '';
 
     let statusBadge = '', statusText = '';
@@ -386,9 +400,13 @@ function displayProducts(items) {
           <div class="loader-wrapper absolute inset-0 flex items-center justify-center bg-slate-900 text-amber-400 text-xs z-10">
             <i class="fas fa-spinner fa-spin text-xl"></i>
           </div>
-          <img src="${proxiedImageUrl}" alt="${escapeHtml(product.name)}"
+          <img src="${proxiedImageUrl}" 
+               data-original-src="${escapeHtml(originalImageUrl)}"
+               alt="${escapeHtml(product.name)}"
                class="w-full h-full object-cover opacity-0 transition-opacity duration-300 ${rotateClass}"
-               onload="hideLoader(this)" onerror="handleImgError(this, '${escapeHtml(product.name)}')" loading="lazy">
+               onload="hideLoader(this)" 
+               onerror="handleImgError(this, '${escapeHtml(product.name)}')" 
+               loading="lazy">
           ${statusBadge}
         </div>
         <div class="p-4">
@@ -706,7 +724,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   // 1) تحميل البيانات
   await loadCatalogData();
 
-  // 2) إثراء المنتجات
+  // 2) إثراء المنتجات بمعرّف وصورة وسيطة
   products.forEach((p, i) => {
     p._pid = i;
     p._proxiedImage = getProxyUrl(p.image);
