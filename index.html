@@ -81,11 +81,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </a>
 </div>
 
-<!-- الرأس -->
+<!-- الرأس (الشعار مُكبّر) -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
 <div class="flex items-center gap-2 min-w-0">
-<div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center flex-shrink-0">
+<div class="w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center flex-shrink-0">
 <img id="logoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
 </div>
 <div class="min-w-0">
@@ -144,7 +144,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
   <section class="max-w-7xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
   <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6" id="categoryContainer"></div>
-  <!-- شبكة المنتجات: منتجان جنبًا إلى جنب على الجوال -->
   <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
   <div id="noResults" class="hidden text-center py-16 text-slate-500">
     <i class="fas fa-box-open text-6xl mb-4 text-amber-500/50"></i>
@@ -153,12 +152,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
-<!-- صفحة السلة -->
+<!-- صفحة السلة (الشعار مُكبّر) -->
 <div id="cartPageView" class="hidden max-w-4xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-16 h-16 flex items-center justify-center flex-shrink-0">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center flex-shrink-0">
           <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
         </div>
         <div>
@@ -224,10 +223,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </button>
 </div>
 
-<!-- التذييل -->
+<!-- التذييل (الشعار مُكبّر) -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-10">
 <div class="max-w-4xl mx-auto space-y-3">
-  <div class="w-28 h-28 flex items-center justify-center mx-auto">
+  <div class="w-36 h-36 flex items-center justify-center mx-auto">
     <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
   </div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
@@ -393,7 +392,7 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
-}/* ==================== عرض المنتجات (مُحسّن لبطاقات الجوال الصغيرة) ==================== */
+}/* ==================== عرض المنتجات (بطاقات محسّنة للجوال) ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
