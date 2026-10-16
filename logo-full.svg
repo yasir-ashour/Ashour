@@ -1,0 +1,106 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- تدرج ذهبي -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE08F"/>
+      <stop offset="30%" stop-color="#E8C766"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="70%" stop-color="#B89528"/>
+      <stop offset="100%" stop-color="#997415"/>
+    </linearGradient>
+    
+    <!-- تدرج ذهبي لامع -->
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF4C2"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#8B6A0F"/>
+    </linearGradient>
+    
+    <!-- تدرج خلفية دائرية -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a2540"/>
+      <stop offset="70%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#070a12"/>
+    </radialGradient>
+    
+    <!-- توهج خارجي -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- الخلفية الداكنة -->
+  <circle cx="256" cy="256" r="255" fill="url(#bgGrad)"/>
+  
+  <!-- الحلقة الخارجية الذهبية -->
+  <circle cx="256" cy="256" r="248" fill="none" stroke="url(#goldGrad)" stroke-width="6"/>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  
+  <!-- زخرفة: نجمة 8 رؤوس (الخاتم) -->
+  <g opacity="0.3" transform="translate(256 256)">
+    <path d="M 0,-225 L 55,-55 L 225,0 L 55,55 L 0,225 L -55,55 L -225,0 L -55,-55 Z" 
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <path d="M 0,-225 L 55,-55 L 225,0 L 55,55 L 0,225 L -55,55 L -225,0 L -55,-55 Z" 
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.5" transform="rotate(45)"/>
+  </g>
+  
+  <!-- زخرفة زاوية: النقاط الأربع -->
+  <g fill="url(#goldGrad)" opacity="0.6">
+    <circle cx="256" cy="26" r="6"/>
+    <circle cx="256" cy="486" r="6"/>
+    <circle cx="26" cy="256" r="6"/>
+    <circle cx="486" cy="256" r="6"/>
+  </g>
+  
+  <!-- قوس علوي: مركز عاشور -->
+  <path id="topArc" d="M 80,256 A 176,176 0 0,1 432,256" fill="none"/>
+  <text font-family="Amiri, serif" font-size="34" font-weight="700" fill="url(#goldShine)" filter="url(#glow)">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+      مـركـز عـاشـور
+    </textPath>
+  </text>
+  
+  <!-- الحلقة الوسطى الذهبية السميكة -->
+  <circle cx="256" cy="256" r="170" fill="none" stroke="url(#goldShine)" stroke-width="3"/>
+  
+  <!-- حلقة داخلية رقيقة -->
+  <circle cx="256" cy="256" r="155" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.7"/>
+  
+  <!-- زخرفة داخلية: نجمة صغيرة -->
+  <g fill="url(#goldGrad)" opacity="0.4">
+    <polygon points="256,110 260,130 280,130 264,144 270,164 256,152 242,164 248,144 232,130 252,130"/>
+  </g>
+  
+  <!-- الاسم الرئيسي: عاشور -->
+  <text x="256" y="295" text-anchor="middle" font-family="Amiri, serif" 
+        font-size="115" font-weight="700" fill="url(#goldShine)" 
+        filter="url(#glow)" letter-spacing="4">
+    عـاشـور
+  </text>
+  
+  <!-- الخط الفاصل -->
+  <line x1="180" y1="320" x2="332" y2="320" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.8"/>
+  
+  <!-- كلمة: للتجارة -->
+  <text x="256" y="365" text-anchor="middle" font-family="Amiri, serif" 
+        font-size="34" font-weight="700" fill="url(#goldShine)" 
+        letter-spacing="8">
+    لـلـتـجـارة
+  </text>
+  
+  <!-- قوس سفلي: منذ 1951 -->
+  <path id="botArc" d="M 90,320 A 176,176 0 0,0 422,320" fill="none"/>
+  <text font-family="Tajawal, sans-serif" font-size="18" font-weight="600" 
+        fill="url(#goldGrad)" letter-spacing="4" opacity="0.85">
+    <textPath href="#botArc" startOffset="50%" text-anchor="middle">
+      ★ EST. 1951 ★
+    </textPath>
+  </text>
+  
+  <!-- حلقة خارجية رفيعة جدًا للإغلاق -->
+  <circle cx="256" cy="256" r="252" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+</svg>
