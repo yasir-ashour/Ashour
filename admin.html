@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة إدارة الكتالوج - مركز عاشور</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,6 +15,14 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .flavor-tag { display: inline-flex; align-items: center; gap: 6px; }
+@keyframes modalPop {
+  from { transform: scale(0.85) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+}
 </style>
 </head>
 <body class="min-h-screen">
@@ -37,52 +46,51 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- الواجهة الرئيسية -->
 <div id="adminApp" class="hidden">
 
 <header class="sticky top-0 z-30 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+  <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
     <div class="flex items-center gap-3">
-      <div class="w-11 h-11 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl">
-        <i class="fas fa-sliders-h"></i>
+      <div class="w-12 h-12 rounded-xl overflow-hidden bg-slate-900/50 flex items-center justify-center flex-shrink-0 p-1">
+        <img src="logo.png" class="w-full h-full object-contain" alt="Logo" onerror="this.style.display='none'">
       </div>
       <div>
-        <h1 class="text-lg sm:text-xl font-black gold-gradient-text">لوحة إدارة الكتالوج</h1>
+        <h1 class="text-base sm:text-xl font-black gold-gradient-text">لوحة إدارة الكتالوج</h1>
         <p class="text-xs text-slate-400">مركز عاشور للتجارة</p>
       </div>
     </div>
     <div class="flex items-center gap-2 flex-wrap">
-      <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-3 py-1.5 rounded-full font-bold">
+      <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-2.5 py-1.5 rounded-full font-bold">
         <i class="fas fa-circle text-[6px]"></i> غير منشور
       </span>
-      <button onclick="saveToGitHub()" id="publishBtn" class="bg-sky-600 hover:bg-sky-500 text-white font-black px-4 py-2 rounded-xl text-sm flex items-center gap-2">
-        <i class="fas fa-cloud-upload-alt"></i> نشر إلى GitHub
+      <button onclick="saveToGitHub()" id="publishBtn" class="bg-sky-600 hover:bg-sky-500 text-white font-black px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2">
+        <i class="fas fa-cloud-upload-alt"></i> نشر
       </button>
-      <button onclick="saveAll()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+      <button onclick="saveAll()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2">
         <i class="fas fa-save"></i> حفظ
       </button>
-      <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
-        <i class="fas fa-external-link-alt"></i> عرض الموقع
+      <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2">
+        <i class="fas fa-external-link-alt"></i>
       </a>
     </div>
   </div>
 </header>
 
-<div class="max-w-7xl mx-auto px-4 pt-6">
-  <div class="flex gap-2 mb-6 flex-wrap">
-    <button data-tab="products" class="tab-btn active bg-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition">
+<div class="max-w-7xl mx-auto px-3 sm:px-4 pt-5">
+  <div class="flex gap-2 mb-5 flex-wrap">
+    <button data-tab="products" class="tab-btn active bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-sm transition">
       <i class="fas fa-boxes"></i> المنتجات
     </button>
-    <button data-tab="settings" class="tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition">
+    <button data-tab="settings" class="tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition">
       <i class="fas fa-cog"></i> الإعدادات
     </button>
-    <button data-tab="backup" class="tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition">
+    <button data-tab="backup" class="tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition">
       <i class="fas fa-database"></i> النسخ الاحتياطي
     </button>
   </div>
 </div><!-- تبويب المنتجات -->
-<div id="tab-products" class="tab-content max-w-7xl mx-auto px-4 pb-16">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
+<div id="tab-products" class="tab-content max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-4 mb-5 flex items-center gap-3 flex-wrap">
     <div class="relative flex-grow min-w-[200px]">
       <input type="text" id="adminSearch" placeholder="ابحث عن منتج..." oninput="renderProductList()"
         class="w-full bg-slate-950 text-white placeholder-slate-500 pr-10 pl-3 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
@@ -99,31 +107,31 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <option value="lowStock">كمية محدودة</option>
       <option value="unavailable">غير متوفر</option>
     </select>
-    <button onclick="openProductModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm flex items-center gap-2">
+    <button onclick="openProductModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
       <i class="fas fa-plus"></i> منتج جديد
     </button>
   </div>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1">إجمالي المنتجات</p>
       <p id="statTotal" class="text-2xl font-black text-white">0</p>
     </div>
-    <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-4">
+    <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1">متوفرة</p>
       <p id="statAvailable" class="text-2xl font-black text-emerald-400">0</p>
     </div>
-    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-4">
+    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1">كمية محدودة</p>
       <p id="statLow" class="text-2xl font-black text-amber-400">0</p>
     </div>
-    <div class="bg-slate-900 border border-rose-500/30 rounded-2xl p-4">
+    <div class="bg-slate-900 border border-rose-500/30 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1">غير متوفرة</p>
       <p id="statUnavailable" class="text-2xl font-black text-rose-400">0</p>
     </div>
   </div>
 
-  <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  <div id="productList" class="grid grid-cols-2 lg:grid-cols-3 gap-3"></div>
   <div id="emptyState" class="hidden text-center py-16 text-slate-500">
     <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
     <p class="text-lg">لا توجد منتجات تطابق البحث</p>
@@ -131,8 +139,8 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </div>
 
 <!-- تبويب الإعدادات -->
-<div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-4 pb-16">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
+<div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-store text-amber-400"></i> إعدادات المتجر
     </h2>
@@ -181,7 +189,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 
   <!-- قسم GitHub -->
-  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-6 space-y-4 mt-5">
+  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub
     </h2>
@@ -193,7 +201,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
     <div>
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">Personal Access Token</label>
-      <input type="password" id="setGithubToken" placeholder="github_pat_..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
+      <input type="password" id="setGithubToken" placeholder="ghp_..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
       <p class="text-slate-500 text-xs mt-1">أدخل التوكن مرة واحدة ثم اضغط حفظ</p>
     </div>
 
@@ -219,8 +227,8 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </div>
 
 <!-- تبويب النسخ الاحتياطي -->
-<div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-4 pb-16 space-y-5">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+<div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16 space-y-5">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
       <i class="fas fa-file-export text-emerald-400"></i> تصدير يدوي
     </h2>
@@ -230,7 +238,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
 
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
       <i class="fas fa-file-import text-amber-400"></i> استيراد البيانات
     </h2>
@@ -240,16 +248,16 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
 </div><!-- نافذة تعديل/إضافة منتج -->
-<div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-4">
-  <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-8 shadow-2xl">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
-      <h2 id="modalTitle" class="text-xl font-black gold-gradient-text">تعديل منتج</h2>
+<div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
+  <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
+    <div class="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800">
+      <h2 id="modalTitle" class="text-lg sm:text-xl font-black gold-gradient-text">تعديل منتج</h2>
       <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
         <i class="fas fa-times"></i>
       </button>
     </div>
 
-    <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+    <div class="p-4 sm:p-5 space-y-4 max-h-[70vh] overflow-y-auto">
       <input type="hidden" id="fPid">
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -268,6 +276,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
       </div>
 
+      <!-- قسم الصورة -->
       <div class="border-t border-slate-800 pt-4">
         <label class="block text-slate-300 font-bold mb-2 text-sm">صورة المنتج <span class="text-rose-500">*</span></label>
 
@@ -353,7 +362,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       </div>
     </div>
 
-    <div class="flex justify-between items-center p-5 border-t border-slate-800 gap-3 flex-wrap">
+    <div class="flex justify-between items-center p-4 sm:p-5 border-t border-slate-800 gap-3 flex-wrap">
       <button type="button" onclick="deleteProductFromModal()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
         <i class="fas fa-trash-alt"></i> حذف المنتج
       </button>
@@ -367,11 +376,50 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
+<!-- نافذة تأكيد الحذف الجميلة -->
+<div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+    <div class="h-1.5 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500"></div>
+    
+    <div class="p-6 text-center">
+      <div class="w-20 h-20 mx-auto rounded-full bg-rose-500/10 border-2 border-rose-500/40 flex items-center justify-center mb-4" style="animation: iconPulse 1.5s ease-in-out infinite;">
+        <i class="fas fa-trash-alt text-4xl text-rose-400"></i>
+      </div>
+      
+      <h3 class="text-2xl font-black text-white mb-2">تأكيد الحذف</h3>
+      <p class="text-slate-400 text-sm mb-4">هل أنت متأكد من حذف هذا المنتج؟</p>
+      
+      <div class="bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mb-3">
+        <p class="text-xs text-slate-500 mb-1">المنتج</p>
+        <p id="confirmProductName" class="text-amber-400 font-black text-lg">اسم المنتج</p>
+      </div>
+      
+      <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-3 flex items-start gap-2 text-right">
+        <i class="fas fa-exclamation-triangle text-rose-400 mt-0.5"></i>
+        <p class="text-xs text-rose-300 leading-relaxed">
+          <span class="font-bold">تحذير:</span> لا يمكن التراجع عن هذا الإجراء. المنتج سيُحذف نهائيًا من الكتالوج.
+        </p>
+      </div>
+    </div>
+    
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
+      <button onclick="resolveConfirm(false)" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
+        <i class="fas fa-times"></i> إلغاء
+      </button>
+      <button onclick="resolveConfirm(true)" class="flex-1 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-rose-900/50 flex items-center justify-center gap-2">
+        <i class="fas fa-trash-alt"></i> نعم، احذف
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
   <p id="toastMsg" class="text-sm font-bold"></p>
 </div>
 
-<div id="imageProcessingOverlay" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+<!-- شاشة معالجة الصورة -->
+<div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 text-center max-w-sm">
     <i class="fas fa-spinner fa-spin text-4xl text-amber-400 mb-3"></i>
     <p id="uploadStatusText" class="text-white font-bold">جاري معالجة الصورة...</p>
@@ -379,7 +427,8 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<div id="publishOverlay" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+<!-- شاشة النشر -->
+<div id="publishOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-sky-500 rounded-2xl p-6 text-center max-w-sm">
     <i class="fas fa-cloud-upload-alt text-4xl text-sky-400 mb-3 animate-pulse"></i>
     <p id="publishStatusText" class="text-white font-bold">جاري النشر إلى GitHub...</p>
@@ -398,6 +447,23 @@ let editingFlavors = [];
 let currentRotation = '';
 let currentImageData = '';
 
+/* نظام نافذة التأكيد */
+let _confirmResolver = null;
+function showConfirm(productName) {
+  return new Promise((resolve) => {
+    _confirmResolver = resolve;
+    document.getElementById('confirmProductName').innerText = productName;
+    document.getElementById('confirmModal').classList.remove('hidden');
+  });
+}
+function resolveConfirm(answer) {
+  document.getElementById('confirmModal').classList.add('hidden');
+  if (_confirmResolver) {
+    _confirmResolver(answer);
+    _confirmResolver = null;
+  }
+}
+
 /* ============================ أدوات ============================ */
 function escapeHtml(s) {
   return String(s == null ? '' : s)
@@ -409,7 +475,7 @@ function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
   const toastMsg = document.getElementById('toastMsg');
   toastMsg.innerText = msg;
-  toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-2xl border-2 ' +
+  toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] px-5 py-3 rounded-2xl shadow-2xl border-2 ' +
     (type === 'error' ? 'bg-rose-950 border-rose-500' : 'bg-slate-900 border-amber-500');
   toast.classList.remove('hidden');
   clearTimeout(showToast._t);
@@ -423,9 +489,7 @@ function persist() {
 
 function clearDirty() {
   document.getElementById('dirtyBadge').classList.add('hidden');
-}
-
-/* ============================ رفع الصور إلى ImgBB ============================ */
+}/* ============================ رفع الصور إلى ImgBB ============================ */
 function handleImageUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -468,7 +532,7 @@ function handleImageUpload(event) {
       const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
       const sizeKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
 
-      document.getElementById('uploadStatusText').innerText = 'جاري رفع الصورة إلى السحابة... (~' + sizeKB + ' KB)';
+      document.getElementById('uploadStatusText').innerText = 'جاري الرفع... (~' + sizeKB + ' KB)';
 
       const base64Only = compressedDataUrl.split(',')[1];
       const formData = new FormData();
@@ -485,7 +549,6 @@ function handleImageUpload(event) {
 
         if (data && data.success && data.data && data.data.url) {
           currentImageData = data.data.url;
-
           const preview = document.getElementById('fImagePreview');
           preview.src = data.data.url;
           preview.classList.remove('hidden');
@@ -495,16 +558,14 @@ function handleImageUpload(event) {
           const info = document.getElementById('imageSizeInfo');
           info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB)`;
           info.classList.remove('hidden');
-
           showToast('تم رفع الصورة بنجاح ✅');
         } else {
-          throw new Error('فشل الرفع: ' + (data && data.error ? data.error.message : 'خطأ غير معروف'));
+          throw new Error('فشل الرفع');
         }
       })
       .catch(err => {
         document.getElementById('imageProcessingOverlay').classList.add('hidden');
         showToast('فشل رفع الصورة: ' + err.message, 'error');
-        console.error('ImgBB error:', err);
       });
     };
     img.onerror = () => {
@@ -518,7 +579,6 @@ function handleImageUpload(event) {
     showToast('فشل قراءة الملف', 'error');
   };
   reader.readAsDataURL(file);
-
   event.target.value = '';
 }
 
@@ -537,7 +597,9 @@ function removeImage() {
   document.getElementById('fImagePreview').classList.add('hidden');
   document.getElementById('fImagePlaceholder').classList.remove('hidden');
   document.getElementById('imageSizeInfo').classList.add('hidden');
-}/* ============================ تحميل البيانات ============================ */
+}
+
+/* ============================ تحميل البيانات ============================ */
 function loadInitialData() {
   return new Promise((resolve) => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -568,7 +630,7 @@ function loadInitialData() {
         products: [],
         settings: {
           storeName: 'مركز عاشور للتجارة',
-          logoUrl: 'https://cdn.phototourl.com/free/2026-09-21-ca2f4731-bf40-43ca-b6c3-c3b47ad9603d.jpg',
+          logoUrl: 'logo.png',
           orderWhatsApp: '963982572810',
           inquiryWhatsApp: '963959248901',
           address: 'دمشق أوتوستراد درعا الدولي',
@@ -615,8 +677,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     const tab = btn.dataset.tab;
     document.querySelectorAll('.tab-btn').forEach(b => {
       b.className = b.dataset.tab === tab
-        ? 'tab-btn active bg-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition'
-        : 'tab-btn bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm border border-slate-700 transition';
+        ? 'tab-btn active bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-sm transition'
+        : 'tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition';
     });
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
     document.getElementById('tab-' + tab).classList.remove('hidden');
@@ -722,29 +784,21 @@ function renderProductList() {
     const isLow = p.lowStock === true && isAvail;
 
     let badge = '';
-    if (!isAvail) badge = '<span class="bg-rose-600 text-white text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-times-circle"></i> غير متوفر</span>';
-    else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>';
-    else badge = '<span class="bg-emerald-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-check-circle"></i> متوفر</span>';
-
-    const flavorsBadge = (p.flavors && p.flavors.length)
-      ? `<span class="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md"><i class="fas fa-tags"></i> ${p.flavors.length} نكهة</span>`
-      : `<span class="text-xs text-slate-500 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">بدون نكهات</span>`;
+    if (!isAvail) badge = '<span class="bg-rose-600 text-white text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black"><i class="fas fa-times-circle"></i></span>';
+    else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black"><i class="fas fa-exclamation-triangle"></i></span>';
+    else badge = '<span class="bg-emerald-500 text-slate-950 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black"><i class="fas fa-check-circle"></i></span>';
 
     return `
       <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
-        <div class="aspect-[740/645] bg-slate-950 relative overflow-hidden">
+        <div class="aspect-square bg-slate-950 relative overflow-hidden">
           <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" loading="lazy"
             class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}"
-            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-4xl\\'></i></div>'">
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-3xl\\'></i></div>'">
           <div class="absolute top-2 right-2">${badge}</div>
         </div>
-        <div class="p-3">
-          <h3 class="text-white font-black text-sm leading-snug mb-2">${escapeHtml(p.name)}</h3>
-          <div class="flex items-center gap-2 flex-wrap mb-3">
-            <span class="text-xs text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${escapeHtml(p.category || 'بدون فئة')}</span>
-            ${flavorsBadge}
-          </div>
-          <button onclick="openProductModal(${pid})" class="w-full bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 font-bold py-2 rounded-xl text-sm flex items-center justify-center gap-2">
+        <div class="p-2 sm:p-3">
+          <h3 class="text-white font-black text-xs sm:text-sm leading-snug mb-2 line-clamp-2">${escapeHtml(p.name)}</h3>
+          <button onclick="openProductModal(${pid})" class="w-full bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1">
             <i class="fas fa-edit"></i> تعديل
           </button>
         </div>
@@ -890,7 +944,7 @@ function removeFlavor(i) {
   renderFlavors();
 }
 
-/* ============================ حفظ وحذف ============================ */
+/* ============================ حفظ المنتج ============================ */
 function saveProduct() {
   const name = document.getElementById('fName').value.trim();
   const category = document.getElementById('fCategory').value.trim();
@@ -929,27 +983,29 @@ function saveProduct() {
   closeProductModal();
 }
 
-function deleteProductFromModal() {
+/* ============================ حذف المنتج (بالنافذة الجميلة) ============================ */
+async function deleteProductFromModal() {
   const pidVal = document.getElementById('fPid').value;
   if (pidVal === '') { closeProductModal(); return; }
   const p = catalogData.products[Number(pidVal)];
   if (!p) return;
-  if (!confirm(`هل تريد حذف "${p.name}"؟ لا يمكن التراجع.`)) return;
+  
+  const confirmed = await showConfirm(p.name);
+  if (!confirmed) return;
+  
   catalogData.products.splice(Number(pidVal), 1);
   persist();
   renderProductList();
   renderStats();
   closeProductModal();
-  showToast('تم حذف المنتج');
+  showToast('تم حذف المنتج بنجاح');
 }
 
 function saveAll() {
   persist();
   clearDirty();
   showToast('تم حفظ التغييرات محليًا');
-}
-
-/* ============================ نشر إلى GitHub ============================ */
+}/* ============================ نشر إلى GitHub ============================ */
 function buildCatalogJS() {
   const clean = {
     products: catalogData.products.map(p => {
@@ -997,7 +1053,6 @@ async function saveToGitHub() {
   document.getElementById('publishStatusText').innerText = 'جاري التحضير...';
 
   try {
-    // 1) احصل على SHA الحالي
     document.getElementById('publishStatusText').innerText = 'جاري قراءة الملف الحالي...';
     const getRes = await fetch(
       `https://api.github.com/repos/${user}/${repo}/contents/${filePath}?ref=${branch}`,
@@ -1012,7 +1067,6 @@ async function saveToGitHub() {
       throw new Error('فشل الاتصال بـ GitHub: ' + getRes.status);
     }
 
-    // 2) ارفع الملف
     document.getElementById('publishStatusText').innerText = 'جاري الرفع إلى GitHub...';
     const content = buildCatalogJS();
     const base64Content = btoa(unescape(encodeURIComponent(content)));
@@ -1078,7 +1132,9 @@ async function testGithubConnection() {
   } catch (err) {
     showToast('❌ خطأ: ' + err.message, 'error');
   }
-}/* ============================ تصدير يدوي ============================ */
+}
+
+/* ============================ تصدير يدوي ============================ */
 function exportData() {
   const content = buildCatalogJS();
   const blob = new Blob([content], { type: 'application/javascript' });
@@ -1129,25 +1185,30 @@ function importData(e) {
 }
 
 function applyImportedData(data) {
-  if (!confirm('سيتم استبدال جميع البيانات الحالية. متابعة؟')) return;
-  catalogData = {
-    products: data.products,
-    settings: data.settings && typeof data.settings === 'object'
-      ? { ...catalogData.settings, ...data.settings }
-      : catalogData.settings,
-    categories: Array.isArray(data.categories) ? data.categories : []
-  };
-  persist();
-  renderCategories();
-  renderSettingsInputs();
-  renderProductList();
-  renderStats();
-  showToast('تم استيراد البيانات بنجاح');
+  showConfirm('جميع البيانات الحالية').then(confirmed => {
+    if (!confirmed) return;
+    catalogData = {
+      products: data.products,
+      settings: data.settings && typeof data.settings === 'object'
+        ? { ...catalogData.settings, ...data.settings }
+        : catalogData.settings,
+      categories: Array.isArray(data.categories) ? data.categories : []
+    };
+    persist();
+    renderCategories();
+    renderSettingsInputs();
+    renderProductList();
+    renderStats();
+    showToast('تم استيراد البيانات بنجاح');
+  });
 }
 
 /* ============================ إغلاق بزر Escape ============================ */
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeProductModal();
+  if (e.key === 'Escape') {
+    closeProductModal();
+    if (_confirmResolver) resolveConfirm(false);
+  }
 });
 
 /* ============================ الإقلاع ============================ */
