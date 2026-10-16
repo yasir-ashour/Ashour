@@ -4,10 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
-<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق.">
+<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق. اطلب مباشرة عبر الواتساب.">
+<meta name="keywords" content="مركز عاشور, بسكويت دمشق, شيبس, عصائر, قهوة, سكاكر, تجارة, دمشق, سوريا">
+<meta name="author" content="مركز عاشور للتجارة">
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
+
+<!-- Open Graph (مشاركة على السوشيال ميديا) -->
+<meta property="og:title" content="مركز عاشور للتجارة - الكتالوج الإلكتروني">
+<meta property="og:description" content="أجود أنواع الشيبس، البسكويت، العصائر، والقهوة - اطلب مباشرة عبر واتساب.">
+<meta property="og:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yasir-ashour.github.io/Ashour/">
+<meta property="og:locale" content="ar_SY">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مركز عاشور للتجارة">
+<meta name="twitter:description" content="كتالوج المنتجات - شيبس، بسكويت، عصائر، قهوة">
+<meta name="twitter:image" content="https://yasir-ashour.github.io/Ashour/logo.png">
+
+<!-- Schema.org - بيانات المتجر لـ Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "مركز عاشور للتجارة",
+  "alternateName": "Ashour Trading Center",
+  "description": "أجود أنواع الشيبس، البسكويت، العصائر، القهوة، والحلويات في دمشق. اطلب مباشرة عبر الواتساب مع توصيل سريع.",
+  "image": "https://yasir-ashour.github.io/Ashour/logo.png",
+  "logo": "https://yasir-ashour.github.io/Ashour/logo.png",
+  "url": "https://yasir-ashour.github.io/Ashour/",
+  "telephone": "+963982572810",
+  "priceRange": "$$",
+  "currenciesAccepted": "SYP",
+  "paymentAccepted": "نقدًا، عند التوصيل",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة",
+    "addressLocality": "دمشق",
+    "addressRegion": "دمشق",
+    "addressCountry": "SY"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "33.4731",
+    "longitude": "36.2946"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "08:00",
+      "closes": "23:00"
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "منتجات مركز عاشور",
+    "itemListElement": [
+      { "@type": "OfferCatalog", "name": "بسكويت" },
+      { "@type": "OfferCatalog", "name": "شيبس" },
+      { "@type": "OfferCatalog", "name": "سكاكر وعلكة" },
+      { "@type": "OfferCatalog", "name": "عصائر ومشروبات" },
+      { "@type": "OfferCatalog", "name": "قهوة" }
+    ]
+  },
+  "sameAs": [
+    "https://wa.me/963959248901"
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -81,7 +148,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </a>
 </div>
 
-<!-- الرأس (الشعار مُكبّر) -->
+<!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
 <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
 <div class="flex items-center gap-2 min-w-0">
@@ -152,7 +219,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
-<!-- صفحة السلة (الشعار مُكبّر) -->
+<!-- صفحة السلة -->
 <div id="cartPageView" class="hidden max-w-4xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
@@ -223,7 +290,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </button>
 </div>
 
-<!-- التذييل (الشعار مُكبّر) -->
+<!-- التذييل -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-10">
 <div class="max-w-4xl mx-auto space-y-3">
   <div class="w-36 h-36 flex items-center justify-center mx-auto">
@@ -278,9 +345,7 @@ function base64ToBlobUrl(base64) {
 /* ==================== تجهيز رابط الصورة ==================== */
 function prepareImage(img) {
   if (!img) return '';
-  if (img.startsWith('data:')) {
-    return base64ToBlobUrl(img);
-  }
+  if (img.startsWith('data:')) return base64ToBlobUrl(img);
   return `https://images.weserv.nl/?url=${encodeURIComponent(img)}&w=800&q=90&output=webp`;
 }
 
@@ -392,7 +457,7 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
-}/* ==================== عرض المنتجات (بطاقات محسّنة للجوال) ==================== */
+}/* ==================== عرض المنتجات ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
