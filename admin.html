@@ -35,13 +35,23 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
     <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
-    <input type="password" id="loginPassword" placeholder="كلمة المرور"
-      class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-lg mb-4"
-      onkeydown="if(event.key==='Enter') tryLogin()">
-    <button onclick="tryLogin()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition">
+
+    <!-- حقل كلمة المرور مع زر العين -->
+    <div class="relative mb-4">
+      <input type="password" id="loginPassword" placeholder="كلمة المرور"
+        class="w-full bg-slate-950 text-white p-3.5 pr-12 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-lg"
+        onkeydown="if(event.key==='Enter') tryLogin()">
+      <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 transition p-2">
+        <i id="passwordEyeIcon" class="fas fa-eye"></i>
+      </button>
+    </div>
+
+    <button onclick="tryLogin()" id="loginBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed">
       <i class="fas fa-sign-in-alt ml-2"></i> دخول
     </button>
-    <p id="loginError" class="hidden text-rose-400 text-sm mt-3 font-bold">كلمة المرور غير صحيحة</p>
+
+    <p id="loginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
+    <p id="lockMessage" class="hidden text-amber-400 text-sm mt-3 font-bold"></p>
     <p class="text-slate-600 text-xs mt-6">الافتراضية: <span class="text-amber-400 font-mono">ashour2026</span></p>
   </div>
 </div>
@@ -72,6 +82,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2">
         <i class="fas fa-external-link-alt"></i>
       </a>
+      <button onclick="logoutAdmin()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2" title="تسجيل الخروج">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -147,7 +160,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
     <div>
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المتجر</label>
-      <input type="text" id="setStoreName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      <input type="text" id="setStoreName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
     </div>
 
     <div>
@@ -184,7 +197,12 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
     <div class="border-t border-slate-800 pt-5">
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">كلمة مرور اللوحة</label>
-      <input type="text" id="setPassword" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono">
+      <div class="relative">
+        <input type="password" id="setPassword" class="w-full bg-slate-950 text-white p-3 pr-12 rounded-xl border border-slate-700 text-sm font-mono">
+        <button type="button" onclick="toggleSetPasswordVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 p-1">
+          <i id="setPasswordEyeIcon" class="fas fa-eye"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -201,7 +219,12 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
     <div>
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">Personal Access Token</label>
-      <input type="password" id="setGithubToken" placeholder="ghp_..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
+      <div class="relative">
+        <input type="password" id="setGithubToken" placeholder="ghp_..." class="w-full bg-slate-950 text-white p-3 pr-12 rounded-xl border border-slate-700 text-xs font-mono">
+        <button type="button" onclick="toggleTokenVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 p-1">
+          <i id="tokenEyeIcon" class="fas fa-eye"></i>
+        </button>
+      </div>
       <p class="text-slate-500 text-xs mt-1">أدخل التوكن مرة واحدة ثم اضغط حفظ</p>
     </div>
 
@@ -272,11 +295,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-sm">السعر</label>
-          <input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          <input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
         </div>
       </div>
 
-      <!-- قسم الصورة -->
       <div class="border-t border-slate-800 pt-4">
         <label class="block text-slate-300 font-bold mb-2 text-sm">صورة المنتج <span class="text-rose-500">*</span></label>
 
@@ -303,7 +325,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
             <div id="urlInputWrapper" class="hidden">
               <input type="text" id="fImage" oninput="previewImage()" placeholder="https://example.com/image.jpg"
-                class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
+                class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
             </div>
 
             <button type="button" onclick="removeImage()"
@@ -397,7 +419,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-3 flex items-start gap-2 text-right">
         <i class="fas fa-exclamation-triangle text-rose-400 mt-0.5"></i>
         <p class="text-xs text-rose-300 leading-relaxed">
-          <span class="font-bold">تحذير:</span> لا يمكن التراجع عن هذا الإجراء. المنتج سيُحذف نهائيًا من الكتالوج.
+          <span class="font-bold">تحذير:</span> لا يمكن التراجع عن هذا الإجراء.
         </p>
       </div>
     </div>
@@ -442,13 +464,18 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 /* ============================ الإعدادات ============================ */
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 5 * 60 * 1000; // 5 دقائق
+const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 دقيقة
+
 let catalogData = { products: [], settings: {}, categories: [] };
 let editingFlavors = [];
 let currentRotation = '';
 let currentImageData = '';
-
-/* نظام نافذة التأكيد */
 let _confirmResolver = null;
+let _idleTimer = null;
+
+/* ============================ نافذة التأكيد ============================ */
 function showConfirm(productName) {
   return new Promise((resolve) => {
     _confirmResolver = resolve;
@@ -462,6 +489,114 @@ function resolveConfirm(answer) {
     _confirmResolver(answer);
     _confirmResolver = null;
   }
+}
+
+/* ============================ نظام قفل المحاولات ============================ */
+function getLoginAttempts() {
+  try {
+    const data = JSON.parse(localStorage.getItem('ashour_login_attempts') || '{}');
+    if (data.lockedUntil && Date.now() < data.lockedUntil) {
+      return { count: data.count || 0, lockedUntil: data.lockedUntil };
+    }
+    if (data.lockedUntil && Date.now() >= data.lockedUntil) {
+      localStorage.removeItem('ashour_login_attempts');
+      return { count: 0, lockedUntil: 0 };
+    }
+    return { count: data.count || 0, lockedUntil: 0 };
+  } catch (e) {
+    return { count: 0, lockedUntil: 0 };
+  }
+}
+
+function saveLoginAttempts(count, lockedUntil = 0) {
+  localStorage.setItem('ashour_login_attempts', JSON.stringify({ count, lockedUntil }));
+}
+
+function resetLoginAttempts() {
+  localStorage.removeItem('ashour_login_attempts');
+}
+
+function checkLock() {
+  const { lockedUntil } = getLoginAttempts();
+  if (lockedUntil && Date.now() < lockedUntil) {
+    const remaining = Math.ceil((lockedUntil - Date.now()) / 60000);
+    const lockMsg = document.getElementById('lockMessage');
+    lockMsg.innerText = `🔒 اللوحة مقفلة. حاول بعد ${remaining} دقيقة.`;
+    lockMsg.classList.remove('hidden');
+    document.getElementById('loginBtn').disabled = true;
+    document.getElementById('loginPassword').disabled = true;
+    return true;
+  } else {
+    document.getElementById('lockMessage').classList.add('hidden');
+    document.getElementById('loginBtn').disabled = false;
+    document.getElementById('loginPassword').disabled = false;
+    return false;
+  }
+}
+
+/* ============================ إظهار/إخفاء كلمة المرور ============================ */
+function togglePasswordVisibility() {
+  const input = document.getElementById('loginPassword');
+  const icon = document.getElementById('passwordEyeIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+function toggleSetPasswordVisibility() {
+  const input = document.getElementById('setPassword');
+  const icon = document.getElementById('setPasswordEyeIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+function toggleTokenVisibility() {
+  const input = document.getElementById('setGithubToken');
+  const icon = document.getElementById('tokenEyeIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+/* ============================ تسجيل الخروج ============================ */
+function logoutAdmin() {
+  if (!confirm('هل تريد تسجيل الخروج؟')) return;
+  sessionStorage.removeItem('ashour_admin_ok');
+  if (_idleTimer) clearTimeout(_idleTimer);
+  document.getElementById('adminApp').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginPassword').value = '';
+}
+
+/* ============================ الخروج التلقائي ============================ */
+function resetIdleTimer() {
+  if (_idleTimer) clearTimeout(_idleTimer);
+  _idleTimer = setTimeout(() => {
+    if (sessionStorage.getItem('ashour_admin_ok') === '1') {
+      alert('تم تسجيل الخروج تلقائيًا بسبب عدم النشاط لمدة 30 دقيقة');
+      logoutAdmin();
+    }
+  }, IDLE_TIMEOUT);
+}
+
+function startIdleWatcher() {
+  ['click', 'keypress', 'touchstart', 'scroll', 'mousemove'].forEach(ev => {
+    document.addEventListener(ev, resetIdleTimer, { passive: true });
+  });
+  resetIdleTimer();
 }
 
 /* ============================ أدوات ============================ */
@@ -539,14 +674,10 @@ function handleImageUpload(event) {
       formData.append('key', IMGBB_API_KEY);
       formData.append('image', base64Only);
 
-      fetch('https://api.imgbb.com/1/upload', {
-        method: 'POST',
-        body: formData
-      })
+      fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
       .then(res => res.json())
       .then(data => {
         document.getElementById('imageProcessingOverlay').classList.add('hidden');
-
         if (data && data.success && data.data && data.data.url) {
           currentImageData = data.data.url;
           const preview = document.getElementById('fImagePreview');
@@ -554,7 +685,6 @@ function handleImageUpload(event) {
           preview.classList.remove('hidden');
           document.getElementById('fImagePlaceholder').classList.add('hidden');
           document.getElementById('fImage').value = '';
-
           const info = document.getElementById('imageSizeInfo');
           info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB)`;
           info.classList.remove('hidden');
@@ -585,9 +715,7 @@ function handleImageUpload(event) {
 function toggleUrlInput() {
   const wrapper = document.getElementById('urlInputWrapper');
   wrapper.classList.toggle('hidden');
-  if (!wrapper.classList.contains('hidden')) {
-    document.getElementById('fImage').focus();
-  }
+  if (!wrapper.classList.contains('hidden')) document.getElementById('fImage').focus();
 }
 
 function removeImage() {
@@ -648,18 +776,38 @@ function loadInitialData() {
   });
 }
 
-/* ============================ الدخول ============================ */
+/* ============================ الدخول (مع القفل) ============================ */
 function tryLogin() {
+  if (checkLock()) return;
+
   const pwd = document.getElementById('loginPassword').value;
   const expected = catalogData.settings.password || 'ashour2026';
+  const errEl = document.getElementById('loginError');
+  errEl.classList.add('hidden');
+
   if (pwd === expected) {
+    resetLoginAttempts();
     sessionStorage.setItem('ashour_admin_ok', '1');
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('adminApp').classList.remove('hidden');
+    document.getElementById('loginPassword').value = '';
     initAdmin();
+    startIdleWatcher();
+    showToast('مرحبًا بك 👋');
   } else {
-    document.getElementById('loginError').classList.remove('hidden');
-    setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 2500);
+    const { count } = getLoginAttempts();
+    const newCount = count + 1;
+
+    if (newCount >= MAX_LOGIN_ATTEMPTS) {
+      saveLoginAttempts(newCount, Date.now() + LOCKOUT_DURATION);
+      errEl.innerText = `❌ تجاوزت الحد المسموح (5 محاولات). اللوحة مقفلة 5 دقائق.`;
+      errEl.classList.remove('hidden');
+      checkLock();
+    } else {
+      saveLoginAttempts(newCount);
+      errEl.innerText = `❌ كلمة المرور غير صحيحة. تبقى ${MAX_LOGIN_ATTEMPTS - newCount} محاولات.`;
+      errEl.classList.remove('hidden');
+    }
   }
 }
 
@@ -816,11 +964,8 @@ function renderStats() {
 
 /* ============================ نافذة المنتج ============================ */
 function setProductStatus(status) {
-  document.querySelectorAll('input[name="fStatus"]').forEach(r => {
-    r.checked = (r.value === status);
-  });
+  document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); });
 }
-
 function getProductStatus() {
   const checked = document.querySelector('input[name="fStatus"]:checked');
   return checked ? checked.value : 'available';
@@ -856,14 +1001,11 @@ function openProductModal(pid = null) {
     document.getElementById('fCategory').value = p.category || '';
     document.getElementById('fPrice').value = p.price || 'التواصل مع المبيعات';
     document.getElementById('fDescription').value = p.description || '';
-
     if (p.available === false) setProductStatus('unavailable');
     else if (p.lowStock) setProductStatus('lowStock');
     else setProductStatus('available');
-
     editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
     setRotation(p.rotateClass || '');
-
     if (p.image) {
       currentImageData = p.image;
       const preview = document.getElementById('fImagePreview');
@@ -888,7 +1030,6 @@ function previewImage() {
   const url = document.getElementById('fImage').value.trim();
   const preview = document.getElementById('fImagePreview');
   const placeholder = document.getElementById('fImagePlaceholder');
-
   if (url) {
     currentImageData = url;
     preview.src = url;
@@ -989,10 +1130,10 @@ async function deleteProductFromModal() {
   if (pidVal === '') { closeProductModal(); return; }
   const p = catalogData.products[Number(pidVal)];
   if (!p) return;
-  
+
   const confirmed = await showConfirm(p.name);
   if (!confirmed) return;
-  
+
   catalogData.products.splice(Number(pidVal), 1);
   persist();
   renderProductList();
@@ -1214,10 +1355,12 @@ document.addEventListener('keydown', (e) => {
 /* ============================ الإقلاع ============================ */
 (async function boot() {
   await loadInitialData();
+  checkLock();
   if (sessionStorage.getItem('ashour_admin_ok') === '1') {
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('adminApp').classList.remove('hidden');
     initAdmin();
+    startIdleWatcher();
   }
 })();
 </script>
