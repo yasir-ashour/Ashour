@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مركز عاشور للتجارة - الكتالوج الإلكتروني</title>
-<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق. اطلب مباشرة عبر الواتساب.">
-<meta name="keywords" content="مركز عاشور, بسكويت دمشق, شيبس, عصائر, قهوة, سكاكر, تجارة, دمشق, سوريا">
-<meta name="author" content="مركز عاشور للتجارة">
+<meta name="description" content="كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق.">
+<meta name="keywords" content="مركز عاشور, بسكويت دمشق, شيبس, عصائر, قهوة, سكاكر">
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
@@ -37,47 +36,23 @@
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "مركز عاشور للتجارة",
-  "alternateName": "Ashour Trading Center",
-  "description": "أجود أنواع الشيبس، البسكويت، العصائر، القهوة، والحلويات في دمشق. اطلب مباشرة عبر الواتساب مع توصيل سريع.",
+  "description": "أجود أنواع الشيبس، البسكويت، العصائر، القهوة، والحلويات في دمشق.",
   "image": "https://yasir-ashour.github.io/Ashour/logo.png",
   "logo": "https://yasir-ashour.github.io/Ashour/logo.png",
   "url": "https://yasir-ashour.github.io/Ashour/",
   "telephone": "+963982572810",
-  "priceRange": "$$",
-  "currenciesAccepted": "SYP",
-  "paymentAccepted": "نقدًا، عند التوصيل",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "أوتوستراد درعا الدولي - قبل التاون سنتر مقابل جامع عائشة",
+    "streetAddress": "أوتوستراد درعا الدولي - قبل التاون سنتر",
     "addressLocality": "دمشق",
-    "addressRegion": "دمشق",
     "addressCountry": "SY"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "33.4731",
-    "longitude": "36.2946"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "08:00",
-      "closes": "23:00"
-    }
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "منتجات مركز عاشور",
-    "itemListElement": [
-      { "@type": "OfferCatalog", "name": "بسكويت" },
-      { "@type": "OfferCatalog", "name": "شيبس" },
-      { "@type": "OfferCatalog", "name": "سكاكر وعلكة" },
-      { "@type": "OfferCatalog", "name": "عصائر ومشروبات" },
-      { "@type": "OfferCatalog", "name": "قهوة" }
-    ]
-  },
-  "sameAs": ["https://wa.me/963959248901"]
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "08:00",
+    "closes": "23:00"
+  }]
 }
 </script>
 
@@ -85,9 +60,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-tailwind.config = {
-  theme: { extend: { fontFamily: { sans: ['Tajawal', 'sans-serif'] } } }
-}
+tailwind.config = { theme: { extend: { fontFamily: { sans: ['Tajawal', 'sans-serif'] } } } }
 </script>
 <style>
 body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8fafc; }
@@ -96,11 +69,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .product-card { transition: all 0.3s ease; }
-.product-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(212, 175, 55, 0.8);
-  box-shadow: 0 12px 28px -5px rgba(212, 175, 55, 0.2);
-}
+.product-card:hover { transform: translateY(-6px); border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 12px 28px -5px rgba(212, 175, 55, 0.2); }
 #preloaderBar { transition: width 5s linear; }
 .rot-90 { transform: rotate(90deg); scale: 1.2; }
 .rot-180 { transform: rotate(180deg); }
@@ -111,13 +80,16 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.95)); }
 }
 .logo-glow { animation: logoGlow 2.5s ease-in-out infinite; }
+@keyframes modalPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.star-active { color: #d4af37; }
+.star-empty { color: #475569; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-24 sm:pb-0 overflow-x-hidden">
 
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
   <div class="w-56 h-56 sm:w-72 sm:h-72 mb-6 flex items-center justify-center logo-glow">
-    <img id="loaderLogoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
+    <img id="loaderLogoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور">
   </div>
   <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-2">مركز عاشور للتجارة</h1>
   <p class="text-xs text-slate-400 mb-8">عالم من الأذواق الرفيعة</p>
@@ -290,6 +262,94 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </button>
 </div>
 
+<!-- نافذة عرض التقييمات -->
+<div id="reviewsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s ease-out;">
+    <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
+    
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-gradient-text">
+        <i class="fas fa-star text-amber-400"></i> تقييمات العملاء
+      </h3>
+      <button onclick="closeReviewsModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="p-5 max-h-[70vh] overflow-y-auto">
+      <p id="reviewsProductName" class="text-white font-black text-center text-base mb-4"></p>
+      
+      <div class="bg-slate-950/60 border border-amber-500/30 rounded-2xl p-4 mb-5 text-center">
+        <p id="reviewsAverageStars" class="text-4xl mb-1">⭐⭐⭐⭐⭐</p>
+        <p id="reviewsAverageText" class="text-amber-400 text-2xl font-black mb-1">0.0</p>
+        <p id="reviewsTotalText" class="text-slate-400 text-xs">بناءً على 0 تقييم</p>
+      </div>
+
+      <div id="reviewsListPublic" class="space-y-3"></div>
+    </div>
+
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50">
+      <button onclick="openReviewForm()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl transition flex items-center justify-center gap-2">
+        <i class="fas fa-pen"></i>
+        <span>أضف تقييمك</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة إضافة تقييم -->
+<div id="addReviewModal" class="hidden fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s ease-out;">
+    <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
+    
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-gradient-text">
+        <i class="fas fa-pen text-amber-400"></i> أضف تقييمك
+      </h3>
+      <button onclick="closeReviewForm()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="p-5 space-y-4">
+      <p id="reviewFormProductName" class="text-white font-bold text-center text-sm bg-slate-950/60 border border-slate-800 rounded-xl p-3"></p>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-2 text-sm text-center">تقييمك</label>
+        <div id="publicReviewStars" class="flex gap-2 justify-center" dir="ltr">
+          <button type="button" data-star="1" class="public-review-star w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+          <button type="button" data-star="2" class="public-review-star w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+          <button type="button" data-star="3" class="public-review-star w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+          <button type="button" data-star="4" class="public-review-star w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+          <button type="button" data-star="5" class="public-review-star w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-sm">اسمك (اختياري)</label>
+        <input type="text" id="publicReviewName" placeholder="مثال: أحمد" maxlength="30"
+          class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-sm">تعليقك (اختياري)</label>
+        <textarea id="publicReviewComment" rows="3" placeholder="اكتب رأيك..." maxlength="200"
+          class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeReviewForm()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
+        <button onclick="submitReview()" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp"></i>
+          <span>إرسال</span>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-500 text-center">سيصل تقييمك لصاحب المتجر عبر واتساب، وسيُنشر بعد المراجعة</p>
+    </div>
+  </div>
+</div>
+
 <!-- التذييل -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-10">
 <div class="max-w-4xl mx-auto space-y-3">
@@ -315,6 +375,10 @@ let cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
 let productSelections = {};
 let currentCategory = 'الكل';
 
+/* متغيرات التقييمات */
+let currentReviewsProduct = null;
+let publicReviewStars = 0;
+
 /* ==================== أدوات ==================== */
 function escapeHtml(str) {
   return String(str == null ? '' : str)
@@ -337,7 +401,6 @@ function base64ToBlobUrl(base64) {
     const blob = new Blob([u8arr], { type: mime });
     return URL.createObjectURL(blob);
   } catch (e) {
-    console.warn('فشل تحويل base64 إلى Blob:', e);
     return base64;
   }
 }
@@ -399,17 +462,12 @@ function hideLoader(el) {
 
 function handleImgError(el, name) {
   const originalUrl = el.dataset.originalSrc || '';
-
   if (originalUrl.startsWith('data:') || el.src.startsWith('blob:')) {
     showImgPlaceholder(el, name);
     return;
   }
-
   const attempt = parseInt(el.dataset.attempt || '0');
-  if (!originalUrl) {
-    showImgPlaceholder(el, name);
-    return;
-  }
+  if (!originalUrl) { showImgPlaceholder(el, name); return; }
 
   const sources = [
     originalUrl,
@@ -417,14 +475,12 @@ function handleImgError(el, name) {
     `https://api.allorigins.win/raw?url=${encodeURIComponent(originalUrl)}`,
     `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(originalUrl)}`
   ];
-
   const nextAttempt = attempt + 1;
   if (nextAttempt < sources.length) {
     el.dataset.attempt = nextAttempt;
     el.src = sources[nextAttempt];
     return;
   }
-
   showImgPlaceholder(el, name);
 }
 
@@ -457,6 +513,122 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
+}
+
+/* ==================== نجوم التقييم ==================== */
+function renderStars(count) {
+  return '★'.repeat(count) + '☆'.repeat(5 - count);
+}
+
+function getAverageStars(reviews) {
+  if (!reviews || reviews.length === 0) return 0;
+  const sum = reviews.reduce((acc, r) => acc + (r.stars || 0), 0);
+  return (sum / reviews.length).toFixed(1);
+}
+
+/* ==================== نافذة عرض التقييمات ==================== */
+function openReviewsModal(productName) {
+  const product = products.find(p => p.name === productName);
+  if (!product) return;
+
+  currentReviewsProduct = product;
+  document.getElementById('reviewsProductName').innerText = product.name;
+
+  const reviews = product.reviews || [];
+  const avg = getAverageStars(reviews);
+  const starsFull = Math.round(avg);
+
+  document.getElementById('reviewsAverageStars').innerText = renderStars(starsFull);
+  document.getElementById('reviewsAverageText').innerText = avg + ' من 5';
+  document.getElementById('reviewsTotalText').innerText = `بناءً على ${reviews.length} تقييم`;
+
+  const list = document.getElementById('reviewsListPublic');
+  if (reviews.length === 0) {
+    list.innerHTML = '<p class="text-center text-slate-500 text-sm py-6 bg-slate-950/40 rounded-2xl border border-slate-800">لا توجد تقييمات بعد — كن أول من يقيّم!</p>';
+  } else {
+    list.innerHTML = [...reviews].reverse().map(r => `
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+          <span class="text-amber-400 text-sm font-bold" dir="ltr">${renderStars(r.stars || 0)}</span>
+          <span class="text-white text-xs font-bold">${escapeHtml(r.name || 'عميل')}</span>
+          <span class="text-slate-500 text-[10px] mr-auto">${r.date || ''}</span>
+        </div>
+        ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('reviewsModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReviewsModal() {
+  document.getElementById('reviewsModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ==================== نافذة إضافة تقييم ==================== */
+function openReviewForm() {
+  if (!currentReviewsProduct) return;
+  document.getElementById('reviewFormProductName').innerText = currentReviewsProduct.name;
+  document.getElementById('publicReviewName').value = '';
+  document.getElementById('publicReviewComment').value = '';
+  publicReviewStars = 0;
+  updatePublicStars(0);
+  attachPublicStarListeners();
+  document.getElementById('addReviewModal').classList.remove('hidden');
+}
+
+function closeReviewForm() {
+  document.getElementById('addReviewModal').classList.add('hidden');
+}
+
+function attachPublicStarListeners() {
+  document.querySelectorAll('.public-review-star').forEach(btn => {
+    btn.onclick = () => {
+      publicReviewStars = Number(btn.dataset.star);
+      updatePublicStars(publicReviewStars);
+    };
+  });
+}
+
+function updatePublicStars(count) {
+  document.querySelectorAll('.public-review-star').forEach(btn => {
+    const s = Number(btn.dataset.star);
+    if (s <= count) {
+      btn.classList.add('star-active');
+      btn.classList.remove('bg-slate-800', 'text-slate-600');
+    } else {
+      btn.classList.remove('star-active');
+      btn.classList.add('bg-slate-800', 'text-slate-600');
+    }
+  });
+}
+
+function submitReview() {
+  if (publicReviewStars === 0) {
+    alert('يرجى اختيار عدد النجوم أولًا');
+    return;
+  }
+
+  const productName = currentReviewsProduct.name;
+  const name = document.getElementById('publicReviewName').value.trim() || 'عميل';
+  const comment = document.getElementById('publicReviewComment').value.trim();
+
+  const starsStr = '⭐'.repeat(publicReviewStars);
+
+  let msg = `🌟 *تقييم جديد*\n\n`;
+  msg += `*المنتج:* ${productName}\n`;
+  msg += `*التقييم:* ${starsStr} (${publicReviewStars}/5)\n`;
+  msg += `*الاسم:* ${name}\n`;
+  if (comment) msg += `*التعليق:* ${comment}\n`;
+  msg += `\n— من موقع مركز عاشور`;
+
+  const url = `https://wa.me/${inquiryWhatsApp}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+
+  closeReviewForm();
+  closeReviewsModal();
 }/* ==================== عرض المنتجات ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
@@ -482,17 +654,32 @@ function displayProducts(items) {
     const finalImageUrl = product._proxiedImage || prepareImage(product.image);
     const originalImageUrl = product.image || '';
     const rotateClass = product.rotateClass || '';
+    const reviews = product.reviews || [];
+    const avgStars = getAverageStars(reviews);
+    const starsFull = Math.round(avgStars);
 
     let statusBadge = '', statusText = '';
     if (!isAvail) {
-      statusBadge = `<span class="absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-times-circle"></i> <span class="hidden sm:inline">غير متوفر</span></span>`;
-      statusText  = `<span class="text-rose-400 font-extrabold text-[10px] sm:text-xs bg-rose-950/80 border border-rose-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-times-circle"></i> نفد</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-times-circle"></i></span>`;
+      statusText  = `<span class="text-rose-400 font-extrabold text-[10px] sm:text-xs bg-rose-950/80 border border-rose-500/30 px-2 py-0.5 rounded-md">نفد</span>`;
     } else if (isLow) {
-      statusBadge = `<span class="absolute top-2 right-2 bg-amber-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-exclamation-triangle"></i> <span class="hidden sm:inline">كمية محدودة</span></span>`;
-      statusText  = `<span class="text-amber-400 font-extrabold text-[10px] sm:text-xs bg-amber-950/80 border border-amber-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-exclamation-triangle"></i> قليل</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-amber-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-exclamation-triangle"></i></span>`;
+      statusText  = `<span class="text-amber-400 font-extrabold text-[10px] sm:text-xs bg-amber-950/80 border border-amber-500/30 px-2 py-0.5 rounded-md">قليل</span>`;
     } else {
-      statusBadge = `<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-check-circle"></i> <span class="hidden sm:inline">متوفر</span></span>`;
-      statusText  = `<span class="text-emerald-400 font-extrabold text-[10px] sm:text-xs bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-check-circle"></i> متوفر</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-check-circle"></i></span>`;
+      statusText  = `<span class="text-emerald-400 font-extrabold text-[10px] sm:text-xs bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-md">متوفر</span>`;
+    }
+
+    // بادج التقييمات
+    let reviewsBadgeHtml = '';
+    if (reviews.length > 0) {
+      reviewsBadgeHtml = `
+        <button type="button" data-action="show-reviews" data-pname="${escapeHtml(product.name)}"
+          class="absolute top-2 left-2 bg-slate-950/90 border border-amber-500/50 text-amber-300 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black flex items-center gap-1 z-20 backdrop-blur-sm">
+          <i class="fas fa-star text-amber-400"></i>
+          <span>${avgStars}</span>
+          <span class="text-slate-400">(${reviews.length})</span>
+        </button>`;
     }
 
     let selectorsHtml = '';
@@ -540,6 +727,7 @@ function displayProducts(items) {
                onerror="handleImgError(this, '${escapeHtml(product.name)}')" 
                loading="lazy">
           ${statusBadge}
+          ${reviewsBadgeHtml}
         </div>
         <div class="p-2 sm:p-4">
           <div class="flex items-center justify-between mb-1 flex-wrap gap-1">
@@ -551,7 +739,14 @@ function displayProducts(items) {
         </div>
       </div>
       <div class="p-2 sm:p-4 pt-0">
-        <div class="border-t border-slate-700/60 pt-2 sm:pt-3 mt-auto">${selectorsHtml}</div>
+        <div class="border-t border-slate-700/60 pt-2 sm:pt-3 mt-auto">
+          ${selectorsHtml}
+          <button type="button" data-action="show-reviews" data-pname="${escapeHtml(product.name)}"
+            class="w-full mt-1.5 bg-slate-800/60 hover:bg-slate-700 text-amber-400 border border-slate-700/80 font-bold py-1.5 rounded-xl text-[10px] sm:text-xs flex items-center justify-center gap-1">
+            <i class="fas fa-star text-amber-400"></i>
+            <span>${reviews.length > 0 ? 'التقييمات (' + reviews.length + ')' : 'أضف تقييمك'}</span>
+          </button>
+        </div>
       </div>`;
     frag.appendChild(card);
   });
@@ -566,6 +761,12 @@ document.getElementById('productsGrid').addEventListener('click', (e) => {
   const action = btn.dataset.action;
   const pid = Number(btn.dataset.pid);
   const product = products[pid];
+
+  if (action === 'show-reviews') {
+    openReviewsModal(btn.dataset.pname);
+    return;
+  }
+
   if (!product) return;
 
   if (action === 'inc' || action === 'dec') {
@@ -777,7 +978,7 @@ document.body.addEventListener('click', (e) => {
   const b = e.target.closest('[data-action]');
   if (!b) return;
   const a = b.dataset.action;
-  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove'].includes(a)) return;
+  if (['inc','dec','add-to-cart','cart-inc','cart-dec','cart-remove','show-reviews'].includes(a)) return;
   if (a === 'open-cart') { e.preventDefault(); switchToCartView(); }
   else if (a === 'back-to-catalog') { e.preventDefault(); switchToCatalogView(); }
   else if (a === 'send-order') { e.preventDefault(); sendOrderToWhatsApp(); }
@@ -874,6 +1075,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   setTimeout(hidePreloader, 2500);
 
   console.log('✅ تم تحميل ' + products.length + ' منتجًا');
+});
+
+/* ==================== إغلاق النوافذ بـ Escape ==================== */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeReviewsModal();
+    closeReviewForm();
+  }
 });
 
 /* ==================== Service Worker (PWA) ==================== */
