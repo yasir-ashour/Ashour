@@ -1,106 +1,87 @@
-<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- تدرج ذهبي -->
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FCE08F"/>
-      <stop offset="30%" stop-color="#E8C766"/>
-      <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="70%" stop-color="#B89528"/>
-      <stop offset="100%" stop-color="#997415"/>
-    </linearGradient>
-    
-    <!-- تدرج ذهبي لامع -->
-    <linearGradient id="goldShine" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- تدرج ذهبي فاخر -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFF4C2"/>
+      <stop offset="25%" stop-color="#F0D77B"/>
       <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="75%" stop-color="#B89528"/>
       <stop offset="100%" stop-color="#8B6A0F"/>
     </linearGradient>
     
-    <!-- تدرج خلفية دائرية -->
-    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#1a2540"/>
-      <stop offset="70%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#070a12"/>
-    </radialGradient>
+    <!-- تدرج ذهبي لامع للنص الرئيسي -->
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FCE08F"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B89528"/>
+    </linearGradient>
     
-    <!-- توهج خارجي -->
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+    <!-- تدرج أزرق للأزرار -->
+    <linearGradient id="navy" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#0A1628"/>
+    </linearGradient>
+    
+    <!-- ظل خفيف للنص -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="3" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
       <feMerge>
-        <feMergeNode in="blur"/>
+        <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
   </defs>
   
-  <!-- الخلفية الداكنة -->
-  <circle cx="256" cy="256" r="255" fill="url(#bgGrad)"/>
+  <!-- خط علوي ذهبي رفيع -->
+  <rect x="80" y="40" width="740" height="2" fill="url(#gold)" opacity="0.6"/>
   
-  <!-- الحلقة الخارجية الذهبية -->
-  <circle cx="256" cy="256" r="248" fill="none" stroke="url(#goldGrad)" stroke-width="6"/>
-  <circle cx="256" cy="256" r="240" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <!-- النقاط الجانبية على الخط العلوي -->
+  <circle cx="80" cy="41" r="4" fill="url(#gold)"/>
+  <circle cx="820" cy="41" r="4" fill="url(#gold)"/>
   
-  <!-- زخرفة: نجمة 8 رؤوس (الخاتم) -->
-  <g opacity="0.3" transform="translate(256 256)">
-    <path d="M 0,-225 L 55,-55 L 225,0 L 55,55 L 0,225 L -55,55 L -225,0 L -55,-55 Z" 
-          fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
-    <path d="M 0,-225 L 55,-55 L 225,0 L 55,55 L 0,225 L -55,55 L -225,0 L -55,-55 Z" 
-          fill="none" stroke="url(#goldGrad)" stroke-width="1.5" transform="rotate(45)"/>
+  <!-- رمز الشعار: خطان متقاطعان (رمز التجارة) -->
+  <g transform="translate(450 90)">
+    <path d="M -25,0 L 0,-18 L 25,0" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M -25,8 L 0,26 L 25,8" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
   </g>
   
-  <!-- زخرفة زاوية: النقاط الأربع -->
-  <g fill="url(#goldGrad)" opacity="0.6">
-    <circle cx="256" cy="26" r="6"/>
-    <circle cx="256" cy="486" r="6"/>
-    <circle cx="26" cy="256" r="6"/>
-    <circle cx="486" cy="256" r="6"/>
-  </g>
-  
-  <!-- قوس علوي: مركز عاشور -->
-  <path id="topArc" d="M 80,256 A 176,176 0 0,1 432,256" fill="none"/>
-  <text font-family="Amiri, serif" font-size="34" font-weight="700" fill="url(#goldShine)" filter="url(#glow)">
-    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
-      مـركـز عـاشـور
-    </textPath>
+  <!-- الكلمة الرئيسية: مركز عاشور -->
+  <text x="450" y="175" text-anchor="middle" 
+        font-family="'Amiri', 'Traditional Arabic', serif" 
+        font-size="92" font-weight="700" 
+        fill="url(#goldText)" 
+        filter="url(#softShadow)"
+        letter-spacing="2">
+    مــركــز عــاشــور
   </text>
   
-  <!-- الحلقة الوسطى الذهبية السميكة -->
-  <circle cx="256" cy="256" r="170" fill="none" stroke="url(#goldShine)" stroke-width="3"/>
-  
-  <!-- حلقة داخلية رقيقة -->
-  <circle cx="256" cy="256" r="155" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.7"/>
-  
-  <!-- زخرفة داخلية: نجمة صغيرة -->
-  <g fill="url(#goldGrad)" opacity="0.4">
-    <polygon points="256,110 260,130 280,130 264,144 270,164 256,152 242,164 248,144 232,130 252,130"/>
+  <!-- خط فاصل مزخرف -->
+  <g transform="translate(450 205)">
+    <line x1="-280" y1="0" x2="-60" y2="0" stroke="url(#gold)" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="-50" cy="0" r="3" fill="url(#gold)"/>
+    <circle cx="0" cy="0" r="5" fill="url(#gold)"/>
+    <circle cx="50" cy="0" r="3" fill="url(#gold)"/>
+    <line x1="60" y1="0" x2="280" y2="0" stroke="url(#gold)" stroke-width="1.5" opacity="0.6"/>
   </g>
   
-  <!-- الاسم الرئيسي: عاشور -->
-  <text x="256" y="295" text-anchor="middle" font-family="Amiri, serif" 
-        font-size="115" font-weight="700" fill="url(#goldShine)" 
-        filter="url(#glow)" letter-spacing="4">
-    عـاشـور
-  </text>
-  
-  <!-- الخط الفاصل -->
-  <line x1="180" y1="320" x2="332" y2="320" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.8"/>
-  
-  <!-- كلمة: للتجارة -->
-  <text x="256" y="365" text-anchor="middle" font-family="Amiri, serif" 
-        font-size="34" font-weight="700" fill="url(#goldShine)" 
-        letter-spacing="8">
+  <!-- الكلمة الثانوية: للتجارة -->
+  <text x="450" y="260" text-anchor="middle" 
+        font-family="'Tajawal', 'Amiri', sans-serif" 
+        font-size="42" font-weight="500" 
+        fill="#FFFFFF" 
+        letter-spacing="14"
+        opacity="0.95">
     لـلـتـجـارة
   </text>
   
-  <!-- قوس سفلي: منذ 1951 -->
-  <path id="botArc" d="M 90,320 A 176,176 0 0,0 422,320" fill="none"/>
-  <text font-family="Tajawal, sans-serif" font-size="18" font-weight="600" 
-        fill="url(#goldGrad)" letter-spacing="4" opacity="0.85">
-    <textPath href="#botArc" startOffset="50%" text-anchor="middle">
-      ★ EST. 1951 ★
-    </textPath>
-  </text>
+  <!-- خط سفلي ذهبي رفيع -->
+  <rect x="80" y="285" width="740" height="2" fill="url(#gold)" opacity="0.6"/>
   
-  <!-- حلقة خارجية رفيعة جدًا للإغلاق -->
-  <circle cx="256" cy="256" r="252" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+  <!-- نقاط جانبية سفلية -->
+  <circle cx="80" cy="286" r="4" fill="url(#gold)"/>
+  <circle cx="820" cy="286" r="4" fill="url(#gold)"/>
 </svg>
