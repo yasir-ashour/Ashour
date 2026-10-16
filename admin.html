@@ -80,7 +80,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </div><!-- ============= تبويب المنتجات ============= -->
 <div id="tab-products" class="tab-content max-w-7xl mx-auto px-4 pb-16">
 
-  <!-- شريط الأدوات -->
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
     <div class="relative flex-grow min-w-[200px]">
       <input type="text" id="adminSearch" placeholder="ابحث عن منتج..." oninput="renderProductList()"
@@ -103,7 +102,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
 
-  <!-- إحصاءات -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
       <p class="text-slate-400 text-xs mb-1">إجمالي المنتجات</p>
@@ -123,7 +121,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
   </div>
 
-  <!-- قائمة المنتجات -->
   <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
   <div id="emptyState" class="hidden text-center py-16 text-slate-500">
     <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
@@ -157,7 +154,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم استقبال الطلبات</label>
           <input type="text" id="setOrderWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono">
-          <p class="text-slate-500 text-xs mt-1">بصيغة دولية بدون + وبدون مسافات</p>
         </div>
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم الاستفسار</label>
@@ -172,14 +168,13 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
 
     <div>
-      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط موقع المتجر على الخرائط</label>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label>
       <input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
     </div>
 
     <div class="border-t border-slate-800 pt-5">
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">كلمة مرور اللوحة</label>
       <input type="text" id="setPassword" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono">
-      <p class="text-amber-400/80 text-xs mt-1"><i class="fas fa-exclamation-triangle"></i> احتفظ بها في مكان آمن.</p>
     </div>
   </div>
 </div>
@@ -238,23 +233,58 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
       </div>
 
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الصورة <span class="text-rose-500">*</span></label>
-        <input type="text" id="fImage" oninput="previewImage()" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
-        <div class="mt-3 flex items-start gap-4">
-          <div class="w-32 h-28 rounded-xl border-2 border-slate-700 bg-slate-950 overflow-hidden flex items-center justify-center flex-shrink-0">
-            <img id="fImagePreview" class="w-full h-full object-cover">
-          </div>
-          <div class="flex flex-col gap-2">
-            <p class="text-slate-400 text-xs">تصحيح اتجاه الصورة:</p>
-            <div class="flex gap-2 flex-wrap">
-              <button type="button" onclick="setRotation('')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="">0°</button>
-              <button type="button" onclick="setRotation('rot-90')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-90">90°</button>
-              <button type="button" onclick="setRotation('rot-180')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-180">180°</button>
-              <button type="button" onclick="setRotation('rot-270')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-270">270°</button>
+      <!-- ============ قسم الصورة الجديد ============ -->
+      <div class="border-t border-slate-800 pt-4">
+        <label class="block text-slate-300 font-bold mb-2 text-sm">صورة المنتج <span class="text-rose-500">*</span></label>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <!-- معاينة الصورة -->
+          <div class="w-full sm:w-40 h-40 rounded-2xl border-2 border-slate-700 bg-slate-950 overflow-hidden flex items-center justify-center flex-shrink-0 relative">
+            <img id="fImagePreview" class="w-full h-full object-cover hidden" alt="معاينة">
+            <div id="fImagePlaceholder" class="text-center text-slate-600 p-4">
+              <i class="fas fa-image text-4xl mb-2"></i>
+              <p class="text-xs">لا توجد صورة</p>
             </div>
           </div>
+
+          <!-- أزرار التحكم -->
+          <div class="flex-grow space-y-2">
+            <input type="file" id="fImageFile" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+            <button type="button" onclick="document.getElementById('fImageFile').click()"
+              class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
+              <i class="fas fa-camera"></i> اختيار صورة من الاستوديو
+            </button>
+
+            <button type="button" onclick="toggleUrlInput()"
+              class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
+              <i class="fas fa-link"></i> أو أدخل رابط صورة يدويًا
+            </button>
+
+            <div id="urlInputWrapper" class="hidden">
+              <input type="text" id="fImage" oninput="previewImage()" placeholder="https://example.com/image.jpg"
+                class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-xs font-mono">
+            </div>
+
+            <button type="button" onclick="removeImage()"
+              class="w-full bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+              <i class="fas fa-trash-alt"></i> مسح الصورة
+            </button>
+          </div>
         </div>
+
+        <!-- تصحيح اتجاه الصورة -->
+        <div class="mt-3">
+          <p class="text-slate-400 text-xs mb-2">تصحيح اتجاه الصورة:</p>
+          <div class="flex gap-2 flex-wrap">
+            <button type="button" onclick="setRotation('')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="">0°</button>
+            <button type="button" onclick="setRotation('rot-90')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-90">90°</button>
+            <button type="button" onclick="setRotation('rot-180')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-180">180°</button>
+            <button type="button" onclick="setRotation('rot-270')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-270">270°</button>
+          </div>
+        </div>
+
+        <!-- مؤشر الحجم -->
+        <p id="imageSizeInfo" class="hidden text-xs text-slate-400 mt-2"></p>
       </div>
 
       <div>
@@ -274,15 +304,29 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t border-slate-800">
-        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-700 cursor-pointer">
-          <input type="checkbox" id="fAvailable" class="w-5 h-5 accent-emerald-500">
-          <span class="text-slate-200 font-bold text-sm"><i class="fas fa-check-circle text-emerald-400 ml-1"></i> متوفر للبيع</span>
-        </label>
-        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-700 cursor-pointer">
-          <input type="checkbox" id="fLowStock" class="w-5 h-5 accent-amber-500">
-          <span class="text-slate-200 font-bold text-sm"><i class="fas fa-exclamation-circle text-amber-400 ml-1"></i> كمية محدودة</span>
-        </label>
+      <!-- ============ حالة المنتج (Radio Buttons بدل Checkboxes) ============ -->
+      <div class="pt-3 border-t border-slate-800">
+        <label class="block text-slate-300 font-bold mb-2 text-sm">حالة المنتج</label>
+        <div class="grid grid-cols-1 gap-2">
+          <label class="flex items-center gap-3 bg-emerald-950/40 border-2 border-emerald-500/40 p-3 rounded-xl cursor-pointer hover:bg-emerald-950/60 transition">
+            <input type="radio" name="fStatus" value="available" class="w-5 h-5 accent-emerald-500" checked>
+            <span class="text-emerald-300 font-bold text-sm flex-1">
+              <i class="fas fa-check-circle ml-1"></i> متوفر — المنتج متاح للبيع
+            </span>
+          </label>
+          <label class="flex items-center gap-3 bg-amber-950/40 border-2 border-amber-500/40 p-3 rounded-xl cursor-pointer hover:bg-amber-950/60 transition">
+            <input type="radio" name="fStatus" value="lowStock" class="w-5 h-5 accent-amber-500">
+            <span class="text-amber-300 font-bold text-sm flex-1">
+              <i class="fas fa-exclamation-triangle ml-1"></i> كمية محدودة — المنتج شبه نافد
+            </span>
+          </label>
+          <label class="flex items-center gap-3 bg-rose-950/40 border-2 border-rose-500/40 p-3 rounded-xl cursor-pointer hover:bg-rose-950/60 transition">
+            <input type="radio" name="fStatus" value="unavailable" class="w-5 h-5 accent-rose-500">
+            <span class="text-rose-300 font-bold text-sm flex-1">
+              <i class="fas fa-times-circle ml-1"></i> غير متوفر — المنتج نفد أو موقوف
+            </span>
+          </label>
+        </div>
       </div>
     </div>
 
@@ -305,6 +349,15 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   <p id="toastMsg" class="text-sm font-bold"></p>
 </div>
 
+<!-- شاشة معالجة الصورة -->
+<div id="imageProcessingOverlay" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
+  <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 text-center">
+    <i class="fas fa-spinner fa-spin text-4xl text-amber-400 mb-3"></i>
+    <p class="text-white font-bold">جاري معالجة الصورة...</p>
+    <p class="text-slate-400 text-xs mt-1">ضغط + تحويل</p>
+  </div>
+</div>
+
 </div><!-- /adminApp -->
 
 <script>
@@ -313,6 +366,7 @@ const STORAGE_KEY = 'ashour_catalog_data_v1';
 let catalogData = { products: [], settings: {}, categories: [] };
 let editingFlavors = [];
 let currentRotation = '';
+let currentImageData = ''; // base64 أو رابط
 
 /* ============================ أدوات ============================ */
 function escapeHtml(s) {
@@ -339,10 +393,107 @@ function persist() {
 
 function clearDirty() {
   document.getElementById('dirtyBadge').classList.add('hidden');
+}
+
+/* ============================ معالجة الصور ============================ */
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast('يجب اختيار ملف صورة', 'error');
+    return;
+  }
+
+  // عرض شاشة المعالجة
+  document.getElementById('imageProcessingOverlay').classList.remove('hidden');
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      // ضغط الصورة عبر Canvas
+      const canvas = document.createElement('canvas');
+      const MAX_WIDTH = 900;
+      const MAX_HEIGHT = 900;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height = Math.round((height * MAX_WIDTH) / width);
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width = Math.round((width * MAX_HEIGHT) / height);
+          height = MAX_HEIGHT;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // ضغط إلى JPEG بجودة 0.75
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+      currentImageData = compressedDataUrl;
+
+      // إظهار المعاينة
+      const preview = document.getElementById('fImagePreview');
+      const placeholder = document.getElementById('fImagePlaceholder');
+      preview.src = compressedDataUrl;
+      preview.classList.remove('hidden');
+      placeholder.classList.add('hidden');
+
+      // مسح حقل الرابط
+      document.getElementById('fImage').value = '';
+
+      // عرض حجم الصورة
+      const sizeKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
+      const info = document.getElementById('imageSizeInfo');
+      info.innerText = `حجم الصورة بعد الضغط: ~${sizeKB} KB (${width}×${height})`;
+      info.classList.remove('hidden');
+
+      document.getElementById('imageProcessingOverlay').classList.add('hidden');
+      showToast('تم رفع الصورة بنجاح ✅');
+    };
+    img.onerror = () => {
+      document.getElementById('imageProcessingOverlay').classList.add('hidden');
+      showToast('فشل تحميل الصورة', 'error');
+    };
+    img.src = e.target.result;
+  };
+  reader.onerror = () => {
+    document.getElementById('imageProcessingOverlay').classList.add('hidden');
+    showToast('فشل قراءة الملف', 'error');
+  };
+  reader.readAsDataURL(file);
+
+  // مسح القيمة من الحقل حتى يتمكن من اختيار نفس الصورة مرة أخرى
+  event.target.value = '';
+}
+
+function toggleUrlInput() {
+  const wrapper = document.getElementById('urlInputWrapper');
+  wrapper.classList.toggle('hidden');
+  if (!wrapper.classList.contains('hidden')) {
+    document.getElementById('fImage').focus();
+  }
+}
+
+function removeImage() {
+  currentImageData = '';
+  document.getElementById('fImage').value = '';
+  document.getElementById('fImagePreview').src = '';
+  document.getElementById('fImagePreview').classList.add('hidden');
+  document.getElementById('fImagePlaceholder').classList.remove('hidden');
+  document.getElementById('imageSizeInfo').classList.add('hidden');
 }/* ============================ تحميل البيانات ============================ */
 function loadInitialData() {
   return new Promise((resolve) => {
-    // 1) حاول من localStorage أولًا (تعديلات محفوظة سابقًا)
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
@@ -354,7 +505,6 @@ function loadInitialData() {
       } catch (e) { /* تجاهل */ }
     }
 
-    // 2) حاول من catalog-data.js
     const script = document.createElement('script');
     script.src = 'catalog-data.js?v=' + Date.now();
     script.onload = () => {
@@ -511,20 +661,25 @@ function renderProductList() {
 
     let badge = '';
     if (!isAvail) badge = '<span class="bg-rose-600 text-white text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-times-circle"></i> غير متوفر</span>';
-    else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-exclamation-circle"></i> كمية محدودة</span>';
+    else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>';
     else badge = '<span class="bg-emerald-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-black"><i class="fas fa-check-circle"></i> متوفر</span>';
 
     const flavorsBadge = (p.flavors && p.flavors.length)
       ? `<span class="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md"><i class="fas fa-tags"></i> ${p.flavors.length} نكهة</span>`
       : `<span class="text-xs text-slate-500 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">بدون نكهات</span>`;
 
+    // كشف صورة base64
+    const imgSrc = p.image || '';
+    const isDataUrl = imgSrc.startsWith('data:image');
+
     return `
       <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
         <div class="aspect-[740/645] bg-slate-950 relative overflow-hidden">
-          <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" loading="lazy"
+          <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.name)}" loading="lazy"
             class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}"
             onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-4xl\\'></i></div>'">
           <div class="absolute top-2 right-2">${badge}</div>
+          ${isDataUrl ? '<div class="absolute top-2 left-2 bg-sky-600 text-white text-xs px-2 py-0.5 rounded font-bold"><i class="fas fa-image"></i> مضمّنة</div>' : ''}
         </div>
         <div class="p-3">
           <h3 class="text-white font-black text-sm leading-snug mb-2">${escapeHtml(p.name)}</h3>
@@ -549,9 +704,29 @@ function renderStats() {
 }
 
 /* ============================ نافذة المنتج ============================ */
+function setProductStatus(status) {
+  document.querySelectorAll('input[name="fStatus"]').forEach(r => {
+    r.checked = (r.value === status);
+  });
+}
+
+function getProductStatus() {
+  const checked = document.querySelector('input[name="fStatus"]:checked');
+  return checked ? checked.value : 'available';
+}
+
 function openProductModal(pid = null) {
   const modal = document.getElementById('productModal');
   editingFlavors = [];
+  currentImageData = '';
+
+  // تصفير الواجهة
+  document.getElementById('fImage').value = '';
+  document.getElementById('fImagePreview').src = '';
+  document.getElementById('fImagePreview').classList.add('hidden');
+  document.getElementById('fImagePlaceholder').classList.remove('hidden');
+  document.getElementById('imageSizeInfo').classList.add('hidden');
+  document.getElementById('urlInputWrapper').classList.add('hidden');
 
   if (pid === null) {
     document.getElementById('modalTitle').innerText = 'إضافة منتج جديد';
@@ -559,10 +734,8 @@ function openProductModal(pid = null) {
     document.getElementById('fName').value = '';
     document.getElementById('fCategory').value = '';
     document.getElementById('fPrice').value = 'التواصل مع المبيعات';
-    document.getElementById('fImage').value = '';
     document.getElementById('fDescription').value = '';
-    document.getElementById('fAvailable').checked = true;
-    document.getElementById('fLowStock').checked = false;
+    setProductStatus('available');
     setRotation('');
   } else {
     const p = catalogData.products[pid];
@@ -572,16 +745,35 @@ function openProductModal(pid = null) {
     document.getElementById('fName').value = p.name || '';
     document.getElementById('fCategory').value = p.category || '';
     document.getElementById('fPrice').value = p.price || 'التواصل مع المبيعات';
-    document.getElementById('fImage').value = p.image || '';
     document.getElementById('fDescription').value = p.description || '';
-    document.getElementById('fAvailable').checked = p.available !== false;
-    document.getElementById('fLowStock').checked = p.lowStock === true;
+
+    if (p.available === false) setProductStatus('unavailable');
+    else if (p.lowStock) setProductStatus('lowStock');
+    else setProductStatus('available');
+
     editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
     setRotation(p.rotateClass || '');
+
+    // عرض الصورة الحالية
+    if (p.image) {
+      currentImageData = p.image;
+      const preview = document.getElementById('fImagePreview');
+      preview.src = p.image;
+      preview.classList.remove('hidden');
+      document.getElementById('fImagePlaceholder').classList.add('hidden');
+
+      if (p.image.startsWith('data:image')) {
+        const sizeKB = Math.round((p.image.length * 0.75) / 1024);
+        const info = document.getElementById('imageSizeInfo');
+        info.innerText = `صورة مضمّنة (~${sizeKB} KB)`;
+        info.classList.remove('hidden');
+      } else {
+        document.getElementById('fImage').value = p.image;
+      }
+    }
   }
 
   renderFlavors();
-  previewImage();
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
@@ -593,9 +785,20 @@ function closeProductModal() {
 
 function previewImage() {
   const url = document.getElementById('fImage').value.trim();
-  const img = document.getElementById('fImagePreview');
-  if (url) { img.src = url; img.style.display = 'block'; }
-  else img.style.display = 'none';
+  const preview = document.getElementById('fImagePreview');
+  const placeholder = document.getElementById('fImagePlaceholder');
+
+  if (url) {
+    currentImageData = url;
+    preview.src = url;
+    preview.classList.remove('hidden');
+    placeholder.classList.add('hidden');
+    document.getElementById('imageSizeInfo').classList.add('hidden');
+  } else if (!currentImageData) {
+    preview.src = '';
+    preview.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+  }
 }
 
 function setRotation(rot) {
@@ -638,23 +841,25 @@ function addFlavor() {
 function removeFlavor(i) {
   editingFlavors.splice(i, 1);
   renderFlavors();
-}/* ============================ حفظ المنتج ============================ */
+}
+
+/* ============================ حفظ وحذف ============================ */
 function saveProduct() {
   const name = document.getElementById('fName').value.trim();
   const category = document.getElementById('fCategory').value.trim();
-  const image = document.getElementById('fImage').value.trim();
 
   if (!name) { showToast('اسم المنتج مطلوب', 'error'); return; }
   if (!category) { showToast('الفئة مطلوبة', 'error'); return; }
-  if (!image) { showToast('رابط الصورة مطلوب', 'error'); return; }
+  if (!currentImageData) { showToast('الصورة مطلوبة', 'error'); return; }
 
+  const status = getProductStatus();
   const data = {
     name, category,
     price: document.getElementById('fPrice').value.trim() || 'التواصل مع المبيعات',
-    image,
+    image: currentImageData,
     description: document.getElementById('fDescription').value.trim(),
-    available: document.getElementById('fAvailable').checked,
-    lowStock: document.getElementById('fLowStock').checked,
+    available: status !== 'unavailable',
+    lowStock: status === 'lowStock',
     flavors: editingFlavors.length ? [...editingFlavors] : undefined,
     rotateClass: currentRotation || undefined
   };
@@ -691,14 +896,11 @@ function deleteProductFromModal() {
   showToast('تم حذف المنتج');
 }
 
-/* ============================ حفظ شامل ============================ */
 function saveAll() {
   persist();
   clearDirty();
   showToast('تم حفظ كل التغييرات في المتصفح');
-}
-
-/* ============================ تصدير ============================ */
+}/* ============================ تصدير ============================ */
 function exportData() {
   const clean = {
     products: catalogData.products.map(p => {
@@ -710,7 +912,6 @@ function exportData() {
     categories: [...(catalogData.categories || [])]
   };
 
-  // إنتاج ملف JS (متوافق مع index.html الجديد)
   let jsContent = '/* ================================\n';
   jsContent += '   ملف بيانات الكتالوج\n';
   jsContent += '   مركز عاشور للتجارة\n';
