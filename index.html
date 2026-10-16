@@ -34,8 +34,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .rot-270 { transform: rotate(270deg); scale: 1.2; }
 .product-img { opacity: 1; }
 @keyframes logoGlow {
-  0%, 100% { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5)); }
-  50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.9)); }
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.55)); }
+  50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.95)); }
 }
 .logo-glow { animation: logoGlow 2.5s ease-in-out infinite; }
 </style>
@@ -44,7 +44,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <!-- شاشة التحميل -->
 <div id="sitePreloader" class="fixed inset-0 z-50 bg-[#070a12] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-700">
-  <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-2 border-amber-400/60 mb-6 bg-slate-900/50 flex items-center justify-center p-3 logo-glow">
+  <div class="w-56 h-56 sm:w-72 sm:h-72 mb-6 flex items-center justify-center logo-glow">
     <img id="loaderLogoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
   </div>
   <h1 class="text-3xl sm:text-4xl font-black gold-gradient-text tracking-wide mb-2">مركز عاشور للتجارة</h1>
@@ -83,17 +83,17 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <!-- الرأس -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
-<div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
-<div class="flex items-center gap-3">
-<div class="w-16 h-16 rounded-xl overflow-hidden border-2 border-amber-400/50 bg-slate-900/50 flex items-center justify-center flex-shrink-0 p-1">
+<div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center flex-shrink-0">
 <img id="logoImg" src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
 </div>
-<div>
-<h1 class="text-lg sm:text-2xl font-black gold-gradient-text leading-tight">مركز عاشور للتجارة</h1>
-<p class="text-xs text-slate-400 hidden sm:block">أجود أنواع الشيبس، البسكويت، العصائر، والعلكة</p>
+<div class="min-w-0">
+<h1 class="text-base sm:text-2xl font-black gold-gradient-text leading-tight truncate">مركز عاشور للتجارة</h1>
+<p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">أجود أنواع الشيبس، البسكويت، العصائر، والعلكة</p>
 </div>
 </div>
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 flex-shrink-0">
   <button data-action="open-cart" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-sm">
     <i class="fas fa-shopping-basket text-lg"></i>
     <span class="hidden sm:inline">إنشاء طلب</span>
@@ -107,14 +107,14 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </div>
 </header><!-- الكتالوج -->
 <div id="catalogMainView" class="w-full flex flex-col flex-grow">
-  <section class="relative py-10 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
+  <section class="relative py-8 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
-  
+
   <!-- الشعار الكبير في القسم الرئيسي -->
-  <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-amber-400/50 bg-slate-900/40 flex items-center justify-center mx-auto mb-6 p-3 logo-glow">
+  <div class="w-72 h-72 sm:w-96 sm:h-96 max-w-full flex items-center justify-center mx-auto mb-4 logo-glow">
     <img src="logo.png" class="w-full h-full object-contain" alt="مركز عاشور للتجارة">
   </div>
-  
+
   <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-4">كتالوج منتجات مركز عاشور</span>
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 text-white leading-tight">أهلاً وسهلاً بكم في <span class="gold-gradient-text">مركز عاشور</span></h2>
   <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">استعرض تشكيلتنا الشاملة واطلب كمياتك ونكهاتك مباشرة.</p>
@@ -142,9 +142,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
-  <div class="flex flex-wrap justify-center gap-3 mb-10" id="categoryContainer"></div>
-  <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
+  <section class="max-w-7xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
+  <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6" id="categoryContainer"></div>
+  <!-- شبكة المنتجات: منتجان جنبًا إلى جنب على الجوال -->
+  <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
   <div id="noResults" class="hidden text-center py-16 text-slate-500">
     <i class="fas fa-box-open text-6xl mb-4 text-amber-500/50"></i>
     <p class="text-xl font-semibold">لا توجد منتجات تطابق بحثك.</p>
@@ -153,15 +154,15 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </div>
 
 <!-- صفحة السلة -->
-<div id="cartPageView" class="hidden max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
-  <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl">
-    <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-800 flex-wrap gap-4">
+<div id="cartPageView" class="hidden max-w-4xl mx-auto px-3 sm:px-4 py-6 flex-grow w-full">
+  <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
+    <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-xl overflow-hidden border border-amber-400/40 bg-slate-900/50 flex items-center justify-center p-1 flex-shrink-0">
+        <div class="w-16 h-16 flex items-center justify-center flex-shrink-0">
           <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
         </div>
         <div>
-          <h2 class="text-xl sm:text-2xl font-black gold-gradient-text">صفحة إنشاء الطلب</h2>
+          <h2 class="text-lg sm:text-2xl font-black gold-gradient-text">صفحة إنشاء الطلب</h2>
           <p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل.</p>
         </div>
       </div>
@@ -170,9 +171,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </button>
     </div>
 
-    <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-5 mb-6 space-y-4">
+    <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 sm:p-5 mb-5 space-y-4">
       <h3 class="text-base font-black text-white border-b border-slate-800 pb-2 flex items-center gap-2"><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل <span class="text-rose-500">*</span></label>
           <input type="text" id="custName" oninput="saveCustomerData()" placeholder="أدخل اسمك..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
@@ -188,7 +189,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
     </div>
 
-    <div class="mb-6">
+    <div class="mb-5">
       <h3 class="text-base font-black text-white mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
         <span>المنتجات المحددة</span>
         <span id="cartTotalItemsBadge" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span>
@@ -199,34 +200,34 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
 
     <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
-      <button data-action="back-to-catalog" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2">
-        <i class="fas fa-arrow-right"></i> العودة للكتالوج
+      <button data-action="back-to-catalog" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-3 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-arrow-right"></i> العودة
       </button>
-      <button data-action="send-order" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-8 py-3 rounded-xl text-sm shadow-xl flex items-center gap-2.5">
+      <button data-action="send-order" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl flex items-center gap-2.5">
         <i class="fab fa-whatsapp text-xl"></i>
-        <span>إتمام الطلب عبر الواتساب</span>
+        <span>إتمام الطلب</span>
       </button>
     </div>
   </div>
 </div><!-- الأزرار العائمة -->
-<div class="fixed bottom-6 right-6 z-40 flex items-center gap-2">
-  <a id="floatWaInquiryBtn" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-3.5 rounded-full shadow-xl flex items-center gap-3 border-2 border-emerald-400">
+<div class="fixed bottom-4 right-4 z-40 flex items-center gap-2">
+  <a id="floatWaInquiryBtn" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-3.5 py-3 rounded-full shadow-xl flex items-center gap-2 border-2 border-emerald-400">
     <i class="fab fa-whatsapp text-2xl"></i>
     <div class="text-right leading-tight hidden sm:block">
       <p class="text-xs font-semibold text-emerald-100">استفسار</p>
       <p class="text-sm font-black">ياسر عاشور</p>
     </div>
   </a>
-  <button data-action="open-cart" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black p-4 rounded-full shadow-2xl flex items-center justify-center gap-2 border-2 border-amber-300">
+  <button data-action="open-cart" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black p-3.5 rounded-full shadow-2xl flex items-center justify-center gap-2 border-2 border-amber-300">
     <i class="fas fa-clipboard-list text-2xl"></i>
     <span id="floatCartBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
   </button>
 </div>
 
 <!-- التذييل -->
-<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-12">
+<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-10">
 <div class="max-w-4xl mx-auto space-y-3">
-  <div class="w-20 h-20 rounded-xl overflow-hidden border border-amber-400/40 bg-slate-950/60 flex items-center justify-center mx-auto p-1.5">
+  <div class="w-28 h-28 flex items-center justify-center mx-auto">
     <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
   </div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
@@ -392,7 +393,7 @@ function showToast(name) {
   m.innerText = `تمت إضافة "${name}" إلى السلة!`;
   t.classList.remove('hidden'); t.classList.add('flex');
   setTimeout(() => { t.classList.remove('flex'); t.classList.add('hidden'); }, 2500);
-}/* ==================== عرض المنتجات ==================== */
+}/* ==================== عرض المنتجات (مُحسّن لبطاقات الجوال الصغيرة) ==================== */
 function displayProducts(items) {
   const grid = document.getElementById('productsGrid');
   const noResults = document.getElementById('noResults');
@@ -420,14 +421,14 @@ function displayProducts(items) {
 
     let statusBadge = '', statusText = '';
     if (!isAvail) {
-      statusBadge = `<span class="absolute top-3 right-3 bg-rose-600 text-white font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-times-circle"></i> غير متوفر</span>`;
-      statusText  = `<span class="text-rose-400 font-extrabold text-xs bg-rose-950/80 border border-rose-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-times-circle"></i> غير متوفر</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-times-circle"></i> <span class="hidden sm:inline">غير متوفر</span></span>`;
+      statusText  = `<span class="text-rose-400 font-extrabold text-[10px] sm:text-xs bg-rose-950/80 border border-rose-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-times-circle"></i> نفد</span>`;
     } else if (isLow) {
-      statusBadge = `<span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>`;
-      statusText  = `<span class="text-amber-400 font-extrabold text-xs bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-exclamation-triangle"></i> كمية محدودة</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-amber-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-exclamation-triangle"></i> <span class="hidden sm:inline">كمية محدودة</span></span>`;
+      statusText  = `<span class="text-amber-400 font-extrabold text-[10px] sm:text-xs bg-amber-950/80 border border-amber-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-exclamation-triangle"></i> قليل</span>`;
     } else {
-      statusBadge = `<span class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full z-20"><i class="fas fa-check-circle"></i> متوفر</span>`;
-      statusText  = `<span class="text-emerald-400 font-extrabold text-xs bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fas fa-check-circle"></i> متوفر</span>`;
+      statusBadge = `<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full z-20"><i class="fas fa-check-circle"></i> <span class="hidden sm:inline">متوفر</span></span>`;
+      statusText  = `<span class="text-emerald-400 font-extrabold text-[10px] sm:text-xs bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-check-circle"></i> متوفر</span>`;
     }
 
     let selectorsHtml = '';
@@ -438,28 +439,28 @@ function displayProducts(items) {
         const currentSelQty = (productSelections[product.name] && productSelections[product.name][flv]) || 0;
         const safeFlv = escapeHtml(flv);
         flavorsRows += `
-          <div class="flex items-center justify-between bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-700/80">
-            <span class="text-xs text-amber-300 font-bold truncate max-w-[100px]">${safeFlv}</span>
-            <div class="flex items-center gap-1.5">
+          <div class="flex items-center justify-between bg-slate-900/90 px-2 py-1 rounded-lg border border-slate-700/80">
+            <span class="text-[10px] sm:text-xs text-amber-300 font-bold truncate max-w-[70px] sm:max-w-[100px]">${safeFlv}</span>
+            <div class="flex items-center gap-1">
               <button type="button" data-action="dec" data-pid="${pid}" data-fidx="${fIdx}" data-flavor="${safeFlv}"
-                class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-black text-xs">-</button>
-              <span id="sel-${pid}-${fIdx}" class="w-6 text-center font-bold text-amber-400 text-xs">${currentSelQty}</span>
+                class="w-6 h-6 sm:w-7 sm:h-7 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white rounded flex items-center justify-center font-black text-xs">-</button>
+              <span id="sel-${pid}-${fIdx}" class="w-5 text-center font-bold text-amber-400 text-xs">${currentSelQty}</span>
               <button type="button" data-action="inc" data-pid="${pid}" data-fidx="${fIdx}" data-flavor="${safeFlv}"
-                class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded flex items-center justify-center font-black text-xs">+</button>
+                class="w-6 h-6 sm:w-7 sm:h-7 bg-slate-800 hover:bg-slate-700 active:bg-amber-500 text-white rounded flex items-center justify-center font-black text-xs">+</button>
             </div>
           </div>`;
       });
       selectorsHtml = `
-        <div class="space-y-1.5 mb-3 bg-slate-950/40 p-2 rounded-xl border border-slate-800">
-          <div class="text-[11px] text-slate-400 font-semibold mb-1">العدد والنكهات:</div>
-          <div class="max-h-32 overflow-y-auto space-y-1 pr-1">${flavorsRows}</div>
+        <div class="space-y-1 mb-2 bg-slate-950/40 p-1.5 rounded-xl border border-slate-800">
+          <div class="text-[10px] text-slate-400 font-semibold mb-1">العدد والنكهات:</div>
+          <div class="max-h-28 sm:max-h-32 overflow-y-auto space-y-1 pr-1">${flavorsRows}</div>
         </div>
         <button type="button" data-action="add-to-cart" data-pid="${pid}"
-          class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-sm">
-          <i class="fas fa-plus-circle"></i><span>إضافة إلى السلة</span>
+          class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2 px-2 rounded-xl flex items-center justify-center gap-1 text-xs sm:text-sm">
+          <i class="fas fa-plus-circle"></i><span>إضافة</span>
         </button>`;
     } else {
-      selectorsHtml = `<button disabled class="w-full bg-slate-700 text-slate-400 font-bold py-2.5 px-4 rounded-xl text-sm opacity-60">غير متوفر حالياً</button>`;
+      selectorsHtml = `<button disabled class="w-full bg-slate-700 text-slate-400 font-bold py-2 px-2 rounded-xl text-xs sm:text-sm opacity-60">نفد</button>`;
     }
 
     const card = document.createElement('div');
@@ -476,16 +477,18 @@ function displayProducts(items) {
                loading="lazy">
           ${statusBadge}
         </div>
-        <div class="p-4">
-          <div class="flex items-center justify-between mb-1.5 flex-wrap gap-2">
-            <span class="text-[11px] font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${escapeHtml(product.category)}</span>
+        <div class="p-2 sm:p-4">
+          <div class="flex items-center justify-between mb-1 flex-wrap gap-1">
+            <span class="text-[10px] sm:text-[11px] font-bold text-amber-400/90 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">${escapeHtml(product.category)}</span>
             ${statusText}
           </div>
-          <h3 class="text-base font-black text-white mb-1 leading-snug">${escapeHtml(product.name)}</h3>
-          <p class="text-slate-400 text-xs mb-3 leading-relaxed line-clamp-2">${escapeHtml(product.description || 'منتج عالي الجودة من مركز عاشور.')}</p>
+          <h3 class="text-xs sm:text-base font-black text-white mb-1 leading-snug">${escapeHtml(product.name)}</h3>
+          <p class="text-slate-400 text-[10px] sm:text-xs mb-2 leading-relaxed line-clamp-2">${escapeHtml(product.description || 'منتج عالي الجودة من مركز عاشور.')}</p>
         </div>
       </div>
-      <div class="p-4 pt-0"><div class="border-t border-slate-700/60 pt-3 mt-auto">${selectorsHtml}</div></div>`;
+      <div class="p-2 sm:p-4 pt-0">
+        <div class="border-t border-slate-700/60 pt-2 sm:pt-3 mt-auto">${selectorsHtml}</div>
+      </div>`;
     frag.appendChild(card);
   });
 
@@ -667,9 +670,9 @@ function filterCategory(cat) {
   currentCategory = cat;
   document.querySelectorAll('.filter-btn').forEach(b => {
     if (b.dataset.category === cat) {
-      b.className = "filter-btn active bg-amber-500 text-slate-950 font-extrabold px-6 py-2.5 rounded-full text-base transition";
+      b.className = "filter-btn active bg-amber-500 text-slate-950 font-extrabold px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base transition";
     } else {
-      b.className = "filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-6 py-2.5 rounded-full text-base border border-slate-700 transition";
+      b.className = "filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base border border-slate-700 transition";
     }
   });
   filterProducts();
@@ -730,7 +733,7 @@ function renderCategoryButtons() {
     <button data-category="${escapeHtml(cat)}"
       class="filter-btn ${i === 0
         ? 'active bg-amber-500 text-slate-950 font-extrabold'
-        : 'bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700'} px-6 py-2.5 rounded-full text-base transition">${escapeHtml(cat)}</button>
+        : 'bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700'} px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base transition">${escapeHtml(cat)}</button>
   `).join('');
 }
 
