@@ -23,6 +23,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
   50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
 }
+.review-star.active { background: #d4af37 !important; color: #0b0f19 !important; }
 </style>
 </head>
 <body class="min-h-screen">
@@ -36,7 +37,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
     <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
 
-    <!-- حقل كلمة المرور مع زر العين -->
     <div class="relative mb-4">
       <input type="password" id="loginPassword" placeholder="كلمة المرور"
         class="w-full bg-slate-950 text-white p-3.5 pr-12 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-lg"
@@ -164,7 +164,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
 
     <div>
-      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الشعار (Logo URL)</label>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الشعار</label>
       <input type="text" id="setLogoUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono">
       <img id="logoPreview" class="mt-3 w-20 h-20 rounded-full object-cover border-2 border-amber-500/40" onerror="this.style.display='none'">
     </div>
@@ -206,7 +206,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
   </div>
 
-  <!-- قسم GitHub -->
   <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub
@@ -214,7 +213,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
     <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200">
       <i class="fas fa-lock mr-1"></i>
-      الـ Token يُحفظ في متصفحك فقط، ولا يُرفع إلى أي مكان. لا تشاركه مع أحد.
+      الـ Token يُحفظ في متصفحك فقط. لا تشاركه مع أحد.
     </div>
 
     <div>
@@ -225,7 +224,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
           <i id="tokenEyeIcon" class="fas fa-eye"></i>
         </button>
       </div>
-      <p class="text-slate-500 text-xs mt-1">أدخل التوكن مرة واحدة ثم اضغط حفظ</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -255,7 +253,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2">
       <i class="fas fa-file-export text-emerald-400"></i> تصدير يدوي
     </h2>
-    <p class="text-slate-400 text-sm mb-4">حمّل ملف <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-400">catalog-data.js</code> كنسخة احتياطية.</p>
     <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2">
       <i class="fas fa-download"></i> تنزيل ملف JS
     </button>
@@ -382,6 +379,60 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
           </label>
         </div>
       </div>
+
+      <!-- قسم التقييمات -->
+      <div class="pt-3 border-t border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <label class="block text-slate-300 font-bold text-sm">
+            <i class="fas fa-star text-amber-400"></i> تقييمات العملاء
+          </label>
+          <span id="reviewsCountBadge" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30 font-bold">
+            0 تقييم
+          </span>
+        </div>
+
+        <div id="reviewsList" class="space-y-2 mb-3 max-h-60 overflow-y-auto pr-1"></div>
+
+        <button type="button" onclick="openAddReviewForm()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2">
+          <i class="fas fa-plus"></i> إضافة تقييم يدويًا
+        </button>
+
+        <div id="addReviewForm" class="hidden bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mt-3 space-y-3">
+          <p class="text-amber-400 font-bold text-xs flex items-center gap-1.5">
+            <i class="fas fa-pen"></i> تقييم جديد
+          </p>
+
+          <div>
+            <label class="block text-slate-400 text-xs mb-1.5">التقييم</label>
+            <div id="reviewStars" class="flex gap-1 justify-center" dir="ltr">
+              <button type="button" data-star="1" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+              <button type="button" data-star="2" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+              <button type="button" data-star="3" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+              <button type="button" data-star="4" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+              <button type="button" data-star="5" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 text-xs mb-1.5">الاسم (اختياري)</label>
+            <input type="text" id="reviewName" placeholder="مثال: أحمد" maxlength="30"
+              class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
+          </div>
+
+          <div>
+            <label class="block text-slate-400 text-xs mb-1.5">التعليق (اختياري)</label>
+            <textarea id="reviewComment" rows="2" placeholder="اكتب رأيك..." maxlength="200"
+              class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="closeAddReviewForm()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-xl text-xs">إلغاء</button>
+            <button type="button" onclick="saveReview()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2 rounded-xl text-xs">
+              <i class="fas fa-save"></i> حفظ التقييم
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="flex justify-between items-center p-4 sm:p-5 border-t border-slate-800 gap-3 flex-wrap">
@@ -398,24 +449,20 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- نافذة تأكيد الحذف الجميلة -->
+<!-- نافذة تأكيد الحذف -->
 <div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500"></div>
-    
     <div class="p-6 text-center">
       <div class="w-20 h-20 mx-auto rounded-full bg-rose-500/10 border-2 border-rose-500/40 flex items-center justify-center mb-4" style="animation: iconPulse 1.5s ease-in-out infinite;">
         <i class="fas fa-trash-alt text-4xl text-rose-400"></i>
       </div>
-      
       <h3 class="text-2xl font-black text-white mb-2">تأكيد الحذف</h3>
       <p class="text-slate-400 text-sm mb-4">هل أنت متأكد من حذف هذا المنتج؟</p>
-      
       <div class="bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mb-3">
         <p class="text-xs text-slate-500 mb-1">المنتج</p>
         <p id="confirmProductName" class="text-amber-400 font-black text-lg">اسم المنتج</p>
       </div>
-      
       <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-3 flex items-start gap-2 text-right">
         <i class="fas fa-exclamation-triangle text-rose-400 mt-0.5"></i>
         <p class="text-xs text-rose-300 leading-relaxed">
@@ -423,7 +470,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </p>
       </div>
     </div>
-    
     <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
       <button onclick="resolveConfirm(false)" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
         <i class="fas fa-times"></i> إلغاء
@@ -440,7 +486,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   <p id="toastMsg" class="text-sm font-bold"></p>
 </div>
 
-<!-- شاشة معالجة الصورة -->
+<!-- معالجة الصورة -->
 <div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 text-center max-w-sm">
     <i class="fas fa-spinner fa-spin text-4xl text-amber-400 mb-3"></i>
@@ -449,11 +495,11 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- شاشة النشر -->
+<!-- النشر -->
 <div id="publishOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-sky-500 rounded-2xl p-6 text-center max-w-sm">
     <i class="fas fa-cloud-upload-alt text-4xl text-sky-400 mb-3 animate-pulse"></i>
-    <p id="publishStatusText" class="text-white font-bold">جاري النشر إلى GitHub...</p>
+    <p id="publishStatusText" class="text-white font-bold">جاري النشر...</p>
     <p class="text-slate-400 text-xs mt-1">لا تغلق الصفحة</p>
   </div>
 </div>
@@ -465,8 +511,8 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const MAX_LOGIN_ATTEMPTS = 5;
-const LOCKOUT_DURATION = 5 * 60 * 1000; // 5 دقائق
-const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 دقيقة
+const LOCKOUT_DURATION = 5 * 60 * 1000;
+const IDLE_TIMEOUT = 30 * 60 * 1000;
 
 let catalogData = { products: [], settings: {}, categories: [] };
 let editingFlavors = [];
@@ -474,6 +520,104 @@ let currentRotation = '';
 let currentImageData = '';
 let _confirmResolver = null;
 let _idleTimer = null;
+
+/* ============================ التقييمات ============================ */
+let currentReviews = []; // تقييمات المنتج الحالي
+let currentReviewStars = 0;
+
+function openAddReviewForm() {
+  document.getElementById('addReviewForm').classList.remove('hidden');
+  document.getElementById('reviewName').value = '';
+  document.getElementById('reviewComment').value = '';
+  currentReviewStars = 0;
+  updateReviewStars(0);
+  attachStarListeners();
+}
+
+function closeAddReviewForm() {
+  document.getElementById('addReviewForm').classList.add('hidden');
+}
+
+function attachStarListeners() {
+  document.querySelectorAll('.review-star').forEach(btn => {
+    btn.onclick = () => {
+      const stars = Number(btn.dataset.star);
+      currentReviewStars = stars;
+      updateReviewStars(stars);
+    };
+  });
+}
+
+function updateReviewStars(count) {
+  document.querySelectorAll('.review-star').forEach(btn => {
+    const s = Number(btn.dataset.star);
+    if (s <= count) {
+      btn.classList.add('active');
+      btn.classList.remove('bg-slate-800', 'text-slate-600');
+    } else {
+      btn.classList.remove('active');
+      btn.classList.add('bg-slate-800', 'text-slate-600');
+    }
+  });
+}
+
+function saveReview() {
+  if (currentReviewStars === 0) {
+    showToast('يرجى اختيار عدد النجوم', 'error');
+    return;
+  }
+  const name = document.getElementById('reviewName').value.trim() || 'عميل';
+  const comment = document.getElementById('reviewComment').value.trim();
+  
+  const review = {
+    name: name,
+    stars: currentReviewStars,
+    comment: comment,
+    date: new Date().toISOString().slice(0, 10)
+  };
+  
+  currentReviews.push(review);
+  renderReviews();
+  closeAddReviewForm();
+  showToast('تمت إضافة التقييم — سيُحفظ مع المنتج');
+}
+
+function renderReviews() {
+  const container = document.getElementById('reviewsList');
+  const badge = document.getElementById('reviewsCountBadge');
+  
+  badge.innerText = currentReviews.length + ' تقييم';
+  
+  if (currentReviews.length === 0) {
+    container.innerHTML = '<p class="text-center text-slate-500 text-xs py-4 bg-slate-950/40 rounded-xl border border-slate-800">لا توجد تقييمات بعد</p>';
+    return;
+  }
+  
+  container.innerHTML = currentReviews.map((r, i) => {
+    const stars = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+    return `
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-start gap-2">
+        <div class="flex-grow min-w-0">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <span class="text-amber-400 text-xs font-bold">${stars}</span>
+            <span class="text-slate-400 text-xs">•</span>
+            <span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span>
+            <span class="text-slate-500 text-[10px]">${r.date}</span>
+          </div>
+          ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
+        </div>
+        <button type="button" onclick="removeReview(${i})" class="w-7 h-7 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-times text-xs"></i>
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function removeReview(i) {
+  currentReviews.splice(i, 1);
+  renderReviews();
+}
 
 /* ============================ نافذة التأكيد ============================ */
 function showConfirm(productName) {
@@ -491,7 +635,7 @@ function resolveConfirm(answer) {
   }
 }
 
-/* ============================ نظام قفل المحاولات ============================ */
+/* ============================ قفل المحاولات ============================ */
 function getLoginAttempts() {
   try {
     const data = JSON.parse(localStorage.getItem('ashour_login_attempts') || '{}');
@@ -507,15 +651,12 @@ function getLoginAttempts() {
     return { count: 0, lockedUntil: 0 };
   }
 }
-
 function saveLoginAttempts(count, lockedUntil = 0) {
   localStorage.setItem('ashour_login_attempts', JSON.stringify({ count, lockedUntil }));
 }
-
 function resetLoginAttempts() {
   localStorage.removeItem('ashour_login_attempts');
 }
-
 function checkLock() {
   const { lockedUntil } = getLoginAttempts();
   if (lockedUntil && Date.now() < lockedUntil) {
@@ -534,41 +675,24 @@ function checkLock() {
   }
 }
 
-/* ============================ إظهار/إخفاء كلمة المرور ============================ */
+/* ============================ إظهار كلمة المرور ============================ */
 function togglePasswordVisibility() {
   const input = document.getElementById('loginPassword');
   const icon = document.getElementById('passwordEyeIcon');
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.className = 'fas fa-eye-slash';
-  } else {
-    input.type = 'password';
-    icon.className = 'fas fa-eye';
-  }
+  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+  else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
-
 function toggleSetPasswordVisibility() {
   const input = document.getElementById('setPassword');
   const icon = document.getElementById('setPasswordEyeIcon');
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.className = 'fas fa-eye-slash';
-  } else {
-    input.type = 'password';
-    icon.className = 'fas fa-eye';
-  }
+  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+  else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
-
 function toggleTokenVisibility() {
   const input = document.getElementById('setGithubToken');
   const icon = document.getElementById('tokenEyeIcon');
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.className = 'fas fa-eye-slash';
-  } else {
-    input.type = 'password';
-    icon.className = 'fas fa-eye';
-  }
+  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+  else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
 /* ============================ تسجيل الخروج ============================ */
@@ -581,17 +705,15 @@ function logoutAdmin() {
   document.getElementById('loginPassword').value = '';
 }
 
-/* ============================ الخروج التلقائي ============================ */
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
   _idleTimer = setTimeout(() => {
     if (sessionStorage.getItem('ashour_admin_ok') === '1') {
-      alert('تم تسجيل الخروج تلقائيًا بسبب عدم النشاط لمدة 30 دقيقة');
+      alert('تم تسجيل الخروج تلقائيًا بسبب عدم النشاط');
       logoutAdmin();
     }
   }, IDLE_TIMEOUT);
 }
-
 function startIdleWatcher() {
   ['click', 'keypress', 'touchstart', 'scroll', 'mousemove'].forEach(ev => {
     document.addEventListener(ev, resetIdleTimer, { passive: true });
@@ -605,7 +727,6 @@ function escapeHtml(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
   const toastMsg = document.getElementById('toastMsg');
@@ -616,12 +737,10 @@ function showToast(msg, type = 'success') {
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
-
 function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData));
   document.getElementById('dirtyBadge').classList.remove('hidden');
 }
-
 function clearDirty() {
   document.getElementById('dirtyBadge').classList.add('hidden');
 }/* ============================ رفع الصور إلى ImgBB ============================ */
@@ -776,7 +895,7 @@ function loadInitialData() {
   });
 }
 
-/* ============================ الدخول (مع القفل) ============================ */
+/* ============================ الدخول ============================ */
 function tryLogin() {
   if (checkLock()) return;
 
@@ -800,7 +919,7 @@ function tryLogin() {
 
     if (newCount >= MAX_LOGIN_ATTEMPTS) {
       saveLoginAttempts(newCount, Date.now() + LOCKOUT_DURATION);
-      errEl.innerText = `❌ تجاوزت الحد المسموح (5 محاولات). اللوحة مقفلة 5 دقائق.`;
+      errEl.innerText = `❌ تجاوزت الحد. اللوحة مقفلة 5 دقائق.`;
       errEl.classList.remove('hidden');
       checkLock();
     } else {
@@ -936,6 +1055,10 @@ function renderProductList() {
     else if (isLow) badge = '<span class="bg-amber-500 text-slate-950 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black"><i class="fas fa-exclamation-triangle"></i></span>';
     else badge = '<span class="bg-emerald-500 text-slate-950 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-black"><i class="fas fa-check-circle"></i></span>';
 
+    const reviewsBadge = (p.reviews && p.reviews.length > 0)
+      ? `<span class="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded-md"><i class="fas fa-star"></i> ${p.reviews.length}</span>`
+      : '';
+
     return `
       <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
         <div class="aspect-square bg-slate-950 relative overflow-hidden">
@@ -943,6 +1066,7 @@ function renderProductList() {
             class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}"
             onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-3xl\\'></i></div>'">
           <div class="absolute top-2 right-2">${badge}</div>
+          ${reviewsBadge ? `<div class="absolute top-2 left-2">${reviewsBadge}</div>` : ''}
         </div>
         <div class="p-2 sm:p-3">
           <h3 class="text-white font-black text-xs sm:text-sm leading-snug mb-2 line-clamp-2">${escapeHtml(p.name)}</h3>
@@ -975,6 +1099,8 @@ function openProductModal(pid = null) {
   const modal = document.getElementById('productModal');
   editingFlavors = [];
   currentImageData = '';
+  currentReviews = [];
+  currentReviewStars = 0;
 
   document.getElementById('fImage').value = '';
   document.getElementById('fImagePreview').src = '';
@@ -982,6 +1108,7 @@ function openProductModal(pid = null) {
   document.getElementById('fImagePlaceholder').classList.remove('hidden');
   document.getElementById('imageSizeInfo').classList.add('hidden');
   document.getElementById('urlInputWrapper').classList.add('hidden');
+  document.getElementById('addReviewForm').classList.add('hidden');
 
   if (pid === null) {
     document.getElementById('modalTitle').innerText = 'إضافة منتج جديد';
@@ -992,6 +1119,7 @@ function openProductModal(pid = null) {
     document.getElementById('fDescription').value = '';
     setProductStatus('available');
     setRotation('');
+    renderReviews();
   } else {
     const p = catalogData.products[pid];
     if (!p) return;
@@ -1005,6 +1133,7 @@ function openProductModal(pid = null) {
     else if (p.lowStock) setProductStatus('lowStock');
     else setProductStatus('available');
     editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
+    currentReviews = Array.isArray(p.reviews) ? [...p.reviews] : [];
     setRotation(p.rotateClass || '');
     if (p.image) {
       currentImageData = p.image;
@@ -1014,6 +1143,7 @@ function openProductModal(pid = null) {
       document.getElementById('fImagePlaceholder').classList.add('hidden');
       document.getElementById('fImage').value = p.image;
     }
+    renderReviews();
   }
 
   renderFlavors();
@@ -1103,6 +1233,7 @@ function saveProduct() {
     available: status !== 'unavailable',
     lowStock: status === 'lowStock',
     flavors: editingFlavors.length ? [...editingFlavors] : undefined,
+    reviews: currentReviews.length ? [...currentReviews] : undefined,
     rotateClass: currentRotation || undefined
   };
 
@@ -1124,7 +1255,7 @@ function saveProduct() {
   closeProductModal();
 }
 
-/* ============================ حذف المنتج (بالنافذة الجميلة) ============================ */
+/* ============================ حذف المنتج ============================ */
 async function deleteProductFromModal() {
   const pidVal = document.getElementById('fPid').value;
   if (pidVal === '') { closeProductModal(); return; }
@@ -1152,6 +1283,7 @@ function buildCatalogJS() {
     products: catalogData.products.map(p => {
       const o = { ...p };
       if (!o.flavors || o.flavors.length === 0) delete o.flavors;
+      if (!o.reviews || o.reviews.length === 0) delete o.reviews;
       return o;
     }),
     settings: { ...catalogData.settings },
@@ -1275,7 +1407,7 @@ async function testGithubConnection() {
   }
 }
 
-/* ============================ تصدير يدوي ============================ */
+/* ============================ تصدير ============================ */
 function exportData() {
   const content = buildCatalogJS();
   const blob = new Blob([content], { type: 'application/javascript' });
@@ -1344,7 +1476,7 @@ function applyImportedData(data) {
   });
 }
 
-/* ============================ إغلاق بزر Escape ============================ */
+/* ============================ Escape ============================ */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeProductModal();
