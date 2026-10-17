@@ -1,43 +1,20 @@
 {
   "name": "مركز عاشور للتجارة",
   "short_name": "عاشور",
-  "description": "كتالوج منتجات مركز عاشور للتجارة - شيبس، بسكويت، عصائر، قهوة، سكاكر في دمشق",
-  "start_url": "/Ashour/",
-  "scope": "/Ashour/",
+  "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#0b0f19",
   "theme_color": "#d4af37",
-  "lang": "ar",
-  "dir": "rtl",
-  "categories": ["shopping", "food", "business"],
   "icons": [
     {
       "src": "logo.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "الكتالوج",
-      "short_name": "الكتالوج",
-      "description": "تصفح المنتجات",
-      "url": "/Ashour/",
-      "icons": [{ "src": "logo.png", "sizes": "192x192" }]
+      "type": "image/png"
     }
   ]
 }
