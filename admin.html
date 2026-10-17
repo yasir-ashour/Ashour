@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة إدارة الكتالوج - مركز عاشور</title>
 <link rel="icon" type="image/png" href="logo.png">
+<!-- روابط تطبيق لوحة التحكم المستقل -->
+<link rel="manifest" href="manifest-admin.json">
+<meta name="theme-color" content="#0b0f19">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -387,6 +390,13 @@ let _confirmResolver = null;
 let _idleTimer = null;
 let currentReviews = [];
 let currentReviewStars = 0;
+
+/* ============================ تسجيل Service Worker للوحة التحكم ============================ */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw-admin.js')
+    .then(() => console.log('Admin SW registered successfully'))
+    .catch(err => console.log('Admin SW registration failed', err));
+}
 
 /* ============================ معرض الصور ============================ */
 function addGalleryImage() {
