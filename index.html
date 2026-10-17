@@ -6,7 +6,6 @@
 <title>مركز عاشور للتجارة</title>
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
-<!-- إعدادات تطبيق المتجر المستقل -->
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -60,6 +59,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span class="hidden sm:inline">إنشاء طلب</span>
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
+      
+      <!-- أزرار الحساب / تسجيل الدخول -->
+      <button id="loginBtn" onclick="loginWithGoogle()" class="bg-white text-slate-900 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:bg-slate-100">
+        <i class="fab fa-google text-red-500 text-lg"></i>
+        <span class="hidden sm:inline">دخول</span>
+      </button>
+      
+      <button id="userProfileBtn" onclick="openProfileModal()" class="hidden bg-slate-800 border-2 border-amber-500 text-white font-bold px-2 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-sm">
+        <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover border border-slate-600">
+        <span id="userNameDisplay" class="hidden sm:inline max-w-[80px] truncate">حسابي</span>
+      </button>
+
       <a id="headerWa" target="_blank" rel="noopener" class="hidden md:flex items-center gap-2 bg-emerald-600 text-white font-bold px-4 py-2.5 rounded-full text-sm">
         <i class="fab fa-whatsapp text-lg"></i>
         <span>ياسر عاشور</span>
@@ -101,9 +112,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </div>
   </div>
-  </section>
-
-  <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
+  </section>  <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
     <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
@@ -180,6 +189,51 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <i class="fas fa-clipboard-list text-2xl"></i>
     <span id="floatBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
   </button>
+</div>
+
+<!-- نافذة الملف الشخصي -->
+<div id="profileModal" class="hidden fixed inset-0 z-[70] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-text"><i class="fas fa-user-circle text-amber-400"></i> حسابي الشخصي</h3>
+      <button onclick="closeProfileModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto">
+      <div class="flex flex-col items-center justify-center mb-4">
+        <div class="relative w-24 h-24 rounded-full border-4 border-amber-500/50 overflow-hidden bg-slate-950 mb-2 group cursor-pointer" onclick="document.getElementById('profileAvatarFile').click()">
+          <img id="profileAvatarPreview" src="logo.png" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center transition">
+            <i class="fas fa-camera text-white text-2xl"></i>
+          </div>
+        </div>
+        <input type="file" id="profileAvatarFile" accept="image/*" class="hidden" onchange="handleProfileAvatarUpload(event)">
+        <p class="text-[10px] text-slate-400">اضغط على الصورة لتغييرها</p>
+      </div>
+
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل</label>
+        <input type="text" id="profileName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">رقم الهاتف / واتساب</label>
+        <input type="tel" id="profilePhone" placeholder="مثال: 9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono" dir="ltr">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label>
+        <input type="text" id="profileShop" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
+      </div>
+      <div>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs">عنوان المحل</label>
+        <input type="text" id="profileAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
+      </div>
+      
+      <div class="pt-2 flex gap-2">
+        <button onclick="logoutUser()" class="bg-rose-950/60 text-rose-400 border border-rose-500/30 font-bold px-4 py-3 rounded-xl text-sm"><i class="fas fa-sign-out-alt"></i> خروج</button>
+        <button onclick="saveUserProfile()" id="saveProfileBtn" class="flex-grow bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-save"></i> حفظ التعديلات</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="productModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md overflow-y-auto">
@@ -355,12 +409,17 @@ function loadCust() {
   } catch(e) {}
 }
 
-function showToast(name) {
+function showToast(name, type = 'success') {
   var t = document.getElementById('toast');
-  document.getElementById('toastMsg').innerText = 'تمت إضافة "' + name + '"';
+  var msg = document.getElementById('toastMsg');
+  if(!t || !msg) return;
+  msg.innerText = name;
+  t.className = 'fixed top-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-2xl border-2 ' + (type === 'error' ? 'bg-rose-950 border-rose-500 text-white' : 'bg-slate-900 border-amber-500 text-white');
   t.classList.remove('hidden');
-  setTimeout(function() { t.classList.add('hidden'); }, 2000);
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function() { t.classList.add('hidden'); }, 3000);
 }
+window.showToast = showToast;
 
 function stars(n) {
   var s = '';
@@ -598,7 +657,7 @@ function changeSel(pName, pid, fIdx, flavor, delta) {
 
 function addToCart(pName) {
   var sels = selections[pName];
-  if (!sels || Object.keys(sels).length === 0) { showToast('حدد الكمية'); return; }
+  if (!sels || Object.keys(sels).length === 0) { showToast('حدد الكمية', 'error'); return; }
   if (!cart[pName]) cart[pName] = {};
   for (var flv in sels) {
     if (sels.hasOwnProperty(flv)) cart[pName][flv] = (cart[pName][flv] || 0) + sels[flv];
@@ -606,7 +665,7 @@ function addToCart(pName) {
   delete selections[pName];
   saveCart();
   updateCart();
-  showToast(pName);
+  showToast('تمت إضافة ' + pName);
   var cards = document.querySelectorAll('[data-name]');
   for (var i = 0; i < cards.length; i++) {
     if (cards[i].getAttribute('data-name') === pName) {
@@ -746,34 +805,6 @@ function showCatalog() {
   window.scrollTo(0, 0);
 }
 
-function sendOrder() {
-  var n = document.getElementById('custName').value.trim();
-  var s = document.getElementById('shopName').value.trim();
-  var a = document.getElementById('custAddr').value.trim();
-  if (!n || !a) { showToast('أدخل الاسم والعنوان'); return; }
-  var names = Object.keys(cart);
-  if (names.length === 0) { showToast('السلة فارغة'); return; }
-
-  var msg = 'السلام عليكم، بدي اطلب طلب\n\nالاسم: ' + n + '\nاسم المحل: ' + (s || 'لا يوجد') + '\nالعنوان: ' + a + '\n\nالمنتجات:\n\n';
-  var total = 0;
-  var idx = 1;
-  for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var details = [];
-    for (var flv in cart[name]) {
-      if (!cart[name].hasOwnProperty(flv)) continue;
-      var qty = cart[name][flv];
-      if (qty > 0) { details.push('(' + flv + ' × ' + qty + ')'); total += qty; }
-    }
-    if (details.length > 0) {
-      msg += idx + '• ' + name + '\n' + details.join('  ') + '\n----------------\n';
-      idx++;
-    }
-  }
-  msg += '\nإجمالي الكميات: ' + total;
-  window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
-}
-
 function onSearch() {
   var v = document.getElementById('searchBox').value;
   var c = document.getElementById('clearBtn');
@@ -844,9 +875,7 @@ function renderCategories() {
       c.appendChild(btn);
     })(cats[j], j);
   }
-}
-
-/* ==================== صفحة المنتج المتقدمة ==================== */
+}/* ==================== صفحة المنتج المتقدمة ==================== */
 function openProduct(pName) {
   var p = null;
   for (var i = 0; i < products.length; i++) {
@@ -863,14 +892,13 @@ function openProduct(pName) {
   while (content.firstChild) content.removeChild(content.firstChild);
 
   var grid = document.createElement('div');
-  grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-5';
+  grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5';
 
-  // --- معرض الصور ---
   var imgWrap = document.createElement('div');
   imgWrap.className = 'w-full';
   
   var imgBox = document.createElement('div');
-  imgBox.className = 'w-full aspect-[740/645] bg-[#0f172a] rounded-2xl overflow-hidden relative mb-2';
+  imgBox.className = 'w-full h-48 sm:h-auto sm:aspect-[740/645] bg-[#0f172a] rounded-2xl overflow-hidden relative mb-2';
   var img = document.createElement('img');
   img.src = p._proxyImg || imgUrl(p.image);
   img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
@@ -882,11 +910,11 @@ function openProduct(pName) {
   var allImages = [p.image, ...(p.images || [])].filter(Boolean);
   if (allImages.length > 1) {
     var thumbContainer = document.createElement('div');
-    thumbContainer.className = 'flex gap-2 overflow-x-auto pb-2 snap-x';
+    thumbContainer.className = 'flex gap-2 overflow-x-auto pb-1 snap-x';
     
     allImages.forEach(function(url, idx) {
       var thumb = document.createElement('div');
-      thumb.className = 'w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-slate-700 cursor-pointer snap-start hover:border-amber-500 transition';
+      thumb.className = 'w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-slate-700 cursor-pointer snap-start hover:border-amber-500 transition';
       
       var tImg = document.createElement('img');
       tImg.src = imgUrl(url);
@@ -908,28 +936,28 @@ function openProduct(pName) {
   var info = document.createElement('div');
 
   var catEl = document.createElement('span');
-  catEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-3';
+  catEl.className = 'inline-block px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-1.5 sm:mb-3';
   catEl.innerText = p.category || '';
   info.appendChild(catEl);
 
   var h2 = document.createElement('h2');
-  h2.className = 'text-2xl font-black text-white mb-3';
+  h2.className = 'text-lg sm:text-2xl font-black text-white mb-1.5 sm:mb-3';
   h2.innerText = p.name;
   info.appendChild(h2);
 
   if (parseFloat(avg) > 0) {
     var starsDiv = document.createElement('div');
-    starsDiv.className = 'flex items-center gap-2 mb-3';
-    starsDiv.innerHTML = '<span class="text-amber-400">' + stars(Math.round(parseFloat(avg))) + '</span><span class="text-amber-400 font-black">' + avg + '</span><span class="text-slate-500 text-xs">(' + revs.length + ')</span>';
+    starsDiv.className = 'flex items-center gap-1.5 mb-2 sm:mb-3';
+    starsDiv.innerHTML = '<span class="text-amber-400 text-sm">' + stars(Math.round(parseFloat(avg))) + '</span><span class="text-amber-400 font-black text-sm">' + avg + '</span><span class="text-slate-500 text-[10px] sm:text-xs">(' + revs.length + ')</span>';
     info.appendChild(starsDiv);
   }
 
   var priceBox = document.createElement('div');
-  priceBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-4 mb-4';
-  priceBox.innerHTML = '<p class="text-slate-400 text-xs mb-1">السعر</p><p class="text-2xl font-black text-amber-400">' + esc(p.price || 'حسب الطلب') + '</p>';
+  priceBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-2.5 sm:p-4 mb-2 sm:mb-4';
+  priceBox.innerHTML = '<p class="text-slate-400 text-[10px] sm:text-xs mb-0.5 sm:mb-1">السعر</p><p class="text-lg sm:text-2xl font-black text-amber-400">' + esc(p.price || 'حسب الطلب') + '</p>';
   if (p.hasOffer && p.oldPrice) {
     var offerP = document.createElement('p');
-    offerP.className = 'text-xs mt-2';
+    offerP.className = 'text-xs mt-1';
     offerP.innerHTML = '<span class="line-through text-rose-400">' + esc(p.oldPrice) + '</span> <span class="text-amber-400 font-black">← ' + esc(p.price || '') + '</span>';
     priceBox.appendChild(offerP);
   }
@@ -937,19 +965,18 @@ function openProduct(pName) {
 
   if (p.description) {
     var descBox = document.createElement('div');
-    descBox.className = 'mb-4';
-    descBox.innerHTML = '<p class="text-white font-black text-sm mb-2">الوصف:</p>';
+    descBox.className = 'mb-2 sm:mb-4';
+    descBox.innerHTML = '<p class="text-white font-black text-xs sm:text-sm mb-1">الوصف:</p>';
     var descP = document.createElement('p');
-    descP.className = 'text-slate-300 text-sm leading-relaxed';
+    descP.className = 'text-slate-300 text-[11px] sm:text-sm leading-relaxed';
     descP.innerText = p.description;
     descBox.appendChild(descP);
     info.appendChild(descBox);
   }
 
-  // --- تفاصيل المنتج ---
   var detailsBox = document.createElement('div');
-  detailsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm';
-  detailsBox.innerHTML = '<p class="text-white font-black text-sm mb-2 border-b border-slate-800 pb-2"><i class="fas fa-info-circle text-amber-400"></i> تفاصيل المنتج:</p>';
+  detailsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-3 sm:p-4 text-xs sm:text-sm';
+  detailsBox.innerHTML = '<p class="text-white font-black text-xs sm:text-sm mb-1.5 sm:mb-2 border-b border-slate-800 pb-1.5"><i class="fas fa-info-circle text-amber-400"></i> تفاصيل المنتج:</p>';
   detailsBox.appendChild(detailRow('الفئة', p.category || ''));
   if (p.company) detailsBox.appendChild(detailRow('الشركة', p.company));
   if (p.consumerPrice) detailsBox.appendChild(detailRow('سعر المستهلك', p.consumerPrice));
@@ -965,42 +992,42 @@ function openProduct(pName) {
 
   if (avail) {
     var flsBox = document.createElement('div');
-    flsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4';
-    flsBox.innerHTML = '<p class="text-white font-black text-sm mb-3">اختر الكمية والنكهات:</p>';
+    flsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-3 sm:p-4 mt-3';
+    flsBox.innerHTML = '<p class="text-white font-black text-xs sm:text-sm mb-2">اختر الكمية والنكهات:</p>';
     var flsList = (p.flavors && p.flavors.length > 0) ? p.flavors : ['عادي'];
     var listDiv = document.createElement('div');
-    listDiv.className = 'space-y-2 max-h-48 overflow-y-auto';
+    listDiv.className = 'space-y-1.5 sm:space-y-2 max-h-40 sm:max-h-48 overflow-y-auto';
 
     for (var f = 0; f < flsList.length; f++) {
       (function(flv, fIdx) {
         var cur = (selections[p.name] && selections[p.name][flv]) || 0;
         var row = document.createElement('div');
-        row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80';
+        row.className = 'flex items-center justify-between bg-slate-900 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl border border-slate-700/80';
 
         var flvName = document.createElement('span');
-        flvName.className = 'text-sm text-amber-300 font-bold';
+        flvName.className = 'text-xs sm:text-sm text-amber-300 font-bold';
         flvName.innerText = flv;
         row.appendChild(flvName);
 
         var ctrl = document.createElement('div');
-        ctrl.className = 'flex items-center gap-2';
+        ctrl.className = 'flex items-center gap-1.5 sm:gap-2';
 
         var minus = document.createElement('button');
         minus.type = 'button';
-        minus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+        minus.className = 'w-7 h-7 sm:w-9 sm:h-9 bg-slate-800 text-white rounded-md sm:rounded-lg font-black text-sm sm:text-base';
         minus.innerText = '-';
         minus.onclick = function() { prodSel(p._pid, fIdx, flv, -1); };
         ctrl.appendChild(minus);
 
         var span = document.createElement('span');
         span.id = 'pSel-' + fIdx;
-        span.className = 'w-10 text-center font-bold text-amber-400';
+        span.className = 'w-6 sm:w-10 text-center font-bold text-amber-400 text-xs sm:text-base';
         span.innerText = cur;
         ctrl.appendChild(span);
 
         var plus = document.createElement('button');
         plus.type = 'button';
-        plus.className = 'w-9 h-9 bg-slate-800 text-white rounded-lg font-black';
+        plus.className = 'w-7 h-7 sm:w-9 sm:h-9 bg-slate-800 text-white rounded-md sm:rounded-lg font-black text-sm sm:text-base';
         plus.innerText = '+';
         plus.onclick = function() { prodSel(p._pid, fIdx, flv, 1); };
         ctrl.appendChild(plus);
@@ -1015,16 +1042,16 @@ function openProduct(pName) {
 
   if (revs.length > 0) {
     var revBox = document.createElement('div');
-    revBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mt-4';
-    revBox.innerHTML = '<p class="text-white font-black text-sm mb-3">التقييمات (' + revs.length + '):</p>';
+    revBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-3 mt-3';
+    revBox.innerHTML = '<p class="text-white font-black text-xs sm:text-sm mb-2">التقييمات (' + revs.length + '):</p>';
     var revList = document.createElement('div');
-    revList.className = 'space-y-2 max-h-40 overflow-y-auto';
+    revList.className = 'space-y-1.5 sm:space-y-2 max-h-32 sm:max-h-40 overflow-y-auto';
     var startIdx = Math.max(0, revs.length - 5);
     for (var r = revs.length - 1; r >= startIdx; r--) {
       var rev = revs[r];
       var revItem = document.createElement('div');
-      revItem.className = 'bg-slate-900 rounded-xl p-3 border border-slate-800';
-      revItem.innerHTML = '<div class="flex items-center gap-2 mb-1"><span class="text-amber-400 text-xs font-bold">' + stars(rev.stars || 0) + '</span><span class="text-white text-xs font-bold">' + esc(rev.name || 'عميل') + '</span></div>' + (rev.comment ? '<p class="text-slate-300 text-xs">' + esc(rev.comment) + '</p>' : '');
+      revItem.className = 'bg-slate-900 rounded-lg p-2 sm:p-3 border border-slate-800';
+      revItem.innerHTML = '<div class="flex items-center gap-1.5 mb-1"><span class="text-amber-400 text-[10px] sm:text-xs font-bold">' + stars(rev.stars || 0) + '</span><span class="text-white text-[10px] sm:text-xs font-bold">' + esc(rev.name || 'عميل') + '</span></div>' + (rev.comment ? '<p class="text-slate-300 text-[10px] sm:text-xs">' + esc(rev.comment) + '</p>' : '');
       revList.appendChild(revItem);
     }
     revBox.appendChild(revList);
@@ -1032,25 +1059,25 @@ function openProduct(pName) {
   }
 
   var btnsBox = document.createElement('div');
-  btnsBox.className = 'mt-5 flex flex-col sm:flex-row gap-3';
+  btnsBox.className = 'mt-3 sm:mt-5 flex flex-col sm:flex-row gap-2 sm:gap-3';
 
   if (avail) {
     var addBtn = document.createElement('button');
     addBtn.type = 'button';
-    addBtn.className = 'flex-grow bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black py-4 rounded-2xl text-lg';
+    addBtn.className = 'flex-grow bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black py-3 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-lg';
     addBtn.innerText = 'إضافة إلى السلة';
     addBtn.onclick = function() { addToCart(p.name); closeProduct(); };
     btnsBox.appendChild(addBtn);
   } else {
     var noBtn = document.createElement('button');
     noBtn.disabled = true;
-    noBtn.className = 'flex-grow bg-slate-800 text-slate-500 font-black py-4 rounded-2xl text-lg';
+    noBtn.className = 'flex-grow bg-slate-800 text-slate-500 font-black py-3 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-lg';
     noBtn.innerText = 'غير متوفر';
     btnsBox.appendChild(noBtn);
   }
 
   var closeBtn = document.createElement('button');
-  closeBtn.className = 'bg-slate-800 text-slate-300 font-bold px-6 py-4 rounded-2xl';
+  closeBtn.className = 'bg-slate-800 text-slate-300 font-bold px-4 py-3 sm:px-6 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-base';
   closeBtn.innerText = 'رجوع';
   closeBtn.onclick = closeProduct;
   btnsBox.appendChild(closeBtn);
@@ -1062,8 +1089,8 @@ function openProduct(pName) {
 
 function detailRow(label, value) {
   var d = document.createElement('div');
-  d.className = 'flex justify-between py-1.5 border-b border-slate-800';
-  d.innerHTML = '<span class="text-slate-400">' + esc(label) + ':</span><span class="text-white font-bold">' + esc(value) + '</span>';
+  d.className = 'flex justify-between py-1 sm:py-1.5 border-b border-slate-800 text-[11px] sm:text-sm';
+  d.innerHTML = '<span class="text-slate-400">' + esc(label) + ':</span><span class="text-white font-bold text-right">' + esc(value) + '</span>';
   return d;
 }
 
@@ -1130,8 +1157,16 @@ function closeReviews() {
 
 function openAddReview() {
   if (!curRevProduct) return;
+  
+  // التحقق من تسجيل الدخول قبل فتح نافذة التقييم
+  if (!window.currentUser) {
+    showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
+    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    return;
+  }
+
   document.getElementById('addRevTitle').innerText = curRevProduct.name;
-  document.getElementById('revName').value = '';
+  document.getElementById('revName').value = window.currentProfileData?.name || '';
   document.getElementById('revComment').value = '';
   curRevStars = 0;
   updateStarRow(0);
@@ -1157,6 +1192,11 @@ function updateStarRow(n) {
 }
 
 function submitReview() {
+  if (!window.currentUser) {
+    showToast('يجب تسجيل الدخول أولاً', 'error');
+    return;
+  }
+  
   if (curRevStars === 0) { alert('اختر عدد النجوم'); return; }
   var pName = curRevProduct.name;
   var name = document.getElementById('revName').value.trim() || 'عميل';
@@ -1187,6 +1227,12 @@ function setStoreStar(n) {
 }
 
 function submitStoreReview() {
+  if (!window.currentUser) {
+    showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
+    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    return;
+  }
+
   if (localStorage.getItem('ashour_store_rated') === '1') {
     var m = document.getElementById('storeMsg');
     m.innerText = '⚠️ لقد قيّمت المتجر مسبقًا — شكرًا لك!';
@@ -1268,7 +1314,7 @@ function updateStoreRatingDisplay() {
   document.getElementById('storeRatingStars').innerText = stars(Math.round(parseFloat(avg)));
 }
 
-/* ==================== دوال مساعدة ==================== */
+/* ==================== دوال مساعدة وإتمام الطلب ==================== */
 function imgErr(el) {
   if (el.parentElement) {
     el.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-slate-800 p-4"><i class="fas fa-box-open text-3xl text-amber-400"></i></div>';
@@ -1384,6 +1430,65 @@ function loadData() {
   });
 }
 
+// دالة إتمام الطلب المعدلة مع التحقق من تسجيل الدخول
+function sendOrder() {
+  if (!window.currentUser) {
+    showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
+    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    return;
+  }
+
+  var n = document.getElementById('custName').value.trim();
+  var s = document.getElementById('shopName').value.trim();
+  var a = document.getElementById('custAddr').value.trim();
+  if (!n || !a) { showToast('أدخل الاسم والعنوان', 'error'); return; }
+  var names = Object.keys(cart);
+  if (names.length === 0) { showToast('السلة فارغة', 'error'); return; }
+
+  var date = new Date().toLocaleDateString('ar-SY', { 
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+    hour: '2-digit', minute: '2-digit' 
+  });
+
+  var msg = '🛒 *طلب جديد من مركز عاشور* 🛒\n\n';
+  msg += '👤 *الاسم:* ' + n + '\n';
+  msg += '🏪 *المحل:* ' + (s || 'لا يوجد') + '\n';
+  msg += '📍 *العنوان:* ' + a + '\n\n';
+  msg += '📦 *تفاصيل الطلب:*\n';
+  msg += '------------------------\n';
+
+  var total = 0;
+  var idx = 1;
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var details = [];
+    for (var flv in cart[name]) {
+      if (!cart[name].hasOwnProperty(flv)) continue;
+      var qty = cart[name][flv];
+      if (qty > 0) { 
+        details.push(flv + ' × ' + qty); 
+        total += qty; 
+      }
+    }
+    if (details.length > 0) {
+      msg += idx + '. *' + name + '*\n';
+      msg += '   ➖ ' + details.join('  |  ') + '\n';
+      idx++;
+    }
+  }
+  msg += '------------------------\n';
+  msg += '🧾 *إجمالي الكميات:* ' + total + ' قطعة\n\n';
+  msg += '📅 *تاريخ الطلب:* ' + date + '\n';
+  msg += 'شكراً لتعاملكم معنا! 🌟';
+
+  // حفظ في Firebase قبل فتح الواتساب (يتم استدعاؤها من سكربت Firebase)
+  if (typeof window.saveOrderToFirebase === 'function') {
+    window.saveOrderToFirebase(cart, n, s, a);
+  }
+
+  window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
 function boot() {
   loadData().then(function() {
     if (!Array.isArray(products)) products = [];
@@ -1425,20 +1530,220 @@ if (document.readyState === 'loading') {
 window.addEventListener('load', function() { setTimeout(hidePre, 400); });
 setTimeout(hidePre, 3500);
 
-// تسجيل Service Worker الخاص بالمتجر
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(() => console.log('Store SW registered successfully'))
-    .catch(err => console.log('Store SW registration failed', err));
-}
-
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     try { closeProduct(); } catch(e) {}
     try { closeReviews(); } catch(e) {}
     try { closeAddReview(); } catch(e) {}
+    try { closeProfileModal(); } catch(e) {}
   }
 });
+</script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
+    authDomain: "ashour-e5e42.firebaseapp.com",
+    projectId: "ashour-e5e42",
+    storageBucket: "ashour-e5e42.firebasestorage.app",
+    messagingSenderId: "198701450405",
+    appId: "1:198701450405:web:80275ed45ff3da7941f94c",
+    measurementId: "G-MET5QXQWM5"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+  const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
+
+  let currentUser = null;
+  let currentProfileData = {};
+  
+  // تعريف المتغيرات عالمياً ليتمكن السكربت الأساسي من رؤيتها
+  window.currentUser = null;
+  window.currentProfileData = {};
+
+  window.loginWithGoogle = async function() {
+    try {
+      await signInWithPopup(auth, provider);
+      window.showToast('تم تسجيل الدخول بنجاح');
+    } catch (error) {
+      console.error(error);
+      window.showToast('فشل تسجيل الدخول', 'error');
+    }
+  };
+
+  window.logoutUser = async function() {
+    await signOut(auth);
+    window.closeProfileModal();
+    window.showToast('تم تسجيل الخروج');
+  };
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      window.currentUser = user;
+      
+      document.getElementById('loginBtn').classList.add('hidden');
+      document.getElementById('userProfileBtn').classList.remove('hidden');
+      
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        currentProfileData = docSnap.data();
+      } else {
+        currentProfileData = {
+          name: user.displayName,
+          email: user.email,
+          phone: '',
+          shopName: '',
+          address: '',
+          avatarUrl: user.photoURL || 'logo.png'
+        };
+        await setDoc(docRef, { ...currentProfileData, createdAt: serverTimestamp() });
+      }
+      
+      window.currentProfileData = currentProfileData;
+
+      document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
+      document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
+      
+      document.getElementById('profileName').value = currentProfileData.name || '';
+      document.getElementById('profilePhone').value = currentProfileData.phone || '';
+      document.getElementById('profileShop').value = currentProfileData.shopName || '';
+      document.getElementById('profileAddress').value = currentProfileData.address || '';
+      document.getElementById('profileAvatarPreview').src = currentProfileData.avatarUrl || 'logo.png';
+
+      if(currentProfileData.name) document.getElementById('custName').value = currentProfileData.name;
+      if(currentProfileData.shopName) document.getElementById('shopName').value = currentProfileData.shopName;
+      if(currentProfileData.address) document.getElementById('custAddr').value = currentProfileData.address;
+
+    } else {
+      currentUser = null;
+      window.currentUser = null;
+      currentProfileData = {};
+      window.currentProfileData = {};
+      
+      document.getElementById('loginBtn').classList.remove('hidden');
+      document.getElementById('userProfileBtn').classList.add('hidden');
+    }
+  });
+
+  window.openProfileModal = function() {
+    if(!window.currentUser) return;
+    document.getElementById('profileModal').classList.remove('hidden');
+  };
+  
+  window.closeProfileModal = function() {
+    document.getElementById('profileModal').classList.add('hidden');
+  };
+
+  window.handleProfileAvatarUpload = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 300;
+        let width = img.width; let height = img.height;
+        if (width > height) { if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; } }
+        else { if (height > MAX) { width = Math.round((width * MAX) / height); height = MAX; } }
+        
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+        const base64 = canvas.toDataURL('image/jpeg', 0.85);
+
+        const btn = document.getElementById('saveProfileBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري رفع الصورة...';
+        btn.disabled = true;
+
+        const formData = new FormData();
+        formData.append('key', IMGBB_API_KEY);
+        formData.append('image', base64.split(',')[1]);
+
+        fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            window.currentProfileData.avatarUrl = data.data.url;
+            document.getElementById('profileAvatarPreview').src = data.data.url;
+            window.showToast('تم رفع الصورة، لا تنسى الحفظ');
+          }
+        }).catch(err => window.showToast('فشل رفع الصورة', 'error'))
+        .finally(() => {
+          btn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+          btn.disabled = false;
+          event.target.value = '';
+        });
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.saveUserProfile = async function() {
+    if(!window.currentUser) return;
+    const btn = document.getElementById('saveProfileBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+    
+    const updatedData = {
+      name: document.getElementById('profileName').value.trim(),
+      phone: document.getElementById('profilePhone').value.trim(),
+      shopName: document.getElementById('profileShop').value.trim(),
+      address: document.getElementById('profileAddress').value.trim(),
+      avatarUrl: window.currentProfileData.avatarUrl || 'logo.png',
+      email: window.currentUser.email
+    };
+
+    try {
+      await setDoc(doc(db, "users", window.currentUser.uid), updatedData, { merge: true });
+      window.currentProfileData = { ...window.currentProfileData, ...updatedData };
+      
+      document.getElementById('userAvatar').src = updatedData.avatarUrl;
+      document.getElementById('userNameDisplay').innerText = updatedData.name || 'حسابي';
+      
+      document.getElementById('custName').value = updatedData.name;
+      document.getElementById('shopName').value = updatedData.shopName;
+      document.getElementById('custAddr').value = updatedData.address;
+
+      window.showToast('تم حفظ بياناتك بنجاح ✅');
+      window.closeProfileModal();
+    } catch (error) {
+      console.error(error);
+      window.showToast('حدث خطأ أثناء الحفظ', 'error');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+    }
+  };
+
+  // دالة حفظ الطلب (يتم استدعاؤها من دالة sendOrder)
+  window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
+    if (!window.currentUser) return;
+    try {
+      await addDoc(collection(db, "orders"), {
+        userId: window.currentUser.uid,
+        userName: name,
+        shopName: shop,
+        address: address,
+        phone: window.currentProfileData.phone || '',
+        items: cartItems,
+        status: 'جديد',
+        createdAt: serverTimestamp()
+      });
+      console.log("Order saved to Firebase");
+    } catch (e) { 
+      console.error("Error saving order:", e); 
+    }
+  };
+
 </script>
 </body>
 </html>
