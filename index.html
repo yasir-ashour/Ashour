@@ -64,8 +64,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </a>
     </div>
   </div>
-</header><div id="catalogView" class="w-full flex flex-col flex-grow">
+</header>
 
+<div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
   <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full mx-auto mb-1 glow">
@@ -75,7 +76,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white">أهلاً وسهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
   <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-3 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
 
-  <!-- تقييم المتجر -->
   <div id="storeRatingDisplay" class="hidden inline-flex items-center gap-2 bg-slate-950/60 border border-amber-500/30 rounded-full px-4 py-2 mb-4">
     <span id="storeRatingStars" class="text-amber-400 text-lg">★★★★★</span>
     <span id="storeRatingValue" class="text-white font-black text-lg">0.0</span>
@@ -85,12 +85,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative">
-      <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()"
-      class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500">
+      <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500">
       <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
-      <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full items-center justify-center">
-        <i class="fas fa-times text-xs"></i>
-      </button>
+      <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full items-center justify-center"><i class="fas fa-times text-xs"></i></button>
     </div>
     <div class="flex items-center justify-between px-2">
       <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
@@ -98,28 +95,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span class="text-slate-300">عدد المنتجات:</span>
         <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2.5 py-0.5 rounded-md">0</span>
       </div>
-      <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold">
-        <i class="fas fa-rotate-left"></i> إرجاع الكل
-      </button>
+      <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fas fa-rotate-left"></i> إرجاع الكل</button>
     </div>
   </div>
   </div>
   </section>
 
-  <!-- قسم العروض -->
   <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
     <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
-          <div class="w-14 h-14 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-fire text-rose-400 text-2xl"></i>
-          </div>
-          <div>
-            <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-              <i class="fas fa-tags text-rose-400"></i> عروض وخصومات
-            </h3>
-            <p class="text-xs text-rose-300/80">وفّر أكثر على منتجاتك المفضلة</p>
-          </div>
+          <div class="w-14 h-14 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center flex-shrink-0"><i class="fas fa-fire text-rose-400 text-2xl"></i></div>
+          <div><h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2"><i class="fas fa-tags text-rose-400"></i> عروض وخصومات</h3><p class="text-xs text-rose-300/80">وفّر أكثر على منتجاتك المفضلة</p></div>
         </div>
         <span id="offersCount" class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
@@ -127,20 +114,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </section>
 
-  <!-- قسم الجديد -->
   <section id="newBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full">
     <div class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
-          <div class="w-14 h-14 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-star-of-life text-emerald-400 text-2xl"></i>
-          </div>
-          <div>
-            <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-              <i class="fas fa-sparkles text-emerald-400"></i> منتجات جديدة
-            </h3>
-            <p class="text-xs text-emerald-300/80">وصلت حديثًا إلى متجرنا</p>
-          </div>
+          <div class="w-14 h-14 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0"><i class="fas fa-star-of-life text-emerald-400 text-2xl"></i></div>
+          <div><h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2"><i class="fas fa-sparkles text-emerald-400"></i> منتجات جديدة</h3><p class="text-xs text-emerald-300/80">وصلت حديثًا إلى متجرنا</p></div>
         </div>
         <span id="newCount" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
@@ -148,11 +127,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </section>
 
-  <!-- شبكة المنتجات -->
   <section class="max-w-7xl mx-auto px-3 py-6 flex-grow w-full">
-    <h3 class="text-xl sm:text-2xl font-black text-white mb-4 flex items-center gap-2">
-      <i class="fas fa-th-large text-amber-400"></i> كل المنتجات
-    </h3>
+    <h3 class="text-xl sm:text-2xl font-black text-white mb-4 flex items-center gap-2"><i class="fas fa-th-large text-amber-400"></i> كل المنتجات</h3>
     <div class="flex flex-wrap justify-center gap-2 mb-6" id="categories"></div>
     <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
     <div id="noResults" class="hidden text-center py-16 text-slate-500">
@@ -162,38 +138,23 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
-<!-- صفحة السلة -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
         <div class="w-28 h-28 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
-        <div>
-          <h2 class="text-lg sm:text-2xl font-black gold-text">صفحة إنشاء الطلب</h2>
-          <p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل</p>
-        </div>
+        <div><h2 class="text-lg sm:text-2xl font-black gold-text">صفحة إنشاء الطلب</h2><p class="text-slate-400 text-xs mt-1">راجع منتجاتك وأدخل معلومات التوصيل</p></div>
       </div>
-      <button onclick="showCatalog()" class="bg-slate-800 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm">
-        <i class="fas fa-arrow-right"></i> متابعة التسوق
-      </button>
+      <button onclick="showCatalog()" class="bg-slate-800 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm"><i class="fas fa-arrow-right"></i> متابعة التسوق</button>
     </div>
 
     <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mb-5 space-y-3">
       <h3 class="text-base font-black text-white border-b border-slate-800 pb-2"><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label>
-          <input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
-        </div>
-        <div>
-          <label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label>
-          <input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
-        </div>
+        <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label><input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
+        <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       </div>
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label>
-        <input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
-      </div>
+      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
     </div>
 
     <div class="mb-5">
@@ -205,69 +166,53 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
 
     <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
-      <button onclick="showCatalog()" class="bg-slate-800 text-slate-300 font-bold px-5 py-3 rounded-xl text-sm">
-        <i class="fas fa-arrow-right"></i> العودة
-      </button>
-      <button onclick="sendOrder()" class="bg-emerald-600 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl">
-        <i class="fab fa-whatsapp text-xl"></i> إتمام الطلب
-      </button>
+      <button onclick="showCatalog()" class="bg-slate-800 text-slate-300 font-bold px-5 py-3 rounded-xl text-sm"><i class="fas fa-arrow-right"></i> العودة</button>
+      <button onclick="sendOrder()" class="bg-emerald-600 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
-</div><!-- الأزرار العائمة -->
+</div>
+
 <div class="fixed bottom-4 right-4 z-40 flex items-center gap-2">
-  <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black px-3.5 py-3 rounded-full shadow-xl flex items-center gap-2 border-2 border-emerald-400">
-    <i class="fab fa-whatsapp text-2xl"></i>
-  </a>
+  <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black px-3.5 py-3 rounded-full shadow-xl flex items-center gap-2 border-2 border-emerald-400"><i class="fab fa-whatsapp text-2xl"></i></a>
   <button onclick="showCart()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black p-3.5 rounded-full shadow-2xl border-2 border-amber-300">
     <i class="fas fa-clipboard-list text-2xl"></i>
     <span id="floatBadge" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span>
   </button>
 </div>
 
-<!-- نافذة المنتج -->
 <div id="productModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md overflow-y-auto">
   <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4">
       <div class="flex items-center justify-between p-4 border-b border-slate-800">
         <h3 class="text-lg font-black gold-text"><i class="fas fa-box-open text-amber-400"></i> تفاصيل المنتج</h3>
-        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center">
-          <i class="fas fa-times"></i>
-        </button>
+        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
       </div>
       <div id="productContent" class="p-4"></div>
     </div>
   </div>
 </div>
 
-<!-- نافذة التقييمات -->
 <div id="reviewsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-star text-amber-400"></i> التقييمات</h3>
-      <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center">
-        <i class="fas fa-times"></i>
-      </button>
+      <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 max-h-96 overflow-y-auto">
       <p id="revTitle" class="text-white font-black text-center mb-4"></p>
       <div id="revList" class="space-y-3"></div>
     </div>
     <div class="p-5 border-t border-slate-800">
-      <button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl">
-        <i class="fas fa-pen"></i> أضف تقييمك
-      </button>
+      <button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl"><i class="fas fa-pen"></i> أضف تقييمك</button>
     </div>
   </div>
 </div>
 
-<!-- نافذة إضافة تقييم -->
 <div id="addReviewModal" class="hidden fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
       <h3 class="text-lg font-black gold-text">أضف تقييمك</h3>
-      <button onclick="closeAddReview()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center">
-        <i class="fas fa-times"></i>
-      </button>
+      <button onclick="closeAddReview()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 space-y-4">
       <p id="addRevTitle" class="text-white font-bold text-center text-sm bg-slate-950/60 rounded-xl p-3"></p>
@@ -285,20 +230,15 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <textarea id="revComment" rows="3" placeholder="تعليقك (اختياري)" maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
       <div class="flex gap-2">
         <button onclick="closeAddReview()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
-        <button onclick="submitReview()" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm">
-          <i class="fab fa-whatsapp"></i> إرسال
-        </button>
+        <button onclick="submitReview()" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm"><i class="fab fa-whatsapp"></i> إرسال</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- قسم تقييم المتجر -->
 <section class="max-w-4xl mx-auto px-3 py-8 w-full">
   <div class="bg-gradient-to-br from-amber-950/30 to-slate-900 border-2 border-amber-500/40 rounded-3xl p-6 text-center">
-    <div class="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/50 flex items-center justify-center mx-auto mb-4 glow">
-      <i class="fas fa-star text-amber-400 text-3xl"></i>
-    </div>
+    <div class="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-500/50 flex items-center justify-center mx-auto mb-4 glow"><i class="fas fa-star text-amber-400 text-3xl"></i></div>
     <h3 class="text-2xl sm:text-3xl font-black gold-text mb-2">قيّم تجربتك معنا</h3>
     <p class="text-slate-400 text-sm mb-5">رأيك يهمنا ويساعدنا على التحسين</p>
     <div class="flex gap-2 justify-center mb-5">
@@ -309,30 +249,22 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="setStoreStar(5)" class="storeStar w-12 h-12 rounded-2xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
     </div>
     <p id="storeMsg" class="text-slate-500 text-sm mb-5">اضغط على النجوم لتقييمنا</p>
-    <button onclick="submitStoreReview()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black px-6 py-3.5 rounded-xl">
-      <i class="fas fa-paper-plane text-xl"></i> إرسال التقييم
-    </button>
+    <button onclick="submitStoreReview()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black px-6 py-3.5 rounded-xl"><i class="fas fa-paper-plane text-xl"></i> إرسال التقييم</button>
   </div>
 </section>
 
-<!-- التذييل -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6">
 <div class="max-w-4xl mx-auto space-y-3">
-  <div class="w-40 h-40 flex items-center justify-center mx-auto">
-    <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
-  </div>
+  <div class="w-40 h-40 flex items-center justify-center mx-auto"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
   <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر</p>
-  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold">
-    <i class="fas fa-map-marked-alt"></i> موقع المركز مباشر
-  </a>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold"><i class="fas fa-map-marked-alt"></i> موقع المركز مباشر</a>
   <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
   <p class="text-xs text-slate-500">جميع الحقوق محفوظة 2026</p>
 </div>
 </footer>
 
-<script>
-var orderWa = "963982572810";
+<script>var orderWa = "963982572810";
 var inquiryWa = "963959248901";
 var products = [];
 var cart = {};
@@ -442,7 +374,8 @@ function avgStars(r) {
   return (sum / r.length).toFixed(1);
 }
 
-applyWa();/* ==================== عرض المنتجات ==================== */
+applyWa();
+
 function displayProducts(items) {
   try {
     var grid = document.getElementById('productsGrid');
@@ -911,7 +844,7 @@ function renderCategories() {
   }
 }
 
-/* ==================== صفحة المنتج ==================== */
+/* ==================== صفحة المنتج المتقدمة ==================== */
 function openProduct(pName) {
   var p = null;
   for (var i = 0; i < products.length; i++) {
@@ -930,15 +863,45 @@ function openProduct(pName) {
   var grid = document.createElement('div');
   grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-5';
 
+  // --- معرض الصور (جديد) ---
   var imgWrap = document.createElement('div');
+  imgWrap.className = 'w-full';
+  
   var imgBox = document.createElement('div');
-  imgBox.className = 'w-full aspect-[740/645] bg-[#0f172a] rounded-2xl overflow-hidden relative';
+  imgBox.className = 'w-full aspect-[740/645] bg-[#0f172a] rounded-2xl overflow-hidden relative mb-2';
   var img = document.createElement('img');
   img.src = p._proxyImg || imgUrl(p.image);
   img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
   img.onerror = function() { imgErr(this); };
+  img.id = 'mainProductImage'; 
   imgBox.appendChild(img);
   imgWrap.appendChild(imgBox);
+
+  var allImages = [p.image, ...(p.images || [])].filter(Boolean);
+  if (allImages.length > 1) {
+    var thumbContainer = document.createElement('div');
+    thumbContainer.className = 'flex gap-2 overflow-x-auto pb-2 snap-x';
+    
+    allImages.forEach(function(url, idx) {
+      var thumb = document.createElement('div');
+      thumb.className = 'w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-slate-700 cursor-pointer snap-start hover:border-amber-500 transition';
+      
+      var tImg = document.createElement('img');
+      tImg.src = imgUrl(url);
+      tImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
+      thumb.appendChild(tImg);
+      
+      thumb.onclick = function() {
+        document.getElementById('mainProductImage').src = imgUrl(url);
+        Array.from(thumbContainer.children).forEach(c => c.classList.remove('border-amber-500'));
+        thumb.classList.add('border-amber-500');
+      };
+      
+      if (idx === 0) thumb.classList.add('border-amber-500');
+      thumbContainer.appendChild(thumb);
+    });
+    imgWrap.appendChild(thumbContainer);
+  }
 
   var info = document.createElement('div');
 
@@ -981,11 +944,15 @@ function openProduct(pName) {
     info.appendChild(descBox);
   }
 
+  // --- تفاصيل المنتج (جديد) ---
   var detailsBox = document.createElement('div');
   detailsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm';
-  detailsBox.innerHTML = '<p class="text-white font-black text-sm mb-2">تفاصيل المنتج:</p>';
+  detailsBox.innerHTML = '<p class="text-white font-black text-sm mb-2 border-b border-slate-800 pb-2"><i class="fas fa-info-circle text-amber-400"></i> تفاصيل المنتج:</p>';
   detailsBox.appendChild(detailRow('الفئة', p.category || ''));
   if (p.company) detailsBox.appendChild(detailRow('الشركة', p.company));
+  if (p.consumerPrice) detailsBox.appendChild(detailRow('سعر المستهلك', p.consumerPrice));
+  if (p.piecesPerBox) detailsBox.appendChild(detailRow('عدد القطع بالعلبة', p.piecesPerBox));
+  if (p.boxesPerCarton) detailsBox.appendChild(detailRow('العلب بالكرتونة', p.boxesPerCarton));
   if (p.packageInfo) detailsBox.appendChild(detailRow('عدد الطرد', p.packageInfo));
   detailsBox.appendChild(detailRow('التوفر', !avail ? 'غير متوفر' : (low ? 'كمية محدودة' : 'متوفر')));
   info.appendChild(detailsBox);
@@ -1445,18 +1412,17 @@ function boot() {
   }).then(function() {
     setTimeout(hidePre, 300);
   });
-}/* ==================== التشغيل والإقلاع ==================== */
+}
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
   boot();
 }
 
-// إخفاء شاشة التحميل
 window.addEventListener('load', function() { setTimeout(hidePre, 400); });
 setTimeout(hidePre, 3500);
 
-// إغلاق النوافذ عند الضغط على Escape
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     try { closeProduct(); } catch(e) {}
