@@ -60,13 +60,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <!-- أزرار الحساب / تسجيل الدخول -->
-      <button id="loginBtn" onclick="loginWithGoogle()" class="bg-white text-slate-900 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:bg-slate-100">
-        <i class="fab fa-google text-red-500 text-lg"></i>
-        <span class="hidden sm:inline">دخول</span>
+      <!-- زر تسجيل الدخول / الملف الشخصي -->
+      <button id="loginBtn" onclick="loginWithGoogle()" class="bg-slate-900 border-2 border-amber-500 text-amber-400 font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
+        <i class="fab fa-google text-lg"></i>
+        <span>تسجيل الدخول</span>
       </button>
       
-      <button id="userProfileBtn" onclick="openProfileModal()" class="hidden bg-slate-800 border-2 border-amber-500 text-white font-bold px-2 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-sm">
+      <button id="userProfileBtn" onclick="openProfileModal()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:bg-slate-700">
         <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover border border-slate-600">
         <span id="userNameDisplay" class="hidden sm:inline max-w-[80px] truncate">حسابي</span>
       </button>
@@ -1158,7 +1158,6 @@ function closeReviews() {
 function openAddReview() {
   if (!curRevProduct) return;
   
-  // التحقق من تسجيل الدخول قبل فتح نافذة التقييم
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
     if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
@@ -1430,7 +1429,6 @@ function loadData() {
   });
 }
 
-// دالة إتمام الطلب المعدلة مع التحقق من تسجيل الدخول
 function sendOrder() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
@@ -1481,7 +1479,6 @@ function sendOrder() {
   msg += '📅 *تاريخ الطلب:* ' + date + '\n';
   msg += 'شكراً لتعاملكم معنا! 🌟';
 
-  // حفظ في Firebase قبل فتح الواتساب (يتم استدعاؤها من سكربت Firebase)
   if (typeof window.saveOrderToFirebase === 'function') {
     window.saveOrderToFirebase(cart, n, s, a);
   }
@@ -1541,7 +1538,7 @@ document.addEventListener('keydown', function(e) {
 </script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1563,17 +1560,24 @@ document.addEventListener('keydown', function(e) {
   let currentUser = null;
   let currentProfileData = {};
   
-  // تعريف المتغيرات عالمياً ليتمكن السكربت الأساسي من رؤيتها
   window.currentUser = null;
   window.currentProfileData = {};
 
+  getRedirectResult(auth).then((result) => {
+    if (result && result.user) {
+      window.showToast('تم تسجيل الدخول بنجاح');
+    }
+  }).catch((error) => {
+    console.error("Redirect Error:", error);
+    window.showToast('حدث خطأ أثناء تسجيل الدخول', 'error');
+  });
+
   window.loginWithGoogle = async function() {
     try {
-      await signInWithPopup(auth, provider);
-      window.showToast('تم تسجيل الدخول بنجاح');
+      await signInWithRedirect(auth, provider);
     } catch (error) {
       console.error(error);
-      window.showToast('فشل تسجيل الدخول', 'error');
+      window.showToast('فشل تسجيل الدخول: ' + error.message, 'error');
     }
   };
 
@@ -1724,7 +1728,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // دالة حفظ الطلب (يتم استدعاؤها من دالة sendOrder)
   window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
     if (!window.currentUser) return;
     try {
