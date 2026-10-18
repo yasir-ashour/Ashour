@@ -26,7 +26,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
   </div>
   <h1 class="text-3xl font-black gold-text mb-1">مركز عاشور للتجارة</h1>
-  <p class="text-xs text-slate-400 mb-6">عالم من الأذواق الرفيعة</p>
+  <!-- تم تعديل الجملة هنا -->
+  <p class="text-sm font-bold text-amber-400/80 mb-6">اطلب طلبك وريح حالك</p>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3">
     <div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div>
   </div>
@@ -65,7 +66,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span>تسجيل الدخول</span>
       </button>
       
-      <!-- زر الحساب الشخصي يفتح الصفحة الكاملة -->
       <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:bg-slate-700">
         <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover border border-slate-600">
         <span id="userNameDisplay" class="max-w-[80px] truncate">حسابي</span>
@@ -77,7 +77,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </a>
     </div>
   </div>
-</header><!-- 🌟 نافذة تسجيل الدخول (Auth Modal) 🌟 -->
+</header>
+
 <div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
@@ -138,10 +139,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p id="authError" class="text-rose-500 text-xs text-center mt-4 hidden"></p>
     </div>
   </div>
-</div>
-
-<!-- الكتالوج -->
-<div id="catalogView" class="w-full flex flex-col flex-grow">
+</div><div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
   <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full mx-auto mb-1 glow cursor-pointer" onclick="showCatalog()">
@@ -204,7 +202,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p class="text-xl">لا توجد منتجات</p>
     </div>
   </section>
-</div><div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
+</div>
+
+<div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
@@ -236,11 +236,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="sendOrder()" class="bg-emerald-600 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
-</div>
-
-<!-- 🌟 صفحة الحساب الشخصي الجديدة (Full Page) 🌟 -->
+</div><!-- 🌟 صفحة الحساب الشخصي الكاملة 🌟 -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20">
-  <!-- هيدر الحساب -->
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
       <button onclick="showCatalog()" class="absolute top-0 right-0 bg-slate-800 text-slate-300 w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i></button>
@@ -255,17 +252,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p id="viewUserEmail" class="text-sm text-slate-400 mb-4" dir="ltr">email@example.com</p>
       
       <div class="flex gap-2">
-        <button onclick="openEditProfileModal()" class="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-700 transition">
+        <button onclick="openEditProfileModal()" class="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2">
           <i class="fas fa-edit text-amber-400"></i> تعديل الملف الشخصي
         </button>
-        <button onclick="logoutUser()" class="bg-rose-950/60 border border-rose-500/30 text-rose-400 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-900 transition">
-          <i class="fas fa-sign-out-alt"></i> خروج
+        
+        <!-- زر تسجيل الخروج المعدل -->
+        <button onclick="logoutUser()" class="bg-rose-950/60 border border-rose-500/30 text-rose-400 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-900 transition flex items-center gap-2">
+          <i class="fas fa-sign-out-alt text-sm"></i> تسجيل خروج
         </button>
       </div>
     </div>
   </div>
 
-  <!-- التبويبات -->
   <div class="max-w-4xl mx-auto w-full px-3 mt-6">
     <div class="flex border-b border-slate-800 mb-6">
       <button onclick="switchAppTab('orders')" id="btnTabOrders" class="flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 flex items-center justify-center gap-2">
@@ -279,21 +277,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </button>
     </div>
 
-    <!-- محتوى تبويب الطلبات -->
     <div id="appTabOrders" class="space-y-4">
       <div id="appMyOrdersList" class="space-y-4">
         <div class="text-center py-10"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p class="text-slate-400">جاري تحميل الطلبات...</p></div>
       </div>
     </div>
 
-    <!-- محتوى تبويب المفضلة -->
     <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500">
       <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-heart text-4xl text-slate-700"></i></div>
       <h3 class="text-xl font-bold text-white mb-2">قائمة المفضلة فارغة</h3>
       <p class="text-sm">لم تقم بإضافة أي منتجات إلى المفضلة بعد.</p>
     </div>
 
-    <!-- محتوى تبويب العناوين -->
     <div id="appTabAddresses" class="hidden text-center py-16 text-slate-500">
       <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marked-alt text-4xl text-slate-700"></i></div>
       <h3 class="text-xl font-bold text-white mb-2">لا توجد عناوين محفوظة</h3>
@@ -302,7 +297,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- نافذة تعديل الملف الشخصي (Modal) -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[80] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -994,7 +988,6 @@ function renderCategories() {
   }
 }
 
-// دوال التنقل في صفحة الحساب
 window.showProfileView = function() {
   if (!window.currentUser) return;
   document.getElementById('catalogView').classList.add('hidden');
@@ -1785,7 +1778,9 @@ document.addEventListener('keydown', function(e) {
     try { closeAuthModal(); } catch(e) {}
   }
 });
-</script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
+</script>
+
+<!-- سكربت Firebase للحسابات وقاعدة البيانات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1813,7 +1808,6 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  /* ==================== دوال نافذة تسجيل الدخول ==================== */
   window.openAuthModal = function() {
     document.getElementById('authModal').classList.remove('hidden');
     document.getElementById('authError').classList.add('hidden');
@@ -1934,13 +1928,15 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  // تم تعديل دالة تسجيل الخروج هنا لإضافة تأكيد وشعار
   window.logoutUser = async function() {
-    await signOut(auth);
-    window.showCatalog(); // الرجوع للكتالوج عند تسجيل الخروج
-    window.showToast('تم تسجيل الخروج');
+    if (confirm("هل أنت متأكد من تسجيل الخروج؟")) {
+      await signOut(auth);
+      window.showCatalog();
+      window.showToast('تم تسجيل الخروج بنجاح');
+    }
   };
 
-  /* ==================== مراقبة حالة الدخول ==================== */
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
@@ -1985,21 +1981,6 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userProfileBtn').classList.add('hidden');
     }
   });
-
-  /* ==================== الملف الشخصي ==================== */
-  window.openEditProfileModal = function() {
-    document.getElementById('editProfileModal').classList.remove('hidden');
-    document.getElementById('profileEmail').value = window.currentUser.email || '';
-    document.getElementById('profileName').value = window.currentProfileData.name || '';
-    document.getElementById('profilePhone').value = window.currentProfileData.phone || '';
-    document.getElementById('profileShop').value = window.currentProfileData.shopName || '';
-    document.getElementById('profileAddress').value = window.currentProfileData.address || '';
-    document.getElementById('profileAvatarPreview').src = window.currentProfileData.avatarUrl || 'logo.png';
-  };
-  
-  window.closeEditProfileModal = function() {
-    document.getElementById('editProfileModal').classList.add('hidden');
-  };
 
   window.handleProfileAvatarUpload = function(event) {
     const file = event.target.files[0];
@@ -2083,7 +2064,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  /* ==================== حفظ الطلبات ==================== */
   window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
     if (!window.currentUser) return;
     try {
@@ -2120,7 +2100,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  /* ==================== نظام التقييمات ==================== */
   window.fetchReviewsFromFirebase = async function() {
     try {
       const q = query(collection(db, "reviews"));
