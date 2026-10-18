@@ -178,8 +178,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
-</div><!-- تبويب إدارة الطلبات -->
-<div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+</div><div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="flex items-center justify-between mb-5">
     <h2 class="text-xl font-black text-white flex items-center gap-2">
       <i class="fas fa-shopping-bag text-amber-400"></i> إدارة الطلبات
@@ -189,7 +188,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
   <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- سيتم تحميل الطلبات هنا -->
     <div class="col-span-full text-center py-10 text-slate-500">
       <i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i>
       <p>جاري تحميل الطلبات...</p>
@@ -197,7 +195,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- تبويب العملاء -->
 <div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="flex items-center justify-between mb-5">
     <h2 class="text-xl font-black text-white flex items-center gap-2">
@@ -246,7 +243,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد العلب بالكرتونة</label><input type="text" id="fBoxesPerCarton" placeholder="مثال: 12 علبة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       </div>
 
-      <!-- قسم إدارة الصور المدمج -->
       <div class="border-t border-slate-800 pt-4 mt-4 bg-slate-900/50 p-4 rounded-2xl">
         <label class="block text-slate-300 font-bold mb-3 text-base"><i class="fas fa-images text-amber-400"></i> إدارة صور المنتج</label>
         
@@ -392,6 +388,30 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
       <button onclick="resolveConfirm(false)" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-times"></i> إلغاء</button>
       <button onclick="resolveConfirm(true)" class="flex-1 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-rose-900/50 flex items-center justify-center gap-2"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🌟 نافذة إدخال المبلغ (تصميم جميل) 🌟 -->
+<div id="deliveryAmountModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+    <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"></div>
+    <div class="p-6 text-center">
+      <div class="w-20 h-20 mx-auto rounded-full bg-emerald-500/10 border-2 border-emerald-500/40 flex items-center justify-center mb-4">
+        <i class="fas fa-money-bill-wave text-4xl text-emerald-400"></i>
+      </div>
+      <h3 class="text-2xl font-black text-white mb-2">تم التسليم بنجاح</h3>
+      <p class="text-slate-400 text-sm mb-5">أدخل المبلغ الذي تم استلامه من الزبون بالليرة السورية</p>
+      
+      <div class="relative mb-2">
+        <input type="number" id="deliveryAmountInput" placeholder="مثال: 50000" class="w-full bg-slate-950 text-emerald-400 text-center text-2xl font-black p-4 rounded-2xl border-2 border-slate-700 focus:outline-none focus:border-emerald-500">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">ل.س</span>
+      </div>
+      <p id="deliveryAmountError" class="text-rose-500 text-xs mb-4 hidden">يرجى إدخال المبلغ أولاً</p>
+    </div>
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
+      <button onclick="closeDeliveryModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-times"></i> إلغاء</button>
+      <button onclick="confirmDelivery()" id="confirmDeliveryBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-emerald-900/50 flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> تأكيد المبلغ</button>
     </div>
   </div>
 </div>
@@ -1227,21 +1247,54 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
-  window.markAsDelivered = async function(orderId) {
-    const amount = prompt("أدخل المبلغ الذي تم استلامه من الزبون (بالليرة السورية):");
-    if (amount === null) return;
-    
+  // ==================== 4. نظام إدخال المبلغ (النافذة الجديدة) ====================
+  let currentDeliveringOrderId = null;
+
+  window.markAsDelivered = function(orderId) {
+    currentDeliveringOrderId = orderId;
+    document.getElementById('deliveryAmountInput').value = '';
+    document.getElementById('deliveryAmountError').classList.add('hidden');
+    document.getElementById('deliveryAmountModal').classList.remove('hidden');
+    setTimeout(() => {
+      document.getElementById('deliveryAmountInput').focus();
+    }, 100);
+  };
+
+  window.closeDeliveryModal = function() {
+    document.getElementById('deliveryAmountModal').classList.add('hidden');
+    currentDeliveringOrderId = null;
+  };
+
+  window.confirmDelivery = async function() {
+    const amount = document.getElementById('deliveryAmountInput').value.trim();
+    const errEl = document.getElementById('deliveryAmountError');
+    const btn = document.getElementById('confirmDeliveryBtn');
+
+    if (!amount) {
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    errEl.classList.add('hidden');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+    btn.disabled = true;
+
     try {
-      const orderRef = doc(db, "orders", orderId);
+      const orderRef = doc(db, "orders", currentDeliveringOrderId);
       await updateDoc(orderRef, {
         status: 'تم التسليم',
         deliveryAmount: amount,
         deliveredAt: serverTimestamp()
       });
+      
       window.showToast('تم تأكيد التسليم واستلام المبلغ بنجاح');
+      closeDeliveryModal();
     } catch (e) {
       console.error(e);
       window.showToast('حدث خطأ أثناء التأكيد', 'error');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-check-double"></i> تأكيد المبلغ';
+      btn.disabled = false;
     }
   };
 
@@ -1249,7 +1302,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     window.showToast('جاري المزامنة...');
   };
 
-  // ==================== 4. جلب العملاء ====================
+  // ==================== 5. جلب العملاء ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i><p>جاري تحميل البيانات من السحابة...</p></div>';
