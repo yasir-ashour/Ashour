@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ashour-store-v1';
+const CACHE_NAME = 'ashour-store-v2';
 const urlsToCache = [
   './index.html',
   './logo.png',
