@@ -59,6 +59,11 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       </div>
     </div>
     <div class="flex items-center gap-2 flex-wrap">
+      <!-- زر تفعيل الإشعارات -->
+      <button onclick="enableAdminNotifications()" id="notifyBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2 transition">
+        <i class="fas fa-bell"></i> تفعيل التنبيهات
+      </button>
+      
       <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-2.5 py-1.5 rounded-full font-bold">
         <i class="fas fa-circle text-[6px]"></i> غير منشور
       </span>
@@ -83,8 +88,12 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <button data-tab="products" class="tab-btn active bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-sm transition">
       <i class="fas fa-boxes"></i> المنتجات
     </button>
+    <button data-tab="orders" class="tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition relative">
+      <i class="fas fa-shopping-bag text-amber-400"></i> إدارة الطلبات
+      <span id="newOrdersBadge" class="hidden absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full animate-pulse">0</span>
+    </button>
     <button data-tab="customers" class="tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition">
-      <i class="fas fa-users text-amber-400"></i> العملاء والطلبات
+      <i class="fas fa-users text-amber-400"></i> العملاء
     </button>
     <button data-tab="settings" class="tab-btn bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 transition">
       <i class="fas fa-cog"></i> الإعدادات
@@ -169,24 +178,36 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
-</div><!-- تبويب العملاء والطلبات -->
+</div><!-- تبويب إدارة الطلبات -->
+<div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+  <div class="flex items-center justify-between mb-5">
+    <h2 class="text-xl font-black text-white flex items-center gap-2">
+      <i class="fas fa-shopping-bag text-amber-400"></i> إدارة الطلبات
+    </h2>
+    <button onclick="window.loadOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
+      <i class="fas fa-sync-alt"></i> تحديث
+    </button>
+  </div>
+  <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- سيتم تحميل الطلبات هنا -->
+    <div class="col-span-full text-center py-10 text-slate-500">
+      <i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i>
+      <p>جاري تحميل الطلبات...</p>
+    </div>
+  </div>
+</div>
+
+<!-- تبويب العملاء -->
 <div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="flex items-center justify-between mb-5">
     <h2 class="text-xl font-black text-white flex items-center gap-2">
-      <i class="fas fa-users text-amber-400"></i> سجل العملاء والطلبات
+      <i class="fas fa-users text-amber-400"></i> سجل العملاء
     </h2>
     <button onclick="loadCustomersAndOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
       <i class="fas fa-sync-alt"></i> تحديث البيانات
     </button>
   </div>
-  
-  <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <!-- سيتم تحميل بيانات العملاء هنا -->
-    <div class="col-span-full text-center py-10 text-slate-500">
-      <i class="fas fa-users text-5xl mb-3 text-slate-700"></i>
-      <p>اضغط على "تحديث البيانات" لجلب قائمة العملاء</p>
-    </div>
-  </div>
+  <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
 
 <div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16 space-y-5">
@@ -717,9 +738,11 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
     document.getElementById('tab-' + tab).classList.remove('hidden');
     
-    // إذا تم الضغط على تبويب العملاء، قم بجلب البيانات تلقائياً
     if(tab === 'customers' && typeof window.loadCustomersAndOrders === 'function') {
       window.loadCustomersAndOrders();
+    }
+    if(tab === 'orders' && typeof window.loadOrders === 'function') {
+      window.loadOrders();
     }
   });
 });
@@ -811,7 +834,7 @@ function renderStats() {
   document.getElementById('statAvailable').innerText = all.filter(p => p.available !== false && !p.lowStock).length;
   document.getElementById('statLow').innerText = all.filter(p => p.lowStock && p.available !== false).length;
   document.getElementById('statUnavailable').innerText = all.filter(p => p.available === false).length;
-}/* ============================ نافذة المنتج ============================ */
+}/* ============================ نافذة المنتج (تكملة) ============================ */
 function setProductStatus(status) { document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); }); }
 function getProductStatus() { const checked = document.querySelector('input[name="fStatus"]:checked'); return checked ? checked.value : 'available'; }
 function openProductModal(pid = null) {
@@ -876,6 +899,64 @@ function addFlavor() {
   editingFlavors.push(v); input.value = ''; renderFlavors(); input.focus();
 }
 function removeFlavor(i) { editingFlavors.splice(i, 1); renderFlavors(); }
+
+/* ============================ التقييمات ============================ */
+function toggleOfferFields() {
+  const checked = document.getElementById('fHasOffer').checked;
+  document.getElementById('offerFields').classList.toggle('hidden', !checked);
+  if (!checked) document.getElementById('fOldPrice').value = '';
+}
+function openAddReviewForm() {
+  document.getElementById('addReviewForm').classList.remove('hidden');
+  document.getElementById('reviewName').value = '';
+  document.getElementById('reviewComment').value = '';
+  currentReviewStars = 0;
+  updateReviewStars(0);
+  attachStarListeners();
+}
+function closeAddReviewForm() { document.getElementById('addReviewForm').classList.add('hidden'); }
+function attachStarListeners() {
+  document.querySelectorAll('.review-star').forEach(btn => {
+    btn.onclick = () => { currentReviewStars = Number(btn.dataset.star); updateReviewStars(currentReviewStars); };
+  });
+}
+function updateReviewStars(count) {
+  document.querySelectorAll('.review-star').forEach(btn => {
+    const s = Number(btn.dataset.star);
+    if (s <= count) { btn.classList.add('active'); btn.classList.remove('bg-slate-800', 'text-slate-600'); }
+    else { btn.classList.remove('active'); btn.classList.add('bg-slate-800', 'text-slate-600'); }
+  });
+}
+function saveReview() {
+  if (currentReviewStars === 0) { showToast('يرجى اختيار عدد النجوم', 'error'); return; }
+  const name = document.getElementById('reviewName').value.trim() || 'عميل';
+  const comment = document.getElementById('reviewComment').value.trim();
+  currentReviews.push({ name: name, stars: currentReviewStars, comment: comment, date: new Date().toISOString().slice(0, 10) });
+  renderReviews();
+  closeAddReviewForm();
+  showToast('تمت إضافة التقييم');
+}
+function renderReviews() {
+  const container = document.getElementById('reviewsList');
+  const badge = document.getElementById('reviewsCountBadge');
+  if (!container) return;
+  if (badge) badge.innerText = currentReviews.length + ' تقييم';
+  if (currentReviews.length === 0) {
+    container.innerHTML = '<p class="text-center text-slate-500 text-xs py-4 bg-slate-950/40 rounded-xl border border-slate-800">لا توجد تقييمات بعد</p>';
+    return;
+  }
+  container.innerHTML = currentReviews.map((r, i) => {
+    const stars = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+    return `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-start gap-2">
+        <div class="flex-grow min-w-0">
+          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${r.date}</span></div>
+          ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
+        </div>
+        <button type="button" onclick="removeReview(${i})" class="w-7 h-7 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-times text-xs"></i></button>
+      </div>`;
+  }).join('');
+}
+function removeReview(i) { currentReviews.splice(i, 1); renderReviews(); }
 
 /* ============================ حفظ وحذف المنتج ============================ */
 function saveProduct() {
@@ -973,64 +1054,6 @@ function applyImportedData(data) {
   });
 }
 
-/* ============================ التقييمات ============================ */
-function toggleOfferFields() {
-  const checked = document.getElementById('fHasOffer').checked;
-  document.getElementById('offerFields').classList.toggle('hidden', !checked);
-  if (!checked) document.getElementById('fOldPrice').value = '';
-}
-function openAddReviewForm() {
-  document.getElementById('addReviewForm').classList.remove('hidden');
-  document.getElementById('reviewName').value = '';
-  document.getElementById('reviewComment').value = '';
-  currentReviewStars = 0;
-  updateReviewStars(0);
-  attachStarListeners();
-}
-function closeAddReviewForm() { document.getElementById('addReviewForm').classList.add('hidden'); }
-function attachStarListeners() {
-  document.querySelectorAll('.review-star').forEach(btn => {
-    btn.onclick = () => { currentReviewStars = Number(btn.dataset.star); updateReviewStars(currentReviewStars); };
-  });
-}
-function updateReviewStars(count) {
-  document.querySelectorAll('.review-star').forEach(btn => {
-    const s = Number(btn.dataset.star);
-    if (s <= count) { btn.classList.add('active'); btn.classList.remove('bg-slate-800', 'text-slate-600'); }
-    else { btn.classList.remove('active'); btn.classList.add('bg-slate-800', 'text-slate-600'); }
-  });
-}
-function saveReview() {
-  if (currentReviewStars === 0) { showToast('يرجى اختيار عدد النجوم', 'error'); return; }
-  const name = document.getElementById('reviewName').value.trim() || 'عميل';
-  const comment = document.getElementById('reviewComment').value.trim();
-  currentReviews.push({ name: name, stars: currentReviewStars, comment: comment, date: new Date().toISOString().slice(0, 10) });
-  renderReviews();
-  closeAddReviewForm();
-  showToast('تمت إضافة التقييم');
-}
-function renderReviews() {
-  const container = document.getElementById('reviewsList');
-  const badge = document.getElementById('reviewsCountBadge');
-  if (!container) return;
-  if (badge) badge.innerText = currentReviews.length + ' تقييم';
-  if (currentReviews.length === 0) {
-    container.innerHTML = '<p class="text-center text-slate-500 text-xs py-4 bg-slate-950/40 rounded-xl border border-slate-800">لا توجد تقييمات بعد</p>';
-    return;
-  }
-  container.innerHTML = currentReviews.map((r, i) => {
-    const stars = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
-    return `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-start gap-2">
-        <div class="flex-grow min-w-0">
-          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${r.date}</span></div>
-          ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
-        </div>
-        <button type="button" onclick="removeReview(${i})" class="w-7 h-7 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-times text-xs"></i></button>
-      </div>`;
-  }).join('');
-}
-function removeReview(i) { currentReviews.splice(i, 1); renderReviews(); }
-
 /* ============================ التشغيل الأساسي ============================ */
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeProductModal(); if (_confirmResolver) resolveConfirm(false); } });
 (async function boot() {
@@ -1041,10 +1064,10 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 })();
 </script>
 
-<!-- سكربت Firebase لجلب العملاء والطلبات -->
+<!-- سكربت Firebase لجلب العملاء والطلبات وإدارتها -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
@@ -1058,7 +1081,175 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // تعريف الدالة في النطاق العام ليتمكن سكربت الإدارة من استدعائها
+  // ==================== نظام إشعارات الطلبات الجديدة ====================
+  let knownOrderIds = new Set();
+  let isFirstLoad = true;
+  const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+
+  window.enableAdminNotifications = async function() {
+    if (!("Notification" in window)) {
+      alert("هذا المتصفح لا يدعم الإشعارات.");
+      return;
+    }
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      window.showToast('تم تفعيل الإشعارات بنجاح ✅');
+      document.getElementById('notifyBtn').innerHTML = '<i class="fas fa-check"></i> التنبيهات مفعلة';
+      document.getElementById('notifyBtn').classList.replace('bg-indigo-600', 'bg-emerald-600');
+    } else {
+      window.showToast('تم رفض الإشعارات', 'error');
+    }
+  };
+
+  const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+  
+  onSnapshot(q, (snapshot) => {
+    let newOrdersCount = 0;
+    const allOrders = [];
+    
+    snapshot.docChanges().forEach((change) => {
+      if (change.type === "added") {
+        if (!isFirstLoad && !knownOrderIds.has(change.doc.id)) {
+          audioAlert.play().catch(e => console.log('Audio blocked by browser'));
+          
+          if (Notification.permission === "granted") {
+            new Notification("طلب جديد في مركز عاشور!", {
+              body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
+              icon: "logo.png"
+            });
+          }
+        }
+        knownOrderIds.add(change.doc.id);
+      }
+    });
+    isFirstLoad = false;
+
+    snapshot.forEach((doc) => {
+      const order = { id: doc.id, ...doc.data() };
+      allOrders.push(order);
+      if (order.status === 'جديد' || !order.status) newOrdersCount++;
+    });
+
+    const badge = document.getElementById('newOrdersBadge');
+    if (badge) {
+      if (newOrdersCount > 0) {
+        badge.innerText = newOrdersCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    renderOrdersList(allOrders);
+  });
+
+  // ==================== 2. عرض الطلبات ====================
+  function renderOrdersList(orders) {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+
+    if (orders.length === 0) {
+      container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-box-open text-4xl mb-3 text-slate-600"></i><p>لا توجد طلبات حتى الآن.</p></div>';
+      return;
+    }
+
+    container.innerHTML = orders.map(order => {
+      let dateStr = 'غير معروف';
+      if (order.createdAt) {
+        dateStr = new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+      }
+      
+      let itemsHtml = '';
+      for (let item in order.items) {
+        itemsHtml += `<div class="text-xs text-slate-300 mb-1 border-b border-slate-800 pb-1"><span class="font-bold text-amber-400">${item}:</span> `;
+        let flavors = [];
+        for (let flavor in order.items[item]) {
+          flavors.push(`${flavor} (${order.items[item][flavor]})`);
+        }
+        itemsHtml += flavors.join(' - ') + '</div>';
+      }
+
+      let statusColor = 'bg-slate-700 text-slate-300';
+      if (order.status === 'جديد') statusColor = 'bg-blue-600 text-white';
+      if (order.status === 'جاري التجهيز') statusColor = 'bg-amber-500 text-slate-950';
+      if (order.status === 'جاري التوصيل') statusColor = 'bg-sky-500 text-white';
+      if (order.status === 'تم التسليم') statusColor = 'bg-emerald-600 text-white';
+
+      return `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3">
+          <div class="flex justify-between items-start border-b border-slate-800 pb-2">
+            <div>
+              <p class="text-white font-black text-lg">طلب #${order.id.slice(-4).toUpperCase()}</p>
+              <p class="text-slate-400 text-xs">${dateStr}</p>
+            </div>
+            <span class="${statusColor} text-xs font-bold px-3 py-1 rounded-full">${order.status || 'جديد'}</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div class="text-slate-300"><i class="fas fa-user text-amber-400 w-4"></i> ${order.userName}</div>
+            <div class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${order.shopName || 'بدون محل'}</div>
+            <div class="text-slate-300 col-span-2"><i class="fas fa-map-marker-alt text-rose-400 w-4"></i> ${order.address}</div>
+            <div class="text-slate-300 col-span-2" dir="ltr"><i class="fas fa-phone text-emerald-400 w-4"></i> ${order.phone || 'لا يوجد رقم'}</div>
+          </div>
+
+          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/50">
+            <p class="text-slate-400 text-xs font-bold mb-2">المنتجات:</p>
+            ${itemsHtml}
+          </div>
+
+          ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام مبلغ: ${order.deliveryAmount} ل.س</p></div>` : ''}
+
+          <!-- أزرار التحكم -->
+          <div class="flex gap-2 mt-2">
+            ${order.status !== 'تم التسليم' ? `
+              ${order.status === 'جديد' ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز الطلب</button>` : ''}
+              ${order.status === 'جاري التجهيز' ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التوصيل')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 rounded-lg text-xs">بدء التوصيل</button>` : ''}
+              ${order.status === 'جاري التوصيل' ? `<button onclick="markAsDelivered('${order.id}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs">تم التسليم</button>` : ''}
+            ` : `<div class="w-full text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم تسليم الطلب بنجاح</div>`}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ==================== 3. تحديث حالة الطلب ====================
+  window.updateOrderStatus = async function(orderId, newStatus) {
+    try {
+      const orderRef = doc(db, "orders", orderId);
+      await updateDoc(orderRef, {
+        status: newStatus,
+        updatedAt: serverTimestamp()
+      });
+      window.showToast('تم تحديث حالة الطلب بنجاح');
+    } catch (e) {
+      console.error(e);
+      window.showToast('حدث خطأ أثناء التحديث', 'error');
+    }
+  };
+
+  window.markAsDelivered = async function(orderId) {
+    const amount = prompt("أدخل المبلغ الذي تم استلامه من الزبون (بالليرة السورية):");
+    if (amount === null) return;
+    
+    try {
+      const orderRef = doc(db, "orders", orderId);
+      await updateDoc(orderRef, {
+        status: 'تم التسليم',
+        deliveryAmount: amount,
+        deliveredAt: serverTimestamp()
+      });
+      window.showToast('تم تأكيد التسليم واستلام المبلغ بنجاح');
+    } catch (e) {
+      console.error(e);
+      window.showToast('حدث خطأ أثناء التأكيد', 'error');
+    }
+  };
+
+  window.loadOrders = function() {
+    window.showToast('جاري المزامنة...');
+  };
+
+  // ==================== 4. جلب العملاء ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i><p>جاري تحميل البيانات من السحابة...</p></div>';
@@ -1094,15 +1285,12 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
                   if (order.createdAt) {
                     dateStr = new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
                   }
-                  let totalItems = 0;
-                  for (let item in order.items) { for (let flavor in order.items[item]) { totalItems += order.items[item][flavor]; } }
                   return `
                     <div class="bg-slate-950 border border-slate-700/50 rounded-lg p-2.5 text-xs">
                       <div class="flex justify-between items-center mb-1">
                         <span class="text-emerald-400 font-bold">${order.status || 'جديد'}</span>
                         <span class="text-slate-400 text-[10px]">${dateStr}</span>
                       </div>
-                      <p class="text-slate-300">عدد القطع: <span class="text-white font-bold">${totalItems}</span></p>
                       <p class="text-slate-400 text-[10px] mt-1 truncate">العنوان: ${order.address}</p>
                     </div>
                   `;
@@ -1123,7 +1311,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
               <div class="mt-2 space-y-1 text-xs">
                 <p class="text-slate-300"><i class="fas fa-phone text-emerald-400 w-4 text-center"></i> ${user.phone || 'لا يوجد رقم'}</p>
                 <p class="text-slate-300"><i class="fas fa-store text-sky-400 w-4 text-center"></i> ${user.shopName || 'لا يوجد محل'}</p>
-                <p class="text-slate-300 truncate"><i class="fas fa-map-marker-alt text-rose-400 w-4 text-center"></i> ${user.address || 'لا يوجد عنوان'}</p>
               </div>
             </div>
           </div>
@@ -1134,9 +1321,10 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
     } catch (error) {
       console.error("Error loading data:", error);
-      container.innerHTML = '<div class="col-span-full text-center py-10 text-rose-500"><i class="fas fa-exclamation-triangle text-3xl mb-3"></i><p>حدث خطأ أثناء جلب البيانات. تأكد من اتصالك بالإنترنت ومن قواعد الأمان في Firebase.</p></div>';
+      container.innerHTML = '<div class="col-span-full text-center py-10 text-rose-500"><i class="fas fa-exclamation-triangle text-3xl mb-3"></i><p>حدث خطأ أثناء جلب البيانات.</p></div>';
     }
   };
+
 </script>
 </body>
 </html>
