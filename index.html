@@ -468,7 +468,8 @@ function buildCard(p) {
   card.setAttribute('data-name', p.name);
 
   var imgBox = document.createElement('div');
-  imgBox.className = 'w-full aspect-[740/645] bg-[#0f172a] relative cursor-pointer';
+  // تم التعديل هنا: ارتفاع ثابت للجوال (h-40) لمنع تمدد البطاقات
+  imgBox.className = 'w-full h-40 sm:h-auto sm:aspect-[740/645] bg-[#0f172a] relative cursor-pointer overflow-hidden';
   imgBox.onclick = function() { openProduct(p.name); };
 
   var img = document.createElement('img');
@@ -476,7 +477,17 @@ function buildCard(p) {
   img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
   img.loading = 'lazy';
   img.alt = p.name;
-  img.onerror = function() { imgErr(this); };
+  
+  // تم التعديل هنا: إذا فشل تحميل الصورة المضغوطة، يحاول تحميل الصورة الأصلية
+  img.onerror = function() { 
+    if (this.src.includes('images.weserv.nl')) {
+      this.src = p.image; // الرجوع للصورة الأصلية
+      this.onerror = function() { imgErr(this); }; // إذا فشلت أيضاً، يظهر أيقونة
+    } else {
+      imgErr(this); 
+    }
+  };
+  
   imgBox.appendChild(img);
 
   var stBadge = document.createElement('span');
@@ -570,6 +581,7 @@ function buildCard(p) {
     flTitle.innerText = 'النكهات:';
     flBox.appendChild(flTitle);
 
+    // تم تثبيت ارتفاع قائمة النكهات لكي لا تطول البطاقة
     var flList = document.createElement('div');
     flList.className = 'h-24 overflow-y-auto space-y-1';
 
