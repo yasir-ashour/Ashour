@@ -1429,6 +1429,7 @@ function loadData() {
   });
 }
 
+// تم تعديل دالة إرسال الطلب هنا لتطابق التنسيق المطلوب
 function sendOrder() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
@@ -1448,12 +1449,16 @@ function sendOrder() {
     hour: '2-digit', minute: '2-digit' 
   });
 
-  var msg = '🛒 *طلب جديد من مركز عاشور* 🛒\n\n';
-  msg += '👤 *الاسم:* ' + n + '\n';
-  msg += '🏪 *المحل:* ' + (s || 'لا يوجد') + '\n';
-  msg += '📍 *العنوان:* ' + a + '\n\n';
-  msg += '📦 *تفاصيل الطلب:*\n';
-  msg += '------------------------\n';
+  var msg = 'السلام عليكم ورحمه الله وبركاته\n\n';
+  msg += ' *📝 اريد ان اطلب طلب* \n\n';
+  
+  msg += '👤 *معلومات المستلم* :\n';
+  msg += '▫️ *الاسم:* ' + n + '\n';
+  msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
+  msg += '▫️ *العنوان:* ' + a + '\n\n';
+  
+  msg += '━━━━━━━━━━━━━━━\n';
+  msg += '📦 _تفاصيل الطلب:_ \n\n';
 
   var total = 0;
   var idx = 1;
@@ -1464,20 +1469,20 @@ function sendOrder() {
       if (!cart[name].hasOwnProperty(flv)) continue;
       var qty = cart[name][flv];
       if (qty > 0) { 
-        details.push(flv + ' × ' + qty); 
+        details.push('  ( ' + flv + ' × ' + qty); 
         total += qty; 
       }
     }
     if (details.length > 0) {
-      msg += idx + '. *' + name + '*\n';
-      msg += '   ➖ ' + details.join('  |  ') + '\n';
+      msg += ' *' + idx + '*• *' + name + '*\n';
+      msg += details.join('\n') + '\n\n';
       idx++;
     }
   }
-  msg += '------------------------\n';
-  msg += '🧾 *إجمالي الكميات:* ' + total + ' قطعة\n\n';
-  msg += '📅 *تاريخ الطلب:* ' + date + '\n';
-  msg += 'شكراً لتعاملكم معنا! 🌟';
+  
+  msg += '━━━━━━━━━━━━━━━\n\n';
+  msg += ' *🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n\n';
+  msg += '📅 تاريخ الطلب : ' + date + '\n\n\n';
 
   if (typeof window.saveOrderToFirebase === 'function') {
     window.saveOrderToFirebase(cart, n, s, a);
@@ -1563,7 +1568,6 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  // تم التعديل هنا لتعمل على الهاتف بدون مشاكل
   window.loginWithGoogle = async function() {
     try {
       await signInWithPopup(auth, provider);
