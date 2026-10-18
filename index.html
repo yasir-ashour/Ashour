@@ -33,7 +33,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
-<div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
+<div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl">
   <p class="text-sm font-bold" id="toastMsg">تمت الإضافة!</p>
 </div>
 
@@ -60,9 +60,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <!-- زر تسجيل الدخول / الملف الشخصي -->
-      <button id="loginBtn" onclick="loginWithGoogle()" class="bg-slate-900 border-2 border-amber-500 text-amber-400 font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
-        <i class="fab fa-google text-lg"></i>
+      <!-- زر تسجيل الدخول المحدث -->
+      <button id="loginBtn" onclick="openAuthModal()" class="bg-slate-900 border-2 border-amber-500 text-amber-400 font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
+        <i class="fas fa-sign-in-alt text-lg"></i>
         <span>تسجيل الدخول</span>
       </button>
       
@@ -78,6 +78,76 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </div>
 </header>
+
+<!-- 🌟 نافذة تسجيل الدخول الجديدة (Auth Modal) 🌟 -->
+<div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8">
+    <!-- زر الإغلاق -->
+    <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
+    
+    <div class="p-6 sm:p-8">
+      <!-- الشعار -->
+      <div class="text-center mb-6">
+        <img src="logo.png" class="w-24 h-24 mx-auto object-contain mb-3 glow">
+        <h2 class="text-2xl font-black gold-text">مركز عاشور</h2>
+        <p class="text-slate-400 text-xs mt-1">سجل دخولك لمتابعة طلباتك وتقييم المنتجات</p>
+      </div>
+
+      <!-- التبويبات (دخول / إنشاء حساب) -->
+      <div class="flex bg-slate-950 p-1 rounded-xl mb-6">
+        <button id="tabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-lg text-sm font-bold bg-amber-500 text-slate-950 transition">دخول</button>
+        <button id="tabRegister" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition">إنشاء حساب</button>
+      </div>
+
+      <!-- نموذج تسجيل الدخول -->
+      <form id="loginForm" onsubmit="handleEmailLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">البريد الإلكتروني</label>
+          <input type="email" id="loginEmail" required placeholder="example@email.com" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">كلمة المرور</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <button type="submit" id="loginSubmitBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">تسجيل الدخول</button>
+      </form>
+
+      <!-- نموذج إنشاء حساب -->
+      <form id="registerForm" onsubmit="handleEmailRegister(event)" class="space-y-4 hidden">
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">الاسم الكامل</label>
+          <input type="text" id="regName" required placeholder="اسمك الكريم" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">البريد الإلكتروني</label>
+          <input type="email" id="regEmail" required placeholder="example@email.com" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">كلمة المرور</label>
+          <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1">تأكيد كلمة المرور</label>
+          <input type="password" id="regConfirmPassword" required placeholder="••••••••" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
+        </div>
+        <button type="submit" id="regSubmitBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl text-sm transition">إنشاء الحساب</button>
+      </form>
+
+      <div class="flex items-center my-6">
+        <div class="flex-grow border-t border-slate-700"></div>
+        <span class="px-3 text-slate-500 text-xs">أو</span>
+        <div class="flex-grow border-t border-slate-700"></div>
+      </div>
+
+      <!-- زر جوجل -->
+      <button onclick="loginWithGoogle()" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">
+        الدخول عبر حساب Google
+      </button>
+      <p id="authError" class="text-rose-500 text-xs text-center mt-4 hidden"></p>
+    </div>
+  </div>
+</div>
 
 <div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
@@ -248,6 +318,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- نافذة عرض التقييمات -->
 <div id="reviewsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -264,6 +335,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- نافذة إضافة تقييم -->
 <div id="addReviewModal" class="hidden fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -282,11 +354,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
           <button onclick="setStar(5)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
         </div>
       </div>
-      <input type="text" id="revName" placeholder="اسمك (اختياري)" maxlength="30" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
-      <textarea id="revComment" rows="3" placeholder="تعليقك (اختياري)" maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+      <textarea id="revComment" rows="3" placeholder="اكتب تعليقك هنا (اختياري)" maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
       <div class="flex gap-2">
         <button onclick="closeAddReview()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
-        <button onclick="submitReview()" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm"><i class="fab fa-whatsapp"></i> إرسال</button>
+        <!-- تم إزالة زر الواتساب واستبداله بزر حفظ -->
+        <button onclick="submitReview()" id="submitRevBtn" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm"><i class="fas fa-check"></i> نشر التقييم</button>
       </div>
     </div>
   </div>
@@ -414,7 +486,7 @@ function showToast(name, type = 'success') {
   var msg = document.getElementById('toastMsg');
   if(!t || !msg) return;
   msg.innerText = name;
-  t.className = 'fixed top-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-2xl border-2 ' + (type === 'error' ? 'bg-rose-950 border-rose-500 text-white' : 'bg-slate-900 border-amber-500 text-white');
+  t.className = 'fixed top-6 left-1/2 -translate-x-1/2 z-[100] px-5 py-3 rounded-2xl shadow-2xl border-2 ' + (type === 'error' ? 'bg-rose-950 border-rose-500 text-white' : 'bg-slate-900 border-amber-500 text-white');
   t.classList.remove('hidden');
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(function() { t.classList.add('hidden'); }, 3000);
@@ -460,7 +532,7 @@ function buildCard(p) {
   var pid = p._pid;
   var avail = p.available !== false;
   var low = p.lowStock === true && avail;
-  var revs = p.reviews || [];
+  var revs = p.reviews || []; // سيتم تعبئتها ديناميكياً
   var avg = avgStars(revs);
 
   var card = document.createElement('div');
@@ -468,7 +540,6 @@ function buildCard(p) {
   card.setAttribute('data-name', p.name);
 
   var imgBox = document.createElement('div');
-  // تم التعديل هنا: ارتفاع ثابت للجوال (h-40) لمنع تمدد البطاقات
   imgBox.className = 'w-full h-40 sm:h-auto sm:aspect-[740/645] bg-[#0f172a] relative cursor-pointer overflow-hidden';
   imgBox.onclick = function() { openProduct(p.name); };
 
@@ -477,17 +548,12 @@ function buildCard(p) {
   img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
   img.loading = 'lazy';
   img.alt = p.name;
-  
-  // تم التعديل هنا: إذا فشل تحميل الصورة المضغوطة، يحاول تحميل الصورة الأصلية
   img.onerror = function() { 
     if (this.src.includes('images.weserv.nl')) {
-      this.src = p.image; // الرجوع للصورة الأصلية
-      this.onerror = function() { imgErr(this); }; // إذا فشلت أيضاً، يظهر أيقونة
-    } else {
-      imgErr(this); 
-    }
+      this.src = p.image;
+      this.onerror = function() { imgErr(this); };
+    } else { imgErr(this); }
   };
-  
   imgBox.appendChild(img);
 
   var stBadge = document.createElement('span');
@@ -581,7 +647,6 @@ function buildCard(p) {
     flTitle.innerText = 'النكهات:';
     flBox.appendChild(flTitle);
 
-    // تم تثبيت ارتفاع قائمة النكهات لكي لا تطول البطاقة
     var flList = document.createElement('div');
     flList.className = 'h-24 overflow-y-auto space-y-1';
 
@@ -1172,12 +1237,12 @@ function openAddReview() {
   
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
-    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    closeReviews();
+    openAuthModal();
     return;
   }
 
   document.getElementById('addRevTitle').innerText = curRevProduct.name;
-  document.getElementById('revName').value = window.currentProfileData?.name || '';
   document.getElementById('revComment').value = '';
   curRevStars = 0;
   updateStarRow(0);
@@ -1202,6 +1267,7 @@ function updateStarRow(n) {
   }
 }
 
+// تم تعديل هذه الدالة لحفظ التقييم في Firebase بدلاً من الواتساب
 function submitReview() {
   if (!window.currentUser) {
     showToast('يجب تسجيل الدخول أولاً', 'error');
@@ -1209,17 +1275,30 @@ function submitReview() {
   }
   
   if (curRevStars === 0) { alert('اختر عدد النجوم'); return; }
+  
   var pName = curRevProduct.name;
-  var name = document.getElementById('revName').value.trim() || 'عميل';
   var comment = document.getElementById('revComment').value.trim();
-  var s = '';
-  for (var i = 0; i < curRevStars; i++) s += '⭐';
-  var msg = 'تقييم جديد\n\nالمنتج: ' + pName + '\nالتقييم: ' + s + ' (' + curRevStars + '/5)\nالاسم: ' + name;
-  if (comment) msg += '\nالتعليق: ' + comment;
-  msg += '\n\nمن موقع مركز عاشور';
-  window.open('https://wa.me/' + inquiryWa + '?text=' + encodeURIComponent(msg), '_blank');
-  closeAddReview();
-  closeReviews();
+  
+  var btn = document.getElementById('submitRevBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
+  btn.disabled = true;
+
+  // استدعاء الدالة من سكربت Firebase
+  window.saveReviewToFirebase(pName, curRevStars, comment).then(() => {
+    window.showToast('تم نشر تقييمك بنجاح! شكراً لك');
+    closeAddReview();
+    closeReviews();
+    
+    // تحديث الواجهة فوراً (اختياري: يمكن إعادة تحميل الصفحة أو جلب التقييمات الجديدة)
+    setTimeout(() => { location.reload(); }, 1500);
+
+  }).catch((err) => {
+    window.showToast('حدث خطأ أثناء نشر التقييم', 'error');
+    console.error(err);
+  }).finally(() => {
+    btn.innerHTML = '<i class="fas fa-check"></i> نشر التقييم';
+    btn.disabled = false;
+  });
 }
 
 /* ==================== تقييم المتجر ==================== */
@@ -1240,7 +1319,7 @@ function setStoreStar(n) {
 function submitStoreReview() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
-    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    openAuthModal();
     return;
   }
 
@@ -1441,11 +1520,10 @@ function loadData() {
   });
 }
 
-// تم تعديل دالة إرسال الطلب هنا لتطابق التنسيق المطلوب
 function sendOrder() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
-    if(typeof window.loginWithGoogle === 'function') window.loginWithGoogle();
+    openAuthModal();
     return;
   }
 
@@ -1516,6 +1594,12 @@ function boot() {
         }
       } catch(e) { products[i]._proxyImg = ''; }
     }
+    
+    // سيتم تحديث التقييمات من Firebase في السكربت السفلي
+    if(typeof window.fetchReviewsFromFirebase === 'function') {
+      window.fetchReviewsFromFirebase(); 
+    }
+
     loadCust();
     updateCart();
     renderCategories();
@@ -1550,13 +1634,14 @@ document.addEventListener('keydown', function(e) {
     try { closeReviews(); } catch(e) {}
     try { closeAddReview(); } catch(e) {}
     try { closeProfileModal(); } catch(e) {}
+    try { closeAuthModal(); } catch(e) {}
   }
 });
-</script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
+</script><!-- سكربت Firebase للحسابات والتقييمات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
@@ -1580,10 +1665,124 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
+  /* ==================== دوال نافذة تسجيل الدخول ==================== */
+  window.openAuthModal = function() {
+    document.getElementById('authModal').classList.remove('hidden');
+    document.getElementById('authError').classList.add('hidden');
+  };
+
+  window.closeAuthModal = function() {
+    document.getElementById('authModal').classList.add('hidden');
+  };
+
+  window.switchAuthTab = function(tab) {
+    document.getElementById('authError').classList.add('hidden');
+    if(tab === 'login') {
+      document.getElementById('tabLogin').className = 'flex-1 py-2.5 rounded-lg text-sm font-bold bg-amber-500 text-slate-950 transition';
+      document.getElementById('tabRegister').className = 'flex-1 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition';
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('registerForm').classList.add('hidden');
+    } else {
+      document.getElementById('tabRegister').className = 'flex-1 py-2.5 rounded-lg text-sm font-bold bg-emerald-600 text-white transition';
+      document.getElementById('tabLogin').className = 'flex-1 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition';
+      document.getElementById('registerForm').classList.remove('hidden');
+      document.getElementById('loginForm').classList.add('hidden');
+    }
+  };
+
+  window.handleEmailLogin = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginSubmitBtn');
+    const errEl = document.getElementById('authError');
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الدخول...';
+    btn.disabled = true;
+    errEl.classList.add('hidden');
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      window.showToast('مرحباً بك مجدداً!');
+      closeAuthModal();
+    } catch (error) {
+      errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.innerHTML = 'تسجيل الدخول';
+      btn.disabled = false;
+    }
+  };
+
+  window.handleEmailRegister = async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value;
+    const confirmPass = document.getElementById('regConfirmPassword').value;
+    const btn = document.getElementById('regSubmitBtn');
+    const errEl = document.getElementById('authError');
+
+    // 1. التحقق من صحة الإيميل (Regex)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errEl.innerText = 'يرجى إدخال بريد إلكتروني صحيح (مثال: name@example.com).';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    // 2. التحقق من تطابق كلمة المرور
+    if (pass !== confirmPass) {
+      errEl.innerText = 'كلمتا المرور غير متطابقتين.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    if (pass.length < 6) {
+      errEl.innerText = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
+    btn.disabled = true;
+    errEl.classList.add('hidden');
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(userCredential.user, { displayName: name });
+      
+      // حفظ بيانات الزبون في Firestore
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        name: name,
+        email: email,
+        phone: '',
+        shopName: '',
+        address: '',
+        avatarUrl: 'logo.png',
+        createdAt: serverTimestamp()
+      });
+
+      window.showToast('تم إنشاء الحساب بنجاح!');
+      closeAuthModal();
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        errEl.innerText = 'هذا البريد الإلكتروني مستخدم بالفعل.';
+      } else {
+        errEl.innerText = 'حدث خطأ: ' + error.message;
+      }
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.innerHTML = 'إنشاء الحساب';
+      btn.disabled = false;
+    }
+  };
+
   window.loginWithGoogle = async function() {
     try {
       await signInWithPopup(auth, provider);
       window.showToast('تم تسجيل الدخول بنجاح');
+      closeAuthModal();
     } catch (error) {
       console.error(error);
       window.showToast('فشل تسجيل الدخول: ' + error.message, 'error');
@@ -1596,6 +1795,7 @@ document.addEventListener('keydown', function(e) {
     window.showToast('تم تسجيل الخروج');
   };
 
+  /* ==================== مراقبة حالة الدخول ==================== */
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
@@ -1610,8 +1810,9 @@ document.addEventListener('keydown', function(e) {
       if (docSnap.exists()) {
         currentProfileData = docSnap.data();
       } else {
+        // إذا سجل بجوجل لأول مرة ولم تكن له بيانات
         currentProfileData = {
-          name: user.displayName,
+          name: user.displayName || 'مستخدم',
           email: user.email,
           phone: '',
           shopName: '',
@@ -1647,6 +1848,7 @@ document.addEventListener('keydown', function(e) {
     }
   });
 
+  /* ==================== الملف الشخصي ==================== */
   window.openProfileModal = function() {
     if(!window.currentUser) return;
     document.getElementById('profileModal').classList.remove('hidden');
@@ -1737,6 +1939,7 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  /* ==================== حفظ الطلبات ==================== */
   window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
     if (!window.currentUser) return;
     try {
@@ -1754,6 +1957,45 @@ document.addEventListener('keydown', function(e) {
     } catch (e) { 
       console.error("Error saving order:", e); 
     }
+  };
+
+  /* ==================== نظام التقييمات الجديد ==================== */
+  // 1. جلب التقييمات عند تحميل الموقع
+  window.fetchReviewsFromFirebase = async function() {
+    try {
+      const q = query(collection(db, "reviews"));
+      const querySnapshot = await getDocs(q);
+      
+      // تصفير التقييمات القديمة في المصفوفة
+      products.forEach(p => p.reviews = []);
+      
+      querySnapshot.forEach((doc) => {
+        const rev = doc.data();
+        const p = products.find(prod => prod.name === rev.productName);
+        if(p) {
+          p.reviews.push({ stars: rev.stars, name: rev.userName, comment: rev.comment, date: rev.date });
+        }
+      });
+
+      // إعادة رسم المنتجات بعد جلب التقييمات
+      displayProducts(products);
+    } catch(e) {
+      console.error("Error fetching reviews:", e);
+    }
+  };
+
+  // 2. حفظ تقييم جديد
+  window.saveReviewToFirebase = async function(productName, stars, comment) {
+    if (!window.currentUser) return Promise.reject("Not logged in");
+    
+    return await addDoc(collection(db, "reviews"), {
+      productName: productName,
+      userId: window.currentUser.uid,
+      userName: window.currentProfileData.name || 'عميل',
+      stars: stars,
+      comment: comment,
+      date: new Date().toISOString().slice(0, 10)
+    });
   };
 
 </script>
