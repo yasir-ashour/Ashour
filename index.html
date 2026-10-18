@@ -1538,7 +1538,7 @@ document.addEventListener('keydown', function(e) {
 </script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1563,18 +1563,11 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  getRedirectResult(auth).then((result) => {
-    if (result && result.user) {
-      window.showToast('تم تسجيل الدخول بنجاح');
-    }
-  }).catch((error) => {
-    console.error("Redirect Error:", error);
-    window.showToast('حدث خطأ أثناء تسجيل الدخول', 'error');
-  });
-
+  // تم التعديل هنا لتعمل على الهاتف بدون مشاكل
   window.loginWithGoogle = async function() {
     try {
-      await signInWithRedirect(auth, provider);
+      await signInWithPopup(auth, provider);
+      window.showToast('تم تسجيل الدخول بنجاح');
     } catch (error) {
       console.error(error);
       window.showToast('فشل تسجيل الدخول: ' + error.message, 'error');
