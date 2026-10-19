@@ -691,7 +691,6 @@ function toggleTokenVisibility() {
   if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
-/* ============================ إعدادات OneSignal ============================ */
 function saveOneSignalKey() {
   const key = document.getElementById('setOneSignalKey').value.trim();
   if (key) {
@@ -1120,7 +1119,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
   // ==================== دالة إرسال الإشعار عبر OneSignal ====================
   async function sendOneSignalNotification(playerId, title, message) {
-    const appId = "YOUR_APP_ID_HERE"; // bbd1717d-8f66-4ad0-a61e-e6d27c2e7284
+    const appId = "YOUR_APP_ID_HERE"; // ⚠️ ضع App ID الخاص بك هنا (هذا ليس سرياً)
     const restApiKey = localStorage.getItem('ashour_onesignal_key'); // جلب المفتاح من ذاكرة المتصفح
 
     if (!restApiKey) {
@@ -1182,14 +1181,20 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
                     body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
                     icon: "logo.png",
                     vibrate: [200, 100, 200],
-                    requireInteraction: true
+                    requireInteraction: true,
+                    data: {
+                      url: window.location.href
+                    }
                   });
                 });
               } else {
-                new Notification("طلب جديد في مركز عاشور!", {
+                var notif = new Notification("طلب جديد في مركز عاشور!", {
                   body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
                   icon: "logo.png"
                 });
+                notif.onclick = function() {
+                  window.focus();
+                };
               }
             } catch(e) {
               console.error("Notification error:", e);
