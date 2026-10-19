@@ -160,7 +160,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
   </div>
 
-  <!-- قسم إعدادات OneSignal -->
   <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-bell text-indigo-400"></i> إعدادات إشعارات OneSignal
@@ -691,7 +690,6 @@ function toggleTokenVisibility() {
   if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
-/* ============================ إعدادات OneSignal ============================ */
 function saveOneSignalKey() {
   const key = document.getElementById('setOneSignalKey').value.trim();
   if (key) {
@@ -1118,10 +1116,9 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // ==================== دالة إرسال الإشعار عبر OneSignal ====================
   async function sendOneSignalNotification(playerId, title, message) {
-    const appId = "YOUR_APP_ID_HERE"; // bbd1717d-8f66-4ad0-a61e-e6d27c2e7284
-    const restApiKey = localStorage.getItem('ashour_onesignal_key'); // جلب المفتاح من ذاكرة المتصفح
+    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284",
+    const restApiKey = localStorage.getItem('ashour_onesignal_key'); 
 
     if (!restApiKey) {
         console.warn("OneSignal API Key is missing. Please set it in Admin Settings.");
@@ -1149,15 +1146,13 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   }
 
-  // ==================== نظام إشعارات الطلبات الجديدة للمدير ====================
   let knownOrderIds = new Set();
   let isFirstLoad = true;
-  const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+  const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
 
   window.enableAdminNotifications = async function() {
     if (!("Notification" in window)) { alert("هذا المتصفح لا يدعم الإشعارات."); return; }
     
-    // تفعيل الصوت (حيلة برمجية لتخطي حظر المتصفح)
     try {
       audioAlert.volume = 0.01;
       await audioAlert.play();
@@ -1195,9 +1190,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
                     icon: "logo.png",
                     vibrate: [200, 100, 200],
                     requireInteraction: true,
-                    data: {
-                      url: window.location.href
-                    }
+                    data: { url: window.location.href }
                   });
                 });
               } else {
@@ -1205,13 +1198,9 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
                   body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
                   icon: "logo.png"
                 });
-                notif.onclick = function() {
-                  window.focus();
-                };
+                notif.onclick = function() { window.focus(); };
               }
-            } catch(e) {
-              console.error("Notification error:", e);
-            }
+            } catch(e) { console.error("Notification error:", e); }
           } else {
             console.warn("صلاحية الإشعارات غير ممنوحة. الحالة الحالية:", Notification.permission);
             window.showToast("طلب جديد وصل! (لكن الإشعارات غير مفعلة)", "error");
