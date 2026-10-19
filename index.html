@@ -18,6 +18,26 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .glow { animation: glow 2.5s ease-in-out infinite; }
 .star-on { background: #d4af37 !important; color: #0b0f19 !important; }
 </style>
+
+<!-- كود OneSignal للإشعارات -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "YOUR_APP_ID_HERE", // bbd1717d-8f66-4ad0-a61e-e6d27c2e7284
+      serviceWorkerPath: "./OneSignalSDKWorker.js", // تأكد من رفع هذا الملف في نفس المجلد
+      allowLocalhostAsSecureOrigin: true
+    });
+
+    // محاولة جلب معرف المستخدم إذا كان مسجل دخول مسبقاً
+    OneSignal.getUserId().then(function(userId) {
+      if (userId && window.currentUser) {
+        window.savePlayerIdToFirebase(userId);
+      }
+    });
+  });
+</script>
 </head>
 <body class="min-h-screen pb-20 sm:pb-0">
 
@@ -26,7 +46,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
   </div>
   <h1 class="text-3xl font-black gold-text mb-1">مركز عاشور للتجارة</h1>
-  <!-- تم تعديل الجملة هنا -->
   <p class="text-sm font-bold text-amber-400/80 mb-6">اطلب طلبك وريح حالك</p>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3">
     <div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div>
@@ -77,9 +96,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </a>
     </div>
   </div>
-</header>
-
-<div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+</header><div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
@@ -139,7 +156,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p id="authError" class="text-rose-500 text-xs text-center mt-4 hidden"></p>
     </div>
   </div>
-</div><div id="catalogView" class="w-full flex flex-col flex-grow">
+</div>
+
+<div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
   <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full mx-auto mb-1 glow cursor-pointer" onclick="showCatalog()">
@@ -202,9 +221,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p class="text-xl">لا توجد منتجات</p>
     </div>
   </section>
-</div>
-
-<div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
+</div><div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
@@ -236,7 +253,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="sendOrder()" class="bg-emerald-600 text-white font-black px-6 py-3 rounded-xl text-sm shadow-xl"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
-</div><!-- 🌟 صفحة الحساب الشخصي الكاملة 🌟 -->
+</div>
+
+<!-- صفحة الحساب الشخصي الكاملة -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
@@ -255,8 +274,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <button onclick="openEditProfileModal()" class="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2">
           <i class="fas fa-edit text-amber-400"></i> تعديل الملف الشخصي
         </button>
-        
-        <!-- زر تسجيل الخروج المعدل -->
         <button onclick="logoutUser()" class="bg-rose-950/60 border border-rose-500/30 text-rose-400 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-900 transition flex items-center gap-2">
           <i class="fas fa-sign-out-alt text-sm"></i> تسجيل خروج
         </button>
@@ -1808,6 +1825,15 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
+  // دالة حفظ معرف OneSignal في قاعدة البيانات
+  window.savePlayerIdToFirebase = async function(playerId) {
+    if (!window.currentUser) return;
+    try {
+      await setDoc(doc(db, "users", window.currentUser.uid), { oneSignalPlayerId: playerId }, { merge: true });
+      console.log("Player ID saved to Firebase");
+    } catch(e) { console.error("Error saving Player ID:", e); }
+  };
+
   window.openAuthModal = function() {
     document.getElementById('authModal').classList.remove('hidden');
     document.getElementById('authError').classList.add('hidden');
@@ -1928,7 +1954,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // تم تعديل دالة تسجيل الخروج هنا لإضافة تأكيد وشعار
   window.logoutUser = async function() {
     if (confirm("هل أنت متأكد من تسجيل الخروج؟")) {
       await signOut(auth);
@@ -1966,6 +1991,13 @@ document.addEventListener('keydown', function(e) {
 
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
+      
+      // حفظ معرف OneSignal عند تسجيل الدخول
+      if (window.OneSignal) {
+        window.OneSignal.getUserId().then(function(playerId) {
+          if (playerId) window.savePlayerIdToFirebase(playerId);
+        });
+      }
       
       if(currentProfileData.name) document.getElementById('custName').value = currentProfileData.name;
       if(currentProfileData.shopName) document.getElementById('shopName').value = currentProfileData.shopName;
