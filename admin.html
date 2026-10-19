@@ -1119,7 +1119,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
   // ==================== دالة إرسال الإشعار عبر OneSignal ====================
   async function sendOneSignalNotification(playerId, title, message) {
-    const appId = "YOUR_APP_ID_HERE"; // ⚠️ ضع App ID الخاص بك هنا (هذا ليس سرياً)
+    const appId = "YOUR_APP_ID_HERE"; // bbd1717d-8f66-4ad0-a61e-e6d27c2e7284
     const restApiKey = localStorage.getItem('ashour_onesignal_key'); // جلب المفتاح من ذاكرة المتصفح
 
     if (!restApiKey) {
