@@ -691,6 +691,7 @@ function toggleTokenVisibility() {
   if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
+/* ============================ إعدادات OneSignal ============================ */
 function saveOneSignalKey() {
   const key = document.getElementById('setOneSignalKey').value.trim();
   if (key) {
@@ -1155,12 +1156,24 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
   window.enableAdminNotifications = async function() {
     if (!("Notification" in window)) { alert("هذا المتصفح لا يدعم الإشعارات."); return; }
+    
+    // تفعيل الصوت (حيلة برمجية لتخطي حظر المتصفح)
+    try {
+      audioAlert.volume = 0.01;
+      await audioAlert.play();
+      audioAlert.pause();
+      audioAlert.currentTime = 0;
+      audioAlert.volume = 1;
+    } catch(e) { console.log("Audio context unlock failed", e); }
+
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
-      window.showToast('تم تفعيل الإشعارات بنجاح ✅');
+      window.showToast('تم تفعيل الإشعارات والصوت بنجاح ✅');
       document.getElementById('notifyBtn').innerHTML = '<i class="fas fa-check"></i> التنبيهات مفعلة';
       document.getElementById('notifyBtn').classList.replace('bg-indigo-600', 'bg-emerald-600');
-    } else { window.showToast('تم رفض الإشعارات', 'error'); }
+    } else { 
+      window.showToast('تم رفض الإشعارات', 'error'); 
+    }
   };
 
   const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
