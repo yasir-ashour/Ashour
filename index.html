@@ -26,11 +26,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "YOUR_APP_ID_HERE", // bbd1717d-8f66-4ad0-a61e-e6d27c2e7284
-      serviceWorkerPath: "./OneSignalSDKWorker.js", // تأكد من رفع هذا الملف في نفس المجلد
+      serviceWorkerPath: "./OneSignalSDKWorker.js",
       allowLocalhostAsSecureOrigin: true
     });
-
-    // محاولة جلب معرف المستخدم إذا كان مسجل دخول مسبقاً
     OneSignal.getUserId().then(function(userId) {
       if (userId && window.currentUser) {
         window.savePlayerIdToFirebase(userId);
@@ -167,6 +165,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-2">كتالوج منتجات مركز عاشور</span>
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white">أهلاً وسهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
   <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-3 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
+
+  <div id="storeRatingDisplay" class="hidden inline-flex items-center gap-2 bg-slate-950/60 border border-amber-500/30 rounded-full px-4 py-2 mb-4">
+    <span id="storeRatingStars" class="text-amber-400 text-lg">★★★★★</span>
+    <span id="storeRatingValue" class="text-white font-black text-lg">0.0</span>
+    <span class="text-slate-500 text-xs">|</span>
+    <span id="storeRatingCount" class="text-slate-400 text-xs">0 تقييم</span>
+  </div>
 
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative">
@@ -306,7 +311,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p class="text-sm">لم تقم بإضافة أي منتجات إلى المفضلة بعد.</p>
     </div>
 
-    <div id="appTabAddresses" class="hidden text-center py-16 text-slate-500">
+    <div id="tab-app-addresses" class="hidden text-center py-16 text-slate-500">
       <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marked-alt text-4xl text-slate-700"></i></div>
       <h3 class="text-xl font-bold text-white mb-2">لا توجد عناوين محفوظة</h3>
       <p class="text-sm">يمكنك إضافة عنوانك أثناء إتمام الطلب.</p>
@@ -361,6 +366,28 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <div class="pt-2 flex gap-2">
         <button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-save"></i> حفظ التعديلات</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🌟 نافذة تأكيد إتمام الطلب الجديدة 🌟 -->
+<div id="confirmOrderModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+    <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
+    <div class="p-6 text-center">
+      <div class="w-20 h-20 mx-auto rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mb-4 glow">
+        <i class="fas fa-shopping-basket text-4xl text-amber-400"></i>
+      </div>
+      <h3 class="text-2xl font-black text-white mb-2">تأكيد الطلب</h3>
+      <p class="text-slate-400 text-sm mb-6">هل أنت متأكد من إتمام الطلب وإرساله إلى مركز عاشور؟</p>
+    </div>
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
+      <button onclick="closeConfirmOrderModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
+        <i class="fas fa-times"></i> إلغاء
+      </button>
+      <button onclick="confirmSendOrder()" id="confirmOrderBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-emerald-900/50 flex items-center justify-center gap-2">
+        <i class="fas fa-check-double"></i> نعم، إتمام الطلب
+      </button>
     </div>
   </div>
 </div>
@@ -1024,7 +1051,7 @@ window.switchAppTab = function(tab) {
   const tabs = ['orders', 'favorites', 'addresses'];
   tabs.forEach(t => {
     const btn = document.getElementById('btnTab' + t.charAt(0).toUpperCase() + t.slice(1));
-    const content = document.getElementById('appTab' + t.charAt(0).toUpperCase() + t.slice(1));
+    const content = document.getElementById('tab-app-' + t);
     
     if (t === tab) {
       btn.className = 'flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 flex items-center justify-center gap-2';
@@ -1118,7 +1145,97 @@ window.openEditProfileModal = function() {
 
 window.closeEditProfileModal = function() {
   document.getElementById('editProfileModal').classList.add('hidden');
-};function openProduct(pName) {
+};
+
+// 🌟 دوال نافذة تأكيد إتمام الطلب 🌟
+window.sendOrder = function() {
+  if (!window.currentUser) {
+    showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
+    openAuthModal();
+    return;
+  }
+
+  var n = document.getElementById('custName').value.trim();
+  var a = document.getElementById('custAddr').value.trim();
+  if (!n || !a) { showToast('أدخل الاسم والعنوان', 'error'); return; }
+  var names = Object.keys(cart);
+  if (names.length === 0) { showToast('السلة فارغة', 'error'); return; }
+
+  // إظهار نافذة التأكيد
+  document.getElementById('confirmOrderModal').classList.remove('hidden');
+};
+
+window.closeConfirmOrderModal = function() {
+  document.getElementById('confirmOrderModal').classList.add('hidden');
+};
+
+window.confirmSendOrder = function() {
+  var btn = document.getElementById('confirmOrderBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+  btn.disabled = true;
+
+  var n = document.getElementById('custName').value.trim();
+  var s = document.getElementById('shopName').value.trim();
+  var a = document.getElementById('custAddr').value.trim();
+  
+  var date = new Date().toLocaleDateString('ar-SY', { 
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+    hour: '2-digit', minute: '2-digit' 
+  });
+
+  var msg = 'السلام عليكم ورحمه الله وبركاته\n\n';
+  msg += ' *📝 اريد ان اطلب طلب* \n\n';
+  
+  msg += '👤 *معلومات المستلم* :\n';
+  msg += '▫️ *الاسم:* ' + n + '\n';
+  msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
+  msg += '▫️ *العنوان:* ' + a + '\n\n';
+  
+  msg += '━━━━━━━━━━━━━━━\n';
+  msg += '📦 _تفاصيل الطلب:_ \n\n';
+
+  var total = 0;
+  var idx = 1;
+  var names = Object.keys(cart);
+  
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var details = [];
+    for (var flv in cart[name]) {
+      if (!cart[name].hasOwnProperty(flv)) continue;
+      var qty = cart[name][flv];
+      if (qty > 0) { 
+        details.push('  ( ' + flv + ' × ' + qty); 
+        total += qty; 
+      }
+    }
+    if (details.length > 0) {
+      msg += ' *' + idx + '*• *' + name + '*\n';
+      msg += details.join('\n') + '\n\n';
+      idx++;
+    }
+  }
+  
+  msg += '━━━━━━━━━━━━━━━\n\n';
+  msg += ' *🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n\n';
+  msg += '📅 تاريخ الطلب : ' + date + '\n\n\n';
+
+  if (typeof window.saveOrderToFirebase === 'function') {
+    window.saveOrderToFirebase(cart, n, s, a);
+  }
+
+  window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
+  
+  closeConfirmOrderModal();
+  
+  setTimeout(() => {
+    btn.innerHTML = '<i class="fas fa-check-double"></i> نعم، إتمام الطلب';
+    btn.disabled = false;
+  }, 1000);
+};
+
+// دوال التقييمات...
+function openProduct(pName) {
   var p = null;
   for (var i = 0; i < products.length; i++) {
     if (products[i].name === pName) { p = products[i]; break; }
@@ -1679,67 +1796,6 @@ function loadData() {
   });
 }
 
-function sendOrder() {
-  if (!window.currentUser) {
-    showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
-    openAuthModal();
-    return;
-  }
-
-  var n = document.getElementById('custName').value.trim();
-  var s = document.getElementById('shopName').value.trim();
-  var a = document.getElementById('custAddr').value.trim();
-  if (!n || !a) { showToast('أدخل الاسم والعنوان', 'error'); return; }
-  var names = Object.keys(cart);
-  if (names.length === 0) { showToast('السلة فارغة', 'error'); return; }
-
-  var date = new Date().toLocaleDateString('ar-SY', { 
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
-    hour: '2-digit', minute: '2-digit' 
-  });
-
-  var msg = 'السلام عليكم ورحمه الله وبركاته\n\n';
-  msg += ' *📝 اريد ان اطلب طلب* \n\n';
-  
-  msg += '👤 *معلومات المستلم* :\n';
-  msg += '▫️ *الاسم:* ' + n + '\n';
-  msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
-  msg += '▫️ *العنوان:* ' + a + '\n\n';
-  
-  msg += '━━━━━━━━━━━━━━━\n';
-  msg += '📦 _تفاصيل الطلب:_ \n\n';
-
-  var total = 0;
-  var idx = 1;
-  for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var details = [];
-    for (var flv in cart[name]) {
-      if (!cart[name].hasOwnProperty(flv)) continue;
-      var qty = cart[name][flv];
-      if (qty > 0) { 
-        details.push('  ( ' + flv + ' × ' + qty); 
-        total += qty; 
-      }
-    }
-    if (details.length > 0) {
-      msg += ' *' + idx + '*• *' + name + '*\n';
-      msg += details.join('\n') + '\n\n';
-      idx++;
-    }
-  }
-  
-  msg += '━━━━━━━━━━━━━━━\n\n';
-  msg += ' *🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n\n';
-  msg += '📅 تاريخ الطلب : ' + date + '\n\n\n';
-
-  if (typeof window.saveOrderToFirebase === 'function') {
-    window.saveOrderToFirebase(cart, n, s, a);
-  }
-
-  window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
-}
-
 function boot() {
   loadData().then(function() {
     if (!Array.isArray(products)) products = [];
@@ -1793,11 +1849,10 @@ document.addEventListener('keydown', function(e) {
     try { closeAddReview(); } catch(e) {}
     try { closeEditProfileModal(); } catch(e) {}
     try { closeAuthModal(); } catch(e) {}
+    try { closeConfirmOrderModal(); } catch(e) {}
   }
 });
-</script>
-
-<!-- سكربت Firebase للحسابات وقاعدة البيانات -->
+</script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1825,7 +1880,6 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  // دالة حفظ معرف OneSignal في قاعدة البيانات
   window.savePlayerIdToFirebase = async function(playerId) {
     if (!window.currentUser) return;
     try {
@@ -1992,7 +2046,6 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      // حفظ معرف OneSignal عند تسجيل الدخول
       if (window.OneSignal) {
         window.OneSignal.getUserId().then(function(playerId) {
           if (playerId) window.savePlayerIdToFirebase(playerId);
