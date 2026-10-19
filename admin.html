@@ -160,7 +160,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
   </div>
 
-  <!-- قسم إعدادات OneSignal الجديد -->
+  <!-- قسم إعدادات OneSignal -->
   <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-bell text-indigo-400"></i> إعدادات إشعارات OneSignal
@@ -1175,10 +1175,28 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
         if (!isFirstLoad && !knownOrderIds.has(change.doc.id)) {
           audioAlert.play().catch(e => console.log('Audio blocked by browser'));
           if (Notification.permission === "granted") {
-            new Notification("طلب جديد في مركز عاشور!", {
-              body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
-              icon: "logo.png"
-            });
+            try {
+              if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+                navigator.serviceWorker.ready.then(function(registration) {
+                  registration.showNotification("طلب جديد في مركز عاشور!", {
+                    body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
+                    icon: "logo.png",
+                    vibrate: [200, 100, 200],
+                    requireInteraction: true
+                  });
+                });
+              } else {
+                new Notification("طلب جديد في مركز عاشور!", {
+                  body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
+                  icon: "logo.png"
+                });
+              }
+            } catch(e) {
+              console.error("Notification error:", e);
+            }
+          } else {
+            console.warn("صلاحية الإشعارات غير ممنوحة. الحالة الحالية:", Notification.permission);
+            window.showToast("طلب جديد وصل! (لكن الإشعارات غير مفعلة)", "error");
           }
         }
         knownOrderIds.add(change.doc.id);
