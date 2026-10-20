@@ -29,11 +29,19 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       serviceWorkerPath: "./OneSignalSDKWorker.js",
       allowLocalhostAsSecureOrigin: true
     });
-    OneSignal.getUserId().then(function(userId) {
-      if (userId && window.currentUser) {
-        window.savePlayerIdToFirebase(userId);
+
+    // ✅ الإصلاح #3 (جزء 1): استخدام PushSubscription بدلاً من getUserId() (v16)
+    OneSignal.User.PushSubscription.addEventListener('change', function(event) {
+      const playerId = event.current && event.current.id;
+      if (playerId && window.currentUser) {
+        window.savePlayerIdToFirebase(playerId);
       }
     });
+
+    const currentId = OneSignal.User.PushSubscription.id;
+    if (currentId && window.currentUser) {
+      window.savePlayerIdToFirebase(currentId);
+    }
   });
 </script>
 </head>
@@ -94,7 +102,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </a>
     </div>
   </div>
-</header><div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+</header>
+
+<div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
@@ -154,9 +164,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p id="authError" class="text-rose-500 text-xs text-center mt-4 hidden"></p>
     </div>
   </div>
-</div>
-
-<div id="catalogView" class="w-full flex flex-col flex-grow">
+</div><div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-4 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
   <div class="w-80 h-80 sm:w-[28rem] sm:h-[28rem] max-w-full mx-auto mb-1 glow cursor-pointer" onclick="showCatalog()">
@@ -226,7 +234,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p class="text-xl">لا توجد منتجات</p>
     </div>
   </section>
-</div><div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
+</div>
+
+<div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
       <div class="flex items-center gap-3">
@@ -260,7 +270,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- صفحة الحساب الشخصي الكاملة -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
@@ -370,7 +379,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- نافذة تأكيد إتمام الطلب -->
 <div id="confirmOrderModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
@@ -464,9 +472,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
   <p class="text-xs text-slate-500">جميع الحقوق محفوظة 2026</p>
 </div>
-</footer>
-
-<script>var orderWa = "963982572810";
+</footer><script>
+var orderWa = "963982572810";
 var inquiryWa = "963959248901";
 var products = [];
 var cart = {};
@@ -1147,7 +1154,6 @@ window.closeEditProfileModal = function() {
   document.getElementById('editProfileModal').classList.add('hidden');
 };
 
-// 🌟 دوال نافذة تأكيد إتمام الطلب 🌟
 window.sendOrder = function() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
@@ -1168,16 +1174,16 @@ window.closeConfirmOrderModal = function() {
   document.getElementById('confirmOrderModal').classList.add('hidden');
 };
 
-window.confirmSendOrder = function() {
+// ✅ الإصلاحات #4 (انتظار حفظ Firebase) + #5 (تفريغ السلة)
+window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
   btn.disabled = true;
 
-  // 🔔 تشغيل صوت النجاح للزبون
   try {
     var successSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); 
     successSound.volume = 0.6;
-    successSound.play().catch(e => console.log('Audio blocked', e));
+    successSound.play().catch(function(e) { console.log('Audio blocked', e); });
   } catch(e) {}
 
   var n = document.getElementById('custName').value.trim();
@@ -1226,19 +1232,41 @@ window.confirmSendOrder = function() {
   msg += ' *🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n\n';
   msg += '📅 تاريخ الطلب : ' + date + '\n\n\n';
 
+  // ✅ الإصلاح #4: انتظار حفظ الطلب في Firebase قبل فتح واتساب
+  var savedOk = true;
   if (typeof window.saveOrderToFirebase === 'function') {
-    window.saveOrderToFirebase(cart, n, s, a);
+    try {
+      await window.saveOrderToFirebase(cart, n, s, a);
+    } catch (saveErr) {
+      console.error('فشل حفظ الطلب في Firebase:', saveErr);
+      savedOk = false;
+    }
+  }
+
+  if (!savedOk) {
+    showToast('تم إرسال الطلب عبر واتساب، لكن تعذّر تسجيله. تأكد من الاتصال', 'error');
+  } else {
+    showToast('تم إرسال طلبك بنجاح ✅');
   }
 
   window.open('https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg), '_blank');
   
   closeConfirmOrderModal();
+
+  // ✅ الإصلاح #5: تفريغ السلة بعد الإرسال
+  cart = {};
+  saveCart();
+  updateCart();
+  selections = {};
+  document.querySelectorAll('[id^="sel-"]').forEach(function(el) { el.innerText = '0'; });
   
-  setTimeout(() => {
+  setTimeout(function() {
     btn.innerHTML = '<i class="fas fa-check-double"></i> نعم، إتمام الطلب';
     btn.disabled = false;
   }, 1000);
-};function openProduct(pName) {
+};
+
+function openProduct(pName) {
   var p = null;
   for (var i = 0; i < products.length; i++) {
     if (products[i].name === pName) { p = products[i]; break; }
@@ -1283,9 +1311,12 @@ window.confirmSendOrder = function() {
       tImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
       thumb.appendChild(tImg);
       
+      // ✅ الإصلاح #6: الحفاظ على rotateClass عند تبديل الصور
       thumb.onclick = function() {
-        document.getElementById('mainProductImage').src = imgUrl(url);
-        Array.from(thumbContainer.children).forEach(c => c.classList.remove('border-amber-500'));
+        var mainImg = document.getElementById('mainProductImage');
+        mainImg.src = imgUrl(url);
+        mainImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
+        Array.from(thumbContainer.children).forEach(function(c) { c.classList.remove('border-amber-500'); });
         thumb.classList.add('border-amber-500');
       };
       
@@ -1855,9 +1886,7 @@ document.addEventListener('keydown', function(e) {
     try { closeConfirmOrderModal(); } catch(e) {}
   }
 });
-</script>
-
-<!-- سكربت Firebase للحسابات وقاعدة البيانات -->
+</script><!-- سكربت Firebase للحسابات وقاعدة البيانات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -2051,10 +2080,10 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      if (window.OneSignal) {
-        window.OneSignal.getUserId().then(function(playerId) {
-          if (playerId) window.savePlayerIdToFirebase(playerId);
-        });
+      // ✅ الإصلاح #3 (جزء 2): استخدام PushSubscription بدلاً من getUserId() (v16)
+      if (window.OneSignal && window.OneSignal.User) {
+        const playerId = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
+        if (playerId) window.savePlayerIdToFirebase(playerId);
       }
       
       if(currentProfileData.name) document.getElementById('custName').value = currentProfileData.name;
@@ -2170,6 +2199,7 @@ document.addEventListener('keydown', function(e) {
       console.log("Order saved to Firebase");
     } catch (e) { 
       console.error("Error saving order:", e); 
+      throw e;
     }
   };
 
@@ -2190,22 +2220,54 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  // ✅ الإصلاح #2: دمج تقييمات Firebase مع التقييمات المحلية
   window.fetchReviewsFromFirebase = async function() {
     try {
+      // 1) احفظ التقييمات المحلية (من catalog-data.js) أولاً
+      const localReviews = {};
+      products.forEach(p => {
+        localReviews[p.name] = Array.isArray(p.reviews) ? [...p.reviews] : [];
+      });
+
+      // 2) اجلب التقييمات من Firebase
       const q = query(collection(db, "reviews"));
       const querySnapshot = await getDocs(q);
-      
+
+      // 3) امسح التقييمات الحالية (من الكتالوج) واجمع من Firebase فقط
       products.forEach(p => p.reviews = []);
-      
-      querySnapshot.forEach((doc) => {
-        const rev = doc.data();
+      querySnapshot.forEach((docSnap) => {
+        const rev = docSnap.data();
         const p = products.find(prod => prod.name === rev.productName);
-        if(p) {
-          p.reviews.push({ stars: rev.stars, name: rev.userName, comment: rev.comment, date: rev.date });
+        if (p) {
+          p.reviews.push({ 
+            stars: rev.stars, 
+            name: rev.userName || 'عميل', 
+            comment: rev.comment || '', 
+            date: rev.date || '' 
+          });
         }
       });
 
-      displayProducts(products);
+      // 4) ادمج التقييمات المحلية (بدون تكرار)
+      products.forEach(p => {
+        const locals = localReviews[p.name] || [];
+        const existing = new Set(p.reviews.map(r => `${r.name}|${r.stars}|${r.comment}|${r.date}`));
+        locals.forEach(r => {
+          const key = `${r.name}|${r.stars}|${r.comment}|${r.date}`;
+          if (!existing.has(key)) {
+            p.reviews.push(r);
+            existing.add(key);
+          }
+        });
+      });
+
+      // 5) أعد رسم المنتجات (لتحديث شارات التقييمات في البطاقات)
+      if (typeof displayProducts === 'function') {
+        displayProducts(products);
+      }
+      if (typeof updateStoreRatingDisplay === 'function') {
+        updateStoreRatingDisplay();
+      }
     } catch(e) {
       console.error("Error fetching reviews:", e);
     }
