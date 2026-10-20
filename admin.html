@@ -144,9 +144,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الشعار</label><input type="text" id="setLogoUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"><img id="logoPreview" class="mt-3 w-20 h-20 rounded-full object-cover border-2 border-amber-500/40" onerror="this.style.display='none'"></div>
     <div class="border-t border-slate-800 pt-5">
       <h3 class="text-base font-black text-white mb-3 flex items-center gap-2"><i class="fab fa-whatsapp text-emerald-400"></i> أرقام الواتساب</h3>
+      <p class="text-[11px] text-slate-500 mb-2"><i class="fas fa-info-circle"></i> أدخل الأرقام بالأرقام فقط (بدون + أو مسافات) — مثال: 963982572810</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم استقبال الطلبات</label><input type="text" id="setOrderWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم الاستفسار</label><input type="text" id="setInquiryWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono"></div>
+        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم استقبال الطلبات</label><input type="text" id="setOrderWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono" inputmode="numeric"></div>
+        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رقم الاستفسار</label><input type="text" id="setInquiryWa" placeholder="9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono" inputmode="numeric"></div>
       </div>
     </div>
     <div class="border-t border-slate-800 pt-5"><label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان المتجر</label><input type="text" id="setAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
@@ -196,264 +197,8 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
-</div><div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
-  <div class="flex items-center justify-between mb-5">
-    <h2 class="text-xl font-black text-white flex items-center gap-2">
-      <i class="fas fa-shopping-bag text-amber-400"></i> إدارة الطلبات
-    </h2>
-    <button onclick="window.loadOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
-      <i class="fas fa-sync-alt"></i> تحديث
-    </button>
-  </div>
-  <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="col-span-full text-center py-10 text-slate-500">
-      <i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i>
-      <p>جاري تحميل الطلبات...</p>
-    </div>
-  </div>
-</div>
-
-<div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
-  <div class="flex items-center justify-between mb-5">
-    <h2 class="text-xl font-black text-white flex items-center gap-2">
-      <i class="fas fa-users text-amber-400"></i> سجل العملاء
-    </h2>
-    <button onclick="loadCustomersAndOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
-      <i class="fas fa-sync-alt"></i> تحديث البيانات
-    </button>
-  </div>
-  <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-</div>
-
-<div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16 space-y-5">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-    <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-file-export text-emerald-400"></i> تصدير يدوي</h2>
-    <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-download"></i> تنزيل ملف JS</button>
-  </div>
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-    <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-file-import text-amber-400"></i> استيراد البيانات</h2>
-    <input type="file" id="importFile" accept=".js,.json" class="hidden" onchange="importData(event)">
-    <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-upload"></i> اختيار ملف للاستيراد</button>
-  </div>
-</div>
-
-<!-- نافذة تعديل/إضافة منتج -->
-<div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
-    <div class="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800">
-      <h2 id="modalTitle" class="text-lg sm:text-xl font-black gold-gradient-text">تعديل منتج</h2>
-      <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition"><i class="fas fa-times"></i></button>
-    </div>
-
-    <div class="p-4 sm:p-5 space-y-4 max-h-[70vh] overflow-y-auto">
-      <input type="hidden" id="fPid">
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="md:col-span-2"><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المنتج <span class="text-rose-500">*</span></label><input type="text" id="fName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الفئة <span class="text-rose-500">*</span></label><input type="text" id="fCategory" list="categoriesList" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"><datalist id="categoriesList"></datalist></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">السعر</label><input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 bg-slate-950/40 p-3 rounded-xl border border-slate-800">
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم الشركة</label><input type="text" id="fCompany" placeholder="مثال: شركة نستله" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">سعر المستهلك</label><input type="text" id="fConsumerPrice" placeholder="مثال: 5000 ل.س" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد القطع بالعلبة</label><input type="text" id="fPiecesPerBox" placeholder="مثال: 24 قطعة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد العلب بالكرتونة</label><input type="text" id="fBoxesPerCarton" placeholder="مثال: 12 علبة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-      </div>
-
-      <div class="border-t border-slate-800 pt-4 mt-4 bg-slate-900/50 p-4 rounded-2xl">
-        <label class="block text-slate-300 font-bold mb-3 text-base"><i class="fas fa-images text-amber-400"></i> إدارة صور المنتج</label>
-        
-        <div class="flex flex-col sm:flex-row gap-4 mb-4">
-          <div class="w-full sm:w-32 h-32 rounded-2xl border-2 border-amber-500/50 bg-slate-950 overflow-hidden flex items-center justify-center flex-shrink-0 relative group">
-            <img id="fImagePreview" class="w-full h-full object-cover hidden" alt="معاينة">
-            <div id="fImagePlaceholder" class="text-center text-slate-600 p-4"><i class="fas fa-image text-4xl mb-2"></i><p class="text-xs">الصورة الرئيسية</p></div>
-            <button type="button" onclick="removeImage()" class="absolute inset-0 bg-rose-600/80 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition"><i class="fas fa-trash-alt text-xl"></i></button>
-          </div>
-
-          <div class="flex-grow space-y-2">
-            <input type="file" id="fImageFile" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
-            <button type="button" onclick="document.getElementById('fImageFile').click()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
-              <i class="fas fa-camera"></i> اختيار الصورة الرئيسية
-            </button>
-            
-            <input type="file" id="fGalleryFiles" accept="image/*" multiple class="hidden" onchange="handleGalleryUpload(event)">
-            <button type="button" onclick="document.getElementById('fGalleryFiles').click()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
-              <i class="fas fa-layer-group"></i> رفع صور إضافية (متعدد)
-            </button>
-
-            <div class="flex gap-2">
-              <input type="text" id="fImage" oninput="previewImage()" placeholder="أو ألصق رابط الصورة الرئيسية هنا..." class="flex-grow bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 text-xs font-mono">
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-4 border-t border-slate-800 pt-3">
-          <p class="text-slate-400 text-xs mb-2">تصحيح اتجاه الصور المعروضة:</p>
-          <div class="flex gap-2 flex-wrap">
-            <button type="button" onclick="setRotation('')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="">0°</button>
-            <button type="button" onclick="setRotation('rot-90')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-90">90°</button>
-            <button type="button" onclick="setRotation('rot-180')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-180">180°</button>
-            <button type="button" onclick="setRotation('rot-270')" class="rot-btn bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700" data-rot="rot-270">270°</button>
-          </div>
-        </div>
-
-        <div class="border-t border-slate-800 pt-3">
-          <label class="block text-slate-300 font-bold mb-2 text-xs">صور المعرض الإضافية (اضغط على الصورة لحذفها)</label>
-          <div id="galleryContainer" class="flex flex-wrap gap-2 min-h-[60px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
-        </div>
-        
-        <p id="imageSizeInfo" class="hidden text-xs text-slate-400 mt-2"></p>
-      </div>
-
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الوصف</label><textarea id="fDescription" rows="3" placeholder="وصف مختصر..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea></div>
-
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-sm">النكهات (اختياري)</label>
-        <div id="flavorsContainer" class="flex flex-wrap gap-2 mb-2 min-h-[40px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
-        <div class="flex gap-2">
-          <input type="text" id="newFlavorInput" placeholder="أضف نكهة..." onkeydown="if(event.key==='Enter'){event.preventDefault();addFlavor();}" class="flex-grow bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 text-sm">
-          <button type="button" onclick="addFlavor()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700"><i class="fas fa-plus"></i> إضافة</button>
-        </div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-800">
-        <label class="block text-slate-300 font-bold mb-3 text-sm"><i class="fas fa-fire text-rose-400"></i> التميز والعروض</label>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="bg-rose-950/30 border-2 border-rose-500/40 rounded-xl p-3">
-            <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="fHasOffer" onchange="toggleOfferFields()" class="w-5 h-5 accent-rose-500">
-              <span class="text-rose-300 font-bold text-sm flex-1"><i class="fas fa-fire"></i> عرض خاص</span>
-            </label>
-            <div id="offerFields" class="hidden mt-3">
-              <label class="block text-slate-300 font-bold mb-1.5 text-xs">السعر القديم <span class="text-rose-500">*</span></label>
-              <input type="text" id="fOldPrice" placeholder="مثال: 5000 ل.س" class="w-full bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-rose-500 text-sm">
-            </div>
-          </div>
-          <div class="bg-emerald-950/30 border-2 border-emerald-500/40 rounded-xl p-3">
-            <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" id="fIsNew" class="w-5 h-5 accent-emerald-500">
-              <span class="text-emerald-300 font-bold text-sm flex-1"><i class="fas fa-sparkles"></i> منتج جديد</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-800">
-        <label class="block text-slate-300 font-bold mb-2 text-sm">حالة المنتج</label>
-        <div class="grid grid-cols-1 gap-2">
-          <label class="flex items-center gap-3 bg-emerald-950/40 border-2 border-emerald-500/40 p-3 rounded-xl cursor-pointer"><input type="radio" name="fStatus" value="available" class="w-5 h-5 accent-emerald-500" checked><span class="text-emerald-300 font-bold text-sm flex-1"><i class="fas fa-check-circle ml-1"></i> متوفر</span></label>
-          <label class="flex items-center gap-3 bg-amber-950/40 border-2 border-amber-500/40 p-3 rounded-xl cursor-pointer"><input type="radio" name="fStatus" value="lowStock" class="w-5 h-5 accent-amber-500"><span class="text-amber-300 font-bold text-sm flex-1"><i class="fas fa-exclamation-triangle ml-1"></i> كمية محدودة</span></label>
-          <label class="flex items-center gap-3 bg-rose-950/40 border-2 border-rose-500/40 p-3 rounded-xl cursor-pointer"><input type="radio" name="fStatus" value="unavailable" class="w-5 h-5 accent-rose-500"><span class="text-rose-300 font-bold text-sm flex-1"><i class="fas fa-times-circle ml-1"></i> غير متوفر</span></label>
-        </div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-800">
-        <div class="flex items-center justify-between mb-3">
-          <label class="block text-slate-300 font-bold text-sm"><i class="fas fa-star text-amber-400"></i> تقييمات العملاء</label>
-          <span id="reviewsCountBadge" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30 font-bold">0 تقييم</span>
-        </div>
-        <div id="reviewsList" class="space-y-2 mb-3 max-h-60 overflow-y-auto pr-1"></div>
-        <button type="button" onclick="openAddReviewForm()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-plus"></i> إضافة تقييم يدويًا</button>
-        <div id="addReviewForm" class="hidden bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mt-3 space-y-3">
-          <p class="text-amber-400 font-bold text-xs flex items-center gap-1.5"><i class="fas fa-pen"></i> تقييم جديد</p>
-          <div>
-            <label class="block text-slate-400 text-xs mb-1.5">التقييم</label>
-            <div id="reviewStars" class="flex gap-1 justify-center" dir="ltr">
-              <button type="button" data-star="1" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
-              <button type="button" data-star="2" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
-              <button type="button" data-star="3" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
-              <button type="button" data-star="4" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
-              <button type="button" data-star="5" class="review-star w-9 h-9 rounded-lg bg-slate-800 text-slate-600 text-lg transition hover:bg-slate-700"><i class="fas fa-star"></i></button>
-            </div>
-          </div>
-          <div><label class="block text-slate-400 text-xs mb-1.5">الاسم (اختياري)</label><input type="text" id="reviewName" placeholder="مثال: أحمد" maxlength="30" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 text-sm"></div>
-          <div><label class="block text-slate-400 text-xs mb-1.5">التعليق (اختياري)</label><textarea id="reviewComment" rows="2" placeholder="اكتب رأيك..." maxlength="200" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 text-sm"></textarea></div>
-          <div class="flex gap-2">
-            <button type="button" onclick="closeAddReviewForm()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-xl text-xs">إلغاء</button>
-            <button type="button" onclick="saveReview()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2 rounded-xl text-xs"><i class="fas fa-save"></i> حفظ</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex justify-between items-center p-4 sm:p-5 border-t border-slate-800 gap-3 flex-wrap">
-      <button type="button" onclick="deleteProductFromModal()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-trash-alt"></i> حذف المنتج</button>
-      <div class="flex gap-2">
-        <button onclick="closeProductModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm">إلغاء</button>
-        <button onclick="saveProduct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-save"></i> حفظ المنتج</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
-    <div class="h-1.5 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500"></div>
-    <div class="p-6 text-center">
-      <div class="w-20 h-20 mx-auto rounded-full bg-rose-500/10 border-2 border-rose-500/40 flex items-center justify-center mb-4" style="animation: iconPulse 1.5s ease-in-out infinite;"><i class="fas fa-trash-alt text-4xl text-rose-400"></i></div>
-      <h3 class="text-2xl font-black text-white mb-2">تأكيد الحذف</h3>
-      <p class="text-slate-400 text-sm mb-4">هل أنت متأكد من حذف هذا المنتج؟</p>
-      <div class="bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mb-3">
-        <p class="text-xs text-slate-500 mb-1">المنتج</p>
-        <p id="confirmProductName" class="text-amber-400 font-black text-lg">اسم المنتج</p>
-      </div>
-      <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-3 flex items-start gap-2 text-right">
-        <i class="fas fa-exclamation-triangle text-rose-400 mt-0.5"></i>
-        <p class="text-xs text-rose-300 leading-relaxed"><span class="font-bold">تحذير:</span> لا يمكن التراجع عن هذا الإجراء.</p>
-      </div>
-    </div>
-    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
-      <button onclick="resolveConfirm(false)" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-times"></i> إلغاء</button>
-      <button onclick="resolveConfirm(true)" class="flex-1 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-rose-900/50 flex items-center justify-center gap-2"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
-    </div>
-  </div>
-</div>
-
-<!-- نافذة إدخال المبلغ -->
-<div id="deliveryAmountModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
-    <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"></div>
-    <div class="p-6 text-center">
-      <div class="w-20 h-20 mx-auto rounded-full bg-emerald-500/10 border-2 border-emerald-500/40 flex items-center justify-center mb-4">
-        <i class="fas fa-money-bill-wave text-4xl text-emerald-400"></i>
-      </div>
-      <h3 class="text-2xl font-black text-white mb-2">تم التسليم بنجاح</h3>
-      <p class="text-slate-400 text-sm mb-5">أدخل المبلغ الذي تم استلامه من الزبون بالليرة السورية</p>
-      
-      <div class="relative mb-2">
-        <input type="number" id="deliveryAmountInput" placeholder="مثال: 50000" class="w-full bg-slate-950 text-emerald-400 text-center text-2xl font-black p-4 rounded-2xl border-2 border-slate-700 focus:outline-none focus:border-emerald-500">
-        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">ل.س</span>
-      </div>
-      <p id="deliveryAmountError" class="text-rose-500 text-xs mb-4 hidden">يرجى إدخال المبلغ أولاً</p>
-    </div>
-    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
-      <button onclick="closeDeliveryModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-times"></i> إلغاء</button>
-      <button onclick="confirmDelivery()" id="confirmDeliveryBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-emerald-900/50 flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> تأكيد المبلغ</button>
-    </div>
-  </div>
-</div>
-
-<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p id="toastMsg" class="text-sm font-bold"></p></div>
-
-<div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
-  <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 text-center max-w-sm">
-    <i class="fas fa-spinner fa-spin text-4xl text-amber-400 mb-3"></i>
-    <p id="uploadStatusText" class="text-white font-bold">جاري معالجة الصورة...</p>
-    <p class="text-slate-400 text-xs mt-1">ضغط + رفع إلى السحابة</p>
-  </div>
-</div>
-
-<div id="publishOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
-  <div class="bg-slate-900 border-2 border-sky-500 rounded-2xl p-6 text-center max-w-sm">
-    <i class="fas fa-cloud-upload-alt text-4xl text-sky-400 mb-3 animate-pulse"></i>
-    <p id="publishStatusText" class="text-white font-bold">جاري النشر...</p>
-    <p class="text-slate-400 text-xs mt-1">لا تغلق الصفحة</p>
-  </div>
-</div>
-</div><!-- /adminApp -->
-
-<script>/* ============================ الإعدادات والمتغيرات ============================ */
+</div><script>
+/* ============================ الإعدادات والمتغيرات ============================ */
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const MAX_LOGIN_ATTEMPTS = 5;
@@ -469,6 +214,7 @@ let _confirmResolver = null;
 let _idleTimer = null;
 let currentReviews = [];
 let currentReviewStars = 0;
+let currentProductName = null; // ✨ جديد: لربط التقييمات بـ Firebase
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw-admin.js')
@@ -824,7 +570,16 @@ function renderSettingsInputs() {
   if(el) {
     el.addEventListener('input', () => {
       const map = { setStoreName: 'storeName', setLogoUrl: 'logoUrl', setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp', setAddress: 'address', setMapUrl: 'mapUrl', setPassword: 'password', setGithubUser: 'githubUser', setGithubRepo: 'githubRepo', setGithubBranch: 'githubBranch' };
-      catalogData.settings[map[id]] = el.value;
+      
+      // ✨ التعديل C: تطبيع أرقام الواتساب (أرقام فقط)
+      if (id === 'setOrderWa' || id === 'setInquiryWa') {
+        const cleaned = el.value.replace(/[^\d]/g, '');
+        if (cleaned !== el.value) el.value = cleaned;
+        catalogData.settings[map[id]] = cleaned;
+      } else {
+        catalogData.settings[map[id]] = el.value;
+      }
+      
       if (id === 'setLogoUrl') { const logo = document.getElementById('logoPreview'); logo.src = el.value; logo.style.display = 'block'; }
       persist();
     });
@@ -875,11 +630,15 @@ function renderStats() {
   document.getElementById('statAvailable').innerText = all.filter(p => p.available !== false && !p.lowStock).length;
   document.getElementById('statLow').innerText = all.filter(p => p.lowStock && p.available !== false).length;
   document.getElementById('statUnavailable').innerText = all.filter(p => p.available === false).length;
-}function setProductStatus(status) { document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); }); }
+}
+
+function setProductStatus(status) { document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); }); }
 function getProductStatus() { const checked = document.querySelector('input[name="fStatus"]:checked'); return checked ? checked.value : 'available'; }
 function openProductModal(pid = null) {
   const modal = document.getElementById('productModal');
   editingFlavors = []; currentImageData = ''; currentGallery = []; currentReviews = []; currentReviewStars = 0;
+  currentProductName = null; // ✨ reset
+
   document.getElementById('fImage').value = ''; document.getElementById('fImagePreview').src = ''; document.getElementById('fImagePreview').classList.add('hidden');
   document.getElementById('fImagePlaceholder').classList.remove('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden');
   document.getElementById('addReviewForm').classList.add('hidden'); document.getElementById('offerFields').classList.add('hidden');
@@ -894,6 +653,7 @@ function openProductModal(pid = null) {
     setProductStatus('available'); setRotation(''); renderReviews();
   } else {
     const p = catalogData.products[pid]; if (!p) return;
+    currentProductName = p.name; // ✨
     document.getElementById('modalTitle').innerText = 'تعديل: ' + p.name;
     document.getElementById('fPid').value = pid; document.getElementById('fName').value = p.name || ''; document.getElementById('fCategory').value = p.category || '';
     document.getElementById('fPrice').value = p.price || 'التواصل مع المبيعات'; document.getElementById('fDescription').value = p.description || '';
@@ -903,17 +663,30 @@ function openProductModal(pid = null) {
     document.getElementById('fPiecesPerBox').value = p.piecesPerBox || ''; document.getElementById('fBoxesPerCarton').value = p.boxesPerCarton || '';
     currentGallery = Array.isArray(p.images) ? [...p.images] : []; renderGalleryImages();
     if (p.available === false) setProductStatus('unavailable'); else if (p.lowStock) setProductStatus('lowStock'); else setProductStatus('available');
-    editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : []; currentReviews = Array.isArray(p.reviews) ? [...p.reviews] : [];
+    editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
+    
+    // تحميل التقييمات المحلية (legacy) من الكتالوج
+    currentReviews = Array.isArray(p.reviews) ? p.reviews.map(r => ({ ...r, _source: 'local' })) : [];
+    
     setRotation(p.rotateClass || '');
     if (p.image) {
       currentImageData = p.image; const preview = document.getElementById('fImagePreview');
       preview.src = p.image; preview.classList.remove('hidden'); document.getElementById('fImagePlaceholder').classList.add('hidden'); document.getElementById('fImage').value = p.image;
     }
     renderReviews();
+    
+    // ✨ جلب تلقائي للتقييمات من السحابة بعد فتح المودال
+    setTimeout(() => {
+      if (currentProductName === p.name) refreshReviewsFromCloud();
+    }, 400);
   }
   renderFlavors(); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
 }
-function closeProductModal() { document.getElementById('productModal').classList.add('hidden'); document.body.style.overflow = ''; }
+function closeProductModal() { 
+  document.getElementById('productModal').classList.add('hidden'); 
+  document.body.style.overflow = ''; 
+  currentProductName = null; // ✨
+}
 function previewImage() {
   const url = document.getElementById('fImage').value.trim(); const preview = document.getElementById('fImagePreview'); const placeholder = document.getElementById('fImagePlaceholder');
   if (url) { currentImageData = url; preview.src = url; preview.classList.remove('hidden'); placeholder.classList.add('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden'); }
@@ -965,15 +738,83 @@ function updateReviewStars(count) {
     else { btn.classList.remove('active'); btn.classList.add('bg-slate-800', 'text-slate-600'); }
   });
 }
-function saveReview() {
+
+// ✨ التعديل B: حفظ التقييم في Firebase + محلياً
+async function saveReview() {
   if (currentReviewStars === 0) { showToast('يرجى اختيار عدد النجوم', 'error'); return; }
   const name = document.getElementById('reviewName').value.trim() || 'عميل';
   const comment = document.getElementById('reviewComment').value.trim();
-  currentReviews.push({ name: name, stars: currentReviewStars, comment: comment, date: new Date().toISOString().slice(0, 10) });
+  
+  const reviewObj = { name, stars: currentReviewStars, comment, date: new Date().toISOString().slice(0, 10), _source: 'cloud' };
+  
+  if (currentProductName && typeof window.addReviewToFirebase === 'function') {
+    try {
+      const docId = await window.addReviewToFirebase(currentProductName, currentReviewStars, name, comment);
+      if (docId) reviewObj._docId = docId;
+    } catch (e) {
+      console.warn('فشل حفظ التقييم في السحابة:', e);
+      reviewObj._source = 'local';
+      showToast('تعذّر الحفظ في السحابة — سيُحفظ محلياً فقط', 'error');
+    }
+  } else {
+    reviewObj._source = 'local';
+  }
+  
+  currentReviews.push(reviewObj);
   renderReviews();
   closeAddReviewForm();
   showToast('تمت إضافة التقييم');
 }
+
+// ✨ التعديل B: حذف التقييم من Firebase + محلياً
+async function removeReview(i) {
+  const rev = currentReviews[i];
+  if (!rev) return;
+  
+  if (rev._docId && typeof window.deleteReviewFromFirebase === 'function') {
+    try {
+      await window.deleteReviewFromFirebase(rev._docId);
+    } catch (e) {
+      console.warn('فشل حذف التقييم من السحابة:', e);
+      showToast('تعذّر حذف التقييم من السحابة', 'error');
+      return;
+    }
+  }
+  currentReviews.splice(i, 1);
+  renderReviews();
+  showToast('تم حذف التقييم');
+}
+
+// ✨ التعديل B: جلب التقييمات من السحابة
+async function refreshReviewsFromCloud() {
+  if (!currentProductName) { showToast('احفظ المنتج أولاً لجلب التقييمات', 'error'); return; }
+  if (typeof window.fetchProductReviewsFromCloud !== 'function') { showToast('خدمة السحابة غير جاهزة', 'error'); return; }
+  
+  showToast('جاري جلب التقييمات...');
+  try {
+    const cloudRevs = await window.fetchProductReviewsFromCloud(currentProductName);
+    // حذف التقييمات السحابية القديمة (المحمّلة سابقاً) والإبقاء على المحلية
+    currentReviews = currentReviews.filter(r => !r._docId);
+    // إضافة السحابية الجديدة
+    cloudRevs.forEach(cr => {
+      currentReviews.push({
+        name: cr.userName || 'عميل',
+        stars: cr.stars,
+        comment: cr.comment || '',
+        date: cr.date || '',
+        _source: 'cloud',
+        _docId: cr.id
+      });
+    });
+    renderReviews();
+    showToast(`تم جلب ${cloudRevs.length} تقييم من السحابة`);
+  } catch (e) {
+    console.error('فشل جلب التقييمات:', e);
+    showToast('تعذّر جلب التقييمات', 'error');
+  }
+}
+window.refreshReviewsFromCloud = refreshReviewsFromCloud;
+
 function renderReviews() {
   const container = document.getElementById('reviewsList');
   const badge = document.getElementById('reviewsCountBadge');
@@ -985,16 +826,18 @@ function renderReviews() {
   }
   container.innerHTML = currentReviews.map((r, i) => {
     const stars = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+    const sourceBadge = r._docId 
+      ? '<span class="text-[9px] text-sky-400 bg-sky-500/10 border border-sky-500/30 px-1.5 py-0.5 rounded"><i class="fas fa-cloud"></i> سحابة</span>' 
+      : '<span class="text-[9px] text-slate-400 bg-slate-800 border border-slate-600 px-1.5 py-0.5 rounded"><i class="fas fa-hdd"></i> محلي</span>';
     return `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-start gap-2">
         <div class="flex-grow min-w-0">
-          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${r.date}</span></div>
+          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${r.date}</span>${sourceBadge}</div>
           ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
         </div>
         <button type="button" onclick="removeReview(${i})" class="w-7 h-7 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-times text-xs"></i></button>
       </div>`;
   }).join('');
 }
-function removeReview(i) { currentReviews.splice(i, 1); renderReviews(); }
 
 function saveProduct() {
   const name = document.getElementById('fName').value.trim(); const category = document.getElementById('fCategory').value.trim();
@@ -1004,12 +847,19 @@ function saveProduct() {
   const hasOffer = document.getElementById('fHasOffer').checked; const oldPrice = document.getElementById('fOldPrice').value.trim();
   if (hasOffer && !oldPrice) { showToast('يرجى إدخال السعر القديم للعرض', 'error'); return; }
   const status = getProductStatus();
+  
+  // ✨ التعديل B: التقييمات المحلية فقط تُحفظ في الكتالوج (السحابية تُجلب عند العرض)
+  const localReviewsOnly = currentReviews
+    .filter(r => !r._docId)
+    .map(r => { const o = { ...r }; delete o._source; delete o._docId; return o; });
+  
   const data = {
     name, category, price: document.getElementById('fPrice').value.trim() || 'التواصل مع المبيعات',
     image: currentImageData, description: document.getElementById('fDescription').value.trim(),
     available: status !== 'unavailable', lowStock: status === 'lowStock',
     hasOffer: hasOffer || undefined, oldPrice: hasOffer ? oldPrice : undefined, isNew: document.getElementById('fIsNew').checked || undefined,
-    flavors: editingFlavors.length ? [...editingFlavors] : undefined, reviews: currentReviews.length ? [...currentReviews] : undefined,
+    flavors: editingFlavors.length ? [...editingFlavors] : undefined, 
+    reviews: localReviewsOnly.length ? localReviewsOnly : undefined,
     rotateClass: currentRotation || undefined, company: document.getElementById('fCompany').value.trim() || undefined,
     consumerPrice: document.getElementById('fConsumerPrice').value.trim() || undefined, piecesPerBox: document.getElementById('fPiecesPerBox').value.trim() || undefined,
     boxesPerCarton: document.getElementById('fBoxesPerCarton').value.trim() || undefined, images: currentGallery.length ? [...currentGallery] : undefined
@@ -1097,12 +947,10 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('adminApp').classList.remove('hidden'); initAdmin(); startIdleWatcher();
   }
 })();
-</script>
-
-<!-- سكربت Firebase لجلب العملاء والطلبات وإدارتها وإرسال الإشعارات -->
+</script><!-- سكربت Firebase لجلب العملاء والطلبات وإدارتها وإرسال الإشعارات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, addDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
@@ -1116,8 +964,9 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // ============== الإشعارات ==============
   async function sendOneSignalNotification(playerId, title, message) {
-    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284",
+    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
     const restApiKey = localStorage.getItem('ashour_onesignal_key'); 
 
     if (!restApiKey) {
@@ -1146,6 +995,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   }
 
+  // ============== إدارة التنبيهات الصوتية ==============
   let knownOrderIds = new Set();
   let isFirstLoad = true;
   const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
@@ -1171,12 +1021,73 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
+  // ============== متغيرات الطلبات ==============
+  let allOrdersCache = [];
+
+  // ============== إحصائيات الطلبات ==============
+  window.updateOrderStats = function(orders) {
+    const newC = orders.filter(o => o.status === 'جديد' || !o.status).length;
+    const prepC = orders.filter(o => o.status === 'جاري التجهيز').length;
+    const shipC = orders.filter(o => o.status === 'جاري التوصيل').length;
+    let revenue = 0;
+    orders.forEach(o => {
+      if (o.status === 'تم التسليم' && o.deliveryAmount) {
+        const n = parseFloat(String(o.deliveryAmount).replace(/[^\d.]/g, ''));
+        if (!isNaN(n)) revenue += n;
+      }
+    });
+    const elN = document.getElementById('statOrdersNew');
+    const elP = document.getElementById('statOrdersPreparing');
+    const elS = document.getElementById('statOrdersShipping');
+    const elR = document.getElementById('statOrdersRevenue');
+    if (elN) elN.innerText = newC;
+    if (elP) elP.innerText = prepC;
+    if (elS) elS.innerText = shipC;
+    if (elR) elR.innerText = revenue.toLocaleString('en-US');
+  };
+
+  // ============== تصفية وعرض الطلبات ==============
+  window.filterOrdersRender = function() {
+    const search = (document.getElementById('ordersSearch')?.value || '').trim().toLowerCase();
+    const statusFilter = document.getElementById('ordersFilterStatus')?.value || '';
+    const dateFilter = document.getElementById('ordersFilterDate')?.value || '';
+    
+    let filtered = allOrdersCache.slice();
+    
+    if (statusFilter) {
+      if (statusFilter === 'جديد') {
+        filtered = filtered.filter(o => o.status === 'جديد' || !o.status);
+      } else {
+        filtered = filtered.filter(o => o.status === statusFilter);
+      }
+    }
+    
+    if (search) {
+      filtered = filtered.filter(o => {
+        const hay = (o.userName || '') + ' ' + (o.phone || '') + ' ' + (o.shopName || '') + ' ' + o.id.slice(-4);
+        return hay.toLowerCase().includes(search);
+      });
+    }
+    
+    if (dateFilter) {
+      const now = Date.now();
+      const ranges = { today: 24*60*60*1000, week: 7*24*60*60*1000, month: 30*24*60*60*1000 };
+      const limit = ranges[dateFilter];
+      if (limit) {
+        filtered = filtered.filter(o => {
+          if (!o.createdAt || !o.createdAt.seconds) return false;
+          return (now - o.createdAt.seconds * 1000) <= limit;
+        });
+      }
+    }
+    
+    renderOrdersList(filtered);
+  };
+
+  // ============== الاستماع للطلبات ==============
   const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
   
   onSnapshot(q, (snapshot) => {
-    let newOrdersCount = 0;
-    const allOrders = [];
-    
     snapshot.docChanges().forEach((change) => {
       if (change.type === "added") {
         if (!isFirstLoad && !knownOrderIds.has(change.doc.id)) {
@@ -1211,25 +1122,32 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     });
     isFirstLoad = false;
 
-    snapshot.forEach((doc) => {
-      const order = { id: doc.id, ...doc.data() };
-      allOrders.push(order);
-      if (order.status === 'جديد' || !order.status) newOrdersCount++;
+    allOrdersCache = [];
+    snapshot.forEach((docSnap) => {
+      allOrdersCache.push({ id: docSnap.id, ...docSnap.data() });
     });
 
+    // تحديث الإحصائيات
+    window.updateOrderStats(allOrdersCache);
+
+    // تحديث شارة الطلبات الجديدة
+    const newCount = allOrdersCache.filter(o => o.status === 'جديد' || !o.status).length;
     const badge = document.getElementById('newOrdersBadge');
     if (badge) {
-      if (newOrdersCount > 0) { badge.innerText = newOrdersCount; badge.classList.remove('hidden'); }
+      if (newCount > 0) { badge.innerText = newCount; badge.classList.remove('hidden'); }
       else { badge.classList.add('hidden'); }
     }
-    renderOrdersList(allOrders);
+
+    // إعادة رسم القائمة مع الفلاتر الحالية
+    window.filterOrdersRender();
   });
 
+  // ============== رسم قائمة الطلبات ==============
   function renderOrdersList(orders) {
     const container = document.getElementById('ordersList');
     if (!container) return;
     if (orders.length === 0) {
-      container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-box-open text-4xl mb-3 text-slate-600"></i><p>لا توجد طلبات حتى الآن.</p></div>';
+      container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-box-open text-4xl mb-3 text-slate-600"></i><p>لا توجد طلبات تطابق البحث.</p></div>';
       return;
     }
     container.innerHTML = orders.map(order => {
@@ -1266,33 +1184,58 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
           ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام مبلغ: ${order.deliveryAmount} ل.س</p></div>` : ''}
           <div class="flex gap-2 mt-2">
             ${order.status !== 'تم التسليم' ? `
-              ${order.status === 'جديد' ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز الطلب</button>` : ''}
+              ${order.status === 'جديد' || !order.status ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز الطلب</button>` : ''}
               ${order.status === 'جاري التجهيز' ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التوصيل')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 rounded-lg text-xs">بدء التوصيل</button>` : ''}
               ${order.status === 'جاري التوصيل' ? `<button onclick="markAsDelivered('${order.id}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs">تم التسليم</button>` : ''}
-            ` : `<div class="w-full text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم تسليم الطلب بنجاح</div>`}
+            ` : `<div class="flex-1 text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم تسليم الطلب</div>`}
+            <button onclick="window.deleteOrder('${order.id}')" class="bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/40 font-bold px-3 py-2 rounded-lg text-xs" title="حذف الطلب"><i class="fas fa-trash-alt"></i></button>
           </div>
         </div>
       `;
     }).join('');
   }
 
+  // ============== حذف طلب ==============
+  window.deleteOrder = async function(orderId) {
+    if (typeof window.showConfirm !== 'function') {
+      if (!confirm('هل تريد حذف هذا الطلب نهائياً؟')) return;
+    } else {
+      const ok = await window.showConfirm('الطلب #' + orderId.slice(-4).toUpperCase());
+      if (!ok) return;
+    }
+    try {
+      await deleteDoc(doc(db, "orders", orderId));
+      window.showToast('تم حذف الطلب بنجاح');
+    } catch (e) {
+      console.error(e);
+      window.showToast('تعذّر حذف الطلب', 'error');
+    }
+  };
+
+  // ============== تحديث حالة الطلب ==============
   window.updateOrderStatus = async function(orderId, newStatus) {
     try {
       const orderRef = doc(db, "orders", orderId);
       await updateDoc(orderRef, { status: newStatus, updatedAt: serverTimestamp() });
       window.showToast('تم تحديث حالة الطلب بنجاح');
 
-      const orderSnap = await getDoc(orderRef);
-      const userId = orderSnap.data().userId;
-      const userSnap = await getDoc(doc(db, "users", userId));
-      
-      if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
-        const playerId = userSnap.data().oneSignalPlayerId;
-        let msg = "";
-        if (newStatus === 'جاري التجهيز') msg = "جاري تجهيز طلبك الآن 📦";
-        if (newStatus === 'جاري التوصيل') msg = "طلبك في الطريق إليك 🚚";
-        
-        if (msg) await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+      try {
+        const orderSnap = await getDoc(orderRef);
+        const orderData = orderSnap.data();
+        const userId = orderData && orderData.userId;
+        if (!userId) return;
+
+        const userSnap = await getDoc(doc(db, "users", userId));
+        if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
+          const playerId = userSnap.data().oneSignalPlayerId;
+          let msg = "";
+          if (newStatus === 'جاري التجهيز') msg = "جاري تجهيز طلبك الآن 📦";
+          if (newStatus === 'جاري التوصيل') msg = "طلبك في الطريق إليك 🚚";
+          
+          if (msg) await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+        }
+      } catch (notifErr) {
+        console.warn('تعذّر إرسال الإشعار:', notifErr);
       }
     } catch (e) {
       console.error(e);
@@ -1300,6 +1243,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
+  // ============== تأكيد التسليم ==============
   let currentDeliveringOrderId = null;
 
   window.markAsDelivered = function(orderId) {
@@ -1333,14 +1277,20 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
       window.showToast('تم تأكيد التسليم واستلام المبلغ بنجاح');
       closeDeliveryModal();
 
-      const orderSnap = await getDoc(orderRef);
-      const userId = orderSnap.data().userId;
-      const userSnap = await getDoc(doc(db, "users", userId));
-      
-      if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
-        const playerId = userSnap.data().oneSignalPlayerId;
-        const msg = `تم استلام طلبك بنجاح! المبلغ المدفوع: ${amount} ل.س ✅`;
-        await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+      try {
+        const orderSnap = await getDoc(orderRef);
+        const orderData = orderSnap.data();
+        const userId = orderData && orderData.userId;
+        if (!userId) return;
+
+        const userSnap = await getDoc(doc(db, "users", userId));
+        if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
+          const playerId = userSnap.data().oneSignalPlayerId;
+          const msg = `تم استلام طلبك بنجاح! المبلغ المدفوع: ${amount} ل.س ✅`;
+          await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+        }
+      } catch (notifErr) {
+        console.warn('تعذّر إرسال الإشعار:', notifErr);
       }
     } catch (e) {
       console.error(e);
@@ -1353,6 +1303,48 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
   window.loadOrders = function() { window.showToast('جاري المزامنة...'); };
 
+  // ============== التقييمات (سحابة) ==============
+  window.addReviewToFirebase = async function(productName, stars, name, comment) {
+    try {
+      const docRef = await addDoc(collection(db, "reviews"), {
+        productName: productName,
+        userName: name || 'عميل',
+        stars: stars,
+        comment: comment || '',
+        date: new Date().toISOString().slice(0, 10),
+        createdAt: serverTimestamp()
+      });
+      return docRef.id;
+    } catch (e) {
+      console.error('addReviewToFirebase:', e);
+      throw e;
+    }
+  };
+
+  window.deleteReviewFromFirebase = async function(docId) {
+    try {
+      await deleteDoc(doc(db, "reviews", docId));
+      return true;
+    } catch (e) {
+      console.error('deleteReviewFromFirebase:', e);
+      throw e;
+    }
+  };
+
+  window.fetchProductReviewsFromCloud = async function(productName) {
+    try {
+      const rq = query(collection(db, "reviews"), where("productName", "==", productName));
+      const snap = await getDocs(rq);
+      const revs = [];
+      snap.forEach(d => revs.push({ id: d.id, ...d.data() }));
+      return revs;
+    } catch (e) {
+      console.error('fetchProductReviewsFromCloud:', e);
+      return [];
+    }
+  };
+
+  // ============== العملاء والطلبات ==============
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i><p>جاري تحميل البيانات من السحابة...</p></div>';
@@ -1360,11 +1352,11 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
       const users = [];
-      usersSnapshot.forEach((doc) => { users.push({ id: doc.id, ...doc.data() }); });
+      usersSnapshot.forEach((docSnap) => { users.push({ id: docSnap.id, ...docSnap.data() }); });
 
       const ordersSnapshot = await getDocs(collection(db, "orders"));
       const orders = [];
-      ordersSnapshot.forEach((doc) => { orders.push({ id: doc.id, ...doc.data() }); });
+      ordersSnapshot.forEach((docSnap) => { orders.push({ id: docSnap.id, ...docSnap.data() }); });
 
       if (users.length === 0) {
         container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-users-slash text-4xl mb-3 text-slate-600"></i><p>لا يوجد عملاء مسجلون حتى الآن.</p></div>';
