@@ -4,15 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ✅ وسوم السيو (SEO) الجديدة -->
+<!-- ✅ وسوم السيو (SEO) -->
 <title>مركز عاشور للتجارة | جملة المواد الغذائية والبسكويت في دمشق</title>
 <meta name="description" content="مركز عاشور لتجارة المواد الغذائية في دمشق. كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة وبأفضل الأسعار. جودة عالية وتوصيل مجاني لطلبك. تصفح الكتالوج واطلب الآن!">
 <meta name="keywords" content="مركز عاشور, تجارة المواد الغذائية, بسكويت بالجملة, شيبس, عصائر, قهوة, مواد غذائية دمشق, جملة دمشق, توصيل مجاني, كتالوج عاشور, أسعار الجملة, سكاكر وعلكة, مركز عاشور للتجارة">
 <meta property="og:title" content="مركز عاشور للتجارة | جملة المواد الغذائية في دمشق">
 <meta property="og:description" content="كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة. جودة عالية وأسعار منافسة مع توصيل مجاني.">
 <meta property="og:type" content="website">
-<!-- يمكنك إضافة رابط صورة المشاركة هنا لاحقاً -->
-<!-- <meta property="og:image" content="https://yasir-ashour.github.io/Ashour/og-image.jpg"> -->
 
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
@@ -40,7 +38,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       allowLocalhostAsSecureOrigin: true
     });
 
-    // ✅ إصلاح: استخدام PushSubscription بدلاً من getUserId() (v16)
     OneSignal.User.PushSubscription.addEventListener('change', function(event) {
       const playerId = event.current && event.current.id;
       if (playerId && window.currentUser) {
@@ -263,6 +260,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       </div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
+      
+      <!-- ✅ حقل الملاحظات الجديد -->
+      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">ملاحظات إضافية (اختياري)</label><textarea id="custNotes" oninput="saveCust()" rows="2" placeholder="مثال: يرجى الاتصال قبل التوصيل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea></div>
     </div>
 
     <div class="mb-5">
@@ -553,22 +553,27 @@ function applyWa() {
   if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
 }
 
+// ✅ ميزة جديدة: حفظ الملاحظات محلياً
 function saveCust() {
   try {
     localStorage.setItem('c_name', document.getElementById('custName').value);
     localStorage.setItem('c_shop', document.getElementById('shopName').value);
     localStorage.setItem('c_addr', document.getElementById('custAddr').value);
+    localStorage.setItem('c_notes', document.getElementById('custNotes').value); // ✅ جديد
   } catch(e) {}
 }
 
+// ✅ ميزة جديدة: استرجاع الملاحظات
 function loadCust() {
   try {
     var n = localStorage.getItem('c_name');
     var s = localStorage.getItem('c_shop');
     var a = localStorage.getItem('c_addr');
+    var nt = localStorage.getItem('c_notes'); // ✅ جديد
     if (n) document.getElementById('custName').value = n;
     if (s) document.getElementById('shopName').value = s;
     if (a) document.getElementById('custAddr').value = a;
+    if (nt) document.getElementById('custNotes').value = nt; // ✅ جديد
   } catch(e) {}
 }
 
@@ -1184,7 +1189,7 @@ window.closeConfirmOrderModal = function() {
   document.getElementById('confirmOrderModal').classList.add('hidden');
 };
 
-// ✅ الإصلاحات #4 (انتظار حفظ Firebase) + #5 (تفريغ السلة)
+// ✅ إرسال الطلب مع الملاحظات وانتظار الحفظ في Firebase (إصلاح #4 + ميزة الملاحظات)
 window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
@@ -1199,6 +1204,7 @@ window.confirmSendOrder = async function() {
   var n = document.getElementById('custName').value.trim();
   var s = document.getElementById('shopName').value.trim();
   var a = document.getElementById('custAddr').value.trim();
+  var notes = document.getElementById('custNotes').value.trim(); // ✅ جديد
   
   var date = new Date().toLocaleDateString('ar-SY', { 
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
@@ -1211,7 +1217,9 @@ window.confirmSendOrder = async function() {
   msg += '👤 *معلومات المستلم* :\n';
   msg += '▫️ *الاسم:* ' + n + '\n';
   msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
-  msg += '▫️ *العنوان:* ' + a + '\n\n';
+  msg += '▫️ *العنوان:* ' + a + '\n';
+  if (notes) msg += '▫️ *ملاحظات:* ' + notes + '\n'; // ✅ إضافة الملاحظات للرسالة
+  msg += '\n';
   
   msg += '━━━━━━━━━━━━━━━\n';
   msg += '📦 _تفاصيل الطلب:_ \n\n';
@@ -1242,11 +1250,10 @@ window.confirmSendOrder = async function() {
   msg += ' *🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n\n';
   msg += '📅 تاريخ الطلب : ' + date + '\n\n\n';
 
-  // ✅ الإصلاح #4: انتظار حفظ الطلب في Firebase قبل فتح واتساب
   var savedOk = true;
   if (typeof window.saveOrderToFirebase === 'function') {
     try {
-      await window.saveOrderToFirebase(cart, n, s, a);
+      await window.saveOrderToFirebase(cart, n, s, a, notes); // ✅ تمرير الملاحظات
     } catch (saveErr) {
       console.error('فشل حفظ الطلب في Firebase:', saveErr);
       savedOk = false;
@@ -1263,7 +1270,7 @@ window.confirmSendOrder = async function() {
   
   closeConfirmOrderModal();
 
-  // ✅ الإصلاح #5: تفريغ السلة بعد الإرسال
+  // تفريغ السلة بعد الإرسال (إصلاح #5)
   cart = {};
   saveCart();
   updateCart();
@@ -1321,7 +1328,7 @@ function openProduct(pName) {
       tImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
       thumb.appendChild(tImg);
       
-      // ✅ الإصلاح #6: الحفاظ على rotateClass عند تبديل الصور
+      // إصلاح #6: الحفاظ على rotateClass
       thumb.onclick = function() {
         var mainImg = document.getElementById('mainProductImage');
         mainImg.src = imgUrl(url);
@@ -1557,6 +1564,7 @@ function closeReviews() {
   document.body.style.overflow = '';
 }
 
+// ✅ ميزة منع التقييم المتكرر
 function openAddReview() {
   if (!curRevProduct) return;
   
@@ -1564,6 +1572,16 @@ function openAddReview() {
     showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
     closeReviews();
     openAuthModal();
+    return;
+  }
+
+  // فحص هل قام هذا المستخدم بتقييم المنتج مسبقاً
+  var alreadyReviewed = (curRevProduct.reviews || []).some(function(r) {
+    return r.userId === window.currentUser.uid;
+  });
+  
+  if (alreadyReviewed) {
+    showToast('لقد قمت بتقييم هذا المنتج مسبقاً. شكراً لك!', 'error');
     return;
   }
 
@@ -2090,7 +2108,7 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      // ✅ الإصلاح #3 (جزء 2): استخدام PushSubscription بدلاً من getUserId()
+      // ✅ الإصلاح #3: استخدام PushSubscription بدلاً من getUserId()
       if (window.OneSignal && window.OneSignal.User) {
         const playerId = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
         if (playerId) window.savePlayerIdToFirebase(playerId);
@@ -2193,8 +2211,8 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // ✅ الإصلاح #4: إعادة رمي الخطأ (throw e) لكي يلتقطه confirmSendOrder
-  window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
+  // ✅ إضافة الملاحظات إلى الطلب (notes)
+  window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes) {
     if (!window.currentUser) return;
     try {
       await addDoc(collection(db, "orders"), {
@@ -2203,6 +2221,7 @@ document.addEventListener('keydown', function(e) {
         shopName: shop,
         address: address,
         phone: window.currentProfileData.phone || '',
+        notes: notes || '', // ✅ حفظ الملاحظات
         items: cartItems,
         status: 'جديد',
         createdAt: serverTimestamp()
@@ -2231,26 +2250,24 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // ✅ الإصلاح #2: دمج تقييمات Firebase مع التقييمات المحلية
+  // ✅ دمج التقييمات مع userId
   window.fetchReviewsFromFirebase = async function() {
     try {
-      // 1) احفظ التقييمات المحلية (من catalog-data.js) أولاً
       const localReviews = {};
       products.forEach(p => {
         localReviews[p.name] = Array.isArray(p.reviews) ? [...p.reviews] : [];
       });
 
-      // 2) اجلب التقييمات من Firebase
       const q = query(collection(db, "reviews"));
       const querySnapshot = await getDocs(q);
 
-      // 3) امسح التقييمات الحالية (من الكتالوج) واجمع من Firebase فقط
       products.forEach(p => p.reviews = []);
       querySnapshot.forEach((docSnap) => {
         const rev = docSnap.data();
         const p = products.find(prod => prod.name === rev.productName);
         if (p) {
           p.reviews.push({ 
+            userId: rev.userId, // ✅ جديد: لحفظ معرف المستخدم لمنع التكرار
             stars: rev.stars, 
             name: rev.userName || 'عميل', 
             comment: rev.comment || '', 
@@ -2259,7 +2276,6 @@ document.addEventListener('keydown', function(e) {
         }
       });
 
-      // 4) ادمج التقييمات المحلية (بدون تكرار)
       products.forEach(p => {
         const locals = localReviews[p.name] || [];
         const existing = new Set(p.reviews.map(r => `${r.name}|${r.stars}|${r.comment}|${r.date}`));
@@ -2272,7 +2288,6 @@ document.addEventListener('keydown', function(e) {
         });
       });
 
-      // 5) أعد رسم المنتجات (لتحديث شارات التقييمات في البطاقات)
       if (typeof displayProducts === 'function') {
         displayProducts(products);
       }
