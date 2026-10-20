@@ -261,7 +261,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       
-      <!-- ✅ حقل الملاحظات الجديد -->
+      <!-- ✅ حقل الملاحظات -->
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">ملاحظات إضافية (اختياري)</label><textarea id="custNotes" oninput="saveCust()" rows="2" placeholder="مثال: يرجى الاتصال قبل التوصيل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea></div>
     </div>
 
@@ -553,27 +553,25 @@ function applyWa() {
   if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
 }
 
-// ✅ ميزة جديدة: حفظ الملاحظات محلياً
 function saveCust() {
   try {
     localStorage.setItem('c_name', document.getElementById('custName').value);
     localStorage.setItem('c_shop', document.getElementById('shopName').value);
     localStorage.setItem('c_addr', document.getElementById('custAddr').value);
-    localStorage.setItem('c_notes', document.getElementById('custNotes').value); // ✅ جديد
+    localStorage.setItem('c_notes', document.getElementById('custNotes').value);
   } catch(e) {}
 }
 
-// ✅ ميزة جديدة: استرجاع الملاحظات
 function loadCust() {
   try {
     var n = localStorage.getItem('c_name');
     var s = localStorage.getItem('c_shop');
     var a = localStorage.getItem('c_addr');
-    var nt = localStorage.getItem('c_notes'); // ✅ جديد
+    var nt = localStorage.getItem('c_notes');
     if (n) document.getElementById('custName').value = n;
     if (s) document.getElementById('shopName').value = s;
     if (a) document.getElementById('custAddr').value = a;
-    if (nt) document.getElementById('custNotes').value = nt; // ✅ جديد
+    if (nt) document.getElementById('custNotes').value = nt;
   } catch(e) {}
 }
 
@@ -852,6 +850,7 @@ function saveCart() {
   try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
 }
 
+// ✅ تحديث السلة مع فحص حالة المنتج (نفد أو لا)
 function updateCart() {
   var names = Object.keys(cart);
   document.getElementById('cartBadge').innerText = names.length;
@@ -874,12 +873,25 @@ function updateCart() {
       var box = document.createElement('div');
       box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
 
+      // ✅ فحص حالة المنتج
+      var p = products.find(function(prod) { return prod.name === name; });
+      var isOutOfStock = p && p.available === false;
+      
+      if (isOutOfStock) {
+        box.className = 'bg-rose-950/20 p-3 rounded-2xl border border-rose-500/50';
+      }
+
       var head = document.createElement('div');
       head.className = 'flex items-center justify-between border-b border-slate-800 pb-2';
 
       var n = document.createElement('span');
       n.className = 'text-white text-sm font-black';
       n.innerText = name;
+      
+      if (isOutOfStock) {
+        n.innerHTML = name + ' <span class="text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded-full mr-2">نفد من المخزون</span>';
+      }
+      
       head.appendChild(n);
 
       var delBtn = document.createElement('button');
@@ -907,8 +919,9 @@ function updateCart() {
 
           var minus = document.createElement('button');
           minus.type = 'button';
-          minus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+          minus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black' + (isOutOfStock ? ' opacity-50 cursor-not-allowed' : '');
           minus.innerText = '-';
+          minus.disabled = isOutOfStock;
           minus.onclick = function() { chQty(name, flv, -1); };
           ctrl.appendChild(minus);
 
@@ -916,14 +929,16 @@ function updateCart() {
           inp.type = 'number';
           inp.min = '0';
           inp.value = qty;
-          inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-xs rounded-lg py-1';
+          inp.disabled = isOutOfStock;
+          inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-xs rounded-lg py-1' + (isOutOfStock ? ' opacity-50' : '');
           inp.onchange = function() { setQty(name, flv, this.value); };
           ctrl.appendChild(inp);
 
           var plus = document.createElement('button');
           plus.type = 'button';
-          plus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black';
+          plus.className = 'w-8 h-8 bg-slate-800 text-white rounded-lg font-black' + (isOutOfStock ? ' opacity-50 cursor-not-allowed' : '');
           plus.innerText = '+';
+          plus.disabled = isOutOfStock;
           plus.onclick = function() { chQty(name, flv, 1); };
           ctrl.appendChild(plus);
 
@@ -1087,16 +1102,15 @@ window.switchAppTab = function(tab) {
   if (tab === 'orders') loadAppOrders();
 };
 
-window.loadAppOrders = async function() {
+// ✅ التحديث الفوري للطلبات باستخدام listenToMyOrders
+window.loadAppOrders = function() {
   const list = document.getElementById('appMyOrdersList');
   list.innerHTML = '<div class="text-center py-10"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p class="text-slate-400">جاري تحميل الطلبات...</p></div>';
 
   if (!window.currentUser) return;
 
-  try {
-    if (typeof window.fetchMyOrders === 'function') {
-      const orders = await window.fetchMyOrders();
-      
+  if (typeof window.listenToMyOrders === 'function') {
+    window.listenToMyOrders(function(orders) {
       if (orders.length === 0) {
         list.innerHTML = '<div class="text-center py-16 text-slate-500"><div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-box-open text-4xl text-slate-700"></i></div><h3 class="text-xl font-bold text-white mb-2">لا توجد طلبات</h3><p class="text-sm">لم تقم بإجراء أي طلبات حتى الآن.</p></div>';
         return;
@@ -1148,10 +1162,7 @@ window.loadAppOrders = async function() {
           </div>
         `;
       }).join('');
-    }
-  } catch (e) {
-    console.error(e);
-    list.innerHTML = '<div class="text-center py-10 text-rose-500"><p>حدث خطأ أثناء جلب الطلبات.</p></div>';
+    });
   }
 };
 
@@ -1169,6 +1180,7 @@ window.closeEditProfileModal = function() {
   document.getElementById('editProfileModal').classList.add('hidden');
 };
 
+// ✅ فحص المنتجات النافدة قبل إتمام الطلب
 window.sendOrder = function() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
@@ -1182,6 +1194,21 @@ window.sendOrder = function() {
   var names = Object.keys(cart);
   if (names.length === 0) { showToast('السلة فارغة', 'error'); return; }
 
+  // فحص المنتجات النافدة
+  var hasOutOfStock = false;
+  for (var i = 0; i < names.length; i++) {
+    var p = products.find(function(prod) { return prod.name === names[i]; });
+    if (p && p.available === false) {
+      hasOutOfStock = true;
+      break;
+    }
+  }
+
+  if (hasOutOfStock) {
+    showToast('عذراً، يوجد منتج نفد من المخزون في سلتك. يرجى حذفه للمتابعة.', 'error');
+    return;
+  }
+
   document.getElementById('confirmOrderModal').classList.remove('hidden');
 };
 
@@ -1189,7 +1216,7 @@ window.closeConfirmOrderModal = function() {
   document.getElementById('confirmOrderModal').classList.add('hidden');
 };
 
-// ✅ إرسال الطلب مع الملاحظات وانتظار الحفظ في Firebase (إصلاح #4 + ميزة الملاحظات)
+// ✅ إرسال الطلب مع الملاحظات وانتظار الحفظ في Firebase
 window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
@@ -1204,7 +1231,7 @@ window.confirmSendOrder = async function() {
   var n = document.getElementById('custName').value.trim();
   var s = document.getElementById('shopName').value.trim();
   var a = document.getElementById('custAddr').value.trim();
-  var notes = document.getElementById('custNotes').value.trim(); // ✅ جديد
+  var notes = document.getElementById('custNotes').value.trim();
   
   var date = new Date().toLocaleDateString('ar-SY', { 
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
@@ -1218,7 +1245,7 @@ window.confirmSendOrder = async function() {
   msg += '▫️ *الاسم:* ' + n + '\n';
   msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
   msg += '▫️ *العنوان:* ' + a + '\n';
-  if (notes) msg += '▫️ *ملاحظات:* ' + notes + '\n'; // ✅ إضافة الملاحظات للرسالة
+  if (notes) msg += '▫️ *ملاحظات:* ' + notes + '\n';
   msg += '\n';
   
   msg += '━━━━━━━━━━━━━━━\n';
@@ -1253,7 +1280,7 @@ window.confirmSendOrder = async function() {
   var savedOk = true;
   if (typeof window.saveOrderToFirebase === 'function') {
     try {
-      await window.saveOrderToFirebase(cart, n, s, a, notes); // ✅ تمرير الملاحظات
+      await window.saveOrderToFirebase(cart, n, s, a, notes);
     } catch (saveErr) {
       console.error('فشل حفظ الطلب في Firebase:', saveErr);
       savedOk = false;
@@ -1270,7 +1297,6 @@ window.confirmSendOrder = async function() {
   
   closeConfirmOrderModal();
 
-  // تفريغ السلة بعد الإرسال (إصلاح #5)
   cart = {};
   saveCart();
   updateCart();
@@ -1564,7 +1590,7 @@ function closeReviews() {
   document.body.style.overflow = '';
 }
 
-// ✅ ميزة منع التقييم المتكرر
+// ✅ منع التقييم المتكرر
 function openAddReview() {
   if (!curRevProduct) return;
   
@@ -1918,7 +1944,7 @@ document.addEventListener('keydown', function(e) {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
@@ -2108,7 +2134,7 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      // ✅ الإصلاح #3: استخدام PushSubscription بدلاً من getUserId()
+      // ✅ استخدام PushSubscription بدلاً من getUserId()
       if (window.OneSignal && window.OneSignal.User) {
         const playerId = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
         if (playerId) window.savePlayerIdToFirebase(playerId);
@@ -2233,21 +2259,23 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  window.fetchMyOrders = async function() {
-    if (!window.currentUser) return [];
-    try {
-      const q = query(collection(db, "orders"), where("userId", "==", window.currentUser.uid));
-      const snapshot = await getDocs(q);
+  // ✅ التحديث الفوري لحالة الطلب للزبون
+  let ordersUnsubscribe = null;
+  window.listenToMyOrders = function(callback) {
+    if (ordersUnsubscribe) ordersUnsubscribe();
+    if (!window.currentUser) return;
+    
+    const q = query(collection(db, "orders"), where("userId", "==", window.currentUser.uid));
+    ordersUnsubscribe = onSnapshot(q, (snapshot) => {
       const orders = [];
       snapshot.forEach(doc => {
         orders.push({ id: doc.id, ...doc.data() });
       });
       orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      return orders;
-    } catch (e) {
-      console.error("Error fetching my orders: ", e);
-      return [];
-    }
+      callback(orders);
+    }, (error) => {
+      console.error("Error listening to orders: ", error);
+    });
   };
 
   // ✅ دمج التقييمات مع userId
