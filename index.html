@@ -261,7 +261,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       
-      <!-- ✅ حقل الملاحظات -->
+      <!-- حقل الملاحظات -->
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">ملاحظات إضافية (اختياري)</label><textarea id="custNotes" oninput="saveCust()" rows="2" placeholder="مثال: يرجى الاتصال قبل التوصيل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea></div>
     </div>
 
@@ -498,6 +498,38 @@ try {
   cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
   if (!cart || typeof cart !== 'object') cart = {};
 } catch(e) { cart = {}; }
+
+/* ✅ ميزة زر الرجوع (Back Button) */
+window.pushBackState = function() {
+  history.pushState({ appState: 'open' }, '', location.href);
+};
+
+window.addEventListener('popstate', function(e) {
+  let acted = false;
+  // إغلاق النوافذ المنبثقة إذا كانت مفتوحة
+  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal'];
+  for (let id of modals) {
+    let m = document.getElementById(id);
+    if (m && !m.classList.contains('hidden')) {
+      m.classList.add('hidden');
+      document.body.style.overflow = '';
+      acted = true;
+      break;
+    }
+  }
+  // إذا لم تكن هناك نافذة مفتوحة، نتحقق من صفحة السلة أو الحساب
+  if (!acted) {
+    let cartView = document.getElementById('cartView');
+    let profileView = document.getElementById('profileView');
+    if (cartView && !cartView.classList.contains('hidden')) {
+      showCatalog();
+      acted = true;
+    } else if (profileView && !profileView.classList.contains('hidden')) {
+      showCatalog();
+      acted = true;
+    }
+  }
+});
 
 function esc(s) {
   if (s === null || s === undefined) return '';
@@ -850,7 +882,6 @@ function saveCart() {
   try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
 }
 
-// ✅ تحديث السلة مع فحص حالة المنتج (نفد أو لا)
 function updateCart() {
   var names = Object.keys(cart);
   document.getElementById('cartBadge').innerText = names.length;
@@ -981,6 +1012,7 @@ function setQty(pName, flavor, val) {
 }
 
 function showCart() {
+  window.pushBackState(); // ✅ زر الرجوع
   updateCart();
   document.getElementById('catalogView').classList.add('hidden');
   document.getElementById('profileView').classList.add('hidden');
@@ -1071,6 +1103,7 @@ function renderCategories() {
 
 window.showProfileView = function() {
   if (!window.currentUser) return;
+  window.pushBackState(); // ✅ زر الرجوع
   document.getElementById('catalogView').classList.add('hidden');
   document.getElementById('cartView').classList.add('hidden');
   document.getElementById('profileView').classList.remove('hidden');
@@ -1102,7 +1135,6 @@ window.switchAppTab = function(tab) {
   if (tab === 'orders') loadAppOrders();
 };
 
-// ✅ التحديث الفوري للطلبات باستخدام listenToMyOrders
 window.loadAppOrders = function() {
   const list = document.getElementById('appMyOrdersList');
   list.innerHTML = '<div class="text-center py-10"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p class="text-slate-400">جاري تحميل الطلبات...</p></div>';
@@ -1167,6 +1199,7 @@ window.loadAppOrders = function() {
 };
 
 window.openEditProfileModal = function() {
+  window.pushBackState(); // ✅ زر الرجوع
   document.getElementById('editProfileModal').classList.remove('hidden');
   document.getElementById('profileEmail').value = window.currentUser.email || '';
   document.getElementById('profileName').value = window.currentProfileData.name || '';
@@ -1180,7 +1213,6 @@ window.closeEditProfileModal = function() {
   document.getElementById('editProfileModal').classList.add('hidden');
 };
 
-// ✅ فحص المنتجات النافدة قبل إتمام الطلب
 window.sendOrder = function() {
   if (!window.currentUser) {
     showToast('يرجى تسجيل الدخول أولاً لإتمام الطلب', 'error');
@@ -1216,7 +1248,6 @@ window.closeConfirmOrderModal = function() {
   document.getElementById('confirmOrderModal').classList.add('hidden');
 };
 
-// ✅ إرسال الطلب مع الملاحظات وانتظار الحفظ في Firebase
 window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
@@ -1310,6 +1341,7 @@ window.confirmSendOrder = async function() {
 };
 
 function openProduct(pName) {
+  window.pushBackState(); // ✅ زر الرجوع
   var p = null;
   for (var i = 0; i < products.length; i++) {
     if (products[i].name === pName) { p = products[i]; break; }
@@ -1354,7 +1386,6 @@ function openProduct(pName) {
       tImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
       thumb.appendChild(tImg);
       
-      // إصلاح #6: الحفاظ على rotateClass
       thumb.onclick = function() {
         var mainImg = document.getElementById('mainProductImage');
         mainImg.src = imgUrl(url);
@@ -1554,6 +1585,7 @@ function closeProduct() {
 }
 
 function openReviews(pName) {
+  window.pushBackState(); // ✅ زر الرجوع
   var p = null;
   for (var i = 0; i < products.length; i++) {
     if (products[i].name === pName) { p = products[i]; break; }
@@ -1590,7 +1622,6 @@ function closeReviews() {
   document.body.style.overflow = '';
 }
 
-// ✅ منع التقييم المتكرر
 function openAddReview() {
   if (!curRevProduct) return;
   
@@ -1610,6 +1641,8 @@ function openAddReview() {
     showToast('لقد قمت بتقييم هذا المنتج مسبقاً. شكراً لك!', 'error');
     return;
   }
+
+  window.pushBackState(); // ✅ زر الرجوع
 
   document.getElementById('addRevTitle').innerText = curRevProduct.name;
   document.getElementById('revComment').value = '';
@@ -1976,7 +2009,9 @@ document.addEventListener('keydown', function(e) {
     } catch(e) { console.error("Error saving Player ID:", e); }
   };
 
+  // ✅ إضافة زر الرجوع (Back Button) عند فتح نافذة تسجيل الدخول
   window.openAuthModal = function() {
+    if (window.pushBackState) window.pushBackState();
     document.getElementById('authModal').classList.remove('hidden');
     document.getElementById('authError').classList.add('hidden');
   };
@@ -2134,7 +2169,6 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      // ✅ استخدام PushSubscription بدلاً من getUserId()
       if (window.OneSignal && window.OneSignal.User) {
         const playerId = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
         if (playerId) window.savePlayerIdToFirebase(playerId);
@@ -2237,7 +2271,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // ✅ إضافة الملاحظات إلى الطلب (notes)
   window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes) {
     if (!window.currentUser) return;
     try {
@@ -2247,7 +2280,7 @@ document.addEventListener('keydown', function(e) {
         shopName: shop,
         address: address,
         phone: window.currentProfileData.phone || '',
-        notes: notes || '', // ✅ حفظ الملاحظات
+        notes: notes || '',
         items: cartItems,
         status: 'جديد',
         createdAt: serverTimestamp()
@@ -2259,7 +2292,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // ✅ التحديث الفوري لحالة الطلب للزبون
   let ordersUnsubscribe = null;
   window.listenToMyOrders = function(callback) {
     if (ordersUnsubscribe) ordersUnsubscribe();
@@ -2278,7 +2310,6 @@ document.addEventListener('keydown', function(e) {
     });
   };
 
-  // ✅ دمج التقييمات مع userId
   window.fetchReviewsFromFirebase = async function() {
     try {
       const localReviews = {};
@@ -2295,7 +2326,7 @@ document.addEventListener('keydown', function(e) {
         const p = products.find(prod => prod.name === rev.productName);
         if (p) {
           p.reviews.push({ 
-            userId: rev.userId, // ✅ جديد: لحفظ معرف المستخدم لمنع التكرار
+            userId: rev.userId,
             stars: rev.stars, 
             name: rev.userName || 'عميل', 
             comment: rev.comment || '', 
