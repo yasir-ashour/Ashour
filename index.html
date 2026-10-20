@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مركز عاشور للتجارة</title>
+
+<!-- ✅ وسوم السيو (SEO) الجديدة -->
+<title>مركز عاشور للتجارة | جملة المواد الغذائية والبسكويت في دمشق</title>
+<meta name="description" content="مركز عاشور لتجارة المواد الغذائية في دمشق. كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة وبأفضل الأسعار. جودة عالية وتوصيل مجاني لطلبك. تصفح الكتالوج واطلب الآن!">
+<meta name="keywords" content="مركز عاشور, تجارة المواد الغذائية, بسكويت بالجملة, شيبس, عصائر, قهوة, مواد غذائية دمشق, جملة دمشق, توصيل مجاني, كتالوج عاشور, أسعار الجملة, سكاكر وعلكة, مركز عاشور للتجارة">
+<meta property="og:title" content="مركز عاشور للتجارة | جملة المواد الغذائية في دمشق">
+<meta property="og:description" content="كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة. جودة عالية وأسعار منافسة مع توصيل مجاني.">
+<meta property="og:type" content="website">
+<!-- يمكنك إضافة رابط صورة المشاركة هنا لاحقاً -->
+<!-- <meta property="og:image" content="https://yasir-ashour.github.io/Ashour/og-image.jpg"> -->
+
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="manifest" href="manifest.json">
@@ -30,7 +40,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       allowLocalhostAsSecureOrigin: true
     });
 
-    // ✅ الإصلاح #3 (جزء 1): استخدام PushSubscription بدلاً من getUserId() (v16)
+    // ✅ إصلاح: استخدام PushSubscription بدلاً من getUserId() (v16)
     OneSignal.User.PushSubscription.addEventListener('change', function(event) {
       const playerId = event.current && event.current.id;
       if (playerId && window.currentUser) {
@@ -2080,7 +2090,7 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('userAvatar').src = currentProfileData.avatarUrl || 'logo.png';
       document.getElementById('userNameDisplay').innerText = currentProfileData.name || 'حسابي';
       
-      // ✅ الإصلاح #3 (جزء 2): استخدام PushSubscription بدلاً من getUserId() (v16)
+      // ✅ الإصلاح #3 (جزء 2): استخدام PushSubscription بدلاً من getUserId()
       if (window.OneSignal && window.OneSignal.User) {
         const playerId = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
         if (playerId) window.savePlayerIdToFirebase(playerId);
@@ -2183,6 +2193,7 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  // ✅ الإصلاح #4: إعادة رمي الخطأ (throw e) لكي يلتقطه confirmSendOrder
   window.saveOrderToFirebase = async function(cartItems, name, shop, address) {
     if (!window.currentUser) return;
     try {
