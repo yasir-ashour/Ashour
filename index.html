@@ -335,11 +335,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
     </div>
 
-    <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500">
-      <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-heart text-4xl text-slate-700"></i></div>
-      <h3 class="text-xl font-bold text-white mb-2">قائمة المفضلة فارغة</h3>
-      <p class="text-sm">لم تقم بإضافة أي منتجات إلى المفضلة بعد.</p>
-    </div>
+    <!-- سيتم تعبئة هذا القسم ديناميكياً بواسطة JS -->
+    <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500"></div>
 
     <div id="appTabAddresses" class="hidden text-center py-16 text-slate-500">
       <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marked-alt text-4xl text-slate-700"></i></div>
@@ -480,7 +477,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <div class="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-2">
   <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-emerald-400"><i class="fab fa-whatsapp text-3xl"></i></a>
   
-  <!-- زر الدعم الفني الجديد -->
   <a id="floatSupport" href="https://wa.me/963959248901?text=مرحباً،%20أواجه%20مشكلة%20في%20الموقع%20وأحتاج%20للمساعدة" target="_blank" rel="noopener" class="bg-rose-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-rose-400" title="هل تواجه مشكلة؟ تواصل مع الدعم">
     <i class="fas fa-headset text-2xl"></i>
   </a>
@@ -505,6 +501,7 @@ var orderWa = "963982572810";
 var inquiryWa = "963959248901";
 var products = [];
 var cart = {};
+var wishlist = [];
 var selections = {};
 var currentCat = 'الكل';
 var curRevProduct = null;
@@ -515,7 +512,8 @@ var _searchTimer;
 try {
   cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
   if (!cart || typeof cart !== 'object') cart = {};
-} catch(e) { cart = {}; }
+  wishlist = JSON.parse(localStorage.getItem('ashour_wishlist') || '[]');
+} catch(e) { cart = {}; wishlist = []; }
 
 /* ✅ مستمع حالة الاتصال (Offline / Online) */
 window.addEventListener('online', function() {
@@ -591,7 +589,6 @@ function toBlob(b64) {
   } catch(e) { return b64; }
 }
 
-// ✅ إصلاح 5: حماية صور Base64
 function imgUrl(u) {
   if (!u) return '';
   if (u.indexOf('data:') === 0 || u.length > 2000) return u; 
@@ -713,6 +710,7 @@ function buildCard(p) {
   };
   imgBox.appendChild(img);
 
+  // شارة الحالة
   var stBadge = document.createElement('span');
   if (!avail) {
     stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-[10px] px-2 py-0.5 rounded-full z-10';
@@ -726,10 +724,19 @@ function buildCard(p) {
   }
   imgBox.appendChild(stBadge);
 
+  // ✅ زر المفضلة (القلب)
+  var isWished = wishlist.indexOf(p.name) !== -1;
+  var wishBtn = document.createElement('button');
+  wishBtn.type = 'button';
+  wishBtn.className = 'absolute top-2 left-2 bg-slate-950/80 border border-slate-700 w-7 h-7 rounded-full flex items-center justify-center z-20 transition hover:scale-110';
+  wishBtn.innerHTML = '<i class="fas fa-heart ' + (isWished ? 'text-rose-500' : 'text-white') + ' text-xs"></i>';
+  wishBtn.onclick = function(e) { e.stopPropagation(); toggleWishlist(p.name); };
+  imgBox.appendChild(wishBtn);
+
   if (revs.length > 0) {
     var revBadge = document.createElement('button');
     revBadge.type = 'button';
-    revBadge.className = 'absolute top-2 left-2 bg-slate-950/90 border border-amber-500/50 text-amber-300 text-[10px] px-2 py-0.5 rounded-full font-black z-10';
+    revBadge.className = 'absolute bottom-2 right-2 bg-slate-950/90 border border-amber-500/50 text-amber-300 text-[10px] px-2 py-0.5 rounded-full font-black z-10';
     revBadge.innerHTML = '<i class="fas fa-star text-amber-400"></i> ' + avg;
     revBadge.onclick = function(e) { e.stopPropagation(); openReviews(p.name); };
     imgBox.appendChild(revBadge);
@@ -791,7 +798,7 @@ function buildCard(p) {
   desc.innerText = p.description || 'منتج مميز من مركز عاشور';
   body.appendChild(desc);
 
-  // ✅ إضافة 13: عرض السعر الأساسي وسعر المستهلك
+  // ✅ عرض السعر وسعر المستهلك
   var priceBox = document.createElement('div');
   priceBox.className = 'flex flex-col gap-1 mt-1 mb-2 border-t border-slate-700/50 pt-2';
   priceBox.innerHTML = `
@@ -891,6 +898,24 @@ function buildCard(p) {
   return card;
 }
 
+// ✅ دالة إضافة/إزالة من المفضلة
+function toggleWishlist(pName) {
+  var idx = wishlist.indexOf(pName);
+  if (idx > -1) {
+    wishlist.splice(idx, 1);
+    showToast('تمت الإزالة من المفضلة', 'error');
+  } else {
+    wishlist.push(pName);
+    showToast('تمت الإضافة إلى المفضلة ❤️', 'success');
+  }
+  localStorage.setItem('ashour_wishlist', JSON.stringify(wishlist));
+  
+  filterProducts(); 
+  if (window.currentUser && !document.getElementById('profileView').classList.contains('hidden')) {
+    renderWishlist();
+  }
+}
+
 function changeSel(pName, pid, fIdx, flavor, delta) {
   if (!selections[pName]) selections[pName] = {};
   var cur = selections[pName][flavor] || 0;
@@ -951,7 +976,7 @@ function updateCart() {
       var box = document.createElement('div');
       box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
 
-      // ✅ إصلاح 3: حماية السلة من المنتجات المحذوفة
+      // حماية السلة من المنتجات المحذوفة
       var p = products.find(function(prod) { return prod.name === name; });
       if (!p) {
         delete cart[name];
@@ -1103,6 +1128,7 @@ function norm(t) {
   return t.toLowerCase().replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
 }
 
+// ✅ ترتيب المنتجات حسب الشركة
 function filterProducts() {
   var term = norm(document.getElementById('searchBox').value.trim());
   var filtered = [];
@@ -1114,6 +1140,16 @@ function filterProducts() {
     var ms = term === '' || n.indexOf(term) !== -1 || d.indexOf(term) !== -1;
     if (mc && ms) filtered.push(p);
   }
+  
+  filtered.sort(function(a, b) {
+    var compA = a.company || 'بدون شركة';
+    var compB = b.company || 'بدون شركة';
+    if (compA === compB) {
+      return (a.name || '').localeCompare(b.name || '', 'ar');
+    }
+    return compA.localeCompare(compB, 'ar');
+  });
+
   displayProducts(filtered);
 }
 
@@ -1187,6 +1223,34 @@ window.switchAppTab = function(tab) {
   });
 
   if (tab === 'orders') loadAppOrders();
+  if (tab === 'favorites') renderWishlist();
+};
+
+// ✅ دالة عرض المنتجات المفضلة
+window.renderWishlist = function() {
+  var container = document.getElementById('appTabFavorites');
+  var wishedProds = products.filter(function(p) { return wishlist.indexOf(p.name) !== -1; });
+  
+  if (wishedProds.length === 0) {
+    container.innerHTML = '<div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-heart text-4xl text-slate-700"></i></div><h3 class="text-xl font-bold text-white mb-2">قائمة المفضلة فارغة</h3><p class="text-sm">لم تقم بإضافة أي منتجات إلى المفضلة بعد.</p>';
+    return;
+  }
+  
+  var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full text-right">';
+  wishedProds.forEach(function(p) {
+    html += `
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex gap-3 items-center">
+        <img src="${imgUrl(p.image)}" class="w-16 h-16 rounded-xl object-cover cursor-pointer" onclick="openProduct('${esc(p.name)}')">
+        <div class="flex-grow min-w-0">
+           <h4 class="text-white font-bold text-sm truncate cursor-pointer" onclick="openProduct('${esc(p.name)}')">${esc(p.name)}</h4>
+           <p class="text-amber-400 font-bold text-xs mt-1">${esc(p.price || 'حسب الطلب')}</p>
+        </div>
+        <button onclick="toggleWishlist('${esc(p.name)}')" class="w-8 h-8 rounded-lg bg-rose-950/40 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-trash text-xs"></i></button>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
 };
 
 window.loadAppOrders = function() {
@@ -1426,6 +1490,9 @@ function openProduct(pName) {
   imgWrap.appendChild(imgBox);
 
   var allImages = [p.image, ...(p.images || [])].filter(Boolean);
+  var sliderInterval = null;
+  var currentImgIndex = 0;
+
   if (allImages.length > 1) {
     var thumbContainer = document.createElement('div');
     thumbContainer.className = 'flex gap-2 overflow-x-auto pb-1 snap-x';
@@ -1440,17 +1507,45 @@ function openProduct(pName) {
       thumb.appendChild(tImg);
       
       thumb.onclick = function() {
+        currentImgIndex = idx;
         var mainImg = document.getElementById('mainProductImage');
         mainImg.src = imgUrl(url);
         mainImg.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
         Array.from(thumbContainer.children).forEach(function(c) { c.classList.remove('border-amber-500'); });
         thumb.classList.add('border-amber-500');
+        clearInterval(sliderInterval);
+        startSlider();
       };
       
       if (idx === 0) thumb.classList.add('border-amber-500');
       thumbContainer.appendChild(thumb);
     });
     imgWrap.appendChild(thumbContainer);
+
+    // ✅ حركة تقليب الصور تلقائياً كل 5 ثوانٍ
+    function startSlider() {
+      sliderInterval = setInterval(function() {
+        currentImgIndex = (currentImgIndex + 1) % allImages.length;
+        var mainImg = document.getElementById('mainProductImage');
+        if (mainImg) {
+          mainImg.style.opacity = '0.5';
+          setTimeout(function() {
+            mainImg.src = imgUrl(allImages[currentImgIndex]);
+            mainImg.style.opacity = '1';
+            
+            Array.from(thumbContainer.children).forEach(function(c, i) {
+              if (i === currentImgIndex) c.classList.add('border-amber-500');
+              else c.classList.remove('border-amber-500');
+            });
+          }, 200);
+        } else {
+          clearInterval(sliderInterval);
+        }
+      }, 5000);
+    }
+    startSlider();
+    
+    window._currentSliderInterval = sliderInterval;
   }
 
   var info = document.createElement('div');
@@ -1635,6 +1730,10 @@ function prodSel(pid, fIdx, flavor, delta) {
 function closeProduct() {
   document.getElementById('productModal').classList.add('hidden');
   document.body.style.overflow = '';
+  if (window._currentSliderInterval) {
+    clearInterval(window._currentSliderInterval);
+    window._currentSliderInterval = null;
+  }
 }
 
 function openReviews(pName) {
