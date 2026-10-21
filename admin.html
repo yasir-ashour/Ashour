@@ -180,6 +180,27 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
 
+  <!-- ✅ قسم الإشعارات الجماعية الجديد -->
+  <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-5 space-y-4 mt-5">
+    <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+      <i class="fas fa-bullhorn text-purple-400"></i> إرسال إشعار جماعي
+    </h2>
+    <div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-3 text-xs text-purple-200">
+      <i class="fas fa-info-circle mr-1"></i> سيتم إرسال هذا الإشعار لجميع العملاء المشتركين في التنبيهات.
+    </div>
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان الإشعار</label>
+      <input type="text" id="broadcastTitle" placeholder="مثال: عرض خاص اليوم!" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm">
+    </div>
+    <div>
+      <label class="block text-slate-300 font-bold mb-1.5 text-sm">نص الرسالة</label>
+      <textarea id="broadcastMsg" rows="3" placeholder="اكتب تفاصيل العرض هنا..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+    </div>
+    <button onclick="sendBroadcast()" id="btnBroadcast" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2">
+      <i class="fas fa-paper-plane"></i> إرسال للجميع
+    </button>
+  </div>
+
   <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub</h2>
     <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200"><i class="fas fa-lock mr-1"></i> الـ Token يُحفظ في متصفحك فقط. لا تشاركه مع أحد.</div>
@@ -296,6 +317,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم الشركة</label><input type="text" id="fCompany" placeholder="مثال: شركة نستله" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">سعر المستهلك</label><input type="text" id="fConsumerPrice" placeholder="مثال: 5000 ل.س" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد القطع بالعلبة</label><input type="text" id="fPiecesPerBox" placeholder="مثال: 24 قطعة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
+        <!-- ✅ تعديل مسمى الحقل -->
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد الأكياس بالكرتونة</label><input type="text" id="fBoxesPerCarton" placeholder="مثال: 12 كيس" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       </div>
 
@@ -956,7 +978,7 @@ function openProductModal(pid = null) {
     document.getElementById('fHasOffer').checked = p.hasOffer === true; document.getElementById('fIsNew').checked = p.isNew === true; document.getElementById('fOldPrice').value = p.oldPrice || '';
     toggleOfferFields();
     
-    // ✅ إصلاح 2: جلب اسم الشركة وسعر المستهلك بدقة
+    // ✅ إصلاح جلب بيانات الشركة وسعر المستهلك
     document.getElementById('fCompany').value = p.company || ''; 
     document.getElementById('fConsumerPrice').value = p.consumerPrice || '';
     
@@ -974,7 +996,7 @@ function openProductModal(pid = null) {
     }
     renderReviews();
     
-    // ✅ إصلاح 7: زيادة وقت الانتظار لضمان استقرار الاتصال وجلب التقييمات
+    // جلب التقييمات من السحابة
     setTimeout(() => {
       if (currentProductName === p.name) refreshReviewsFromCloud();
     }, 800);
@@ -1205,7 +1227,7 @@ async function saveToGitHub() {
 }
 async function testGithubConnection() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour'; const repo = catalogData.settings.githubRepo || 'Ashour';
-  if (!token) { showToast('يرجى إدخال GitHub Token أولًا', 'error'); return; }
+  if (!token) { showToast('يرجى إدخال GitHub Token أولاً', 'error'); return; }
   showToast('جاري الاختبار...');
   try { const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, { headers: { 'Authorization': `token ${token}` } }); if (res.ok) { const data = await res.json(); showToast('✅ الاتصال ناجح: ' + data.full_name); } else { showToast('❌ فشل الاتصال: ' + res.status, 'error'); } } catch (err) { showToast('❌ خطأ: ' + err.message, 'error'); }
 }
@@ -1260,7 +1282,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // ✅ إصلاح 1: تصحيح الفاصلة النحوية
+  // ============== إرسال الإشعارات (OneSignal) ==============
   async function sendOneSignalNotification(playerId, title, message) {
     const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
     const restApiKey = localStorage.getItem('ashour_onesignal_key'); 
@@ -1291,17 +1313,81 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   }
 
-  // ============== إدارة التنبيهات الصوتية ==============
+  // ============== الإشعارات الجماعية (Broadcast) ==============
+  window.sendBroadcast = async function() {
+    const title = document.getElementById('broadcastTitle').value.trim();
+    const msg = document.getElementById('broadcastMsg').value.trim();
+    const btn = document.getElementById('btnBroadcast');
+    
+    if (!title || !msg) { window.showToast('أدخل العنوان والرسالة', 'error'); return; }
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+    btn.disabled = true;
+    
+    const restApiKey = localStorage.getItem('ashour_onesignal_key');
+    if (!restApiKey) { 
+      window.showToast('أدخل مفتاح OneSignal أولاً من الإعدادات', 'error'); 
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; btn.disabled = false; return; 
+    }
+    
+    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
+    
+    try {
+      const usersSnap = await getDocs(collection(db, "users"));
+      const playerIds = [];
+      usersSnap.forEach(d => {
+        const pid = d.data().oneSignalPlayerId;
+        if (pid) playerIds.push(pid);
+      });
+      
+      if (playerIds.length === 0) {
+        window.showToast('لا يوجد مشتركون في التنبيهات حالياً', 'error');
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; btn.disabled = false; 
+        return;
+      }
+      
+      // تقسيم المعرفات إلى مجموعات (لأن OneSignal يقبل 2000 كحد أقصى في الطلب الواحد)
+      let successCount = 0;
+      for (let i = 0; i < playerIds.length; i += 2000) {
+        const chunk = playerIds.slice(i, i + 2000);
+        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': `Basic ${restApiKey}`
+          },
+          body: JSON.stringify({
+            app_id: appId,
+            include_player_ids: chunk,
+            contents: { en: msg },
+            headings: { en: title }
+          })
+        });
+        
+        if (response.ok) successCount += chunk.length;
+      }
+      
+      window.showToast(`تم الإرسال لـ ${successCount} مشترك ✅`);
+      document.getElementById('broadcastTitle').value = '';
+      document.getElementById('broadcastMsg').value = '';
+    } catch(e) {
+      console.error(e);
+      window.showToast('فشل الإرسال: ' + e.message, 'error');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع';
+      btn.disabled = false;
+    }
+  };
+
+  // ============== إدارة التنبيهات الصوتية للوحة التحكم ==============
   let knownOrderIds = new Set();
   let isFirstLoad = true;
   const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
 
-  // ✅ إصلاح 6: تحسين دالة تفعيل الإشعارات
   window.enableAdminNotifications = async function() {
     if (!("Notification" in window)) { alert("هذا المتصفح لا يدعم الإشعارات."); return; }
     
     try {
-      // فك حظر الصوت بمجرد تفاعل المستخدم
       audioAlert.volume = 0.01;
       await audioAlert.play();
       audioAlert.pause();
@@ -1315,7 +1401,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
       document.getElementById('notifyBtn').innerHTML = '<i class="fas fa-check"></i> التنبيهات مفعلة';
       document.getElementById('notifyBtn').classList.replace('bg-indigo-600', 'bg-emerald-600');
     } else { 
-      window.showToast('تم رفض الإشعارات. يرجى تفعيلها من إعدادات المتصفح', 'error'); 
+      window.showToast('تم رفض الإشعارات', 'error'); 
     }
   };
 
@@ -1409,7 +1495,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
               }
             } catch(e) { console.error("Notification error:", e); }
           } else {
-            console.warn("صلاحية الإشعارات غير ممنوحة. الحالة الحالية:", Notification.permission);
             window.showToast("طلب جديد وصل! (لكن الإشعارات غير مفعلة)", "error");
           }
         }
@@ -1504,7 +1589,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
-  // ✅ إصلاح 4: حماية تحديث الطلب
   window.updateOrderStatus = async function(orderId, newStatus) {
     try {
       const orderRef = doc(db, "orders", orderId);
@@ -1513,7 +1597,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
       try {
         const orderSnap = await getDoc(orderRef);
-        if (!orderSnap.exists()) return; // التحقق من وجود الطلب
+        if (!orderSnap.exists()) return;
         
         const orderData = orderSnap.data();
         const userId = orderData && orderData.userId;
@@ -1552,7 +1636,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     currentDeliveringOrderId = null;
   };
 
-  // ✅ إصلاح 4: حماية تأكيد التسليم
   window.confirmDelivery = async function() {
     const amount = document.getElementById('deliveryAmountInput').value.trim();
     const errEl = document.getElementById('deliveryAmountError');
@@ -1573,7 +1656,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
 
       try {
         const orderSnap = await getDoc(orderRef);
-        if (!orderSnap.exists()) return; // التحقق من وجود الطلب
+        if (!orderSnap.exists()) return;
         
         const orderData = orderSnap.data();
         const userId = orderData && orderData.userId;
@@ -1627,7 +1710,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
-  // ✅ إصلاح 7: جلب تقييمات المنتج من السحابة
   window.fetchProductReviewsFromCloud = async function(productName) {
     try {
       const rq = query(collection(db, "reviews"), where("productName", "==", productName));
