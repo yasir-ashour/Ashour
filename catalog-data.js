@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ٣:٢١:٥٦ م
+   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ٩:١٨:٣٨ م
    ================================ */
 
 window.catalogData = {
@@ -214,6 +214,8 @@ window.catalogData.products.push({
   "description": "بسكويت ماتيلدا دارك الفاخر",
   "available": true,
   "lowStock": false,
+  "hasOffer": true,
+  "oldPrice": "90 ليرة جديدة",
   "company": "البشير",
   "consumerPrice": "10 ليرة جديده",
   "piecesPerBox": "12"
@@ -227,6 +229,7 @@ window.catalogData.products.push({
   "description": "النكهات : حليب - فريز - موز - برتقال",
   "available": true,
   "lowStock": false,
+  "isNew": true,
   "flavors": [
     "حليب",
     "فريز",
