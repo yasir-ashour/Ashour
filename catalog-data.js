@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ١:٥٨:٤٢ م
+   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ٣:٢١:٥٦ م
    ================================ */
 
 window.catalogData = {
@@ -49,7 +49,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/jkfPR6Zy/1791902579906.jpg",
   "description": "النكهات : مكسيكي - فلفل حار - جبنة - ملح وخل - باربكيو - مالح - كتشب",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "مكسيكي",
@@ -142,9 +142,10 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/nqtNMzLC/1791904254279.jpg",
   "description": "قهوة سادة موكا 100 غرام",
-  "available": true,
+  "available": false,
   "lowStock": false,
-  "company": "بن الحموي"
+  "company": "بن الحموي",
+  "consumerPrice": "من 18 الى 20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -164,7 +165,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fVD0CKR7/1791903879220.jpg",
   "description": "قهوة إكسترا هال 200 غرام",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -181,25 +182,16 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "توب فريش ساور",
+  "name": "توب فريش ساور سكاكر",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/WpqwK1ck/1791903820791.jpg",
   "description": "سكاكر توب فريش ساور الحامضة والمنعشة",
   "available": true,
   "lowStock": false,
-  "company": "زاهي"
-});
-
-window.catalogData.products.push({
-  "name": "كب كيك",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/nsycQxjt/1791903716293.jpg",
-  "description": "كب كيك طري ولذيذ",
-  "available": true,
-  "lowStock": false,
-  "company": "شيف كيك"
+  "company": "زاهي",
+  "consumerPrice": "5 ليرة جديده",
+  "piecesPerBox": "100 حبه"
 });
 
 window.catalogData.products.push({
@@ -222,7 +214,9 @@ window.catalogData.products.push({
   "description": "بسكويت ماتيلدا دارك الفاخر",
   "available": true,
   "lowStock": false,
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "10 ليرة جديده",
+  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -239,7 +233,9 @@ window.catalogData.products.push({
     "موز",
     "برتقال"
   ],
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "10 ليرة جديده",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -257,7 +253,9 @@ window.catalogData.products.push({
     "حار",
     "زعتر"
   ],
-  "company": "ساما"
+  "company": "ساما",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -268,7 +266,9 @@ window.catalogData.products.push({
   "description": "بسكويت مي تو المقرمش بحشوة الكريمة",
   "available": true,
   "lowStock": false,
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "5 ليرة جديده",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -279,7 +279,8 @@ window.catalogData.products.push({
   "description": "بسكويت تاندا الفاخر",
   "available": true,
   "lowStock": false,
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -314,7 +315,8 @@ window.catalogData.products.push({
   "description": "بسكويت جنتي هم هم الهش والمحبوب",
   "available": true,
   "lowStock": false,
-  "company": "جنتي"
+  "company": "جنتي",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -325,7 +327,9 @@ window.catalogData.products.push({
   "description": "بسكويت ديجيستيف أمية كلاس الممتع والمغذي",
   "available": true,
   "lowStock": false,
-  "company": "أمية كلاس دايري"
+  "company": "أمية كلاس دايري",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -336,7 +340,8 @@ window.catalogData.products.push({
   "description": "كيك زنجيرز الطري اللذيذ",
   "available": true,
   "lowStock": false,
-  "company": "أمية كلاس"
+  "company": "أمية كلاس",
+  "consumerPrice": "40 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -347,7 +352,8 @@ window.catalogData.products.push({
   "description": "بسكويت اورينو المميز عبوة 4 حبات",
   "available": true,
   "lowStock": false,
-  "company": "أمية كلاس"
+  "company": "أمية كلاس",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -356,13 +362,14 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/TBYPhsq0/1791302413005.jpg",
   "description": "النكهات : حليب - شوكالا",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "حليب",
     "شوكالا"
   ],
-  "company": "رولانا"
+  "company": "رولانا",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -390,7 +397,8 @@ window.catalogData.products.push({
     "جبنة",
     "مميزة"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -405,7 +413,8 @@ window.catalogData.products.push({
     "جبنة",
     "مميزة"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "20 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -419,7 +428,8 @@ window.catalogData.products.push({
   "flavors": [
     "باربكيو"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "30 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -438,7 +448,8 @@ window.catalogData.products.push({
     "جبنه",
     "حار"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "30 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -457,7 +468,8 @@ window.catalogData.products.push({
     "جبنه",
     "حار"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -474,7 +486,8 @@ window.catalogData.products.push({
     "اليمون",
     "الحار وحلو"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "40 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -489,7 +502,8 @@ window.catalogData.products.push({
     "جبنة",
     "ليمون"
   ],
-  "company": "دارنيتو"
+  "company": "دارنيتو",
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -508,7 +522,8 @@ window.catalogData.products.push({
     "جبنه",
     "ذرة حلوة"
   ],
-  "company": "Modern Nutrition"
+  "company": "Modern Nutrition",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -527,21 +542,25 @@ window.catalogData.products.push({
     "حار وحلو",
     "حار"
   ],
-  "company": "Modern Nutrition"
+  "company": "Modern Nutrition",
+  "consumerPrice": "30 ليرة جديده"
 });
 
 window.catalogData.products.push({
   "name": "برنس بوب كورن بوشار",
   "category": "شيبس",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/f3eab4b1-f7d8-46c3-92db-2745845bf938.jpg",
   "description": "النكهات : ذرة حلوة - حار وحلو - جبنة",
+  "available": true,
+  "lowStock": false,
   "flavors": [
     "ذرة حلوة",
     "حار وحلو",
     "جبنة"
-  ]
+  ],
+  "company": "برنس بوب",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -557,7 +576,8 @@ window.catalogData.products.push({
     "خل",
     "بيتزا"
   ],
-  "company": "ماسة فودز"
+  "company": "ماسة فودز",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -573,7 +593,8 @@ window.catalogData.products.push({
     "حار",
     "ملح"
   ],
-  "company": "شموط"
+  "company": "شموط",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -590,7 +611,8 @@ window.catalogData.products.push({
     "خل",
     "جبنة"
   ],
-  "company": "ماسة فودز"
+  "company": "ماسة فودز",
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -626,7 +648,8 @@ window.catalogData.products.push({
     "ملح",
     "جبنة"
   ],
-  "company": "فيفتي فايف"
+  "company": "فيفتي فايف",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -637,7 +660,8 @@ window.catalogData.products.push({
   "description": "بسكويت سيما سادة مقرمش وفاخر",
   "available": true,
   "lowStock": false,
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -648,7 +672,8 @@ window.catalogData.products.push({
   "description": "بسكويت سيما سادة عائلي مميز",
   "available": true,
   "lowStock": false,
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "30 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -659,7 +684,8 @@ window.catalogData.products.push({
   "description": "بسكويت جوفريك المقرمش اللذيذ",
   "available": true,
   "lowStock": false,
-  "company": "أمواج غولد"
+  "company": "أمواج غولد",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -674,7 +700,8 @@ window.catalogData.products.push({
     "شوكالا دارك",
     "شوكالا بالحليب"
   ],
-  "company": "توت توت"
+  "company": "توت توت",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -685,7 +712,8 @@ window.catalogData.products.push({
   "description": "ويفر توب كورفيت الفاخر",
   "available": true,
   "lowStock": false,
-  "company": "Modern industeries"
+  "company": "Modern industeries",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -696,7 +724,8 @@ window.catalogData.products.push({
   "description": "بسكويت ون تكة المميّز",
   "available": true,
   "lowStock": false,
-  "company": "Modern industeries"
+  "company": "Modern industeries",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -707,7 +736,8 @@ window.catalogData.products.push({
   "description": "بسكويت جنتي ميلكو الغني بحشوة الحليب اللذيذة والمقرمشة",
   "available": true,
   "lowStock": false,
-  "company": "جنتي"
+  "company": "جنتي",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -718,7 +748,8 @@ window.catalogData.products.push({
   "description": "بسكويت شينكي المقرمش مع طعم فريد ومميز",
   "available": true,
   "lowStock": false,
-  "company": "جنتي"
+  "company": "جنتي",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -729,7 +760,8 @@ window.catalogData.products.push({
   "description": "بسكويت جنتي الغني بطعم الكراميل الشهي",
   "available": true,
   "lowStock": false,
-  "company": "جنتي"
+  "company": "جنتي",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -740,7 +772,8 @@ window.catalogData.products.push({
   "description": "بسكويت جنتي صباح المحشو بالعجوة الطبيعية المغذية",
   "available": true,
   "lowStock": false,
-  "company": "جنتي"
+  "company": "جنتي",
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -764,7 +797,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز المحشو بكريمة الفريز اللذيذة",
   "available": true,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -775,7 +809,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز الفاخر بحشوة الشوكولا الغنية",
   "available": false,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -786,7 +821,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز المقرمش بكريمة الحليب الناعمة",
   "available": false,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -797,7 +833,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز المنعش بنكهة البرتقال",
   "available": false,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -808,7 +845,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز بحشوة جوز الهند الغنية",
   "available": false,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -819,7 +857,8 @@ window.catalogData.products.push({
   "description": "بسكويت واوو كريمز الفاخر بنكهة الفانيلا الناعمة",
   "available": true,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -830,7 +869,8 @@ window.catalogData.products.push({
   "description": "بسكويت سوبر اردو المغطى بشوكولاتة الحليب الغنية",
   "available": true,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -841,7 +881,8 @@ window.catalogData.products.push({
   "description": "بسكويت سوبر اردو الفاخر والمقرمش بنكهة الحليب",
   "available": true,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -852,7 +893,8 @@ window.catalogData.products.push({
   "description": "كيك كيكتي الهش بالكاكاو والمليء بكريمة الحليب",
   "available": true,
   "lowStock": false,
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "45 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -863,7 +905,8 @@ window.catalogData.products.push({
   "description": "كيك كيكتي الفانيلا الطري المحشو بالشوكالا",
   "available": true,
   "lowStock": false,
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "45 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -874,7 +917,8 @@ window.catalogData.products.push({
   "description": "كيك كيكتي الشهي بمربى وكريمة الفريز",
   "available": true,
   "lowStock": false,
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "45 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -885,7 +929,8 @@ window.catalogData.products.push({
   "description": "كيك كيكتي الكاكاو المحشو بالشوكولاتة الغنية",
   "available": true,
   "lowStock": false,
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "45 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -896,7 +941,8 @@ window.catalogData.products.push({
   "description": "كيك كيكتي الفانيلا مع كريمة الحليب الناعمة",
   "available": true,
   "lowStock": false,
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "45 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -907,7 +953,8 @@ window.catalogData.products.push({
   "description": "بسكويت اردو الفاخر والمقرمش بنكهة الحليب الغنية",
   "available": true,
   "lowStock": false,
-  "company": "حوريه"
+  "company": "حوريه",
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -918,7 +965,8 @@ window.catalogData.products.push({
   "description": "بسكويت فاخر بنكهة الكاكاو الغنية والشهية",
   "available": true,
   "lowStock": false,
-  "company": "ساما"
+  "company": "ساما",
+  "consumerPrice": "30 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -929,7 +977,8 @@ window.catalogData.products.push({
   "description": "حليب وشوكالا وكرميلو",
   "available": true,
   "lowStock": false,
-  "company": "ساما"
+  "company": "ساما",
+  "consumerPrice": "40 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -940,7 +989,8 @@ window.catalogData.products.push({
   "description": "شوكالا وحليب",
   "available": true,
   "lowStock": false,
-  "company": "ساما"
+  "company": "ساما",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -958,25 +1008,30 @@ window.catalogData.products.push({
     "الفستق",
     "الكراميلو"
   ],
-  "company": "ضحى"
+  "company": "ضحى",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
   "name": "رالاس لوس بجوز الهند",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/8qxxZXWw.jpg",
-  "description": "بسكويت رالاس لوس الفاخر المغطى بجوز الهند المقرمش"
+  "description": "بسكويت رالاس لوس الفاخر المغطى بجوز الهند المقرمش",
+  "available": true,
+  "lowStock": false,
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
   "name": "رالاس نوغاتي بنكهة الفستق",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/14MJqgCFi.jpg",
-  "description": "نوغاتي هش ومحشو بطعم الفستق الغني"
+  "description": "نوغاتي هش ومحشو بطعم الفستق الغني",
+  "available": true,
+  "lowStock": false,
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1009,7 +1064,7 @@ window.catalogData.products.push({
     "شوكالا"
   ],
   "company": "تشيلو",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1029,9 +1084,12 @@ window.catalogData.products.push({
   "name": "دريم لاند 4 قطع",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/L8rAVpMz.jpg",
-  "description": "4 قطع محشوة بالفانيلا والشوكولا"
+  "description": "4 قطع محشوة بالفانيلا والشوكولا",
+  "available": true,
+  "lowStock": false,
+  "company": "تشيلو",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1046,7 +1104,8 @@ window.catalogData.products.push({
     "حليب",
     "شوكالا"
   ],
-  "company": "رولانا"
+  "company": "رولانا",
+  "consumerPrice": "30 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1062,7 +1121,8 @@ window.catalogData.products.push({
     "شوكالا",
     "فريز"
   ],
-  "company": "بونو"
+  "company": "بونو",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1077,7 +1137,8 @@ window.catalogData.products.push({
     "كاكاو بالحليب",
     "كاكاو بالشوكالا"
   ],
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1088,7 +1149,8 @@ window.catalogData.products.push({
   "description": "رول كيك بونو مميز ومحشو بالكريمة",
   "available": true,
   "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "5 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1099,7 +1161,8 @@ window.catalogData.products.push({
   "description": "بسكويت كيك بونو ستار طري ومغطي بالشوكولا",
   "available": true,
   "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1110,7 +1173,8 @@ window.catalogData.products.push({
   "description": "حليب - شوكالا",
   "available": true,
   "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "5 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1121,7 +1185,8 @@ window.catalogData.products.push({
   "description": "النكهات فريز - مشمش - شوكالا",
   "available": true,
   "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "5 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1138,7 +1203,8 @@ window.catalogData.products.push({
     "اللوتس",
     "شوكالا"
   ],
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1154,7 +1220,8 @@ window.catalogData.products.push({
     "دارك شوكالا",
     "حليب"
   ],
-  "company": "إينجوني"
+  "company": "إينجوني",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1170,7 +1237,8 @@ window.catalogData.products.push({
     "شوكالا",
     "حليب"
   ],
-  "company": "البشير"
+  "company": "البشير",
+  "consumerPrice": "5 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1185,7 +1253,8 @@ window.catalogData.products.push({
     "حليب",
     "شوكالا"
   ],
-  "company": "أمية كلاس"
+  "company": "أمية كلاس",
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1196,7 +1265,8 @@ window.catalogData.products.push({
   "description": "النكهات شوكالا ـ حليب",
   "available": true,
   "lowStock": false,
-  "company": "أميه كلاس"
+  "company": "أميه كلاس",
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1207,7 +1277,8 @@ window.catalogData.products.push({
   "description": "أصابع شوكولاتة ويفر بريك ستا المقرمشة",
   "available": true,
   "lowStock": false,
-  "consumerPrice": "تيفاني"
+  "consumerPrice": "تيفاني",
+  "piecesPerBox": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1218,18 +1289,20 @@ window.catalogData.products.push({
   "description": "ويفر هابي بريك بالكريمة الغنية",
   "available": true,
   "lowStock": false,
-  "company": "تيفاني"
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
-  "name": "BREAK بريك",
+  "name": "BREAK بريك اصبعين",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/mryBB5LP/17904423723973625622582965508116.jpg",
   "description": "شوكولاتة ويفر بريك الأصيلة الشهيرة",
   "available": true,
   "lowStock": false,
-  "company": "تيفاني"
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1240,7 +1313,8 @@ window.catalogData.products.push({
   "description": "ويفر بريك رينزو الغني بطعم الشوكولاتة",
   "available": true,
   "lowStock": true,
-  "company": "تيفاني"
+  "company": "تيفاني",
+  "consumerPrice": "40 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1251,7 +1325,8 @@ window.catalogData.products.push({
   "description": "سناك ويفر بريك تايم خفيف ومقرمش",
   "available": true,
   "lowStock": false,
-  "company": "تيفاني"
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1333,11 +1408,10 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/hxV0RJNc/17905913926648324840449697070687.jpg",
   "description": "النكهات : شوكالا - توت - فريز",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "flavors": [
     "شوكالا",
-    "توت",
     "فريز"
   ],
   "company": "جوردانا"
@@ -1356,7 +1430,8 @@ window.catalogData.products.push({
     "احمر",
     "ابيض"
   ],
-  "company": "ايس هابي"
+  "company": "ايس هابي",
+  "consumerPrice": "70 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1380,7 +1455,8 @@ window.catalogData.products.push({
   "description": "بيض شوكولاتة الأرض السعيدة مع ألعاب ومفاجآت",
   "available": true,
   "lowStock": false,
-  "company": "الصناعات الحديثه"
+  "company": "الصناعات الحديثه",
+  "consumerPrice": "10 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1401,9 +1477,12 @@ window.catalogData.products.push({
   "name": "بيتي فور جادو",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://i.ibb.co/xKCrVC5S/IMG-20260922-111134.jpg",
-  "description": "بنكهة الشوكالا والبيتي فور الفاخر"
+  "description": "بنكهة الشوكالا والبيتي فور الفاخر",
+  "available": true,
+  "lowStock": false,
+  "company": "جاد",
+  "consumerPrice": "5 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1466,14 +1545,15 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "توت توت ويفر بسكوت",
+  "name": "توت توت بسكوت طويله",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/TBX1gmyz/231303b93b1c.jpg",
   "description": "ويفر توت توت المقرمش والطري",
   "available": true,
   "lowStock": true,
-  "company": "توت توت"
+  "company": "توت توت",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1498,9 +1578,12 @@ window.catalogData.products.push({
   "name": "توت توت اكياس بسكوت والعاب",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/1czj9UhD8.jpg",
-  "description": "أكياس بسكويت توت توت المحبوبة مع ألعاب ومفاجآت"
+  "description": "أكياس بسكويت توت توت المحبوبة مع ألعاب ومفاجآت",
+  "available": false,
+  "lowStock": false,
+  "company": "توت توت",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1521,9 +1604,11 @@ window.catalogData.products.push({
   "name": "كرات الشوكالا",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://i.ibb.co/ZztZ5XMV/IMG-20260926-164651.jpg",
-  "description": "كرات الشوكولاتة المقرمشة المحشوة بالكريمة الغنية"
+  "description": "كرات الشوكولاتة المقرمشة المحشوة بالكريمة الغنية",
+  "available": true,
+  "lowStock": false,
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1578,7 +1663,8 @@ window.catalogData.products.push({
   "description": "بسكويت فور يو الفاخر خيارك المفضل مع القهوة",
   "available": false,
   "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية"
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1593,6 +1679,7 @@ window.catalogData.products.push({
     "حليب",
     "شوكالا"
   ],
+  "company": "شيف كيك",
   "consumerPrice": "10 ليرة جديدة",
   "piecesPerBox": "24"
 });
@@ -1609,7 +1696,8 @@ window.catalogData.products.push({
     "البندق",
     "شوكالا ساخنه"
   ],
-  "company": "فيرتيكا"
+  "company": "فيرتيكا",
+  "consumerPrice": "200 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1620,7 +1708,8 @@ window.catalogData.products.push({
   "description": "قهوة فيرتيكا سريعة التحضير غنية بالنكهة والمذاق الأصيل",
   "available": true,
   "lowStock": false,
-  "company": "فيرتيكا"
+  "company": "فيرتيكا",
+  "consumerPrice": "200 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1712,26 +1801,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "سيتي كافية 2-1 قهوه كريمي بدون سكر",
-  "category": "قهوة",
-  "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/DflkPmmo.jpg",
-  "description": "سيتي كافيه 2 في 1 بدون سكر",
-  "available": false,
-  "lowStock": false
-});
-
-window.catalogData.products.push({
-  "name": "سيتي شوكالا شراب الشوكالا",
-  "category": "قهوة",
-  "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/jZprrtND.jpg",
-  "description": "شراب شوكولاتة غني ولذيذ",
-  "available": false,
-  "lowStock": false
-});
-
-window.catalogData.products.push({
   "name": "سيتي كافيه غولد",
   "category": "قهوة",
   "price": "التواصل مع المبيعات",
@@ -1751,7 +1820,8 @@ window.catalogData.products.push({
   "description": "مشروب سيتي كافيه القهوة الباردة أورجينال المباشر والمنعش",
   "available": false,
   "lowStock": false,
-  "company": "سيتي كافية الإمارتيه"
+  "company": "سيتي كافية الإمارتيه",
+  "consumerPrice": "80 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1762,7 +1832,8 @@ window.catalogData.products.push({
   "description": "مشروب القهوة الباردة بنكهة الموكا اللذيذة من سيتي كافيه",
   "available": false,
   "lowStock": false,
-  "company": "سيتي كافية الإمارتيه"
+  "company": "سيتي كافية الإمارتيه",
+  "consumerPrice": "80 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1779,7 +1850,8 @@ window.catalogData.products.push({
     "برتقال",
     "تفاح"
   ],
-  "company": "فجر الأوائل"
+  "company": "فجر الأوائل",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1799,8 +1871,10 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://cdn.imagetourls.com/uploads/tyImg/1aZA0Hw2J.jpg",
   "description": "سكاكر بكتين طبيعية وصحية بمذاق الفواكه",
-  "available": false,
-  "lowStock": false
+  "available": true,
+  "lowStock": false,
+  "company": "غلاديس تان",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1855,7 +1929,8 @@ window.catalogData.products.push({
   "description": "سكاكر كلاسيس الفاخرة",
   "available": true,
   "lowStock": false,
-  "company": "أندوريا"
+  "company": "أندوريا",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1885,6 +1960,8 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "هيثم الأكرمي",
+  "consumerPrice": "2 = 5 ليرة جديدة",
+  "piecesPerBox": "100 ظرف",
   "images": [
     "https://i.ibb.co/xKFQg3nJ/c4e5bbfebfe1.jpg"
   ]
@@ -1911,7 +1988,8 @@ window.catalogData.products.push({
   "description": "علكة ميسون الشهيرة",
   "available": true,
   "lowStock": false,
-  "company": "ميسون"
+  "company": "ميسون",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1922,7 +2000,9 @@ window.catalogData.products.push({
   "description": "علكة سمارة",
   "available": true,
   "lowStock": false,
-  "company": "يحيى المصري"
+  "company": "يحيى المصري",
+  "consumerPrice": "2 = 5 ليرة جديدة",
+  "piecesPerBox": "100 حبه"
 });
 
 window.catalogData.products.push({
@@ -1933,7 +2013,9 @@ window.catalogData.products.push({
   "description": "بيض مفاجآت ممتع للأطفال يحتوي على سكاكر وألعاب مميزة",
   "available": true,
   "lowStock": false,
-  "company": "أتكيت لصناعه الألعاب"
+  "company": "أتكيت لصناعه الألعاب",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -1953,7 +2035,8 @@ window.catalogData.products.push({
   "description": "لعبة عيون مسلية للأطفال مع حلوى وسكاكر طازجة",
   "available": true,
   "lowStock": false,
-  "company": "بريتيج"
+  "company": "بريتيج",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1964,7 +2047,8 @@ window.catalogData.products.push({
   "description": "علكة رول اب شريط بطول متر ممتعة ومنعشة للأطفال",
   "available": true,
   "lowStock": false,
-  "company": "الأشبال"
+  "company": "الأشبال",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1985,7 +2069,8 @@ window.catalogData.products.push({
   "description": "لعبة تلفون ممتعة ومسلية للأطفال تحتوي على سكاكر",
   "available": true,
   "lowStock": false,
-  "company": "صنع في الصين"
+  "company": "صنع في الصين",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -2018,7 +2103,8 @@ window.catalogData.products.push({
     "ليمون",
     "برتقال"
   ],
-  "company": "شموط"
+  "company": "شموط",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -2042,7 +2128,8 @@ window.catalogData.products.push({
     "مشمش",
     "برتقال وجزر"
   ],
-  "company": "ياهلا"
+  "company": "ياهلا",
+  "consumerPrice": "10 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -2065,7 +2152,8 @@ window.catalogData.products.push({
     "فواكة",
     "برتقال وجزر"
   ],
-  "company": "فيرتيكا"
+  "company": "فيرتيكا",
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -2116,18 +2204,22 @@ window.catalogData.products.push({
   "description": "مشروب كاكاو الفائز الغني واللذيذ للتحضير السريع",
   "available": true,
   "lowStock": false,
-  "company": "شموط"
+  "company": "شموط",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
-  "name": "عصير جيلي رماز",
+  "name": "جيلي رماز",
   "category": "عصائر ومشروبات",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/mVfkL7rG/IMG-20260928-124421.jpg",
   "description": "عصير جيلي رماز المنعش بمختلف طعمات الفواكه",
   "available": true,
   "lowStock": false,
-  "company": "رمازه"
+  "company": "رمازه",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "50 قطعة"
 });
 
 window.catalogData.products.push({
@@ -2176,6 +2268,7 @@ window.catalogData.products.push({
     "اناناس"
   ],
   "company": "فريش التركيه",
+  "consumerPrice": "40 ليرة جديدة",
   "piecesPerBox": "24"
 });
 
@@ -2184,7 +2277,7 @@ window.catalogData.products.push({
   "category": "عصائر ومشروبات",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MD7Hhxr8/fe0402f8aba1.jpg",
-  "description": "",
+  "description": "عصير كرتون",
   "available": true,
   "lowStock": false,
   "isNew": true,
