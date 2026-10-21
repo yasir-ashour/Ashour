@@ -193,20 +193,19 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 text-white">أهلاً وسهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
   <p class="text-amber-300/90 text-sm sm:text-base max-w-2xl mx-auto mb-3 font-bold">شاهد منتجاتنا أو اطلب احتياجات محلك عبر الواتساب مع توصيل مجاناً</p>
 
-  <div id="storeRatingDisplay" class="hidden inline-flex items-center gap-2 bg-slate-950/60 border border-amber-500/30 rounded-full px-4 py-2 mb-4">
-    <span id="storeRatingStars" class="text-amber-400 text-lg">★★★★★</span>
-    <span id="storeRatingValue" class="text-white font-black text-lg">0.0</span>
-    <span class="text-slate-500 text-xs">|</span>
-    <span id="storeRatingCount" class="text-slate-400 text-xs">0 تقييم</span>
-  </div>
-
   <div class="max-w-md mx-auto flex flex-col gap-3">
     <div class="relative">
       <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500">
       <i class="fas fa-search absolute right-3.5 top-4 text-slate-400"></i>
       <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-6 h-6 rounded-full items-center justify-center"><i class="fas fa-times text-xs"></i></button>
     </div>
-    <div class="flex items-center justify-between px-2">
+    
+    <!-- ✅ زر الاشتراك في التنبيهات -->
+    <button onclick="subscribeToNotifications()" id="notifSubBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-lg transition w-full flex items-center justify-center gap-2">
+      <i class="fas fa-bell"></i> اشترك في تنبيهات المتجر (العروض الجديدة)
+    </button>
+
+    <div class="flex items-center justify-between px-2 mt-1">
       <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
         <i class="fas fa-boxes text-amber-400"></i>
         <span class="text-slate-300">عدد المنتجات:</span>
@@ -473,6 +472,45 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- ✅ قسم تقييم المتجر -->
+<section id="storeRatingSection" class="max-w-7xl mx-auto px-3 py-8 w-full border-t border-slate-800 mt-8">
+  <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 shadow-2xl text-center">
+    <h3 class="text-2xl font-black text-white mb-2"><i class="fas fa-star text-amber-400"></i> تقييم المتجر</h3>
+    <p class="text-slate-400 text-sm mb-4">رأيك يهمنا! ساعدنا في تحسين خدماتنا.</p>
+    
+    <div id="storeReviewsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-right mb-6 max-h-60 overflow-y-auto pr-1"></div>
+    
+    <button id="btnRateStore" onclick="openStoreRatingModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl transition"><i class="fas fa-pen"></i> أضف تقييمك للمتجر</button>
+  </div>
+</section>
+
+<!-- مودال تقييم المتجر -->
+<div id="storeRatingModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-text">تقييم المتجر</h3>
+      <button onclick="closeStoreRatingModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-slate-300 font-bold mb-2 text-sm text-center">كيف تقيم تجربتك معنا؟</label>
+        <div class="flex gap-2 justify-center">
+          <button onclick="setStoreStar(1)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="1"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(2)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="2"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(3)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="3"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(4)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="4"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(5)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
+        </div>
+      </div>
+      <textarea id="storeReviewComment" rows="3" placeholder="اكتب رأيك هنا (اختياري)..." maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+      <div class="flex gap-2">
+        <button onclick="closeStoreRatingModal()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
+        <button onclick="submitStoreRating()" id="submitStoreRatingBtn" class="flex-1 bg-amber-500 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-check"></i> نشر التقييم</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ✅ الأزرار العائمة (واتساب، الدعم الفني، السلة) -->
 <div class="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-2">
   <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-emerald-400"><i class="fab fa-whatsapp text-3xl"></i></a>
@@ -506,8 +544,11 @@ var selections = {};
 var currentCat = 'الكل';
 var curRevProduct = null;
 var curRevStars = 0;
-var storeStars = 0;
 var _searchTimer;
+
+// متغيرات تقييم المتجر
+window.storeStars = 0;
+window.currentStoreReviews = [];
 
 try {
   cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
@@ -536,7 +577,7 @@ window.pushBackState = function() {
 
 window.addEventListener('popstate', function(e) {
   let acted = false;
-  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal'];
+  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal', 'storeRatingModal'];
   for (let id of modals) {
     let m = document.getElementById(id);
     if (m && !m.classList.contains('hidden')) {
@@ -898,7 +939,7 @@ function buildCard(p) {
   return card;
 }
 
-// ✅ دالة إضافة/إزالة من المفضلة
+// ✅ دوال المفضلة
 function toggleWishlist(pName) {
   var idx = wishlist.indexOf(pName);
   if (idx > -1) {
@@ -976,7 +1017,6 @@ function updateCart() {
       var box = document.createElement('div');
       box.className = 'bg-slate-900/80 p-3 rounded-2xl border border-slate-700/80';
 
-      // حماية السلة من المنتجات المحذوفة
       var p = products.find(function(prod) { return prod.name === name; });
       if (!p) {
         delete cart[name];
@@ -1128,7 +1168,6 @@ function norm(t) {
   return t.toLowerCase().replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
 }
 
-// ✅ ترتيب المنتجات حسب الشركة
 function filterProducts() {
   var term = norm(document.getElementById('searchBox').value.trim());
   var filtered = [];
@@ -1141,6 +1180,7 @@ function filterProducts() {
     if (mc && ms) filtered.push(p);
   }
   
+  // ✅ الترتيب حسب الشركة ثم الاسم
   filtered.sort(function(a, b) {
     var compA = a.company || 'بدون شركة';
     var compB = b.company || 'بدون شركة';
@@ -1850,6 +1890,107 @@ function submitReview() {
   });
 }
 
+/* ============ ميزات تقييم المتجر والاشتراك ============ */
+window.subscribeToNotifications = async function() {
+  if (!window.OneSignal) {
+    showToast('جاري تحضير الإشعارات، حاول بعد قليل', 'error');
+    return;
+  }
+  try {
+    await window.OneSignal.Notifications.requestPermission();
+    showToast('تم تفعيل التنبيهات بنجاح ✅');
+    var btn = document.getElementById('notifSubBtn');
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-check"></i> مشترك في التنبيهات';
+      btn.classList.replace('bg-indigo-600', 'bg-emerald-600');
+    }
+  } catch(e) {
+    showToast('فشل تفعيل التنبيهات. تأكد من إعدادات المتصفح', 'error');
+  }
+};
+
+window.openStoreRatingModal = function() {
+  if (!window.currentUser) {
+    showToast('يرجى تسجيل الدخول أولاً لتتمكن من التقييم', 'error');
+    openAuthModal();
+    return;
+  }
+  
+  if (window.currentStoreReviews.some(r => r.userId === window.currentUser.uid)) {
+    showToast('لقد قمت بتقييم المتجر مسبقاً. شكراً لك!', 'error');
+    return;
+  }
+  
+  window.pushBackState();
+  document.getElementById('storeRatingModal').classList.remove('hidden');
+  document.getElementById('storeReviewComment').value = '';
+  window.storeStars = 0;
+  updateStoreStarRow(0);
+};
+
+window.closeStoreRatingModal = function() {
+  document.getElementById('storeRatingModal').classList.add('hidden');
+};
+
+window.setStoreStar = function(n) {
+  window.storeStars = n;
+  updateStoreStarRow(n);
+};
+
+function updateStoreStarRow(n) {
+  document.querySelectorAll('.storeStar').forEach(btn => {
+    let s = Number(btn.dataset.s);
+    if (s <= n) btn.classList.add('star-on');
+    else btn.classList.remove('star-on');
+  });
+}
+
+window.submitStoreRating = async function() {
+  if (window.storeStars === 0) { alert('اختر عدد النجوم'); return; }
+  
+  var btn = document.getElementById('submitStoreRatingBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
+  btn.disabled = true;
+  
+  var comment = document.getElementById('storeReviewComment').value.trim();
+  
+  try {
+    if (typeof window.saveStoreReviewToFirebase === 'function') {
+      await window.saveStoreReviewToFirebase(window.currentUser.uid, window.currentProfileData.name || 'عميل', window.storeStars, comment);
+      showToast('تم نشر تقييمك بنجاح! شكراً لك');
+      closeStoreRatingModal();
+    } else {
+      throw new Error('خدمة السحابة غير جاهزة');
+    }
+  } catch(e) {
+    console.error(e);
+    showToast('حدث خطأ أثناء النشر', 'error');
+  } finally {
+    btn.innerHTML = '<i class="fas fa-check"></i> نشر التقييم';
+    btn.disabled = false;
+  }
+};
+
+window.renderStoreReviews = function(reviews) {
+  var list = document.getElementById('storeReviewsList');
+  if (!list) return;
+  
+  if (reviews.length === 0) {
+    list.innerHTML = '<p class="text-center text-slate-500 col-span-full">لا توجد تقييمات بعد. كن أول من يقيّم!</p>';
+    return;
+  }
+  
+  list.innerHTML = reviews.map(r => `
+    <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="text-amber-400 text-xs font-bold">${'★'.repeat(r.stars) + '☆'.repeat(5 - r.stars)}</span>
+        <span class="text-white text-xs font-bold">${esc(r.name || 'عميل')}</span>
+      </div>
+      ${r.comment ? `<p class="text-slate-300 text-xs">${esc(r.comment)}</p>` : ''}
+    </div>
+  `).join('');
+};
+
 function imgErr(el) {
   if (el.parentElement) {
     el.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-slate-800 p-4"><i class="fas fa-box-open text-3xl text-amber-400"></i></div>';
@@ -2423,6 +2564,31 @@ document.addEventListener('keydown', function(e) {
       date: new Date().toISOString().slice(0, 10)
     });
   };
+
+  // ✅ دوال تقييم المتجر
+  window.saveStoreReviewToFirebase = async function(userId, name, stars, comment) {
+    return await addDoc(collection(db, "store_reviews"), {
+      userId: userId,
+      name: name,
+      stars: stars,
+      comment: comment,
+      createdAt: serverTimestamp()
+    });
+  };
+
+  window.listenToStoreReviews = function() {
+    const q = query(collection(db, "store_reviews"));
+    onSnapshot(q, (snapshot) => {
+      const reviews = [];
+      snapshot.forEach(doc => reviews.push(doc.data()));
+      reviews.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      window.currentStoreReviews = reviews;
+      if (typeof renderStoreReviews === 'function') renderStoreReviews(reviews);
+    });
+  };
+
+  // استدعاء الدالة عند تحميل الصفحة
+  setTimeout(listenToStoreReviews, 1000);
 
 </script>
 </body>
