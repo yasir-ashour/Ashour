@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢٠‏/١٠‏/٢٠٢٦، ١٢:٤٢:٢٢ م
+   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ١:٥٨:٤٢ م
    ================================ */
 
 window.catalogData = {
@@ -612,23 +612,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "شيبس لاند 1 كغ",
-  "category": "شيبس",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/JgHjMKt/17903702848272298161631129192310.jpg",
-  "description": "1 كغ - النكهات ذرة وحلو ـ خل ـ حار ـ كتشب",
-  "available": false,
-  "lowStock": false,
-  "flavors": [
-    "ذرة وحلو",
-    "خل",
-    "حار",
-    "كتشب"
-  ],
-  "company": "ماسه فودز"
-});
-
-window.catalogData.products.push({
   "name": "لب بذر دوار الشمس",
   "category": "شيبس",
   "price": "التواصل مع المبيعات",
@@ -1175,15 +1158,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "جيلي كوب كارز",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "available": false,
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/ZwDfFoLT.jpg",
-  "description": "أكواب جيلي كاندي ممتعة للأطفال"
-});
-
-window.catalogData.products.push({
   "name": "بسكوت ب ب حليب",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
@@ -1295,15 +1269,6 @@ window.catalogData.products.push({
   "company": "الزيات",
   "consumerPrice": "10 ليرة جديدة",
   "piecesPerBox": "24"
-});
-
-window.catalogData.products.push({
-  "name": "سميري دريم",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "available": false,
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/CsWfN2Vz.jpg",
-  "description": "بسكويت سميري دريم الفاخر المحشو"
 });
 
 window.catalogData.products.push({
@@ -1575,17 +1540,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "بسكوت شوكو ليغهيت",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/fV25TKQb/IMG-20260926-184507.jpg",
-  "description": "بسكويت خفيف ومقرمش بنكهة الشوكولاتة اللذيذة",
-  "available": true,
-  "lowStock": true,
-  "company": "تشيلو"
-});
-
-window.catalogData.products.push({
   "name": "Show اصابع شوكالا",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
@@ -1741,7 +1695,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://cdn.imagetourls.com/uploads/tyImg/v5tsOer9.jpg",
   "description": "قهوة سريعة التحضير ممزوجة بنكهة الهيل الطبيعي",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "سيتي كافية"
 });
@@ -1761,18 +1715,20 @@ window.catalogData.products.push({
   "name": "سيتي كافية 2-1 قهوه كريمي بدون سكر",
   "category": "قهوة",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/DflkPmmo.jpg",
-  "description": "سيتي كافيه 2 في 1 بدون سكر"
+  "description": "سيتي كافيه 2 في 1 بدون سكر",
+  "available": false,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
   "name": "سيتي شوكالا شراب الشوكالا",
   "category": "قهوة",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/jZprrtND.jpg",
-  "description": "شراب شوكولاتة غني ولذيذ"
+  "description": "شراب شوكولاتة غني ولذيذ",
+  "available": false,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
@@ -1793,7 +1749,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/Pvsw59HV/17905881015137144588691901690419.jpg",
   "description": "مشروب سيتي كافيه القهوة الباردة أورجينال المباشر والمنعش",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "سيتي كافية الإمارتيه"
 });
@@ -1804,7 +1760,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fwRN44d/17905881539073259721267290530679.jpg",
   "description": "مشروب القهوة الباردة بنكهة الموكا اللذيذة من سيتي كافيه",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "سيتي كافية الإمارتيه"
 });
@@ -1830,19 +1786,21 @@ window.catalogData.products.push({
   "name": "ليكي ريكو مكس شريطه",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "available": true,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/18WZ0qFWP.jpg",
-  "rotateClass": "rot-180",
-  "description": "نصف متر"
+  "description": "نصف متر",
+  "available": false,
+  "lowStock": false,
+  "rotateClass": "rot-180"
 });
 
 window.catalogData.products.push({
   "name": "اسكا البكتين",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "available": false,
   "image": "https://cdn.imagetourls.com/uploads/tyImg/1aZA0Hw2J.jpg",
-  "description": "سكاكر بكتين طبيعية وصحية بمذاق الفواكه"
+  "description": "سكاكر بكتين طبيعية وصحية بمذاق الفواكه",
+  "available": false,
+  "lowStock": false
 });
 
 window.catalogData.products.push({
