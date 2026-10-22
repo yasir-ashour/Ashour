@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢١‏/١٠‏/٢٠٢٦، ٩:١٨:٣٨ م
+   آخر تحديث: ٢٢‏/١٠‏/٢٠٢٦، ١:٥٩:٥٦ م
    ================================ */
 
 window.catalogData = {
@@ -376,7 +376,7 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "شوكالا فيوري صغيرة",
+  "name": "شوكالا فيوري كبيرة",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/NnTrRRSQ/1791299626960.jpg",
@@ -384,8 +384,8 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "تيفاني",
-  "consumerPrice": "مبيع 20",
-  "piecesPerBox": "24"
+  "consumerPrice": "مبيع 40",
+  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -640,7 +640,7 @@ window.catalogData.products.push({
   "name": "لب بذر دوار الشمس",
   "category": "شيبس",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/HDf6Y2JD/IMG-20260926-184721.jpg",
+  "image": "https://i.ibb.co/7d8VY4Ff/0e910f40d993.jpg",
   "description": "بذور دوار الشمس المحمصة والمملحة بعناية",
   "available": true,
   "lowStock": true,
@@ -652,7 +652,8 @@ window.catalogData.products.push({
     "جبنة"
   ],
   "company": "فيفتي فايف",
-  "consumerPrice": "10 ليرة جديدة"
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -892,7 +893,7 @@ window.catalogData.products.push({
   "name": "كيكتي الكاكاو بالحليب",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/04bd5cf4-ce75-4861-be7d-7c46dcd8b422.jpg",
+  "image": "https://i.ibb.co/mrgtxvxY/65872717c393.jpg",
   "description": "كيك كيكتي الهش بالكاكاو والمليء بكريمة الحليب",
   "available": true,
   "lowStock": false,
@@ -904,7 +905,7 @@ window.catalogData.products.push({
   "name": "كيكتي فانيلا بالشوكالا",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/7e6494b9-e2a4-48f6-a771-7ee0f8f44104.jpg",
+  "image": "https://i.ibb.co/5xYXf2Gk/6ea827eb4f72.jpg",
   "description": "كيك كيكتي الفانيلا الطري المحشو بالشوكالا",
   "available": true,
   "lowStock": false,
@@ -916,7 +917,7 @@ window.catalogData.products.push({
   "name": "كيكتي بالفريز",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/b192d6f7-9ec4-4860-bb40-0f26a3171d74.jpg",
+  "image": "https://i.ibb.co/27DxQqZ4/e70277b90e56.jpg",
   "description": "كيك كيكتي الشهي بمربى وكريمة الفريز",
   "available": true,
   "lowStock": false,
@@ -928,7 +929,7 @@ window.catalogData.products.push({
   "name": "كيكتي كاكاو بالشوكالا",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/0859f52d-a93a-4985-98f9-0cbc37eff590.jpg",
+  "image": "https://i.ibb.co/qMwLBg22/32632f5a41ea.jpg",
   "description": "كيك كيكتي الكاكاو المحشو بالشوكولاتة الغنية",
   "available": true,
   "lowStock": false,
@@ -940,7 +941,7 @@ window.catalogData.products.push({
   "name": "كيكتي فانيلا بالحليب",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/f80c1fc8-081a-499a-b386-4f3d11e57fcc.jpg",
+  "image": "https://i.ibb.co/zh4W6bXX/3ed569c5144f.jpg",
   "description": "كيك كيكتي الفانيلا مع كريمة الحليب الناعمة",
   "available": true,
   "lowStock": false,
@@ -976,7 +977,7 @@ window.catalogData.products.push({
   "name": "برنسيس مكسرات ٤",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/PZ69Rrbx/17903740632248857959363517203127-1.png",
+  "image": "https://i.ibb.co/fVqxvcQt/3582fa8e5521.jpg",
   "description": "حليب وشوكالا وكرميلو",
   "available": true,
   "lowStock": false,
@@ -1000,7 +1001,7 @@ window.catalogData.products.push({
   "name": "بسكوت رالاس",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/MDy7N7dC/FB-IMG-1790022842708.jpg",
+  "image": "https://i.ibb.co/KjsdKcrg/c1b49650dee2.jpg",
   "description": "النكهات : جوز هند - الكابتشينو - البندق - الفستق - الكراميلو",
   "available": true,
   "lowStock": false,
@@ -1019,7 +1020,7 @@ window.catalogData.products.push({
   "name": "رالاس لوس بجوز الهند",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/8qxxZXWw.jpg",
+  "image": "https://i.ibb.co/tMpQMGBp/90ab50208464.jpg",
   "description": "بسكويت رالاس لوس الفاخر المغطى بجوز الهند المقرمش",
   "available": true,
   "lowStock": false,
@@ -1030,7 +1031,7 @@ window.catalogData.products.push({
   "name": "رالاس نوغاتي بنكهة الفستق",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/14MJqgCFi.jpg",
+  "image": "https://i.ibb.co/twh0Lk8m/e991fd354018.jpg",
   "description": "نوغاتي هش ومحشو بطعم الفستق الغني",
   "available": true,
   "lowStock": false,
@@ -1087,7 +1088,7 @@ window.catalogData.products.push({
   "name": "دريم لاند 4 قطع",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/L8rAVpMz.jpg",
+  "image": "https://i.ibb.co/4Z82Frhw/40ab8e98d5f2.jpg",
   "description": "4 قطع محشوة بالفانيلا والشوكولا",
   "available": true,
   "lowStock": false,
@@ -1115,7 +1116,7 @@ window.catalogData.products.push({
   "name": "بونو سوبر سندويش",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/VWTLKYqn/Screenshot-2026-09-25-13-14-45-281-com-miui-gallery.jpg",
+  "image": "https://i.ibb.co/fdvwPLb1/8feea04c1d9f.jpg",
   "description": "النكهات : فانيلا - شوكالا - فريز",
   "available": true,
   "lowStock": false,
@@ -1172,7 +1173,7 @@ window.catalogData.products.push({
   "name": "ماكس تايم",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/DyMcLFS/17903712582651060331576293546049.jpg",
+  "image": "https://i.ibb.co/MkBs5tZR/f8be87ed9f8c.jpg",
   "description": "حليب - شوكالا",
   "available": true,
   "lowStock": false,
@@ -1214,7 +1215,7 @@ window.catalogData.products.push({
   "name": "فيريتيكس ويفر",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/MxZD29G6/1790371805850941167294567130987.jpg",
+  "image": "https://i.ibb.co/v4cpDYtv/2ecad33c4021.jpg",
   "description": "النكهات : الشوكالا - دارك شوكالا - حليب",
   "available": true,
   "lowStock": false,
@@ -1264,7 +1265,7 @@ window.catalogData.products.push({
   "name": "اولغاكيك",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/jZMtkKp6/17904425677595787193787746379974.jpg",
+  "image": "https://i.ibb.co/qM6pwgsK/c43633f1582a.jpg",
   "description": "النكهات شوكالا ـ حليب",
   "available": true,
   "lowStock": false,
@@ -1273,15 +1274,16 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "بريك ستا BREAKSTA",
+  "name": "بريك ستا قطعه BREAKSTA",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/93swPjnW/17904424529327407959265093845926.jpg",
   "description": "أصابع شوكولاتة ويفر بريك ستا المقرمشة",
   "available": true,
   "lowStock": false,
-  "consumerPrice": "تيفاني",
-  "piecesPerBox": "20 ليرة جديدة"
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة حديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -1293,7 +1295,8 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "تيفاني",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -1454,7 +1457,7 @@ window.catalogData.products.push({
   "name": "الأرض السعيده (بيض)",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/18ALkvyF5.jpg",
+  "image": "https://i.ibb.co/S4yJ1Rv1/cf2929f0314b.jpg",
   "description": "بيض شوكولاتة الأرض السعيدة مع ألعاب ومفاجآت",
   "available": true,
   "lowStock": false,
@@ -1480,7 +1483,7 @@ window.catalogData.products.push({
   "name": "بيتي فور جادو",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/xKCrVC5S/IMG-20260922-111134.jpg",
+  "image": "https://i.ibb.co/JjZyqFZ9/455b73832f99.jpg",
   "description": "بنكهة الشوكالا والبيتي فور الفاخر",
   "available": true,
   "lowStock": false,
@@ -1707,12 +1710,13 @@ window.catalogData.products.push({
   "name": "فيرتيكا قهوة",
   "category": "قهوة",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/SXWTSbRX/17903727102627557644378252862299.jpg",
+  "image": "https://i.ibb.co/yFr3fs8K/d7577e4421e4.jpg",
   "description": "قهوة فيرتيكا سريعة التحضير غنية بالنكهة والمذاق الأصيل",
   "available": true,
   "lowStock": false,
   "company": "فيرتيكا",
-  "consumerPrice": "200 ليرة جديدة"
+  "consumerPrice": "200 ليرة جديدة",
+  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -1872,7 +1876,7 @@ window.catalogData.products.push({
   "name": "اسكا البكتين",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/1aZA0Hw2J.jpg",
+  "image": "https://i.ibb.co/HTQ5WKYq/032de94e8be6.jpg",
   "description": "سكاكر بكتين طبيعية وصحية بمذاق الفواكه",
   "available": true,
   "lowStock": false,
@@ -2012,7 +2016,7 @@ window.catalogData.products.push({
   "name": "بيض داخلها العاب",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/VYmrhySQ/IMG-20260926-164613.jpg",
+  "image": "https://i.ibb.co/qLc8gCjj/111341174bec.jpg",
   "description": "بيض مفاجآت ممتع للأطفال يحتوي على سكاكر وألعاب مميزة",
   "available": true,
   "lowStock": false,
@@ -2046,7 +2050,7 @@ window.catalogData.products.push({
   "name": "رول اب علكة متر",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/SDbXdWbT/IMG-20260930-145107.jpg",
+  "image": "https://i.ibb.co/mr0Z9qD7/6b675dede400.jpg",
   "description": "علكة رول اب شريط بطول متر ممتعة ومنعشة للأطفال",
   "available": true,
   "lowStock": false,
@@ -2068,7 +2072,7 @@ window.catalogData.products.push({
   "name": "تلفون لعبه",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/DHc56gLy/IMG-20260930-145802.jpg",
+  "image": "https://i.ibb.co/DD6XwqwL/00900776b5d2.jpg",
   "description": "لعبة تلفون ممتعة ومسلية للأطفال تحتوي على سكاكر",
   "available": true,
   "lowStock": false,
@@ -2313,6 +2317,206 @@ window.catalogData.products.push({
   ],
   "company": "بان سيلا",
   "consumerPrice": "85 ليره جديده",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "X فورتين ذرة حلوة",
+  "category": "شيبس",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/xtFqg40Y/37455c41c9c3.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "company": "دارنيتو",
+  "consumerPrice": "20 ليرة جديدة",
+  "boxesPerCarton": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بيلو بسكوت مقطع",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/1YHY1Vbk/b8c042582a74.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "company": "أرجوان",
+  "consumerPrice": "5 ليرة جديده",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "شماسي شوكالا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/yrqNKYF/b966583a1a54.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "معمل شوكالا الحياة",
+  "consumerPrice": "5 ليرة جديده",
+  "piecesPerBox": "48"
+});
+
+window.catalogData.products.push({
+  "name": "بسكويت اصابع شوكالا بيسك لاند",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/J45jPsQ/25fadedf84a0.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "حليب",
+    "شوكالا"
+  ],
+  "company": "مؤسسه سيدار",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "جيلي رماز كوب",
+  "category": "سكاكر وعلكة",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/Q7CkqbKL/8b93ef7069e5.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "رماز",
+  "consumerPrice": "2= 5 ليرة جديده",
+  "piecesPerBox": "120"
+});
+
+window.catalogData.products.push({
+  "name": "عصير طبيعي  كناري زجاجه",
+  "category": "عصائر ومشروبات",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/HpTd7hgn/d402adca38f4.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "توت",
+    "منجا",
+    "برتقال"
+  ],
+  "company": "الكمال",
+  "consumerPrice": "50 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "شيبس ترونو",
+  "category": "شيبس",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/fdtCGLCS/a0219f8c496a.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "flavors": [
+    "كتشب",
+    "جبنه",
+    "كريمه واعشاب"
+  ],
+  "company": "سنابل الشام",
+  "consumerPrice": "50 ليرة جديدة",
+  "boxesPerCarton": "12"
+});
+
+window.catalogData.products.push({
+  "name": "رالاس نوغا مع الكراميل",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/xKqwPnQH/551bf31c1f8a.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "رالاس",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "بريك اربع اصابع",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/F4jyzXkh/f6ae396f3275.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "40 ليرة جديدة",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "فيوري قطعه صغيرة",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/6R2K9LqC/fc89daaac9a7.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بريك تايم قطعه",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/YFVtRBFb/5078ad3ea29d.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بريك ديلايتس",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/gZm2dxLj/8b70bd921e7b.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بريك سوبا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/kV5JtfmM/cf25a8c5b87e.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بريكستا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/SXKjG3s4/11b7b63fcdfb.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تيفاني",
+  "consumerPrice": "40 ليرة جديدة",
   "piecesPerBox": "12"
 });
 
