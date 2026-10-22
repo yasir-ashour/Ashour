@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢٢‏/١٠‏/٢٠٢٦، ١:٥٩:٥٦ م
+   آخر تحديث: ٢٢‏/١٠‏/٢٠٢٦، ٢:٢٥:٥٠ م
    ================================ */
 
 window.catalogData = {
@@ -341,7 +341,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/1YRnQD3B/1791299482629.jpg",
   "description": "كيك زنجيرز الطري اللذيذ",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "أمية كلاس",
   "consumerPrice": "40 ليرة جديده"
@@ -526,7 +526,8 @@ window.catalogData.products.push({
     "ذرة حلوة"
   ],
   "company": "Modern Nutrition",
-  "consumerPrice": "10 ليرة جديدة"
+  "consumerPrice": "10 ليرة جديدة",
+  "boxesPerCarton": "48"
 });
 
 window.catalogData.products.push({
@@ -567,24 +568,7 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "غولدن تاتش صغير 1",
-  "category": "شيبس",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/343b0fb2-a7e9-4a2d-84b9-342185ab3852.jpg",
-  "description": "النكهات : كتشب وخل وبيتزا",
-  "available": false,
-  "lowStock": false,
-  "flavors": [
-    "كتشب",
-    "خل",
-    "بيتزا"
-  ],
-  "company": "ماسة فودز",
-  "consumerPrice": "10 ليرة جديدة"
-});
-
-window.catalogData.products.push({
-  "name": "شيبسو طبيعي 1",
+  "name": "شيبسو طبيعي صغير",
   "category": "شيبس",
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/ac96aa6d-729a-4a79-85ec-708e6a4411da.jpg",
@@ -597,7 +581,8 @@ window.catalogData.products.push({
     "ملح"
   ],
   "company": "شموط",
-  "consumerPrice": "10 ليرة جديدة"
+  "consumerPrice": "10 ليرة جديدة",
+  "boxesPerCarton": "50"
 });
 
 window.catalogData.products.push({
@@ -728,6 +713,10 @@ window.catalogData.products.push({
   "description": "بسكويت ون تكة المميّز",
   "available": true,
   "lowStock": false,
+  "flavors": [
+    "شوكالا",
+    "حليب"
+  ],
   "company": "Modern industeries",
   "consumerPrice": "20 ليرة جديدة"
 });
@@ -871,7 +860,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg",
   "description": "بسكويت سوبر اردو المغطى بشوكولاتة الحليب الغنية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "60 ليرة جديدة"
@@ -958,7 +947,8 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "حوريه",
-  "consumerPrice": "25 ليرة جديدة"
+  "consumerPrice": "25 ليرة جديدة",
+  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -974,7 +964,7 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "برنسيس مكسرات ٤",
+  "name": "برنسيس مكسرات",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fVqxvcQt/3582fa8e5521.jpg",
