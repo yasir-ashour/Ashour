@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٤‏/١١‏/٢٠٢٦، ٨:٣٢:٥٠ م
+   آخر تحديث: ٤‏/١١‏/٢٠٢٦، ٨:٤٢:٣٥ م
    ================================ */
 
 window.catalogData = {
@@ -2206,7 +2206,7 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "جيلي رماز",
+  "name": "جيلي رماز كبيرة",
   "category": "عصائر ومشروبات",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/mVfkL7rG/IMG-20260928-124421.jpg",
@@ -2507,6 +2507,88 @@ window.catalogData.products.push({
   "company": "تيفاني",
   "consumerPrice": "40 ليرة جديدة",
   "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "لاتيلا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/3YMPGfmh/68d66630af0a.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "سميري سانتال",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/rGGDfS12/9a57a4fa27c6.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "5 ليره جديده",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "كأس كريم وشوكالا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/MDCbqC1H/bfbde5b964a5.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "حلى الشام",
+  "consumerPrice": "30 ليرة جديدة",
+  "piecesPerBox": "18"
+});
+
+window.catalogData.products.push({
+  "name": "كريم مغطس بالشوكالا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/WvRYgpMW/0cf7523aee6c.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "حلى الشام",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "اندومي",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/4wJnwS62/eb84c91b8f20.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "خضار"
+  ],
+  "company": "اندومي",
+  "consumerPrice": "40 ليرة جديدة",
+  "boxesPerCarton": "40"
+});
+
+window.catalogData.products.push({
+  "name": "سميري كاندي بونو",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/jkqZHLPh/e2a27cf13692.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "الينبوع المحدودة المسؤولية",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
 });
 
 console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");
