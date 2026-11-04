@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٢٢‏/١٠‏/٢٠٢٦، ٤:٤٤:٤٢ م
+   آخر تحديث: ٤‏/١١‏/٢٠٢٦، ٨:٣٢:٥٠ م
    ================================ */
 
 window.catalogData = {
@@ -108,7 +108,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/sp9QkV36/1791903052882.jpg",
   "description": "النكهات : باربكيو 1",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "flavors": [
     "باربكيو"
@@ -124,10 +124,9 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/gLZD7snf/1791904125082.jpg",
   "description": "النكهات : خردل وعسل - ذرة حلوة - حار وليمون - خضار - جبنة",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "flavors": [
-    "خردل وعسل",
     "ذرة حلوة",
     "حار وليمون",
     "خضار",
@@ -165,7 +164,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fVD0CKR7/1791903879220.jpg",
   "description": "قهوة إكسترا هال 200 غرام",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -627,8 +626,8 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/7d8VY4Ff/0e910f40d993.jpg",
   "description": "بذور دوار الشمس المحمصة والمملحة بعناية",
-  "available": true,
-  "lowStock": true,
+  "available": false,
+  "lowStock": false,
   "flavors": [
     "خل",
     "حار",
@@ -775,7 +774,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/Qyp4pHF/cdc3665ba143.jpg",
   "description": "بسكويت موندو بريميوم الفاخر بالطعم الغني",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "جنتي",
   "consumerPrice": "10 ليرة جديدة",
@@ -836,7 +835,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/effc22e9-ff16-4fa4-92b1-ef3398141409.jpg",
   "description": "بسكويت واوو كريمز بحشوة جوز الهند الغنية",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "60 ليرة جديدة"
@@ -860,7 +859,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg",
   "description": "بسكويت سوبر اردو المغطى بشوكولاتة الحليب الغنية",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "60 ليرة جديدة"
@@ -944,7 +943,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://iili.io/naG7v2V.jpg",
   "description": "بسكويت اردو الفاخر والمقرمش بنكهة الحليب الغنية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "25 ليرة جديدة",
@@ -1588,7 +1587,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/5xz6mC8f/b20552197917.jpg",
   "description": "بسكويت كوكو موندو غني بالطعم اللذيذ",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "rotateClass": "rot-270",
   "company": "جنتي",
