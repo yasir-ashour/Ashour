@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٤‏/١١‏/٢٠٢٦، ٨:٤٢:٣٥ م
+   آخر تحديث: ٤‏/١١‏/٢٠٢٦، ٨:٤٨:٢٧ م
    ================================ */
 
 window.catalogData = {
@@ -213,8 +213,7 @@ window.catalogData.products.push({
   "description": "بسكويت ماتيلدا دارك الفاخر",
   "available": true,
   "lowStock": false,
-  "hasOffer": true,
-  "oldPrice": "90 ليرة جديدة",
+  "isNew": true,
   "company": "البشير",
   "consumerPrice": "10 ليرة جديده",
   "piecesPerBox": "12"
@@ -1575,7 +1574,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://cdn.imagetourls.com/uploads/tyImg/1czj9UhD8.jpg",
   "description": "أكياس بسكويت توت توت المحبوبة مع ألعاب ومفاجآت",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "توت توت",
   "consumerPrice": "10 ليرة جديدة"
@@ -1656,7 +1655,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/xqw4NVw9/IMG-20260928-122756.jpg",
   "description": "بسكويت فور يو الفاخر خيارك المفضل مع القهوة",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "الينبوع المحدودة المسؤولية",
   "consumerPrice": "20 ليرة جديدة"
@@ -2015,15 +2014,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "سيارة وعلكة",
-  "category": "سكاكر وعلكة",
-  "price": "التواصل مع المبيعات",
-  "available": false,
-  "image": "https://i.ibb.co/3yWHJqks/IMG-20260926-164547.jpg",
-  "description": "لعبة سيارة ممتعة مع علكة طيبة ومحبوبة للأطفال"
-});
-
-window.catalogData.products.push({
   "name": "العاب عيون",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
@@ -2171,15 +2161,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "سولو عصير",
-  "category": "عصائر ومشروبات",
-  "price": "التواصل مع المبيعات",
-  "available": false,
-  "image": "https://cdn.imagetourls.com/uploads/tyImg/69w6ahLa.jpg",
-  "description": "برتقال وفريز توت"
-});
-
-window.catalogData.products.push({
   "name": "كولا مشروب غازي",
   "category": "عصائر ومشروبات",
   "price": "التواصل مع المبيعات",
@@ -2187,6 +2168,14 @@ window.catalogData.products.push({
   "description": "ساده - برتقال - جلاب - كولا",
   "available": true,
   "lowStock": false,
+  "flavors": [
+    "سادة",
+    "تفاخ",
+    "كولا",
+    "برتقال",
+    "برتقال وجزر",
+    "رمان"
+  ],
   "company": "الأصباشي",
   "consumerPrice": "20 ليره جديده",
   "piecesPerBox": "24"
@@ -2329,7 +2318,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/1YHY1Vbk/b8c042582a74.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "isNew": true,
   "company": "أرجوان",
