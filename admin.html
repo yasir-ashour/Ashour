@@ -21,7 +21,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </head>
 <body class="min-h-screen">
 
-<!-- ✅ شاشة تسجيل الدخول الآمنة (Firebase Auth) -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
@@ -132,9 +131,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
     <p class="text-lg">لا توجد منتجات تطابق البحث</p>
   </div>
-</div>
-
-<div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
+</div><div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fas fa-store text-amber-400"></i> إعدادات المتجر</h2>
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المتجر</label><input type="text" id="setStoreName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
@@ -207,7 +204,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
-</div><div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+</div>
+
+<div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
     <div class="bg-slate-900 border border-blue-500/30 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-inbox text-blue-400"></i> طلبات جديدة</p>
@@ -254,16 +253,28 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <p>جاري تحميل الطلبات...</p>
     </div>
   </div>
-</div>
-
-<div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
-  <div class="flex items-center justify-between mb-5">
+</div><div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+  <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
     <h2 class="text-xl font-black text-white flex items-center gap-2">
       <i class="fas fa-users text-amber-400"></i> سجل العملاء
     </h2>
-    <button onclick="loadCustomersAndOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
-      <i class="fas fa-sync-alt"></i> تحديث البيانات
-    </button>
+    <div class="flex gap-2 flex-wrap">
+      <button onclick="openRecoveryGuide()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-key"></i> دليل استعادة الرمز
+      </button>
+      <button onclick="openFirebaseConsole()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <i class="fas fa-fire"></i> Firebase Console
+      </button>
+      <button onclick="loadCustomersAndOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
+        <i class="fas fa-sync-alt"></i> تحديث البيانات
+      </button>
+    </div>
+  </div>
+  <div class="bg-sky-950/40 border border-sky-500/30 rounded-2xl p-4 mb-5 text-sm">
+    <p class="text-sky-200 font-bold mb-1"><i class="fas fa-info-circle"></i> ملاحظة</p>
+    <p class="text-sky-300/90 text-xs leading-relaxed">
+      العملاء المسجلون بنظام <span class="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-mono text-[10px]">📱 Phone+PIN</span> يدخلون برقم الهاتف + رمز سري (6 أرقام) بدلاً من البريد. لاستعادة رمزهم، استخدم زر <strong>🔑 استعادة</strong> بجانب كل عميل.
+    </p>
   </div>
   <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
@@ -432,9 +443,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       </div>
     </div>
   </div>
-</div>
-
-<div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+</div><div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500"></div>
     <div class="p-6 text-center">
@@ -476,6 +485,52 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- ✅ مودال دليل استعادة الرمز السري (جديد) -->
+<div id="recoveryGuideModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto p-4">
+  <div class="max-w-2xl mx-auto my-8 bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-xl font-black gold-gradient-text"><i class="fas fa-key text-purple-400"></i> دليل استعادة الرمز السري</h3>
+      <button onclick="closeRecoveryGuide()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-5 space-y-4 text-sm">
+      <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200">
+        <i class="fas fa-exclamation-triangle mr-1"></i>
+        Firebase لا يسمح للأدمن بتغيير كلمة مرور أي مستخدم مباشرة. الحل: <strong>حذف الحساب القديم</strong> ثم إنشاء جديد تلقائياً.
+      </div>
+      <div class="space-y-3">
+        <div class="flex gap-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0 font-black text-purple-300">1</div>
+          <div><p class="text-white font-bold mb-1">استقبل الطلب</p><p class="text-slate-400 text-xs">الزبون يراسلك على واتساب: "نسيت رمزي، رقمي 0959xxxxxxx"</p></div>
+        </div>
+        <div class="flex gap-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0 font-black text-purple-300">2</div>
+          <div><p class="text-white font-bold mb-1">افتح Firebase Console</p><p class="text-slate-400 text-xs">اضغط زر Firebase Console → Authentication → Users</p></div>
+        </div>
+        <div class="flex gap-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0 font-black text-purple-300">3</div>
+          <div><p class="text-white font-bold mb-1">ابحث عن البريد الداخلي</p><p class="text-slate-400 text-xs mb-2">البريد الداخلي = رقم الهاتف (بدون 0 وبدون +963) + @ashour.local</p><p class="text-slate-300 text-xs bg-slate-900 rounded p-2 font-mono" dir="ltr">مثال: 0959248901 → 959248901@ashour.local</p></div>
+        </div>
+        <div class="flex gap-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0 font-black text-purple-300">4</div>
+          <div><p class="text-white font-bold mb-1">احذف الحساب</p><p class="text-slate-400 text-xs">بجانب البريد، اضغط ⋮ → Delete account</p></div>
+        </div>
+        <div class="flex gap-3 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 font-black text-emerald-300">5</div>
+          <div><p class="text-white font-bold mb-1">أخبر الزبون</p><p class="text-slate-400 text-xs">"افتح التطبيق، أدخل رقمك والرمز الجديد واضغط دخول" → سيُنشأ حساب جديد تلقائياً</p></div>
+        </div>
+      </div>
+      <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3 text-xs text-emerald-200">
+        <i class="fas fa-check-circle mr-1"></i>
+        <strong>بيانات الزبون محفوظة:</strong> الطلبات والاسم والمحل تبقى في Firestore حتى بعد حذف الحساب.
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
+      <button onclick="closeRecoveryGuide()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-xl text-sm">إغلاق</button>
+      <button onclick="openFirebaseConsole()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-fire"></i> فتح Firebase</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p id="toastMsg" class="text-sm font-bold"></p></div>
 
 <div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
@@ -496,8 +551,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </div><!-- /adminApp --><script>
 /* ============================ الإعدادات والمتغيرات ============================ */
 const STORAGE_KEY = 'ashour_catalog_data_v1';
-const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f'; // ⚠️ قم بتجديده لاحقاً
+const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const IDLE_TIMEOUT = 30 * 60 * 1000;
+const FIREBASE_CONSOLE_URL = 'https://console.firebase.google.com/project/ashour-e5e42/authentication/users';
 
 let catalogData = { products: [], settings: {}, categories: [] };
 let editingFlavors = [];
@@ -525,7 +581,7 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;'); 
 }
-window.escapeHtml = escapeHtml; // جعلها متاحة للسكربت النمطي
+window.escapeHtml = escapeHtml;
 
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast'); const toastMsg = document.getElementById('toastMsg');
@@ -537,6 +593,19 @@ function showToast(msg, type = 'success') {
   showToast._t = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
 window.showToast = showToast;
+
+// ============ ✅ دوال جديدة: استعادة الرمز + Firebase Console ============
+window.openRecoveryGuide = function() {
+  document.getElementById('recoveryGuideModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+};
+window.closeRecoveryGuide = function() {
+  document.getElementById('recoveryGuideModal').classList.add('hidden');
+  document.body.style.overflow = '';
+};
+window.openFirebaseConsole = function() {
+  window.open(FIREBASE_CONSOLE_URL, '_blank', 'noopener,noreferrer');
+};
 
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData)); document.getElementById('dirtyBadge').classList.remove('hidden'); }
 function clearDirty() { document.getElementById('dirtyBadge').classList.add('hidden'); }
@@ -554,9 +623,6 @@ function resolveConfirm(answer) {
   document.getElementById('confirmModal').classList.add('hidden');
   if (_confirmResolver) { _confirmResolver(answer); _confirmResolver = null; }
 }
-
-// ✅ تم حذف دوال الدخول القديمة (tryLogin, checkLock, ...)
-// لأنها أصبحت غير آمنة وتم استبدالها بـ Firebase Auth في السكربت النمطي.
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
@@ -990,7 +1056,6 @@ function saveAll() { persist(); clearDirty(); showToast('تم حفظ التغي�
 // ✅ دالة النشر (مع إخفاء البيانات الحساسة)
 function buildCatalogJS() {
   const cleanSettings = { ...catalogData.settings };
-  // حذف البيانات السرية
   delete cleanSettings.password;
   delete cleanSettings.githubUser;
   delete cleanSettings.githubRepo;
@@ -1176,14 +1241,56 @@ function uploadSingleToImgBB(file) {
   });
 }
 
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeProductModal(); if (_confirmResolver) resolveConfirm(false); } });
+document.addEventListener('keydown', (e) => { 
+  if (e.key === 'Escape') { 
+    closeProductModal(); 
+    if (_confirmResolver) resolveConfirm(false); 
+    // ✅ إغلاق مودال دليل الاستعادة عند Escape
+    const rgm = document.getElementById('recoveryGuideModal');
+    if (rgm && !rgm.classList.contains('hidden')) closeRecoveryGuide();
+  } 
+});
 
-// ✅ الدالة الابتدائية المبسطة (تنتظر السكربت النمطي ليتحقق من الدخول)
+// ✅ الدالة الابتدائية
 (async function boot() {
   await loadInitialData();
-  // التحقق من حالة الدخول يتم عبر onAuthStateChanged في السكربت النمطي
 })();
-</script><!-- سكربت Firebase لجلب العملاء والطلبات وإدارتها وإرسال الإشعارات -->
+</script><!-- ✅ مودال استعادة الرمز لكل عميل على حدة -->
+<div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-gradient-text"><i class="fas fa-key text-purple-400"></i> استعادة الرمز السري</h3>
+      <button onclick="closeCustomerRecovery()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+        <p class="text-slate-400 text-xs mb-1">العميل</p>
+        <p id="recCustName" class="text-white font-bold text-sm">اسم العميل</p>
+        <p id="recCustPhone" class="text-amber-400 text-xs font-mono mt-1" dir="ltr">0959xxxxxxx</p>
+      </div>
+      <div class="bg-purple-950/30 rounded-xl p-3 border border-purple-500/40">
+        <p class="text-purple-300 text-xs font-bold mb-1"><i class="fas fa-envelope"></i> البريد الداخلي (للبحث في Firebase)</p>
+        <p id="recCustEmail" class="text-white font-mono text-sm break-all bg-slate-950 rounded p-2" dir="ltr">9551234567@ashour.local</p>
+        <button onclick="copyCustomerRecoveryEmail()" class="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-2">
+          <i class="fas fa-copy"></i> نسخ البريد
+        </button>
+      </div>
+      <div class="bg-amber-950/30 rounded-xl p-3 border border-amber-500/30 text-xs text-amber-200 leading-relaxed">
+        <i class="fas fa-info-circle mr-1"></i>
+        <strong>الخطوات:</strong><br>
+        1. اضغط "فتح Firebase Console"<br>
+        2. في تبويب Users، ابحث بالبريد الداخلي أعلاه<br>
+        3. اضغط ⋮ → Delete account<br>
+        4. أخبر الزبون: "ادخل برقمك والرمز الجديد"
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-2">
+      <button onclick="closeCustomerRecovery()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-xl text-sm">إغلاق</button>
+      <button onclick="openFirebaseConsole()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-fire"></i> Firebase</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1202,10 +1309,50 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // ✅ دالة مساعدة لمنع ثغرة XSS
   function safeText(v) {
     return (typeof window.escapeHtml === 'function') ? window.escapeHtml(v) : String(v || '');
   }
+
+  // ============ ✅ دوال مساعدة لاستعادة الرمز ============
+  function normalizePhone(phone) {
+    let p = String(phone || '').replace(/[^\d]/g, '');
+    if (p.startsWith('00963')) p = p.slice(5);
+    else if (p.startsWith('963') && p.length > 9) p = p.slice(3);
+    else if (p.startsWith('0')) p = p.slice(1);
+    return p;
+  }
+
+  function phoneToInternalEmail(phone) {
+    const normalized = normalizePhone(phone);
+    if (!normalized) return '';
+    return normalized + '@ashour.local';
+  }
+
+  // ============ ✅ دوال استعادة الرمز لكل عميل ============
+  let _currentRecoveryEmail = '';
+
+  window.openCustomerRecovery = function(name, phone, email) {
+    _currentRecoveryEmail = email;
+    document.getElementById('recCustName').innerText = name || 'بدون اسم';
+    document.getElementById('recCustPhone').innerText = phone || '—';
+    document.getElementById('recCustEmail').innerText = email || '—';
+    document.getElementById('customerRecoveryModal').classList.remove('hidden');
+  };
+
+  window.closeCustomerRecovery = function() {
+    document.getElementById('customerRecoveryModal').classList.add('hidden');
+  };
+
+  window.copyCustomerRecoveryEmail = function() {
+    if (!_currentRecoveryEmail) return;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(_currentRecoveryEmail)
+        .then(() => window.showToast('تم نسخ البريد الداخلي ✅'))
+        .catch(() => window.showToast('تعذّر النسخ — انسخه يدوياً', 'error'));
+    } else {
+      window.showToast('البريد: ' + _currentRecoveryEmail, 'info');
+    }
+  };
 
   // ==================== تسجيل دخول الأدمن الآمن ====================
   window.tryAdminLogin = async function() {
@@ -1226,7 +1373,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     
     try {
       await signInWithEmailAndPassword(auth, email, pass);
-      // الدخول نجح، onAuthStateChanged سيتكفل بإظهار اللوحة
     } catch (e) {
       errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة';
       errEl.classList.remove('hidden');
@@ -1270,7 +1416,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     }
   };
 
-  // ==================== الإشعارات الجماعية ====================
   window.sendBroadcast = async function() {
     const title = document.getElementById('broadcastTitle').value.trim();
     const msg = document.getElementById('broadcastMsg').value.trim();
@@ -1555,7 +1700,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     return revs;
   };
 
-  // ==================== العملاء ====================
+  // ==================== العملاء (✅ معدّل: مع شارة Phone+PIN وزر استعادة) ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
@@ -1586,11 +1731,40 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
           }).join('')}</div></div>`;
         }
         
+        // ✅ تحسينات: شارة Phone+PIN + زر استعادة
+        const isPhonePin = user.authMethod === 'phone_pin';
+        const internalEmail = isPhonePin ? phoneToInternalEmail(user.phone || '') : '';
+        const phonePinBadge = isPhonePin 
+          ? `<span class="text-[9px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-1.5 py-0.5 rounded font-mono whitespace-nowrap"><i class="fas fa-mobile-alt"></i> Phone+PIN</span>` 
+          : '';
+        const recoverBtn = isPhonePin && internalEmail
+          ? `<button onclick="openCustomerRecovery('${safeText(user.name || '').replace(/'/g, "&#39;")}', '${safeText(user.phone || '')}', '${safeText(internalEmail)}')" class="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold py-1.5 rounded-lg flex items-center justify-center gap-1"><i class="fas fa-key"></i> استعادة الرمز</button>` 
+          : '';
+        const displayContact = isPhonePin ? (user.phone || '—') : (user.email || '—');
+        const contactIcon = isPhonePin ? 'fa-mobile-alt text-purple-400' : 'fa-envelope text-slate-500';
+        
         const card = document.createElement('div');
         card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3';
+        if (isPhonePin) card.classList.add('border-purple-500/30');
         const avatarUrl = safeText(user.avatarUrl || 'logo.png');
         
-        card.innerHTML = `<div class="flex items-start gap-3"><img src="${avatarUrl}" class="w-14 h-14 rounded-full object-cover border-2 border-amber-500/50 flex-shrink-0" onerror="this.src='logo.png'"><div class="min-w-0 flex-grow"><h3 class="text-white font-black text-sm truncate">${safeText(user.name || 'بدون اسم')}</h3><p class="text-slate-400 text-xs truncate" dir="ltr">${safeText(user.email)}</p><div class="mt-2 space-y-1 text-xs"><p class="text-slate-300"><i class="fas fa-phone text-emerald-400 w-4"></i> ${safeText(user.phone || '—')}</p><p class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${safeText(user.shopName || '—')}</p></div></div></div>${ordersHtml}`;
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <img src="${avatarUrl}" class="w-14 h-14 rounded-full object-cover border-2 ${isPhonePin ? 'border-purple-500/50' : 'border-amber-500/50'} flex-shrink-0" onerror="this.src='logo.png'">
+            <div class="min-w-0 flex-grow">
+              <div class="flex items-center gap-2 flex-wrap mb-1">
+                <h3 class="text-white font-black text-sm truncate">${safeText(user.name || 'بدون اسم')}</h3>
+                ${phonePinBadge}
+              </div>
+              <p class="text-slate-400 text-xs truncate" dir="ltr"><i class="fas ${contactIcon} ml-1"></i>${safeText(displayContact)}</p>
+              <div class="mt-2 space-y-1 text-xs">
+                <p class="text-slate-300"><i class="fas fa-phone text-emerald-400 w-4"></i> ${safeText(user.phone || '—')}</p>
+                <p class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${safeText(user.shopName || '—')}</p>
+              </div>
+              ${recoverBtn}
+            </div>
+          </div>
+          ${ordersHtml}`;
         
         container.appendChild(card);
       });
