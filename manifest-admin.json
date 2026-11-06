@@ -1,20 +1,25 @@
 {
-  "name": "لوحة إدارة عاشور",
+  "name": "إدارة مركز عاشور",
   "short_name": "إدارة عاشور",
-  "start_url": "./admin.html",
+  "description": "لوحة تحكم إدارة المتجر والطلبات",
+  "start_url": "/admin.html",
   "display": "standalone",
   "background_color": "#0b0f19",
   "theme_color": "#d4af37",
+  "lang": "ar",
+  "dir": "rtl",
   "icons": [
     {
       "src": "logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
