@@ -21,28 +21,25 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </head>
 <body class="min-h-screen">
 
-<!-- شاشة تسجيل الدخول -->
+<!-- ✅ شاشة تسجيل الدخول الآمنة (Firebase Auth) -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
-      <i class="fas fa-lock text-3xl text-amber-400"></i>
+      <i class="fas fa-shield-halved text-3xl text-amber-400"></i>
     </div>
     <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
-    <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
+    <p class="text-slate-400 text-sm mb-6">دخول آمن بحساب الأدمن</p>
 
-    <div class="relative mb-4">
-      <input type="password" id="loginPassword" placeholder="كلمة المرور" class="w-full bg-slate-950 text-white p-3.5 pr-12 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-lg" onkeydown="if(event.key==='Enter') tryLogin()">
-      <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 transition p-2">
-        <i id="passwordEyeIcon" class="fas fa-eye"></i>
-      </button>
+    <div class="space-y-3 mb-4">
+      <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-sm" onkeydown="if(event.key==='Enter') window.tryAdminLogin()">
+      <input type="password" id="adminPassword" placeholder="كلمة المرور" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-sm" onkeydown="if(event.key==='Enter') window.tryAdminLogin()">
     </div>
 
-    <button onclick="tryLogin()" id="loginBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed">
-      <i class="fas fa-sign-in-alt ml-2"></i> دخول
+    <button onclick="window.tryAdminLogin()" id="adminLoginBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed">
+      <i class="fas fa-sign-in-alt ml-2"></i> دخول آمن
     </button>
 
-    <p id="loginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
-    <p id="lockMessage" class="hidden text-amber-400 text-sm mt-3 font-bold"></p>
+    <p id="adminLoginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
   </div>
 </div>
 
@@ -152,13 +149,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <div class="border-t border-slate-800 pt-5"><label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان المتجر</label><input type="text" id="setAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label><input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"></div>
-    <div class="border-t border-slate-800 pt-5">
-      <label class="block text-slate-300 font-bold mb-1.5 text-sm">كلمة مرور اللوحة</label>
-      <div class="relative">
-        <input type="password" id="setPassword" class="w-full bg-slate-950 text-white p-3 pr-12 rounded-xl border border-slate-700 text-sm font-mono">
-        <button type="button" onclick="toggleSetPasswordVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 p-1"><i id="setPasswordEyeIcon" class="fas fa-eye"></i></button>
-      </div>
-    </div>
   </div>
 
   <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
@@ -180,7 +170,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
   </div>
 
-  <!-- ✅ قسم الإشعارات الجماعية الجديد -->
   <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-bullhorn text-purple-400"></i> إرسال إشعار جماعي
@@ -219,7 +208,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
 </div><div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
-  <!-- إحصائيات الطلبات -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
     <div class="bg-slate-900 border border-blue-500/30 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-inbox text-blue-400"></i> طلبات جديدة</p>
@@ -240,7 +228,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
   </div>
 
-  <!-- شريط التصفية -->
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 mb-4 flex items-center gap-3 flex-wrap">
     <div class="relative flex-grow min-w-[200px]">
       <input type="text" id="ordersSearch" placeholder="ابحث بالاسم أو الهاتف أو رقم الطلب..." oninput="window.filterOrdersRender()" class="w-full bg-slate-950 text-white placeholder-slate-500 pr-10 pl-3 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
@@ -259,9 +246,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <option value="week">آخر 7 أيام</option>
       <option value="month">آخر 30 يوماً</option>
     </select>
-    <button onclick="window.loadOrders()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700 flex items-center gap-2">
-      <i class="fas fa-sync-alt"></i> تحديث
-    </button>
   </div>
 
   <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -296,7 +280,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- نافذة تعديل/إضافة منتج -->
 <div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
     <div class="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800">
@@ -317,7 +300,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم الشركة</label><input type="text" id="fCompany" placeholder="مثال: شركة نستله" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">سعر المستهلك</label><input type="text" id="fConsumerPrice" placeholder="مثال: 5000 ل.س" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد القطع بالعلبة</label><input type="text" id="fPiecesPerBox" placeholder="مثال: 24 قطعة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-        <!-- ✅ تعديل مسمى الحقل -->
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد الأكياس بالكرتونة</label><input type="text" id="fBoxesPerCarton" placeholder="مثال: 12 كيس" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       </div>
 
@@ -415,7 +397,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         </div>
         <div id="reviewsList" class="space-y-2 mb-3 max-h-60 overflow-y-auto pr-1"></div>
         
-        <!-- أزرار التقييمات: جديد + تحديث من السحابة -->
         <div class="grid grid-cols-2 gap-2 mb-3">
           <button type="button" onclick="openAddReviewForm()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-plus"></i> تقييم جديد</button>
           <button type="button" onclick="refreshReviewsFromCloud()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-cloud-download-alt"></i> تحديث من السحابة</button>
@@ -463,10 +444,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <div class="bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mb-3">
         <p class="text-xs text-slate-500 mb-1">العنصر</p>
         <p id="confirmProductName" class="text-amber-400 font-black text-lg">اسم المنتج</p>
-      </div>
-      <div class="bg-rose-950/40 border border-rose-500/30 rounded-xl p-3 flex items-start gap-2 text-right">
-        <i class="fas fa-exclamation-triangle text-rose-400 mt-0.5"></i>
-        <p class="text-xs text-rose-300 leading-relaxed"><span class="font-bold">تحذير:</span> لا يمكن التراجع عن هذا الإجراء.</p>
       </div>
     </div>
     <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
@@ -519,9 +496,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </div><!-- /adminApp --><script>
 /* ============================ الإعدادات والمتغيرات ============================ */
 const STORAGE_KEY = 'ashour_catalog_data_v1';
-const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
-const MAX_LOGIN_ATTEMPTS = 5;
-const LOCKOUT_DURATION = 5 * 60 * 1000;
+const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f'; // ⚠️ قم بتجديده لاحقاً
 const IDLE_TIMEOUT = 30 * 60 * 1000;
 
 let catalogData = { products: [], settings: {}, categories: [] };
@@ -541,156 +516,17 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.log('Admin SW registration failed', err));
 }
 
-function addGalleryImage() {
-  const input = document.getElementById('newGalleryUrl');
-  const url = input.value.trim();
-  if (!url) return;
-  if (currentGallery.includes(url)) { showToast('الصورة موجودة مسبقًا', 'error'); return; }
-  currentGallery.push(url);
-  input.value = '';
-  renderGalleryImages();
+// ✅ دالة الحماية من XSS
+function escapeHtml(s) { 
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;'); 
 }
-function removeGalleryImage(index) {
-  currentGallery.splice(index, 1);
-  renderGalleryImages();
-}
-function renderGalleryImages() {
-  const container = document.getElementById('galleryContainer');
-  if (!container) return;
-  if (currentGallery.length === 0) {
-    container.innerHTML = '<span class="text-slate-500 text-xs py-1">لا توجد صور إضافية</span>';
-    return;
-  }
-  container.innerHTML = currentGallery.map((url, i) => `
-    <div class="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-600 group cursor-pointer">
-      <img src="${escapeHtml(url)}" class="w-full h-full object-cover" onclick="removeGalleryImage(${i})" title="اضغط للحذف">
-    </div>
-  `).join('');
-}
+window.escapeHtml = escapeHtml; // جعلها متاحة للسكربت النمطي
 
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file || !file.type.startsWith('image/')) { showToast('يجب اختيار ملف صورة', 'error'); return; }
-  document.getElementById('imageProcessingOverlay').classList.remove('hidden');
-  document.getElementById('uploadStatusText').innerText = 'جاري ضغط الصورة...';
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const MAX = 800; let width = img.width; let height = img.height;
-      if (width > height) { if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; } }
-      else { if (height > MAX) { width = Math.round((width * MAX) / height); height = MAX; } }
-      canvas.width = width; canvas.height = height;
-      const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-      
-      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      const sizeKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
-      document.getElementById('uploadStatusText').innerText = 'جاري الرفع... (~' + sizeKB + ' KB)';
-
-      const formData = new FormData();
-      formData.append('key', IMGBB_API_KEY);
-      formData.append('image', compressedDataUrl.split(',')[1]);
-
-      fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('imageProcessingOverlay').classList.add('hidden');
-        if (data && data.success && data.data && data.data.url) {
-          currentImageData = data.data.url;
-          const preview = document.getElementById('fImagePreview');
-          preview.src = data.data.url; preview.classList.remove('hidden');
-          document.getElementById('fImagePlaceholder').classList.add('hidden');
-          document.getElementById('fImage').value = '';
-          const info = document.getElementById('imageSizeInfo');
-          info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB)`; info.classList.remove('hidden');
-          showToast('تم رفع الصورة الرئيسية بنجاح ✅');
-        } else { throw new Error('فشل الرفع'); }
-      })
-      .catch(err => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل رفع الصورة: ' + err.message, 'error'); });
-    };
-    img.onerror = () => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل تحميل الصورة', 'error'); };
-    img.src = e.target.result;
-  };
-  reader.onerror = () => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل قراءة الملف', 'error'); };
-  reader.readAsDataURL(file); event.target.value = '';
-}
-
-async function handleGalleryUpload(event) {
-  const files = Array.from(event.target.files);
-  if (files.length === 0) return;
-
-  document.getElementById('imageProcessingOverlay').classList.remove('hidden');
-  
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (!file.type.startsWith('image/')) continue;
-
-    document.getElementById('uploadStatusText').innerText = `جاري ضغط ورفع الصورة ${i + 1} من ${files.length}...`;
-
-    try {
-      const url = await uploadSingleToImgBB(file);
-      if (url && !currentGallery.includes(url)) {
-        currentGallery.push(url);
-        renderGalleryImages(); 
-      }
-    } catch (err) {
-      console.error('فشل رفع صورة:', file.name, err);
-      showToast(`فشل رفع الصورة: ${file.name}`, 'error');
-    }
-  }
-
-  document.getElementById('imageProcessingOverlay').classList.add('hidden');
-  showToast('تم رفع الصور الإضافية بنجاح ✅');
-  event.target.value = ''; 
-}
-
-function uploadSingleToImgBB(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX = 800;
-        let width = img.width; let height = img.height;
-        
-        if (width > height) { if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; } }
-        else { if (height > MAX) { width = Math.round((width * MAX) / height); height = MAX; } }
-        
-        canvas.width = width; canvas.height = height;
-        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-        
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-        const formData = new FormData();
-        formData.append('key', IMGBB_API_KEY);
-        formData.append('image', compressedDataUrl.split(',')[1]);
-
-        fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
-          .then(res => res.json())
-          .then(data => {
-            if (data && data.success && data.data && data.data.url) resolve(data.data.url);
-            else reject(new Error('فشل الرفع من ImgBB'));
-          })
-          .catch(reject);
-      };
-      img.onerror = () => reject(new Error('فشل قراءة الصورة'));
-      img.src = e.target.result;
-    };
-    reader.onerror = () => reject(new Error('فشل قراءة الملف'));
-    reader.readAsDataURL(file);
-  });
-}
-
-function toggleUrlInput() { const wrapper = document.getElementById('urlInputWrapper'); if(wrapper) wrapper.classList.toggle('hidden'); if (wrapper && !wrapper.classList.contains('hidden')) document.getElementById('fImage').focus(); }
-function removeImage() {
-  currentImageData = ''; document.getElementById('fImage').value = ''; document.getElementById('fImagePreview').src = '';
-  document.getElementById('fImagePreview').classList.add('hidden'); document.getElementById('fImagePlaceholder').classList.remove('hidden');
-  document.getElementById('imageSizeInfo').classList.add('hidden');
-}
-
-function escapeHtml(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast'); const toastMsg = document.getElementById('toastMsg');
   if (!toast) return;
@@ -700,6 +536,8 @@ function showToast(msg, type = 'success') {
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
+window.showToast = showToast;
+
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData)); document.getElementById('dirtyBadge').classList.remove('hidden'); }
 function clearDirty() { document.getElementById('dirtyBadge').classList.add('hidden'); }
 
@@ -710,84 +548,41 @@ function showConfirm(productName) {
     document.getElementById('confirmModal').classList.remove('hidden');
   });
 }
+window.showConfirm = showConfirm;
+
 function resolveConfirm(answer) {
   document.getElementById('confirmModal').classList.add('hidden');
   if (_confirmResolver) { _confirmResolver(answer); _confirmResolver = null; }
 }
 
-function getLoginAttempts() {
-  try {
-    const data = JSON.parse(localStorage.getItem('ashour_login_attempts') || '{}');
-    if (data.lockedUntil && Date.now() < data.lockedUntil) return { count: data.count || 0, lockedUntil: data.lockedUntil };
-    if (data.lockedUntil && Date.now() >= data.lockedUntil) { localStorage.removeItem('ashour_login_attempts'); return { count: 0, lockedUntil: 0 }; }
-    return { count: data.count || 0, lockedUntil: 0 };
-  } catch (e) { return { count: 0, lockedUntil: 0 }; }
-}
-function saveLoginAttempts(count, lockedUntil = 0) { localStorage.setItem('ashour_login_attempts', JSON.stringify({ count, lockedUntil })); }
-function resetLoginAttempts() { localStorage.removeItem('ashour_login_attempts'); }
-function checkLock() {
-  const { lockedUntil } = getLoginAttempts();
-  if (lockedUntil && Date.now() < lockedUntil) {
-    const remaining = Math.ceil((lockedUntil - Date.now()) / 60000);
-    const lockMsg = document.getElementById('lockMessage');
-    lockMsg.innerText = `🔒 اللوحة مقفلة. حاول بعد ${remaining} دقيقة.`;
-    lockMsg.classList.remove('hidden');
-    document.getElementById('loginBtn').disabled = true;
-    document.getElementById('loginPassword').disabled = true;
-    return true;
-  } else {
-    document.getElementById('lockMessage').classList.add('hidden');
-    document.getElementById('loginBtn').disabled = false;
-    document.getElementById('loginPassword').disabled = false;
-    return false;
-  }
-}
-function togglePasswordVisibility() {
-  const input = document.getElementById('loginPassword'); const icon = document.getElementById('passwordEyeIcon');
-  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
-}
-function toggleSetPasswordVisibility() {
-  const input = document.getElementById('setPassword'); const icon = document.getElementById('setPasswordEyeIcon');
-  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
-}
-function toggleTokenVisibility() {
-  const input = document.getElementById('setGithubToken'); const icon = document.getElementById('tokenEyeIcon');
-  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
-}
-
-function saveOneSignalKey() {
-  const key = document.getElementById('setOneSignalKey').value.trim();
-  if (key) {
-    localStorage.setItem('ashour_onesignal_key', key);
-    showToast('تم حفظ مفتاح OneSignal بنجاح ✅');
-    clearDirty();
-  } else {
-    showToast('يرجى إدخال المفتاح أولاً', 'error');
-  }
-}
-function toggleOneSignalKeyVisibility() {
-  const input = document.getElementById('setOneSignalKey'); const icon = document.getElementById('oneSignalEyeIcon');
-  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
-}
+// ✅ تم حذف دوال الدخول القديمة (tryLogin, checkLock, ...)
+// لأنها أصبحت غير آمنة وتم استبدالها بـ Firebase Auth في السكربت النمطي.
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
-  sessionStorage.removeItem('ashour_admin_ok');
-  if (_idleTimer) clearTimeout(_idleTimer);
-  document.getElementById('adminApp').classList.add('hidden');
-  document.getElementById('loginScreen').classList.remove('hidden');
-  document.getElementById('loginPassword').value = '';
+  if (typeof window.adminLogout === 'function') {
+    window.adminLogout();
+  } else {
+    sessionStorage.removeItem('ashour_admin_ok');
+    location.reload();
+  }
 }
+
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
   _idleTimer = setTimeout(() => {
-    if (sessionStorage.getItem('ashour_admin_ok') === '1') { alert('تم تسجيل الخروج تلقائيًا'); logoutAdmin(); }
+    if (document.getElementById('adminApp').classList.contains('hidden') === false) { 
+      alert('تم تسجيل الخروج تلقائيًا بسبب عدم النشاط'); 
+      logoutAdmin(); 
+    }
   }, IDLE_TIMEOUT);
 }
+
 function startIdleWatcher() {
   ['click', 'keypress', 'touchstart', 'scroll', 'mousemove'].forEach(ev => { document.addEventListener(ev, resetIdleTimer, { passive: true }); });
   resetIdleTimer();
 }
+window.startIdleWatcher = startIdleWatcher;
 
 function loadInitialData() {
   return new Promise((resolve) => {
@@ -805,42 +600,16 @@ function loadInitialData() {
     script.onerror = () => {
       catalogData = {
         products: [],
-        settings: { storeName: 'مركز عاشور للتجارة', logoUrl: 'logo.png', orderWhatsApp: '963982572810', inquiryWhatsApp: '963959248901', address: 'دمشق أوتوستراد درعا الدولي', mapUrl: 'https://maps.app.goo.gl/djUWNAnBhh3pPwfn6', password: 'ashour2026', githubUser: 'yasir-ashour', githubRepo: 'Ashour', githubBranch: 'main' },
+        settings: { storeName: 'مركز عاشور للتجارة', logoUrl: 'logo.png', orderWhatsApp: '963982572810', inquiryWhatsApp: '963959248901', address: 'دمشق أوتوستراد درعا الدولي', mapUrl: 'https://maps.app.goo.gl/djUWNAnBhh3pPwfn6', githubUser: 'yasir-ashour', githubRepo: 'Ashour', githubBranch: 'main' },
         categories: ['بسكويت', 'شيبس', 'سكاكر وعلكة', 'عصائر ومشروبات', 'قهوة']
       }; resolve();
     };
     document.head.appendChild(script);
   });
 }
-function tryLogin() {
-  if (checkLock()) return;
-  const pwd = document.getElementById('loginPassword').value;
-  const expected = catalogData.settings.password || 'ashour2026';
-  const errEl = document.getElementById('loginError');
-  errEl.classList.add('hidden');
 
-  if (pwd === expected) {
-    resetLoginAttempts();
-    sessionStorage.setItem('ashour_admin_ok', '1');
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('adminApp').classList.remove('hidden');
-    document.getElementById('loginPassword').value = '';
-    initAdmin(); startIdleWatcher(); showToast('مرحبًا بك 👋');
-  } else {
-    const { count } = getLoginAttempts();
-    const newCount = count + 1;
-    if (newCount >= MAX_LOGIN_ATTEMPTS) {
-      saveLoginAttempts(newCount, Date.now() + LOCKOUT_DURATION);
-      errEl.innerText = `❌ تجاوزت الحد. اللوحة مقفلة 5 دقائق.`;
-      errEl.classList.remove('hidden'); checkLock();
-    } else {
-      saveLoginAttempts(newCount);
-      errEl.innerText = `❌ كلمة المرور غير صحيحة. تبقى ${MAX_LOGIN_ATTEMPTS - newCount} محاولات.`;
-      errEl.classList.remove('hidden');
-    }
-  }
-}
 function initAdmin() { renderCategories(); renderSettingsInputs(); renderProductList(); renderStats(); }
+window.initAdmin = initAdmin;
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -854,6 +623,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+// ============ إدارة التصنيفات والإعدادات ============
 function renderCategories() {
   const set = new Set(catalogData.categories || []);
   catalogData.products.forEach(p => p.category && set.add(p.category));
@@ -867,6 +637,7 @@ function renderCategories() {
     filterSelect.value = current;
   }
 }
+
 function renderSettingsInputs() {
   const s = catalogData.settings;
   document.getElementById('setStoreName').value = s.storeName || '';
@@ -875,7 +646,6 @@ function renderSettingsInputs() {
   document.getElementById('setInquiryWa').value = s.inquiryWhatsApp || '';
   document.getElementById('setAddress').value = s.address || '';
   document.getElementById('setMapUrl').value = s.mapUrl || '';
-  document.getElementById('setPassword').value = s.password || '';
   document.getElementById('setGithubUser').value = s.githubUser || 'yasir-ashour';
   document.getElementById('setGithubRepo').value = s.githubRepo || 'Ashour';
   document.getElementById('setGithubBranch').value = s.githubBranch || 'main';
@@ -884,11 +654,12 @@ function renderSettingsInputs() {
   const logo = document.getElementById('logoPreview');
   if (s.logoUrl) { logo.src = s.logoUrl; logo.style.display = 'block'; } else logo.style.display = 'none';
 }
-['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setPassword','setGithubUser','setGithubRepo','setGithubBranch'].forEach(id => {
+
+['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setGithubUser','setGithubRepo','setGithubBranch'].forEach(id => {
   const el = document.getElementById(id);
   if(el) {
     el.addEventListener('input', () => {
-      const map = { setStoreName: 'storeName', setLogoUrl: 'logoUrl', setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp', setAddress: 'address', setMapUrl: 'mapUrl', setPassword: 'password', setGithubUser: 'githubUser', setGithubRepo: 'githubRepo', setGithubBranch: 'githubBranch' };
+      const map = { setStoreName: 'storeName', setLogoUrl: 'logoUrl', setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp', setAddress: 'address', setMapUrl: 'mapUrl', setGithubUser: 'githubUser', setGithubRepo: 'githubRepo', setGithubBranch: 'githubBranch' };
       
       if (id === 'setOrderWa' || id === 'setInquiryWa') {
         const cleaned = el.value.replace(/[^\d]/g, '');
@@ -903,9 +674,25 @@ function renderSettingsInputs() {
     });
   }
 });
+
 const tokenInput = document.getElementById('setGithubToken');
 if (tokenInput) { tokenInput.addEventListener('input', () => { const val = tokenInput.value.trim(); if (val) { localStorage.setItem('ashour_github_token', val); clearDirty(); } }); }
 
+function saveOneSignalKey() {
+  const key = document.getElementById('setOneSignalKey').value.trim();
+  if (key) { localStorage.setItem('ashour_onesignal_key', key); showToast('تم حفظ مفتاح OneSignal بنجاح ✅'); clearDirty(); } 
+  else { showToast('يرجى إدخال المفتاح أولاً', 'error'); }
+}
+function toggleOneSignalKeyVisibility() {
+  const input = document.getElementById('setOneSignalKey'); const icon = document.getElementById('oneSignalEyeIcon');
+  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
+}
+function toggleTokenVisibility() {
+  const input = document.getElementById('setGithubToken'); const icon = document.getElementById('tokenEyeIcon');
+  if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
+}
+
+// ============ إدارة المنتجات ============
 function getFilteredProducts() {
   const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
   const cat = document.getElementById('adminFilterCat').value; const status = document.getElementById('adminFilterStatus').value;
@@ -918,6 +705,7 @@ function getFilteredProducts() {
     return true;
   });
 }
+
 function renderProductList() {
   const list = document.getElementById('productList'); const empty = document.getElementById('emptyState');
   if(!list) return; const items = getFilteredProducts();
@@ -952,6 +740,7 @@ function renderStats() {
 
 function setProductStatus(status) { document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); }); }
 function getProductStatus() { const checked = document.querySelector('input[name="fStatus"]:checked'); return checked ? checked.value : 'available'; }
+
 function openProductModal(pid = null) {
   const modal = document.getElementById('productModal');
   editingFlavors = []; currentImageData = ''; currentGallery = []; currentReviews = []; currentReviewStars = 0;
@@ -978,7 +767,6 @@ function openProductModal(pid = null) {
     document.getElementById('fHasOffer').checked = p.hasOffer === true; document.getElementById('fIsNew').checked = p.isNew === true; document.getElementById('fOldPrice').value = p.oldPrice || '';
     toggleOfferFields();
     
-    // ✅ إصلاح جلب بيانات الشركة وسعر المستهلك
     document.getElementById('fCompany').value = p.company || ''; 
     document.getElementById('fConsumerPrice').value = p.consumerPrice || '';
     
@@ -996,13 +784,13 @@ function openProductModal(pid = null) {
     }
     renderReviews();
     
-    // جلب التقييمات من السحابة
     setTimeout(() => {
       if (currentProductName === p.name) refreshReviewsFromCloud();
     }, 800);
   }
   renderFlavors(); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
 }
+
 function closeProductModal() { 
   document.getElementById('productModal').classList.add('hidden'); 
   document.body.style.overflow = ''; 
@@ -1147,7 +935,7 @@ function renderReviews() {
       : '<span class="text-[9px] text-slate-400 bg-slate-800 border border-slate-600 px-1.5 py-0.5 rounded"><i class="fas fa-hdd"></i> محلي</span>';
     return `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-start gap-2">
         <div class="flex-grow min-w-0">
-          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${r.date}</span>${sourceBadge}</div>
+          <div class="flex items-center gap-2 mb-1 flex-wrap"><span class="text-amber-400 text-xs font-bold">${stars}</span><span class="text-slate-400 text-xs">•</span><span class="text-white text-xs font-bold">${escapeHtml(r.name)}</span><span class="text-slate-500 text-[10px]">${escapeHtml(r.date)}</span>${sourceBadge}</div>
           ${r.comment ? `<p class="text-slate-300 text-xs leading-relaxed">${escapeHtml(r.comment)}</p>` : '<p class="text-slate-600 text-xs italic">بدون تعليق</p>'}
         </div>
         <button type="button" onclick="removeReview(${i})" class="w-7 h-7 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-times text-xs"></i></button>
@@ -1188,6 +976,7 @@ function saveProduct() {
   else { catalogData.products[Number(pidVal)] = data; showToast('تم تحديث المنتج بنجاح'); }
   persist(); renderCategories(); renderProductList(); renderStats(); closeProductModal();
 }
+
 async function deleteProductFromModal() {
   const pidVal = document.getElementById('fPid').value;
   if (pidVal === '') { closeProductModal(); return; }
@@ -1195,18 +984,29 @@ async function deleteProductFromModal() {
   const confirmed = await showConfirm(p.name); if (!confirmed) return;
   catalogData.products.splice(Number(pidVal), 1); persist(); renderProductList(); renderStats(); closeProductModal(); showToast('تم حذف المنتج بنجاح');
 }
+
 function saveAll() { persist(); clearDirty(); showToast('تم حفظ التغييرات محليًا'); }
 
+// ✅ دالة النشر (مع إخفاء البيانات الحساسة)
 function buildCatalogJS() {
+  const cleanSettings = { ...catalogData.settings };
+  // حذف البيانات السرية
+  delete cleanSettings.password;
+  delete cleanSettings.githubUser;
+  delete cleanSettings.githubRepo;
+  delete cleanSettings.githubBranch;
+
   const clean = {
     products: catalogData.products.map(p => { const o = { ...p }; if (!o.flavors || o.flavors.length === 0) delete o.flavors; if (!o.reviews || o.reviews.length === 0) delete o.reviews; if (!o.hasOffer) { delete o.hasOffer; delete o.oldPrice; } if (!o.isNew) delete o.isNew; return o; }),
-    settings: { ...catalogData.settings }, categories: [...(catalogData.categories || [])]
+    settings: cleanSettings, 
+    categories: [...(catalogData.categories || [])]
   };
   let jsContent = '/* ================================\n   ملف بيانات الكتالوج\n   مركز عاشور للتجارة\n   آخر تحديث: ' + new Date().toLocaleString('ar-SY') + '\n   ================================ */\n\n';
   jsContent += 'window.catalogData = {\n  products: [],\n  settings: ' + JSON.stringify(clean.settings, null, 2) + ',\n  categories: ' + JSON.stringify(clean.categories) + '\n};\n\n// ============ المنتجات ============\n\n';
   clean.products.forEach(p => { jsContent += 'window.catalogData.products.push(' + JSON.stringify(p, null, 2) + ');\n\n'; });
   jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n'; return jsContent;
 }
+
 async function saveToGitHub() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour';
   const repo = catalogData.settings.githubRepo || 'Ashour'; const branch = catalogData.settings.githubBranch || 'main'; const filePath = 'catalog-data.js';
@@ -1225,17 +1025,20 @@ async function saveToGitHub() {
     else { const errData = await putRes.json(); throw new Error(errData.message || 'فشل الرفع'); }
   } catch (err) { document.getElementById('publishOverlay').classList.add('hidden'); showToast('فشل النشر: ' + err.message, 'error'); }
 }
+
 async function testGithubConnection() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour'; const repo = catalogData.settings.githubRepo || 'Ashour';
-  if (!token) { showToast('يرجى إدخال GitHub Token أولاً', 'error'); return; }
+  if (!token) { showToast('يرجى إدخال GitHub Token أولًا', 'error'); return; }
   showToast('جاري الاختبار...');
   try { const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, { headers: { 'Authorization': `token ${token}` } }); if (res.ok) { const data = await res.json(); showToast('✅ الاتصال ناجح: ' + data.full_name); } else { showToast('❌ فشل الاتصال: ' + res.status, 'error'); } } catch (err) { showToast('❌ خطأ: ' + err.message, 'error'); }
 }
+
 function exportData() {
   const content = buildCatalogJS(); const blob = new Blob([content], { type: 'application/javascript' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'catalog-data.js'; a.click();
   URL.revokeObjectURL(url); showToast('تم تنزيل الملف');
 }
+
 function importData(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
@@ -1250,6 +1053,7 @@ function importData(e) {
   };
   reader.readAsText(file); e.target.value = '';
 }
+
 function applyImportedData(data) {
   showConfirm('جميع البيانات الحالية').then(confirmed => {
     if (!confirmed) return;
@@ -1258,16 +1062,131 @@ function applyImportedData(data) {
   });
 }
 
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeProductModal(); if (_confirmResolver) resolveConfirm(false); } });
-(async function boot() {
-  await loadInitialData(); checkLock();
-  if (sessionStorage.getItem('ashour_admin_ok') === '1') {
-    document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('adminApp').classList.remove('hidden'); initAdmin(); startIdleWatcher();
+// ============ إدارة الصور ============
+function renderGalleryImages() {
+  const container = document.getElementById('galleryContainer');
+  if (!container) return;
+  if (currentGallery.length === 0) { container.innerHTML = '<span class="text-slate-500 text-xs py-1">لا توجد صور إضافية</span>'; return; }
+  container.innerHTML = currentGallery.map((url, i) => `
+    <div class="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-600 group cursor-pointer">
+      <img src="${escapeHtml(url)}" class="w-full h-full object-cover" onclick="removeGalleryImage(${i})" title="اضغط للحذف">
+    </div>
+  `).join('');
+}
+function removeGalleryImage(index) { currentGallery.splice(index, 1); renderGalleryImages(); }
+function removeImage() {
+  currentImageData = ''; document.getElementById('fImage').value = ''; document.getElementById('fImagePreview').src = '';
+  document.getElementById('fImagePreview').classList.add('hidden'); document.getElementById('fImagePlaceholder').classList.remove('hidden');
+  document.getElementById('imageSizeInfo').classList.add('hidden');
+}
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file || !file.type.startsWith('image/')) { showToast('يجب اختيار ملف صورة', 'error'); return; }
+  document.getElementById('imageProcessingOverlay').classList.remove('hidden');
+  document.getElementById('uploadStatusText').innerText = 'جاري ضغط الصورة...';
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 800; let width = img.width; let height = img.height;
+      if (width > height) { if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; } }
+      else { if (height > MAX) { width = Math.round((width * MAX) / height); height = MAX; } }
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+      
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const sizeKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
+      document.getElementById('uploadStatusText').innerText = 'جاري الرفع... (~' + sizeKB + ' KB)';
+      const formData = new FormData();
+      formData.append('key', IMGBB_API_KEY);
+      formData.append('image', compressedDataUrl.split(',')[1]);
+      fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('imageProcessingOverlay').classList.add('hidden');
+        if (data && data.success && data.data && data.data.url) {
+          currentImageData = data.data.url;
+          const preview = document.getElementById('fImagePreview');
+          preview.src = data.data.url; preview.classList.remove('hidden');
+          document.getElementById('fImagePlaceholder').classList.add('hidden');
+          document.getElementById('fImage').value = '';
+          const info = document.getElementById('imageSizeInfo');
+          info.innerText = `✅ تم الرفع بنجاح (${sizeKB} KB)`; info.classList.remove('hidden');
+          showToast('تم رفع الصورة الرئيسية بنجاح ✅');
+        } else { throw new Error('فشل الرفع'); }
+      })
+      .catch(err => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل رفع الصورة: ' + err.message, 'error'); });
+    };
+    img.onerror = () => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل تحميل الصورة', 'error'); };
+    img.src = e.target.result;
+  };
+  reader.onerror = () => { document.getElementById('imageProcessingOverlay').classList.add('hidden'); showToast('فشل قراءة الملف', 'error'); };
+  reader.readAsDataURL(file); event.target.value = '';
+}
+
+async function handleGalleryUpload(event) {
+  const files = Array.from(event.target.files);
+  if (files.length === 0) return;
+  document.getElementById('imageProcessingOverlay').classList.remove('hidden');
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (!file.type.startsWith('image/')) continue;
+    document.getElementById('uploadStatusText').innerText = `جاري ضغط ورفع الصورة ${i + 1} من ${files.length}...`;
+    try {
+      const url = await uploadSingleToImgBB(file);
+      if (url && !currentGallery.includes(url)) { currentGallery.push(url); renderGalleryImages(); }
+    } catch (err) { console.error('فشل رفع صورة:', file.name, err); showToast(`فشل رفع الصورة: ${file.name}`, 'error'); }
   }
+  document.getElementById('imageProcessingOverlay').classList.add('hidden');
+  showToast('تم رفع الصور الإضافية بنجاح ✅');
+  event.target.value = ''; 
+}
+
+function uploadSingleToImgBB(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 800; let width = img.width; let height = img.height;
+        if (width > height) { if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; } }
+        else { if (height > MAX) { width = Math.round((width * MAX) / height); height = MAX; } }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const formData = new FormData();
+        formData.append('key', IMGBB_API_KEY);
+        formData.append('image', compressedDataUrl.split(',')[1]);
+        fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.success && data.data && data.data.url) resolve(data.data.url);
+            else reject(new Error('فشل الرفع من ImgBB'));
+          })
+          .catch(reject);
+      };
+      img.onerror = () => reject(new Error('فشل قراءة الصورة'));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error('فشل قراءة الملف'));
+    reader.readAsDataURL(file);
+  });
+}
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeProductModal(); if (_confirmResolver) resolveConfirm(false); } });
+
+// ✅ الدالة الابتدائية المبسطة (تنتظر السكربت النمطي ليتحقق من الدخول)
+(async function boot() {
+  await loadInitialData();
+  // التحقق من حالة الدخول يتم عبر onAuthStateChanged في السكربت النمطي
 })();
 </script><!-- سكربت Firebase لجلب العملاء والطلبات وإدارتها وإرسال الإشعارات -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, addDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1280,40 +1199,78 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
   };
 
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // ============== إرسال الإشعارات (OneSignal) ==============
-  async function sendOneSignalNotification(playerId, title, message) {
-    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
-    const restApiKey = localStorage.getItem('ashour_onesignal_key'); 
-
-    if (!restApiKey) {
-        console.warn("OneSignal API Key is missing. Please set it in Admin Settings.");
-        return; 
-    }
-    if (!playerId) return; 
-
-    try {
-      const response = await fetch('https://onesignal.com/api/v1/notifications', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Authorization': `Basic ${restApiKey}`
-        },
-        body: JSON.stringify({
-          app_id: appId,
-          include_player_ids: [playerId],
-          contents: { en: message },
-          headings: { en: title }
-        })
-      });
-      console.log("Notification sent:", await response.json());
-    } catch (error) {
-      console.error("Error sending notification:", error);
-    }
+  // ✅ دالة مساعدة لمنع ثغرة XSS
+  function safeText(v) {
+    return (typeof window.escapeHtml === 'function') ? window.escapeHtml(v) : String(v || '');
   }
 
-  // ============== الإشعارات الجماعية (Broadcast) ==============
+  // ==================== تسجيل دخول الأدمن الآمن ====================
+  window.tryAdminLogin = async function() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const pass = document.getElementById('adminPassword').value;
+    const btn = document.getElementById('adminLoginBtn');
+    const errEl = document.getElementById('adminLoginError');
+    
+    if (!email || !pass) { 
+      errEl.innerText = 'أدخل البريد الإلكتروني وكلمة المرور'; 
+      errEl.classList.remove('hidden'); 
+      return; 
+    }
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الدخول...';
+    btn.disabled = true;
+    errEl.classList.add('hidden');
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      // الدخول نجح، onAuthStateChanged سيتكفل بإظهار اللوحة
+    } catch (e) {
+      errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة';
+      errEl.classList.remove('hidden');
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
+      btn.disabled = false;
+    }
+  };
+
+  window.adminLogout = async function() {
+    await signOut(auth);
+    location.reload();
+  };
+
+  // ==================== الإشعارات ====================
+  async function sendOneSignalNotification(playerId, title, message) {
+    const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
+    const restApiKey = localStorage.getItem('ashour_onesignal_key');
+    if (!restApiKey || !playerId) return;
+    try {
+      await fetch('https://onesignal.com/api/v1/notifications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8', 'Authorization': `Basic ${restApiKey}` },
+        body: JSON.stringify({ app_id: appId, include_player_ids: [playerId], contents: { en: message }, headings: { en: title } })
+      });
+    } catch(e) { console.error(e); }
+  }
+
+  const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
+
+  window.enableAdminNotifications = async function() {
+    if (!("Notification" in window)) { alert("المتصفح لا يدعم الإشعارات"); return; }
+    try { audioAlert.volume = 0.01; await audioAlert.play(); audioAlert.pause(); audioAlert.currentTime = 0; audioAlert.volume = 1; } catch(e) {}
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      window.showToast('تم تفعيل التنبيهات ✅');
+      const btn = document.getElementById('notifyBtn');
+      btn.innerHTML = '<i class="fas fa-check"></i> التنبيهات مفعلة';
+      btn.classList.replace('bg-indigo-600', 'bg-emerald-600');
+    } else {
+      window.showToast('تم رفض الإشعارات', 'error');
+    }
+  };
+
+  // ==================== الإشعارات الجماعية ====================
   window.sendBroadcast = async function() {
     const title = document.getElementById('broadcastTitle').value.trim();
     const msg = document.getElementById('broadcastMsg').value.trim();
@@ -1326,8 +1283,10 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     
     const restApiKey = localStorage.getItem('ashour_onesignal_key');
     if (!restApiKey) { 
-      window.showToast('أدخل مفتاح OneSignal أولاً من الإعدادات', 'error'); 
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; btn.disabled = false; return; 
+      window.showToast('أدخل مفتاح OneSignal أولاً', 'error'); 
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; 
+      btn.disabled = false; 
+      return; 
     }
     
     const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
@@ -1335,463 +1294,326 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePro
     try {
       const usersSnap = await getDocs(collection(db, "users"));
       const playerIds = [];
-      usersSnap.forEach(d => {
-        const pid = d.data().oneSignalPlayerId;
-        if (pid) playerIds.push(pid);
-      });
+      usersSnap.forEach(d => { const pid = d.data().oneSignalPlayerId; if (pid) playerIds.push(pid); });
       
-      if (playerIds.length === 0) {
-        window.showToast('لا يوجد مشتركون في التنبيهات حالياً', 'error');
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; btn.disabled = false; 
-        return;
+      if (playerIds.length === 0) { 
+        window.showToast('لا يوجد مشتركون', 'error'); 
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; 
+        btn.disabled = false; 
+        return; 
       }
       
-      // تقسيم المعرفات إلى مجموعات (لأن OneSignal يقبل 2000 كحد أقصى في الطلب الواحد)
-      let successCount = 0;
+      let count = 0;
       for (let i = 0; i < playerIds.length; i += 2000) {
         const chunk = playerIds.slice(i, i + 2000);
-        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+        const res = await fetch('https://onesignal.com/api/v1/notifications', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Authorization': `Basic ${restApiKey}`
-          },
-          body: JSON.stringify({
-            app_id: appId,
-            include_player_ids: chunk,
-            contents: { en: msg },
-            headings: { en: title }
-          })
+          headers: { 'Content-Type': 'application/json; charset=utf-8', 'Authorization': `Basic ${restApiKey}` },
+          body: JSON.stringify({ app_id: appId, include_player_ids: chunk, contents: { en: msg }, headings: { en: title } })
         });
-        
-        if (response.ok) successCount += chunk.length;
+        if (res.ok) count += chunk.length;
       }
-      
-      window.showToast(`تم الإرسال لـ ${successCount} مشترك ✅`);
+      window.showToast(`تم الإرسال لـ ${count} مشترك ✅`);
       document.getElementById('broadcastTitle').value = '';
       document.getElementById('broadcastMsg').value = '';
-    } catch(e) {
-      console.error(e);
-      window.showToast('فشل الإرسال: ' + e.message, 'error');
-    } finally {
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع';
-      btn.disabled = false;
+    } catch(e) { 
+      window.showToast('فشل الإرسال: ' + e.message, 'error'); 
+    } finally { 
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال للجميع'; 
+      btn.disabled = false; 
     }
   };
 
-  // ============== إدارة التنبيهات الصوتية للوحة التحكم ==============
+  // ==================== الطلبات ====================
+  let allOrdersCache = [];
   let knownOrderIds = new Set();
   let isFirstLoad = true;
-  const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
-
-  window.enableAdminNotifications = async function() {
-    if (!("Notification" in window)) { alert("هذا المتصفح لا يدعم الإشعارات."); return; }
-    
-    try {
-      audioAlert.volume = 0.01;
-      await audioAlert.play();
-      audioAlert.pause();
-      audioAlert.currentTime = 0;
-      audioAlert.volume = 1;
-    } catch(e) { console.log("Audio context unlock failed", e); }
-
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      window.showToast('تم تفعيل الإشعارات والصوت بنجاح ✅');
-      document.getElementById('notifyBtn').innerHTML = '<i class="fas fa-check"></i> التنبيهات مفعلة';
-      document.getElementById('notifyBtn').classList.replace('bg-indigo-600', 'bg-emerald-600');
-    } else { 
-      window.showToast('تم رفض الإشعارات', 'error'); 
-    }
-  };
-
-  // ============== متغيرات الطلبات ==============
-  let allOrdersCache = [];
+  let ordersUnsubscribe = null;
 
   window.updateOrderStats = function(orders) {
     const newC = orders.filter(o => o.status === 'جديد' || !o.status).length;
     const prepC = orders.filter(o => o.status === 'جاري التجهيز').length;
     const shipC = orders.filter(o => o.status === 'جاري التوصيل').length;
     let revenue = 0;
-    orders.forEach(o => {
-      if (o.status === 'تم التسليم' && o.deliveryAmount) {
-        const n = parseFloat(String(o.deliveryAmount).replace(/[^\d.]/g, ''));
-        if (!isNaN(n)) revenue += n;
-      }
+    orders.forEach(o => { 
+      if (o.status === 'تم التسليم' && o.deliveryAmount) { 
+        const n = parseFloat(String(o.deliveryAmount).replace(/[^\d.]/g, '')); 
+        if (!isNaN(n)) revenue += n; 
+      } 
     });
-    const elN = document.getElementById('statOrdersNew');
-    const elP = document.getElementById('statOrdersPreparing');
-    const elS = document.getElementById('statOrdersShipping');
-    const elR = document.getElementById('statOrdersRevenue');
-    if (elN) elN.innerText = newC;
-    if (elP) elP.innerText = prepC;
-    if (elS) elS.innerText = shipC;
-    if (elR) elR.innerText = revenue.toLocaleString('en-US');
+    if (document.getElementById('statOrdersNew')) {
+      document.getElementById('statOrdersNew').innerText = newC;
+      document.getElementById('statOrdersPreparing').innerText = prepC;
+      document.getElementById('statOrdersShipping').innerText = shipC;
+      document.getElementById('statOrdersRevenue').innerText = revenue.toLocaleString('en-US');
+    }
   };
 
   window.filterOrdersRender = function() {
     const search = (document.getElementById('ordersSearch')?.value || '').trim().toLowerCase();
     const statusFilter = document.getElementById('ordersFilterStatus')?.value || '';
     const dateFilter = document.getElementById('ordersFilterDate')?.value || '';
-    
     let filtered = allOrdersCache.slice();
     
     if (statusFilter) {
-      if (statusFilter === 'جديد') {
-        filtered = filtered.filter(o => o.status === 'جديد' || !o.status);
-      } else {
-        filtered = filtered.filter(o => o.status === statusFilter);
-      }
+      filtered = (statusFilter === 'جديد') ? filtered.filter(o => o.status === 'جديد' || !o.status) : filtered.filter(o => o.status === statusFilter);
     }
-    
     if (search) {
-      filtered = filtered.filter(o => {
-        const hay = (o.userName || '') + ' ' + (o.phone || '') + ' ' + (o.shopName || '') + ' ' + o.id.slice(-4);
-        return hay.toLowerCase().includes(search);
-      });
+      filtered = filtered.filter(o => ((o.userName || '') + ' ' + (o.phone || '') + ' ' + (o.shopName || '') + ' ' + o.id.slice(-4)).toLowerCase().includes(search));
     }
-    
     if (dateFilter) {
       const now = Date.now();
-      const ranges = { today: 24*60*60*1000, week: 7*24*60*60*1000, month: 30*24*60*60*1000 };
+      const ranges = { today: 86400000, week: 604800000, month: 2592000000 };
       const limit = ranges[dateFilter];
-      if (limit) {
-        filtered = filtered.filter(o => {
-          if (!o.createdAt || !o.createdAt.seconds) return false;
-          return (now - o.createdAt.seconds * 1000) <= limit;
-        });
-      }
+      if (limit) filtered = filtered.filter(o => o.createdAt && o.createdAt.seconds && (now - o.createdAt.seconds * 1000) <= limit);
     }
-    
     renderOrdersList(filtered);
   };
 
-  const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-  
-  onSnapshot(q, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      if (change.type === "added") {
-        if (!isFirstLoad && !knownOrderIds.has(change.doc.id)) {
-          audioAlert.play().catch(e => console.log('Audio blocked by browser'));
-          if (Notification.permission === "granted") {
-            try {
-              if (navigator.serviceWorker && navigator.serviceWorker.ready) {
-                navigator.serviceWorker.ready.then(function(registration) {
-                  registration.showNotification("طلب جديد في مركز عاشور!", {
-                    body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
-                    icon: "https://yasir-ashour.github.io/Ashour/logo.png",
-                    badge: "https://yasir-ashour.github.io/Ashour/logo.png",
-                    vibrate: [200, 100, 200],
-                    requireInteraction: true,
-                    data: { url: window.location.href }
-                  });
-                });
-              } else {
-                var notif = new Notification("طلب جديد في مركز عاشور!", {
-                  body: `لديك طلب جديد من: ${change.doc.data().userName}\nالرجاء الدخول للتجهيز.`,
-                  icon: "https://yasir-ashour.github.io/Ashour/logo.png"
-                });
-                notif.onclick = function() { window.focus(); };
-              }
-            } catch(e) { console.error("Notification error:", e); }
-          } else {
-            window.showToast("طلب جديد وصل! (لكن الإشعارات غير مفعلة)", "error");
+  function startOrdersListener() {
+    if (ordersUnsubscribe) return;
+    const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+    ordersUnsubscribe = onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === "added" && !isFirstLoad && !knownOrderIds.has(change.doc.id)) {
+          audioAlert.play().catch(() => {});
+          if (Notification.permission === "granted" && navigator.serviceWorker) {
+            navigator.serviceWorker.ready.then(reg => {
+              reg.showNotification("طلب جديد!", {
+                body: `من: ${change.doc.data().userName}`,
+                icon: "https://yasir-ashour.github.io/Ashour/logo.png",
+                badge: "https://yasir-ashour.github.io/Ashour/logo.png",
+                vibrate: [200, 100, 200],
+                requireInteraction: true
+              });
+            });
           }
         }
         knownOrderIds.add(change.doc.id);
+      });
+      isFirstLoad = false;
+      allOrdersCache = [];
+      snapshot.forEach(d => allOrdersCache.push({ id: d.id, ...d.data() }));
+      window.updateOrderStats(allOrdersCache);
+      
+      const badge = document.getElementById('newOrdersBadge');
+      if (badge) {
+        const n = allOrdersCache.filter(o => o.status === 'جديد' || !o.status).length;
+        if (n > 0) { badge.innerText = n; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
       }
+      window.filterOrdersRender();
+    }, (error) => {
+      console.error("Orders listener error:", error);
     });
-    isFirstLoad = false;
-
-    allOrdersCache = [];
-    snapshot.forEach((docSnap) => {
-      allOrdersCache.push({ id: docSnap.id, ...docSnap.data() });
-    });
-
-    window.updateOrderStats(allOrdersCache);
-
-    const newCount = allOrdersCache.filter(o => o.status === 'جديد' || !o.status).length;
-    const badge = document.getElementById('newOrdersBadge');
-    if (badge) {
-      if (newCount > 0) { badge.innerText = newCount; badge.classList.remove('hidden'); }
-      else { badge.classList.add('hidden'); }
-    }
-
-    window.filterOrdersRender();
-  });
+  }
 
   function renderOrdersList(orders) {
     const container = document.getElementById('ordersList');
     if (!container) return;
-    if (orders.length === 0) {
-      container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-box-open text-4xl mb-3 text-slate-600"></i><p>لا توجد طلبات تطابق البحث.</p></div>';
-      return;
+    if (orders.length === 0) { 
+      container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><p>لا توجد طلبات.</p></div>'; 
+      return; 
     }
     container.innerHTML = orders.map(order => {
-      let dateStr = 'غير معروف';
-      if (order.createdAt) {
-        dateStr = new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
-      }
+      const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' }) : 'غير معروف';
       let itemsHtml = '';
       for (let item in order.items) {
-        itemsHtml += `<div class="text-xs text-slate-300 mb-1 border-b border-slate-800 pb-1"><span class="font-bold text-amber-400">${item}:</span> `;
+        itemsHtml += `<div class="text-xs text-slate-300 mb-1 border-b border-slate-800 pb-1"><span class="font-bold text-amber-400">${safeText(item)}:</span> `;
         let flavors = [];
-        for (let flavor in order.items[item]) { flavors.push(`${flavor} (${order.items[item][flavor]})`); }
+        for (let flavor in order.items[item]) flavors.push(`${safeText(flavor)} (${order.items[item][flavor]})`);
         itemsHtml += flavors.join(' - ') + '</div>';
       }
+      
       let statusColor = 'bg-slate-700 text-slate-300';
       if (order.status === 'جديد') statusColor = 'bg-blue-600 text-white';
       if (order.status === 'جاري التجهيز') statusColor = 'bg-amber-500 text-slate-950';
       if (order.status === 'جاري التوصيل') statusColor = 'bg-sky-500 text-white';
       if (order.status === 'تم التسليم') statusColor = 'bg-emerald-600 text-white';
-
+      
       return `
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3">
           <div class="flex justify-between items-start border-b border-slate-800 pb-2">
-            <div><p class="text-white font-black text-lg">طلب #${order.id.slice(-4).toUpperCase()}</p><p class="text-slate-400 text-xs">${dateStr}</p></div>
-            <span class="${statusColor} text-xs font-bold px-3 py-1 rounded-full">${order.status || 'جديد'}</span>
+            <div><p class="text-white font-black text-lg">طلب #${safeText(order.id.slice(-4).toUpperCase())}</p><p class="text-slate-400 text-xs">${safeText(dateStr)}</p></div>
+            <span class="${statusColor} text-xs font-bold px-3 py-1 rounded-full">${safeText(order.status || 'جديد')}</span>
           </div>
           <div class="grid grid-cols-2 gap-2 text-sm">
-            <div class="text-slate-300"><i class="fas fa-user text-amber-400 w-4"></i> ${order.userName}</div>
-            <div class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${order.shopName || 'بدون محل'}</div>
-            <div class="text-slate-300 col-span-2"><i class="fas fa-map-marker-alt text-rose-400 w-4"></i> ${order.address}</div>
-            <div class="text-slate-300 col-span-2" dir="ltr"><i class="fas fa-phone text-emerald-400 w-4"></i> ${order.phone || 'لا يوجد رقم'}</div>
-            ${order.notes ? `<div class="col-span-2 bg-amber-950/30 border border-amber-500/30 p-2 rounded-lg mt-1 text-amber-300"><i class="fas fa-comment-dots text-amber-400"></i> <span class="font-bold text-xs">ملاحظات:</span> ${order.notes}</div>` : ''}
+            <div class="text-slate-300"><i class="fas fa-user text-amber-400 w-4"></i> ${safeText(order.userName)}</div>
+            <div class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${safeText(order.shopName || 'بدون محل')}</div>
+            <div class="text-slate-300 col-span-2"><i class="fas fa-map-marker-alt text-rose-400 w-4"></i> ${safeText(order.address)}</div>
+            <div class="text-slate-300 col-span-2" dir="ltr"><i class="fas fa-phone text-emerald-400 w-4"></i> ${safeText(order.phone || '—')}</div>
+            ${order.notes ? `<div class="col-span-2 bg-amber-950/30 border border-amber-500/30 p-2 rounded-lg mt-1 text-amber-300"><i class="fas fa-comment-dots"></i> ${safeText(order.notes)}</div>` : ''}
           </div>
           <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/50"><p class="text-slate-400 text-xs font-bold mb-2">المنتجات:</p>${itemsHtml}</div>
-          ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام مبلغ: ${order.deliveryAmount} ل.س</p></div>` : ''}
+          ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام: ${safeText(order.deliveryAmount)} ل.س</p></div>` : ''}
           <div class="flex gap-2 mt-2">
             ${order.status !== 'تم التسليم' ? `
-              ${order.status === 'جديد' || !order.status ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز الطلب</button>` : ''}
-              ${order.status === 'جاري التجهيز' ? `<button onclick="updateOrderStatus('${order.id}', 'جاري التوصيل')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 rounded-lg text-xs">بدء التوصيل</button>` : ''}
-              ${order.status === 'جاري التوصيل' ? `<button onclick="markAsDelivered('${order.id}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs">تم التسليم</button>` : ''}
-            ` : `<div class="flex-1 text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم تسليم الطلب</div>`}
-            <button onclick="window.deleteOrder('${order.id}')" class="bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/40 font-bold px-3 py-2 rounded-lg text-xs" title="حذف الطلب"><i class="fas fa-trash-alt"></i></button>
+              ${(order.status === 'جديد' || !order.status) ? `<button onclick="updateOrderStatus('${safeText(order.id)}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز</button>` : ''}
+              ${order.status === 'جاري التجهيز' ? `<button onclick="updateOrderStatus('${safeText(order.id)}', 'جاري التوصيل')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 rounded-lg text-xs">بدء التوصيل</button>` : ''}
+              ${order.status === 'جاري التوصيل' ? `<button onclick="markAsDelivered('${safeText(order.id)}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs">تم التسليم</button>` : ''}
+            ` : `<div class="flex-1 text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم التسليم</div>`}
+            <button onclick="window.deleteOrder('${safeText(order.id)}')" class="bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/40 px-3 py-2 rounded-lg text-xs"><i class="fas fa-trash-alt"></i></button>
           </div>
-        </div>
-      `;
+        </div>`;
     }).join('');
   }
 
   window.deleteOrder = async function(orderId) {
-    if (typeof window.showConfirm !== 'function') {
-      if (!confirm('هل تريد حذف هذا الطلب نهائياً؟')) return;
-    } else {
+    if (typeof window.showConfirm === 'function') {
       const ok = await window.showConfirm('الطلب #' + orderId.slice(-4).toUpperCase());
       if (!ok) return;
+    } else if (!confirm('حذف الطلب نهائياً؟')) return;
+    try { 
+      await deleteDoc(doc(db, "orders", orderId)); 
+      window.showToast('تم حذف الطلب'); 
     }
-    try {
-      await deleteDoc(doc(db, "orders", orderId));
-      window.showToast('تم حذف الطلب بنجاح');
-    } catch (e) {
-      console.error(e);
-      window.showToast('تعذّر حذف الطلب', 'error');
-    }
+    catch(e) { window.showToast('تعذّر الحذف', 'error'); }
   };
 
   window.updateOrderStatus = async function(orderId, newStatus) {
     try {
       const orderRef = doc(db, "orders", orderId);
       await updateDoc(orderRef, { status: newStatus, updatedAt: serverTimestamp() });
-      window.showToast('تم تحديث حالة الطلب بنجاح');
-
+      window.showToast('تم تحديث الحالة');
       try {
-        const orderSnap = await getDoc(orderRef);
-        if (!orderSnap.exists()) return;
-        
-        const orderData = orderSnap.data();
-        const userId = orderData && orderData.userId;
+        const snap = await getDoc(orderRef);
+        if (!snap.exists()) return;
+        const userId = snap.data().userId;
         if (!userId) return;
-
         const userSnap = await getDoc(doc(db, "users", userId));
         if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
-          const playerId = userSnap.data().oneSignalPlayerId;
           let msg = "";
-          if (newStatus === 'جاري التجهيز') msg = "جاري تجهيز طلبك الآن 📦";
-          if (newStatus === 'جاري التوصيل') msg = "طلبك في الطريق إليك 🚚";
-          
-          if (msg) await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+          if (newStatus === 'جاري التجهيز') msg = "جاري تجهيز طلبك 📦";
+          if (newStatus === 'جاري التوصيل') msg = "طلبك في الطريق 🚚";
+          if (msg) await sendOneSignalNotification(userSnap.data().oneSignalPlayerId, "مركز عاشور", msg);
         }
-      } catch (notifErr) {
-        console.warn('تعذّر إرسال الإشعار:', notifErr);
-      }
-    } catch (e) {
-      console.error(e);
-      window.showToast('حدث خطأ أثناء التحديث', 'error');
-    }
+      } catch(e) {}
+    } catch(e) { window.showToast('حدث خطأ', 'error'); }
   };
 
   let currentDeliveringOrderId = null;
-
   window.markAsDelivered = function(orderId) {
     currentDeliveringOrderId = orderId;
     document.getElementById('deliveryAmountInput').value = '';
     document.getElementById('deliveryAmountError').classList.add('hidden');
     document.getElementById('deliveryAmountModal').classList.remove('hidden');
-    setTimeout(() => { document.getElementById('deliveryAmountInput').focus(); }, 100);
+    setTimeout(() => document.getElementById('deliveryAmountInput').focus(), 100);
   };
-
-  window.closeDeliveryModal = function() {
-    document.getElementById('deliveryAmountModal').classList.add('hidden');
-    currentDeliveringOrderId = null;
+  
+  window.closeDeliveryModal = function() { 
+    document.getElementById('deliveryAmountModal').classList.add('hidden'); 
+    currentDeliveringOrderId = null; 
   };
-
+  
   window.confirmDelivery = async function() {
     const amount = document.getElementById('deliveryAmountInput').value.trim();
-    const errEl = document.getElementById('deliveryAmountError');
+    if (!amount) { document.getElementById('deliveryAmountError').classList.remove('hidden'); return; }
+    
     const btn = document.getElementById('confirmDeliveryBtn');
-
-    if (!amount) { errEl.classList.remove('hidden'); return; }
-
-    errEl.classList.add('hidden');
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
     btn.disabled = true;
-
+    
     try {
       const orderRef = doc(db, "orders", currentDeliveringOrderId);
       await updateDoc(orderRef, { status: 'تم التسليم', deliveryAmount: amount, deliveredAt: serverTimestamp() });
-      
-      window.showToast('تم تأكيد التسليم واستلام المبلغ بنجاح');
+      window.showToast('تم التأكيد');
       closeDeliveryModal();
-
       try {
-        const orderSnap = await getDoc(orderRef);
-        if (!orderSnap.exists()) return;
-        
-        const orderData = orderSnap.data();
-        const userId = orderData && orderData.userId;
+        const snap = await getDoc(orderRef);
+        if (!snap.exists()) return;
+        const userId = snap.data().userId;
         if (!userId) return;
-
         const userSnap = await getDoc(doc(db, "users", userId));
         if (userSnap.exists() && userSnap.data().oneSignalPlayerId) {
-          const playerId = userSnap.data().oneSignalPlayerId;
-          const msg = `تم استلام طلبك بنجاح! المبلغ المدفوع: ${amount} ل.س ✅`;
-          await sendOneSignalNotification(playerId, "مركز عاشور", msg);
+          await sendOneSignalNotification(userSnap.data().oneSignalPlayerId, "مركز عاشور", `تم استلام طلبك! المبلغ: ${amount} ل.س ✅`);
         }
-      } catch (notifErr) {
-        console.warn('تعذّر إرسال الإشعار:', notifErr);
-      }
-    } catch (e) {
-      console.error(e);
-      window.showToast('حدث خطأ أثناء التأكيد', 'error');
-    } finally {
-      btn.innerHTML = '<i class="fas fa-check-double"></i> تأكيد المبلغ';
-      btn.disabled = false;
-    }
+      } catch(e) {}
+    } catch(e) { window.showToast('حدث خطأ', 'error'); }
+    finally { btn.innerHTML = '<i class="fas fa-check-double"></i> تأكيد المبلغ'; btn.disabled = false; }
   };
 
-  window.loadOrders = function() { window.showToast('جاري المزامنة...'); };
+  window.loadOrders = function() { window.showToast('محدّث تلقائياً'); };
 
-  // ============== دوال التقييمات (السحابة) ==============
+  // ==================== التقييمات ====================
   window.addReviewToFirebase = async function(productName, stars, name, comment) {
-    try {
-      const docRef = await addDoc(collection(db, "reviews"), {
-        productName: productName,
-        userName: name || 'عميل',
-        stars: stars,
-        comment: comment || '',
-        date: new Date().toISOString().slice(0, 10),
-        createdAt: serverTimestamp()
-      });
-      return docRef.id;
-    } catch (e) {
-      console.error('addReviewToFirebase:', e);
-      throw e;
-    }
+    if (stars < 1 || stars > 5) throw new Error('التقييم يجب أن يكون 1-5');
+    const docRef = await addDoc(collection(db, "reviews"), {
+      productName, userName: name || 'عميل', stars, comment: comment || '',
+      date: new Date().toISOString().slice(0, 10), createdAt: serverTimestamp()
+    });
+    return docRef.id;
   };
-
-  window.deleteReviewFromFirebase = async function(docId) {
-    try {
-      await deleteDoc(doc(db, "reviews", docId));
-      return true;
-    } catch (e) {
-      console.error('deleteReviewFromFirebase:', e);
-      throw e;
-    }
+  
+  window.deleteReviewFromFirebase = async function(docId) { 
+    await deleteDoc(doc(db, "reviews", docId)); 
   };
-
+  
   window.fetchProductReviewsFromCloud = async function(productName) {
-    try {
-      const rq = query(collection(db, "reviews"), where("productName", "==", productName));
-      const snap = await getDocs(rq);
-      const revs = [];
-      snap.forEach(d => revs.push({ id: d.id, ...d.data() }));
-      return revs;
-    } catch (e) {
-      console.error('fetchProductReviewsFromCloud:', e);
-      return [];
-    }
+    const rq = query(collection(db, "reviews"), where("productName", "==", productName));
+    const snap = await getDocs(rq);
+    const revs = [];
+    snap.forEach(d => revs.push({ id: d.id, ...d.data() }));
+    return revs;
   };
 
-  // ============== العملاء والطلبات ==============
+  // ==================== العملاء ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
-    container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i><p>جاري تحميل البيانات من السحابة...</p></div>';
-
+    container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
+    
     try {
-      const usersSnapshot = await getDocs(collection(db, "users"));
+      const usersSnap = await getDocs(collection(db, "users"));
       const users = [];
-      usersSnapshot.forEach((docSnap) => { users.push({ id: docSnap.id, ...docSnap.data() }); });
-
-      const ordersSnapshot = await getDocs(collection(db, "orders"));
+      usersSnap.forEach(d => users.push({ id: d.id, ...d.data() }));
+      
+      const ordersSnap = await getDocs(collection(db, "orders"));
       const orders = [];
-      ordersSnapshot.forEach((docSnap) => { orders.push({ id: docSnap.id, ...docSnap.data() }); });
-
-      if (users.length === 0) {
-        container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-users-slash text-4xl mb-3 text-slate-600"></i><p>لا يوجد عملاء مسجلون حتى الآن.</p></div>';
-        return;
+      ordersSnap.forEach(d => orders.push({ id: d.id, ...d.data() }));
+      
+      if (users.length === 0) { 
+        container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><p>لا يوجد عملاء.</p></div>'; 
+        return; 
       }
-      container.innerHTML = ''; 
-
+      
+      container.innerHTML = '';
       users.forEach(user => {
-        const userOrders = orders.filter(o => o.userId === user.id);
-        userOrders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+        const userOrders = orders.filter(o => o.userId === user.id).sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
         let ordersHtml = '';
+        
         if (userOrders.length > 0) {
-          ordersHtml = `
-            <div class="mt-3 border-t border-slate-800 pt-3">
-              <p class="text-xs font-black text-amber-400 mb-2"><i class="fas fa-shopping-bag"></i> الطلبات السابقة (${userOrders.length}):</p>
-              <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                ${userOrders.map(order => {
-                  let dateStr = 'تاريخ غير معروف';
-                  if (order.createdAt) { dateStr = new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' }); }
-                  return `
-                    <div class="bg-slate-950 border border-slate-700/50 rounded-lg p-2.5 text-xs">
-                      <div class="flex justify-between items-center mb-1">
-                        <span class="text-emerald-400 font-bold">${order.status || 'جديد'}</span>
-                        <span class="text-slate-400 text-[10px]">${dateStr}</span>
-                      </div>
-                      <p class="text-slate-400 text-[10px] mt-1 truncate">العنوان: ${order.address}</p>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          `;
+          ordersHtml = `<div class="mt-3 border-t border-slate-800 pt-3"><p class="text-xs font-black text-amber-400 mb-2"><i class="fas fa-shopping-bag"></i> الطلبات (${userOrders.length}):</p><div class="space-y-2 max-h-48 overflow-y-auto pr-1">${userOrders.map(order => {
+            const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+            return `<div class="bg-slate-950 border border-slate-700/50 rounded-lg p-2.5 text-xs"><div class="flex justify-between mb-1"><span class="text-emerald-400 font-bold">${safeText(order.status || 'جديد')}</span><span class="text-slate-400 text-[10px]">${safeText(dateStr)}</span></div><p class="text-slate-400 text-[10px] mt-1 truncate">${safeText(order.address)}</p></div>`;
+          }).join('')}</div></div>`;
         }
+        
         const card = document.createElement('div');
-        card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3 relative';
-        card.innerHTML = `
-          <div class="flex items-start gap-3">
-            <img src="${user.avatarUrl || 'logo.png'}" class="w-14 h-14 rounded-full object-cover border-2 border-amber-500/50 flex-shrink-0">
-            <div class="min-w-0 flex-grow">
-              <h3 class="text-white font-black text-sm truncate">${user.name || 'بدون اسم'}</h3>
-              <p class="text-slate-400 text-xs truncate" dir="ltr">${user.email}</p>
-              <div class="mt-2 space-y-1 text-xs">
-                <p class="text-slate-300"><i class="fas fa-phone text-emerald-400 w-4 text-center"></i> ${user.phone || 'لا يوجد رقم'}</p>
-                <p class="text-slate-300"><i class="fas fa-store text-sky-400 w-4 text-center"></i> ${user.shopName || 'لا يوجد محل'}</p>
-              </div>
-            </div>
-          </div>
-          ${ordersHtml}
-        `;
+        card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3';
+        const avatarUrl = safeText(user.avatarUrl || 'logo.png');
+        
+        card.innerHTML = `<div class="flex items-start gap-3"><img src="${avatarUrl}" class="w-14 h-14 rounded-full object-cover border-2 border-amber-500/50 flex-shrink-0" onerror="this.src='logo.png'"><div class="min-w-0 flex-grow"><h3 class="text-white font-black text-sm truncate">${safeText(user.name || 'بدون اسم')}</h3><p class="text-slate-400 text-xs truncate" dir="ltr">${safeText(user.email)}</p><div class="mt-2 space-y-1 text-xs"><p class="text-slate-300"><i class="fas fa-phone text-emerald-400 w-4"></i> ${safeText(user.phone || '—')}</p><p class="text-slate-300"><i class="fas fa-store text-sky-400 w-4"></i> ${safeText(user.shopName || '—')}</p></div></div></div>${ordersHtml}`;
+        
         container.appendChild(card);
       });
-    } catch (error) {
-      console.error("Error loading data:", error);
-      container.innerHTML = '<div class="col-span-full text-center py-10 text-rose-500"><i class="fas fa-exclamation-triangle text-3xl mb-3"></i><p>حدث خطأ أثناء جلب البيانات.</p></div>';
+    } catch(e) {
+      console.error(e);
+      container.innerHTML = '<div class="col-span-full text-center py-10 text-rose-500"><p>حدث خطأ.</p></div>';
     }
   };
+
+  // ==================== استماع لحالة الدخول ====================
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminApp').classList.remove('hidden');
+      if (typeof initAdmin === 'function') initAdmin();
+      if (typeof startIdleWatcher === 'function') startIdleWatcher();
+      startOrdersListener();
+    } else {
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminApp').classList.add('hidden');
+      if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
+    }
+  });
 </script>
 </body>
 </html>
