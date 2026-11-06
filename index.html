@@ -55,6 +55,16 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </head>
 <body class="min-h-screen pb-20 sm:pb-0">
 
+<!-- ✅ شريط واتساب (يظهر فقط عند الفتح من واتساب) -->
+<div id="whatsappBanner" class="hidden bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 border-b-2 border-emerald-500 py-3 px-4 text-center sticky top-0 z-50 shadow-lg">
+  <p class="text-white text-xs sm:text-sm font-bold mb-2">
+    <i class="fas fa-info-circle text-amber-400"></i> أنت تتصفح من داخل واتساب. لتسجيل الدخول بجوجل بسرعة، افتح الموقع في متصفح Chrome:
+  </p>
+  <button onclick="openInBrowser()" class="bg-white hover:bg-amber-100 text-emerald-900 font-black px-6 py-2 rounded-full text-sm shadow-lg">
+    <i class="fas fa-external-link-alt"></i> فتح في Chrome
+  </button>
+</div>
+
 <div id="offlineScreen" class="hidden fixed inset-0 z-[200] bg-[#0b0f19] flex flex-col items-center justify-center p-6 text-center">
   <div class="w-32 h-32 mb-4 opacity-80"><i class="fas fa-wifi text-6xl text-rose-500"></i></div>
   <h2 class="text-2xl font-black text-white mb-2">لا يوجد اتصال بالإنترنت</h2>
@@ -120,9 +130,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
       <div id="inAppBrowserWarning" class="hidden bg-amber-950/40 border-2 border-amber-500/60 rounded-2xl p-4 mb-4 text-center">
         <i class="fas fa-exclamation-triangle text-amber-400 text-3xl mb-2"></i>
-        <p class="text-amber-200 font-bold text-sm mb-2">أنت تستخدم متصفح واتساب/إنستغرام</p>
-        <p class="text-amber-300/80 text-xs mb-3">لتسجيل الدخول بجوجل، يرجى فتح الموقع في متصفح Chrome أو Safari.</p>
-        <button onclick="copySiteUrl()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-sm"><i class="fas fa-copy"></i> نسخ رابط الموقع</button>
+        <p class="text-amber-200 font-bold text-sm mb-2">أنت داخل متصفح واتساب</p>
+        <p class="text-amber-300/80 text-xs mb-3">جوجل لا يعمل داخل واتساب. استخدم البريد الإلكتروني، أو افتح الموقع في Chrome.</p>
+        <button onclick="openInBrowser()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-sm"><i class="fas fa-external-link-alt"></i> فتح في Chrome</button>
       </div>
 
       <button onclick="loginWithGoogle()" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-4 rounded-xl text-base flex items-center justify-center gap-3 transition shadow-lg mb-4">
@@ -228,7 +238,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </section>
 
-  <!-- قسم تقييم المتجر (داخل الكتالوج) -->
   <section id="storeRatingSection" class="max-w-7xl mx-auto px-3 py-8 w-full border-t border-slate-800 mt-8">
     <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 shadow-2xl text-center">
       <h3 class="text-2xl font-black text-white mb-2"><i class="fas fa-star text-amber-400"></i> تقييم المتجر</h3>
@@ -255,7 +264,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label><input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       </div>
-      <!-- ✅ حقل الهاتف الجديد -->
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">رقم الهاتف / واتساب *</label><input type="tel" id="custPhone" oninput="saveCust()" placeholder="مثال: 0959248901" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono" dir="ltr"></div>
       
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
@@ -550,11 +558,44 @@ function hidePre() {
 }
 setTimeout(hidePre, 2500);
 
+// ============ ✅ دوال اكتشاف متصفح واتساب وفتح Chrome ============
 function isInAppBrowser() {
   var ua = navigator.userAgent || navigator.vendor || window.opera;
   return /FBAN|FBAV|Instagram|Line|WhatsApp|Twitter|Snapchat/i.test(ua) || (ua.indexOf('wv') > -1);
 }
 window.isInAppBrowser = isInAppBrowser;
+
+function checkWhatsApp() {
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+  var isWhatsApp = /WhatsApp/i.test(ua) || /FBAN|FBAV/i.test(ua);
+  var banner = document.getElementById('whatsappBanner');
+  if (banner && isWhatsApp) {
+    banner.classList.remove('hidden');
+  }
+}
+window.checkWhatsApp = checkWhatsApp;
+
+function openInBrowser() {
+  var url = window.location.href;
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+  
+  if (/Android/i.test(ua)) {
+    var withoutScheme = url.replace(/^https?:\/\//, '');
+    var intentUrl = 'intent://' + withoutScheme + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+    window.location.href = intentUrl;
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function(){});
+    } else {
+      alert('اضغط على زر المشاركة (⬆️) أعلى الشاشة، ثم اختر "فتح في Safari"');
+    }
+  } else {
+    window.open(url, '_blank');
+  }
+}
+window.openInBrowser = openInBrowser;
+
+// ============ دوال عامة ============
 
 function copySiteUrl() {
   var url = window.location.origin;
@@ -686,7 +727,6 @@ function buildCard(p) {
   };
   imgBox.appendChild(img);
 
-  // ✅ شارات الحالة (متوفر/كمية محدودة/نفد)
   var stBadge = document.createElement('span');
   if (!avail) {
     stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-xs px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-lg';
@@ -700,7 +740,6 @@ function buildCard(p) {
   }
   imgBox.appendChild(stBadge);
 
-  // ✅ شارة "جديد"
   if (p.isNew) {
     var newBadge = document.createElement('span');
     newBadge.className = 'absolute top-2 left-2 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 font-black text-xs px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-lg';
@@ -1524,7 +1563,6 @@ function openProduct(pName) {
     btnsBox.appendChild(noBtn);
   }
   
-  // ✅ زر المشاركة
   var shareBtn = document.createElement('button');
   shareBtn.type = 'button';
   shareBtn.className = 'bg-sky-600 hover:bg-sky-500 text-white font-bold px-5 py-3.5 rounded-xl text-sm';
@@ -1720,6 +1758,7 @@ function loadData() {
 }
 
 function boot() {
+  checkWhatsApp(); // ✅ فحص متصفح واتساب
   showSkeleton();
   loadData().then(function() {
     if (!Array.isArray(products)) products = [];
@@ -1735,7 +1774,6 @@ function boot() {
     displayProducts(products);
     setTimeout(function() { var b = document.getElementById('preBar'); if (b) b.style.width = '100%'; }, 100);
     
-    // ✅ فتح المنتج تلقائياً عند الوصول من رابط مشارك
     setTimeout(function() {
       var params = new URLSearchParams(window.location.search);
       var productParam = params.get('product');
@@ -1766,7 +1804,7 @@ document.addEventListener('keydown', function(e) {
     try { closeOrderDetails(); } catch(e) {}
   }
 });
-</script><!-- ✅ سكربت Firebase (مع إصلاح تسجيل الدخول داخل متصفح واتساب) -->
+</script><!-- ✅ سكربت Firebase (مع معالجة تسجيل الدخول داخل متصفح واتساب) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1798,12 +1836,25 @@ document.addEventListener('keydown', function(e) {
     catch(e) { console.error(e); }
   };
 
+  // ✅ نافذة الدخول: تخفي زر جوجل داخل واتساب وتفتح البريد
   window.openAuthModal = function() {
     if (window.pushBackState) window.pushBackState();
     document.getElementById('authModal').classList.remove('hidden');
     document.getElementById('authError').classList.add('hidden');
-    var warn = document.getElementById('inAppBrowserWarning');
-    if (warn) warn.classList.toggle('hidden', !window.isInAppBrowser());
+    
+    var isInApp = window.isInAppBrowser();
+    var warning = document.getElementById('inAppBrowserWarning');
+    var googleBtn = document.querySelector('button[onclick="loginWithGoogle()"]');
+    var emailForm = document.getElementById('emailLoginForm');
+    
+    if (isInApp) {
+      if (googleBtn) googleBtn.classList.add('hidden');
+      if (warning) warning.classList.remove('hidden');
+      if (emailForm) emailForm.classList.remove('hidden');
+    } else {
+      if (googleBtn) googleBtn.classList.remove('hidden');
+      if (warning) warning.classList.add('hidden');
+    }
   };
   window.closeAuthModal = function() { document.getElementById('authModal').classList.add('hidden'); };
 
@@ -1865,16 +1916,14 @@ document.addEventListener('keydown', function(e) {
     } finally { btn.innerHTML = 'إنشاء الحساب'; btn.disabled = false; }
   };
 
-  // ✅ دالة تسجيل الدخول بجوجل (معدلة للعمل داخل متصفح واتساب)
+  // ✅ تسجيل الدخول بجوجل (يعمل داخل واتساب باستخدام Redirect)
   window.loginWithGoogle = async function() {
     try {
       var isMobileOrInApp = window.isInAppBrowser() || /Mobi|Android/i.test(navigator.userAgent);
       
       if (isMobileOrInApp) {
-        // داخل واتساب أو الهاتف: استخدم التحويل (Redirect) بدلاً من النافذة المنبثقة
         await signInWithRedirect(auth, provider);
       } else {
-        // على الحاسوب: استخدم النافذة المنبثقة (أسرع)
         await signInWithPopup(auth, provider);
         window.showToast('تم تسجيل الدخول بنجاح');
         closeAuthModal();
@@ -2084,15 +2133,17 @@ document.addEventListener('keydown', function(e) {
     });
   };
 
-  // ✅ استقبال الزبون بعد عودته من صفحة جوجل (لإصلاح مشكلة واتساب)
+  // ✅ معالجة العودة من صفحة جوجل بعد التحويل (Redirect)
   getRedirectResult(auth).then(function(result) {
     if (result && result.user) {
       window.showToast('تم تسجيل الدخول بنجاح ✅');
-      if (typeof closeAuthModal === 'function') closeAuthModal();
+      var modal = document.getElementById('authModal');
+      if (modal) modal.classList.add('hidden');
     }
   }).catch(function(error) {
     console.error("Redirect Error:", error);
     if (error.code === 'auth/unauthorized-domain') window.showToast('هذا النطاق غير مصرح به', 'error');
+    else if (error.code === 'auth/account-exists-with-different-credential') window.showToast('الحساب موجود بوسيلة دخول أخرى', 'error');
   });
 
   setTimeout(listenToStoreReviews, 1000);
