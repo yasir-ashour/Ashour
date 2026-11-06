@@ -39,6 +39,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
 
     <p id="adminLoginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
+    <p class="text-[10px] text-slate-500 mt-4"><i class="fas fa-lock"></i> الدخول مقتصر على الأدمن فقط</p>
   </div>
 </div>
 
@@ -485,7 +486,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ مودال دليل استعادة الرمز السري (جديد) -->
+<!-- ✅ مودال دليل استعادة الرمز العام -->
 <div id="recoveryGuideModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto p-4">
   <div class="max-w-2xl mx-auto my-8 bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -531,6 +532,42 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- ✅ مودال استعادة الرمز لعميل محدد -->
+<div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black gold-gradient-text"><i class="fas fa-key text-purple-400"></i> استعادة الرمز السري</h3>
+      <button onclick="closeCustomerRecovery()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+        <p class="text-slate-400 text-xs mb-1">العميل</p>
+        <p id="recCustName" class="text-white font-bold text-sm">اسم العميل</p>
+        <p id="recCustPhone" class="text-amber-400 text-xs font-mono mt-1" dir="ltr">0959xxxxxxx</p>
+      </div>
+      <div class="bg-purple-950/30 rounded-xl p-3 border border-purple-500/40">
+        <p class="text-purple-300 text-xs font-bold mb-1"><i class="fas fa-envelope"></i> البريد الداخلي (للبحث في Firebase)</p>
+        <p id="recCustEmail" class="text-white font-mono text-sm break-all bg-slate-950 rounded p-2" dir="ltr">9551234567@ashour.local</p>
+        <button onclick="copyCustomerRecoveryEmail()" class="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-2">
+          <i class="fas fa-copy"></i> نسخ البريد
+        </button>
+      </div>
+      <div class="bg-amber-950/30 rounded-xl p-3 border border-amber-500/30 text-xs text-amber-200 leading-relaxed">
+        <i class="fas fa-info-circle mr-1"></i>
+        <strong>الخطوات:</strong><br>
+        1. اضغط "فتح Firebase Console"<br>
+        2. في تبويب Users، ابحث بالبريد الداخلي أعلاه<br>
+        3. اضغط ⋮ → Delete account<br>
+        4. أخبر الزبون: "ادخل برقمك والرمز الجديد"
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-2">
+      <button onclick="closeCustomerRecovery()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-xl text-sm">إغلاق</button>
+      <button onclick="openFirebaseConsole()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-fire"></i> Firebase</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p id="toastMsg" class="text-sm font-bold"></p></div>
 
 <div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
@@ -572,7 +609,6 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.log('Admin SW registration failed', err));
 }
 
-// ✅ دالة الحماية من XSS
 function escapeHtml(s) { 
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
@@ -594,7 +630,7 @@ function showToast(msg, type = 'success') {
 }
 window.showToast = showToast;
 
-// ============ ✅ دوال جديدة: استعادة الرمز + Firebase Console ============
+// ✅ دوال استعادة الرمز + Firebase Console
 window.openRecoveryGuide = function() {
   document.getElementById('recoveryGuideModal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
@@ -689,7 +725,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ============ إدارة التصنيفات والإعدادات ============
 function renderCategories() {
   const set = new Set(catalogData.categories || []);
   catalogData.products.forEach(p => p.category && set.add(p.category));
@@ -758,7 +793,6 @@ function toggleTokenVisibility() {
   if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
-// ============ إدارة المنتجات ============
 function getFilteredProducts() {
   const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
   const cat = document.getElementById('adminFilterCat').value; const status = document.getElementById('adminFilterStatus').value;
@@ -1053,7 +1087,6 @@ async function deleteProductFromModal() {
 
 function saveAll() { persist(); clearDirty(); showToast('تم حفظ التغييرات محليًا'); }
 
-// ✅ دالة النشر (مع إخفاء البيانات الحساسة)
 function buildCatalogJS() {
   const cleanSettings = { ...catalogData.settings };
   delete cleanSettings.password;
@@ -1127,7 +1160,6 @@ function applyImportedData(data) {
   });
 }
 
-// ============ إدارة الصور ============
 function renderGalleryImages() {
   const container = document.getElementById('galleryContainer');
   if (!container) return;
@@ -1245,53 +1277,17 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { 
     closeProductModal(); 
     if (_confirmResolver) resolveConfirm(false); 
-    // ✅ إغلاق مودال دليل الاستعادة عند Escape
     const rgm = document.getElementById('recoveryGuideModal');
     if (rgm && !rgm.classList.contains('hidden')) closeRecoveryGuide();
+    const crm = document.getElementById('customerRecoveryModal');
+    if (crm && !crm.classList.contains('hidden')) closeCustomerRecovery();
   } 
 });
 
-// ✅ الدالة الابتدائية
 (async function boot() {
   await loadInitialData();
 })();
-</script><!-- ✅ مودال استعادة الرمز لكل عميل على حدة -->
-<div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
-      <h3 class="text-lg font-black gold-gradient-text"><i class="fas fa-key text-purple-400"></i> استعادة الرمز السري</h3>
-      <button onclick="closeCustomerRecovery()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="p-5 space-y-4">
-      <div class="bg-slate-950/60 rounded-xl p-3 border border-slate-800">
-        <p class="text-slate-400 text-xs mb-1">العميل</p>
-        <p id="recCustName" class="text-white font-bold text-sm">اسم العميل</p>
-        <p id="recCustPhone" class="text-amber-400 text-xs font-mono mt-1" dir="ltr">0959xxxxxxx</p>
-      </div>
-      <div class="bg-purple-950/30 rounded-xl p-3 border border-purple-500/40">
-        <p class="text-purple-300 text-xs font-bold mb-1"><i class="fas fa-envelope"></i> البريد الداخلي (للبحث في Firebase)</p>
-        <p id="recCustEmail" class="text-white font-mono text-sm break-all bg-slate-950 rounded p-2" dir="ltr">9551234567@ashour.local</p>
-        <button onclick="copyCustomerRecoveryEmail()" class="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-2">
-          <i class="fas fa-copy"></i> نسخ البريد
-        </button>
-      </div>
-      <div class="bg-amber-950/30 rounded-xl p-3 border border-amber-500/30 text-xs text-amber-200 leading-relaxed">
-        <i class="fas fa-info-circle mr-1"></i>
-        <strong>الخطوات:</strong><br>
-        1. اضغط "فتح Firebase Console"<br>
-        2. في تبويب Users، ابحث بالبريد الداخلي أعلاه<br>
-        3. اضغط ⋮ → Delete account<br>
-        4. أخبر الزبون: "ادخل برقمك والرمز الجديد"
-      </div>
-    </div>
-    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-2">
-      <button onclick="closeCustomerRecovery()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-xl text-sm">إغلاق</button>
-      <button onclick="openFirebaseConsole()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-fire"></i> Firebase</button>
-    </div>
-  </div>
-</div>
-
-<script type="module">
+</script><script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, addDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -1305,6 +1301,9 @@ document.addEventListener('keydown', (e) => {
     appId: "1:198701450405:web:80275ed45ff3da7941f94c"
   };
 
+  // ✅ UID الأدمن الوحيد المسموح له بالدخول
+  const ADMIN_UID = 'ywqKEtrTHjWD7B0xAgYVn4q7Ybi1';
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
@@ -1313,7 +1312,7 @@ document.addEventListener('keydown', (e) => {
     return (typeof window.escapeHtml === 'function') ? window.escapeHtml(v) : String(v || '');
   }
 
-  // ============ ✅ دوال مساعدة لاستعادة الرمز ============
+  // ============ دوال مساعدة لاستعادة الرمز ============
   function normalizePhone(phone) {
     let p = String(phone || '').replace(/[^\d]/g, '');
     if (p.startsWith('00963')) p = p.slice(5);
@@ -1328,9 +1327,7 @@ document.addEventListener('keydown', (e) => {
     return normalized + '@ashour.local';
   }
 
-  // ============ ✅ دوال استعادة الرمز لكل عميل ============
   let _currentRecoveryEmail = '';
-
   window.openCustomerRecovery = function(name, phone, email) {
     _currentRecoveryEmail = email;
     document.getElementById('recCustName').innerText = name || 'بدون اسم';
@@ -1338,11 +1335,9 @@ document.addEventListener('keydown', (e) => {
     document.getElementById('recCustEmail').innerText = email || '—';
     document.getElementById('customerRecoveryModal').classList.remove('hidden');
   };
-
   window.closeCustomerRecovery = function() {
     document.getElementById('customerRecoveryModal').classList.add('hidden');
   };
-
   window.copyCustomerRecoveryEmail = function() {
     if (!_currentRecoveryEmail) return;
     if (navigator.clipboard) {
@@ -1354,7 +1349,7 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ==================== تسجيل دخول الأدمن الآمن ====================
+  // ============ ✅ تسجيل دخول الأدمن مع فحص UID ============
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
@@ -1372,7 +1367,17 @@ document.addEventListener('keydown', (e) => {
     errEl.classList.add('hidden');
     
     try {
-      await signInWithEmailAndPassword(auth, email, pass);
+      const cred = await signInWithEmailAndPassword(auth, email, pass);
+      // ✅ فحص إضافي: هل هذا الأدمن؟
+      if (cred.user.uid !== ADMIN_UID) {
+        await signOut(auth);
+        errEl.innerText = '❌ هذا الحساب ليس لديه صلاحية الأدمن';
+        errEl.classList.remove('hidden');
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
+        btn.disabled = false;
+        return;
+      }
+      // نجح — onAuthStateChanged سيفتح اللوحة
     } catch (e) {
       errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة';
       errEl.classList.remove('hidden');
@@ -1700,7 +1705,7 @@ document.addEventListener('keydown', (e) => {
     return revs;
   };
 
-  // ==================== العملاء (✅ معدّل: مع شارة Phone+PIN وزر استعادة) ====================
+  // ==================== العملاء (مع شارة Phone+PIN) ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
@@ -1731,7 +1736,6 @@ document.addEventListener('keydown', (e) => {
           }).join('')}</div></div>`;
         }
         
-        // ✅ تحسينات: شارة Phone+PIN + زر استعادة
         const isPhonePin = user.authMethod === 'phone_pin';
         const internalEmail = isPhonePin ? phoneToInternalEmail(user.phone || '') : '';
         const phonePinBadge = isPhonePin 
@@ -1774,17 +1778,43 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ==================== استماع لحالة الدخول ====================
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('adminApp').classList.remove('hidden');
+  // ==================== ✅ استماع لحالة الدخول مع فحص الأدمن ====================
+  onAuthStateChanged(auth, async (user) => {
+    const loginScreen = document.getElementById('loginScreen');
+    const adminApp = document.getElementById('adminApp');
+    const errEl = document.getElementById('adminLoginError');
+    const btn = document.getElementById('adminLoginBtn');
+    
+    if (user && user.uid === ADMIN_UID) {
+      // ✅ أدمن حقيقي → افتح اللوحة
+      loginScreen.classList.add('hidden');
+      adminApp.classList.remove('hidden');
+      if (errEl) errEl.classList.add('hidden');
       if (typeof initAdmin === 'function') initAdmin();
       if (typeof startIdleWatcher === 'function') startIdleWatcher();
       startOrdersListener();
+    } else if (user) {
+      // ⚠️ مستخدم عادي حاول الدخول → اطرده
+      await signOut(auth);
+      loginScreen.classList.remove('hidden');
+      adminApp.classList.add('hidden');
+      if (errEl) {
+        errEl.innerText = '❌ هذا الحساب ليس لديه صلاحية الأدمن';
+        errEl.classList.remove('hidden');
+      }
+      if (btn) {
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
+        btn.disabled = false;
+      }
+      if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     } else {
-      document.getElementById('loginScreen').classList.remove('hidden');
-      document.getElementById('adminApp').classList.add('hidden');
+      // لا مستخدم → شاشة الدخول
+      loginScreen.classList.remove('hidden');
+      adminApp.classList.add('hidden');
+      if (btn) {
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
+        btn.disabled = false;
+      }
       if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     }
   });
