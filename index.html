@@ -145,6 +145,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
           <input type="email" id="loginEmail" required placeholder="البريد الإلكتروني" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
           <input type="password" id="loginPassword" required placeholder="كلمة المرور" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
           <button type="submit" id="loginSubmitBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">تسجيل الدخول</button>
+          <button type="button" onclick="resetPassword()" class="w-full mt-1 text-xs text-amber-400 hover:text-amber-300 transition underline">نسيت كلمة المرور؟</button>
         </form>
         <form id="registerForm" onsubmit="handleEmailRegister(event)" class="space-y-3 hidden">
           <input type="text" id="regName" required placeholder="الاسم الكامل" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500 focus:outline-none">
@@ -227,7 +228,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
   </section>
 
-  <!-- ✅ قسم تقييم المتجر (تم نقله داخل catalogView) -->
+  <!-- قسم تقييم المتجر (داخل الكتالوج) -->
   <section id="storeRatingSection" class="max-w-7xl mx-auto px-3 py-8 w-full border-t border-slate-800 mt-8">
     <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 shadow-2xl text-center">
       <h3 class="text-2xl font-black text-white mb-2"><i class="fas fa-star text-amber-400"></i> تقييم المتجر</h3>
@@ -254,6 +255,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label><input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       </div>
+      <!-- ✅ حقل الهاتف الجديد -->
+      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">رقم الهاتف / واتساب *</label><input type="tel" id="custPhone" oninput="saveCust()" placeholder="مثال: 0959248901" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono" dir="ltr"></div>
+      
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">ملاحظات إضافية (اختياري)</label><textarea id="custNotes" oninput="saveCust()" rows="2" placeholder="مثال: يرجى الاتصال قبل التوصيل..." class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea></div>
     </div>
@@ -564,23 +568,33 @@ function applyWa() {
   if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
 }
 
+// ✅ حفظ بيانات الزبون مع الهاتف الجديد
 function saveCust() {
   try {
-    localStorage.setItem('c_name', document.getElementById('custName').value);
-    localStorage.setItem('c_shop', document.getElementById('shopName').value);
-    localStorage.setItem('c_addr', document.getElementById('custAddr').value);
-    localStorage.setItem('c_notes', document.getElementById('custNotes').value);
+    var cn = document.getElementById('custName');
+    var cs = document.getElementById('shopName');
+    var ca = document.getElementById('custAddr');
+    var cnt = document.getElementById('custNotes');
+    var cp = document.getElementById('custPhone');
+    if (cn) localStorage.setItem('c_name', cn.value);
+    if (cs) localStorage.setItem('c_shop', cs.value);
+    if (ca) localStorage.setItem('c_addr', ca.value);
+    if (cnt) localStorage.setItem('c_notes', cnt.value);
+    if (cp) localStorage.setItem('c_phone', cp.value);
   } catch(e) {}
 }
 
+// ✅ استرجاع بيانات الزبون مع الهاتف
 function loadCust() {
   try {
     var n = localStorage.getItem('c_name'); var s = localStorage.getItem('c_shop');
     var a = localStorage.getItem('c_addr'); var nt = localStorage.getItem('c_notes');
+    var ph = localStorage.getItem('c_phone');
     if (n && document.getElementById('custName')) document.getElementById('custName').value = n;
     if (s && document.getElementById('shopName')) document.getElementById('shopName').value = s;
     if (a && document.getElementById('custAddr')) document.getElementById('custAddr').value = a;
     if (nt && document.getElementById('custNotes')) document.getElementById('custNotes').value = nt;
+    if (ph && document.getElementById('custPhone')) document.getElementById('custPhone').value = ph;
   } catch(e) {}
 }
 
@@ -670,6 +684,7 @@ function buildCard(p) {
   };
   imgBox.appendChild(img);
 
+  // ✅ شارات الحالة (متوفر/كمية محدودة/نفد)
   var stBadge = document.createElement('span');
   if (!avail) {
     stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-xs px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-lg';
@@ -683,6 +698,7 @@ function buildCard(p) {
   }
   imgBox.appendChild(stBadge);
 
+  // ✅ شارة "جديد"
   if (p.isNew) {
     var newBadge = document.createElement('span');
     newBadge.className = 'absolute top-2 left-2 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 font-black text-xs px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-lg';
@@ -1236,12 +1252,18 @@ window.openEditProfileModal = function() {
 };
 window.closeEditProfileModal = function() { document.getElementById('editProfileModal').classList.add('hidden'); };
 
+// ✅ التحقق من الاسم والهاتف والعنوان قبل الطلب
 window.sendOrder = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
   var a = document.getElementById('custAddr') ? document.getElementById('custAddr').value.trim() : '';
+  var ph = document.getElementById('custPhone') ? document.getElementById('custPhone').value.trim() : '';
+  
   if (!n) { showToast('يرجى إدخال الاسم الكامل', 'error'); return; }
+  if (!ph) { showToast('يرجى إدخال رقم الهاتف', 'error'); return; }
+  if (ph.length < 8) { showToast('رقم الهاتف غير صحيح', 'error'); return; }
   if (!a) { showToast('يرجى إدخال العنوان التفصيلي', 'error'); return; }
+  
   var names = Object.keys(cart);
   if (names.length === 0) { showToast('السلة فارغة', 'error'); return; }
   for (var i = 0; i < names.length; i++) {
@@ -1252,39 +1274,50 @@ window.sendOrder = function() {
 };
 window.closeConfirmOrderModal = function() { document.getElementById('confirmOrderModal').classList.add('hidden'); };
 
+// ✅ إرسال الطلب مع رقم الهاتف ورقم الطلب
 window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
   btn.disabled = true;
   try { var snd = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); snd.volume = 0.6; snd.play().catch(function(){}); } catch(e) {}
+  
   var n = document.getElementById('custName').value.trim();
   var s = document.getElementById('shopName').value.trim();
   var a = document.getElementById('custAddr').value.trim();
   var notes = document.getElementById('custNotes').value.trim();
+  var ph = document.getElementById('custPhone').value.trim();
+  
   var date = new Date().toLocaleDateString('ar-SY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  var msg = 'السلام عليكم ورحمه الله وبركاته\n\n*📝 اريد ان اطلب طلب*\n\n👤 *معلومات المستلم* :\n▫️ *الاسم:* ' + n + '\n▫️ *المحل:* ' + (s || 'لا يوجد') + '\n▫️ *العنوان:* ' + a + '\n';
+  
+  var savedOk = true;
+  var orderNumber = '';
+  
+  if (typeof window.saveOrderToFirebase === 'function') {
+    try { orderNumber = await window.saveOrderToFirebase(cart, n, s, a, notes, ph); }
+    catch(e) { console.error(e); savedOk = false; }
+  }
+  
+  var msg = 'السلام عليكم ورحمه الله وبركاته\n\n*📝 اريد ان اطلب طلب*\n\n';
+  if (orderNumber) msg += '🔢 *رقم الطلب:* #' + orderNumber + '\n\n';
+  msg += '👤 *معلومات المستلم* :\n';
+  msg += '▫️ *الاسم:* ' + n + '\n';
+  msg += '▫️ *المحل:* ' + (s || 'لا يوجد') + '\n';
+  msg += '▫️ *الهاتف:* ' + ph + '\n';
+  msg += '▫️ *العنوان:* ' + a + '\n';
   if (notes) msg += '▫️ *ملاحظات:* ' + notes + '\n';
   msg += '\n━━━━━━━━━━━━━━━\n📦 _تفاصيل الطلب:_\n\n';
+  
   var total = 0; var idx = 1; var names = Object.keys(cart);
   for (var i = 0; i < names.length; i++) {
     var name = names[i]; var details = [];
     for (var flv in cart[name]) { 
       if (!cart[name].hasOwnProperty(flv)) continue; 
       var qty = cart[name][flv]; 
-      if (qty > 0) { 
-        details.push('  ( ' + flv + ' × ' + qty + ' )');
-        total += qty; 
-      } 
+      if (qty > 0) { details.push('  ( ' + flv + ' × ' + qty + ' )'); total += qty; } 
     }
     if (details.length > 0) { msg += ' *' + idx + '*• *' + name + '*\n' + details.join('\n') + '\n\n'; idx++; }
   }
   msg += '━━━━━━━━━━━━━━━\n\n*🧾 إجمالي عدد المنتجات:* ( ' + total + ' )\n\n📅 تاريخ الطلب : ' + date + '\n\n';
-  
-  var savedOk = true;
-  if (typeof window.saveOrderToFirebase === 'function') {
-    try { await window.saveOrderToFirebase(cart, n, s, a, notes); }
-    catch(e) { console.error(e); savedOk = false; }
-  }
   
   var waUrl = 'https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg);
   window.location.href = waUrl;
@@ -1696,10 +1729,10 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 
-<!-- سكربت Firebase (يُغلق الملف) -->
+<!-- ✅ سكربت Firebase (معدل) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1816,6 +1849,20 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  window.resetPassword = async function() {
+    var email = document.getElementById('loginEmail').value.trim();
+    var errEl = document.getElementById('authError');
+    if (!email) { errEl.innerText = 'أدخل بريدك الإلكتروني أولاً ثم اضغط نسيت كلمة المرور'; errEl.classList.remove('hidden'); return; }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      window.showToast('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك ✅');
+      errEl.classList.add('hidden');
+    } catch(e) {
+      errEl.innerText = 'حدث خطأ، تأكد من صحة البريد الإلكتروني';
+      errEl.classList.remove('hidden');
+    }
+  };
+
   onAuthStateChanged(auth, async function(user) {
     if (user) {
       window.currentUser = user;
@@ -1834,10 +1881,11 @@ document.addEventListener('keydown', function(e) {
         var pid = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
         if (pid) window.savePlayerIdToFirebase(pid);
       }
-      var el1 = document.getElementById('custName'); var el2 = document.getElementById('shopName'); var el3 = document.getElementById('custAddr');
+      var el1 = document.getElementById('custName'); var el2 = document.getElementById('shopName'); var el3 = document.getElementById('custAddr'); var el4 = document.getElementById('custPhone');
       if (el1 && window.currentProfileData.name) el1.value = window.currentProfileData.name;
       if (el2 && window.currentProfileData.shopName) el2.value = window.currentProfileData.shopName;
       if (el3 && window.currentProfileData.address) el3.value = window.currentProfileData.address;
+      if (el4 && window.currentProfileData.phone) el4.value = window.currentProfileData.phone;
     } else {
       window.currentUser = null;
       window.currentProfileData = {};
@@ -1901,19 +1949,22 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('custName').value = data.name;
       document.getElementById('shopName').value = data.shopName;
       document.getElementById('custAddr').value = data.address;
+      document.getElementById('custPhone').value = data.phone;
       window.showToast('تم حفظ البيانات ✅');
       window.closeEditProfileModal();
     } catch(e) { window.showToast('خطأ في الحفظ', 'error'); }
     finally { btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; }
   };
 
-  window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes) {
-    if (!window.currentUser) return;
-    await addDoc(collection(db, "orders"), {
+  window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes, phone) {
+    if (!window.currentUser) return '';
+    var docRef = await addDoc(collection(db, "orders"), {
       userId: window.currentUser.uid, userName: name, shopName: shop, address: address,
-      phone: window.currentProfileData.phone || '', notes: notes || '',
+      phone: phone || window.currentProfileData.phone || '',
+      notes: notes || '',
       items: cartItems, status: 'جديد', createdAt: serverTimestamp()
     });
+    return docRef.id.slice(-4).toUpperCase();
   };
 
   var ordersUnsubscribe = null;
