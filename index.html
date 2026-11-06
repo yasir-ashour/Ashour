@@ -4,13 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مركز عاشور للتجارة | جملة المواد الغذائية والبسكويت في دمشق</title>
-<meta name="description" content="مركز عاشور لتجارة المواد الغذائية في دمشق. كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة وبأفضل الأسعار. جودة عالية وتوصيل مجاني لطلبك. تصفح الكتالوج واطلب الآن!">
-<meta name="keywords" content="مركز عاشور, عاشور جملة, تجارة المواد الغذائية, بسكويت بالجملة, شيبس, عصائر, قهوة, مواد غذائية دمشق, جملة دمشق, توصيل مجاني, كتالوج عاشور, أسعار الجملة, سكاكر وعلكة, مركز عاشور للتجارة">
-<meta property="og:title" content="مركز عاشور للتجارة | جملة المواد الغذائية في دمشق">
-<meta property="og:description" content="كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة. جودة عالية وأسعار منافسة مع توصيل مجاني.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ashour.cc.cd/">
-<meta property="og:image" content="https://ashour.cc.cd/logo.png">
+<meta name="description" content="مركز عاشور لتجارة المواد الغذائية في دمشق. كافة أنواع البسكويت، الشيبس، العصائر والقهوة بالجملة وبأفضل الأسعار.">
 <meta name="theme-color" content="#d4af37">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="manifest" href="manifest.json">
@@ -28,7 +22,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 </style>
 
-<!-- ✅ كود تحويل الموقع إلى تطبيق PWA -->
+<!-- ✅ تفعيل تطبيق PWA للزبائن -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -41,30 +35,19 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284",
-      serviceWorkerPath: "./OneSignalSDKWorker.js"
-    });
+    await OneSignal.init({ appId: "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284", serviceWorkerPath: "./OneSignalSDKWorker.js" });
     OneSignal.User.PushSubscription.addEventListener('change', function(event) {
       const playerId = event.current && event.current.id;
       if (playerId) { window._currentPlayerId = playerId; if (window.currentUser) window.savePlayerIdToFirebase(playerId); }
     });
-    const currentId = OneSignal.User.PushSubscription.id;
-    if (currentId) { window._currentPlayerId = currentId; if (window.currentUser) window.savePlayerIdToFirebase(currentId); }
   });
 </script>
 </head>
 <body class="min-h-screen pb-20 sm:pb-0">
 
-<div id="whatsappBanner" class="hidden bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 border-b-2 border-emerald-500 py-3 px-4 text-center sticky top-0 z-50 shadow-lg">
-  <p class="text-white text-xs sm:text-sm font-bold mb-2"><i class="fas fa-info-circle text-amber-400"></i> أنت تتصفح من داخل واتساب. لتسجيل الدخول بجوجل بسرعة، افتح الموقع في متصفح Chrome:</p>
-  <button onclick="openInBrowser()" class="bg-white hover:bg-amber-100 text-emerald-900 font-black px-6 py-2 rounded-full text-sm shadow-lg"><i class="fas fa-external-link-alt"></i> فتح في Chrome</button>
-</div>
-
 <div id="offlineScreen" class="hidden fixed inset-0 z-[200] bg-[#0b0f19] flex flex-col items-center justify-center p-6 text-center">
   <div class="w-32 h-32 mb-4 opacity-80"><i class="fas fa-wifi text-6xl text-rose-500"></i></div>
   <h2 class="text-2xl font-black text-white mb-2">لا يوجد اتصال بالإنترنت</h2>
-  <p class="text-slate-400 text-sm mb-6">يرجى التحقق من اتصالك بالشبكة والمحاولة مرة أخرى.</p>
   <button onclick="location.reload()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl transition"><i class="fas fa-sync-alt"></i> إعادة المحاولة</button>
 </div>
 
@@ -73,7 +56,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <h1 class="text-3xl font-black gold-text mb-1">مركز عاشور للتجارة</h1>
   <p class="text-sm font-bold text-amber-400/80 mb-6">اطلب طلبك وريح حالك</p>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3"><div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div></div>
-  <p class="text-xs font-bold text-slate-400"><i class="fas fa-spinner fa-spin text-amber-400"></i> جاري التحميل...</p>
 </div>
 
 <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p class="text-sm font-bold" id="toastMsg">تمت الإضافة!</p></div>
@@ -103,7 +85,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span>تسجيل الدخول</span>
       </button>
       
-      <!-- ✅ التعديل 7: زر الحساب الجديد -->
+      <!-- ✅ التعديل 7: زر الحساب الجديد مع أيقونة الإعدادات -->
       <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:bg-slate-700 relative">
         <div class="relative">
           <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover border border-slate-600">
@@ -222,7 +204,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="showCatalog()" class="bg-slate-800 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm"><i class="fas fa-arrow-right"></i> متابعة التسوق</button>
     </div>
     <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mb-5 space-y-3">
-      <h3 class="text-base font-black text-white border-b border-slate-800 pb-2"><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</h3>
+      <h3 class="text-base font-black text-white border-b border-slate-800 pb-2 flex justify-between items-center">
+        <span><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</span>
+      </h3>
+      
+      <!-- ✅ التعديل 6: قائمة اختيار العناوين المحفوظة -->
+      <div id="savedAddressDropdownBox" class="hidden bg-slate-900 border border-emerald-500/30 rounded-xl p-3 mb-2">
+        <label class="block text-emerald-400 font-bold mb-1.5 text-xs"><i class="fas fa-map-marker-alt"></i> استخدام عنوان محفوظ</label>
+        <select id="savedAddressSelect" onchange="fillAddressFromSaved(this.value)" class="w-full bg-slate-950 text-white p-2.5 rounded-lg border border-slate-700 text-sm focus:outline-none focus:border-emerald-500">
+          <option value="">-- اختر عنواناً --</option>
+        </select>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label><input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
@@ -266,15 +259,19 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <div id="appMyOrdersList" class="space-y-4"><div class="text-center py-10"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p class="text-slate-400">جاري تحميل الطلبات...</p></div></div>
     </div>
     <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500"></div>
-    <div id="appTabAddresses" class="hidden text-center py-16 text-slate-500">
-      <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-map-marked-alt text-4xl text-slate-700"></i></div>
-      <h3 class="text-xl font-bold text-white mb-2">لا توجد عناوين محفوظة</h3>
-      <p class="text-sm">يمكنك إضافة عنوانك أثناء إتمام الطلب.</p>
+    
+    <!-- ✅ التعديل 6: تبويب العناوين الجديد -->
+    <div id="appTabAddresses" class="hidden">
+      <button onclick="openAddAddressModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm mb-4 flex items-center justify-center gap-2 transition">
+        <i class="fas fa-plus"></i> إضافة عنوان جديد
+      </button>
+      <div id="savedAddressesList" class="space-y-3"></div>
     </div>
+
   </div>
 </div>
 
-<!-- ✅ نافذة تعديل الملف الشخصي (مع القفل الجديد) -->
+<!-- ✅ التعديل 3: نافذة تعديل الملف الشخصي (مع قفل رقم الهاتف) -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[80] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -292,11 +289,16 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
       
       <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-xs flex justify-between"><span id="profileEmailLabel">البريد الإلكتروني</span><span class="text-amber-500 text-[10px]"><i class="fas fa-lock"></i> لا يمكن تعديله</span></label>
+        <label class="block text-slate-300 font-bold mb-1.5 text-xs flex justify-between">
+          <span id="profileEmailLabel">البريد الإلكتروني</span>
+          <span class="text-amber-500 text-[10px]"><i class="fas fa-lock"></i> لا يمكن تعديله</span>
+        </label>
         <input type="text" id="profileEmail" disabled class="w-full bg-slate-950/50 text-slate-400 p-3 rounded-xl border border-slate-800 text-sm cursor-not-allowed" dir="ltr">
       </div>
+      
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل</label><input type="text" id="profileName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       
+      <!-- ✅ التعديل: قفل رقم الهاتف -->
       <div>
         <label class="block text-slate-300 font-bold mb-1.5 text-xs flex justify-between">
           <span>رقم الهاتف / واتساب</span>
@@ -307,17 +309,32 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="profileShop" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">عنوان المحل</label><input type="text" id="profileAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
-      
+
       <div class="border-t border-slate-800 pt-4 mt-4">
         <h4 class="text-amber-400 font-bold text-sm mb-3"><i class="fas fa-key"></i> تغيير الرمز السري</h4>
-        <p class="text-[10px] text-slate-500 mb-2 leading-relaxed">هذا الرمز يُستخدم للدخول السريع عبر رقم الهاتف. يجب أن يكون 6 أرقام.</p>
         <div class="space-y-2">
           <input type="password" id="newPin" placeholder="الرمز الجديد (6 أرقام)" maxlength="6" inputmode="numeric" pattern="\d*" dir="ltr" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
           <input type="password" id="newPinConfirm" placeholder="تأكيد الرمز الجديد" maxlength="6" inputmode="numeric" pattern="\d*" dir="ltr" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
           <button type="button" onclick="changePin()" id="changePinBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition"><i class="fas fa-key"></i> تغيير الرمز</button>
         </div>
       </div>
+
       <div class="pt-2 flex gap-2"><button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ نافذة إضافة عنوان جديد -->
+<div id="addAddressModal" class="hidden fixed inset-0 z-[90] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+      <h3 class="text-lg font-black text-emerald-400"><i class="fas fa-map-marker-alt"></i> إضافة عنوان جديد</h3>
+      <button onclick="closeAddAddressModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم العنوان (مثال: المحل، المنزل)</label><input type="text" id="newAddrLabel" placeholder="المحل" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
+      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="newAddrDetails" placeholder="دمشق - المزة - شارع الجلاء" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
+      <button onclick="saveNewAddress()" id="saveAddressBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl text-sm transition"><i class="fas fa-save"></i> حفظ العنوان</button>
     </div>
   </div>
 </div><div id="confirmOrderModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
@@ -427,7 +444,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <div class="w-40 h-40 flex items-center justify-center mx-auto"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
   <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي - قبل التاون سنتر</p>
-  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 px-5 py-2 rounded-xl text-xs font-bold"><i class="fas fa-map-marked-alt"></i> موقع المركز مباشر</a>
   <p class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-user-shield ml-1"></i> إدارة وإشراف: ياسر عاشور</p>
   <div class="flex justify-center gap-3 flex-wrap text-xs">
     <a href="privacy.html" class="text-slate-400 hover:text-amber-400 transition underline">سياسة الخصوصية</a>
@@ -458,7 +474,7 @@ try {
   if (!Array.isArray(wishlist)) wishlist = [];
 } catch(e) { cart = {}; wishlist = []; }
 
-// ============ ✅ دوال مساعدة جديدة ============
+// ✅ التعديل 4: التحقق الصارم من رقم الهاتف السوري
 function normalizePhone(phone) {
   let p = String(phone || '').replace(/[^\d]/g, '');
   if (p.startsWith('00963')) p = p.slice(5);
@@ -469,8 +485,8 @@ function normalizePhone(phone) {
 window.normalizePhone = normalizePhone;
 
 function validatePhone(p) {
-  if (!/^9[2-9]\d{7}$/.test(p)) return false;
-  if (/^(\d)\1{8}$/.test(p)) return false; 
+  if (!/^9[2-9]\d{7}$/.test(p)) return false; // يجب أن يبدأ بـ 9 والرقم الثاني من 2 إلى 9
+  if (/^(\d)\1{8}$/.test(p)) return false; // منع الأرقام المكررة مثل 999999999
   return true;
 }
 window.validatePhone = validatePhone;
@@ -488,15 +504,10 @@ window.forgotPinWhatsApp = function() {
   var phoneRaw = document.getElementById('pinPhone') ? document.getElementById('pinPhone').value.trim() : '';
   var phone = normalizePhone(phoneRaw);
   var phoneDisplay = validatePhone(phone) ? ('0' + phone) : '';
-  var msg = encodeURIComponent(
-    'مرحباً، نسيت الرمز السري لحسابي في مركز عاشور للتجارة.' +
-    (phoneDisplay ? '\nرقم هاتفي: ' + phoneDisplay : '') +
-    '\nأرجو مساعدتي في استعادة حسابي.'
-  );
+  var msg = encodeURIComponent('مرحباً، نسيت الرمز السري لحسابي في مركز عاشور للتجارة.' + (phoneDisplay ? '\nرقم هاتفي: ' + phoneDisplay : '') + '\nأرجو مساعدتي في استعادة حسابي.');
   window.open('https://wa.me/963959248901?text=' + msg, '_blank');
 };
 
-// --- شاشة عدم الاتصال وزر الرجوع ---
 window.addEventListener('online', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.add('hidden'); });
 window.addEventListener('offline', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); });
 if (!navigator.onLine) { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); }
@@ -505,7 +516,7 @@ window.pushBackState = function() { history.pushState({ appState: 'open' }, '', 
 
 window.addEventListener('popstate', function(e) {
   let acted = false;
-  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal', 'storeRatingModal', 'imageFullscreen', 'orderDetailsModal'];
+  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal', 'storeRatingModal', 'imageFullscreen', 'orderDetailsModal', 'addAddressModal'];
   for (let id of modals) {
     let m = document.getElementById(id);
     if (m && !m.classList.contains('hidden')) {
@@ -524,7 +535,6 @@ window.addEventListener('popstate', function(e) {
   }
 });
 
-// --- دوال مساعدة ---
 function esc(s) {
   if (s === null || s === undefined) return '';
   s = String(s);
@@ -579,7 +589,7 @@ function checkWhatsApp() {
   var ua = navigator.userAgent || navigator.vendor || window.opera;
   var isWhatsApp = /WhatsApp/i.test(ua) || /FBAN|FBAV/i.test(ua);
   var banner = document.getElementById('whatsappBanner');
-  if (banner && isWhatsApp) { banner.classList.remove('hidden'); }
+  if (banner && isWhatsApp) banner.classList.remove('hidden');
 }
 window.checkWhatsApp = checkWhatsApp;
 
@@ -591,19 +601,11 @@ function openInBrowser() {
     var intentUrl = 'intent://' + withoutScheme + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
     window.location.href = intentUrl;
   } else if (/iPhone|iPad|iPod/i.test(ua)) {
-    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function(){}); } 
-    else { alert('اضغط على زر المشاركة (⬆️) أعلى الشاشة، ثم اختر "فتح في Safari"'); }
-  } else { window.open(url, '_blank'); }
+    if (navigator.share) navigator.share({ title: document.title, url: url }).catch(function(){});
+    else alert('اضغط على زر المشاركة (⬆️) أعلى الشاشة، ثم اختر "فتح في Safari"');
+  } else window.open(url, '_blank');
 }
 window.openInBrowser = openInBrowser;
-
-function copySiteUrl() {
-  var url = window.location.origin;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(function() { showToast('تم نسخ الرابط. الصقه في كروم ✅'); }).catch(function() { showToast('الرابط: ' + url, 'info'); });
-  } else { showToast('الرابط: ' + url, 'info'); }
-}
-window.copySiteUrl = copySiteUrl;
 
 function applyWa() {
   var t = encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور");
@@ -614,18 +616,18 @@ function applyWa() {
 
 function saveCust() {
   try {
-    var cn = document.getElementById('custName'); var cs = document.getElementById('shopName');
-    var ca = document.getElementById('custAddr'); var cnt = document.getElementById('custNotes'); var cp = document.getElementById('custPhone');
-    if (cn) localStorage.setItem('c_name', cn.value); if (cs) localStorage.setItem('c_shop', cs.value);
-    if (ca) localStorage.setItem('c_addr', ca.value); if (cnt) localStorage.setItem('c_notes', cnt.value);
+    var cn = document.getElementById('custName'); var cs = document.getElementById('shopName'); var ca = document.getElementById('custAddr'); var cnt = document.getElementById('custNotes'); var cp = document.getElementById('custPhone');
+    if (cn) localStorage.setItem('c_name', cn.value);
+    if (cs) localStorage.setItem('c_shop', cs.value);
+    if (ca) localStorage.setItem('c_addr', ca.value);
+    if (cnt) localStorage.setItem('c_notes', cnt.value);
     if (cp) localStorage.setItem('c_phone', cp.value);
   } catch(e) {}
 }
 
 function loadCust() {
   try {
-    var n = localStorage.getItem('c_name'); var s = localStorage.getItem('c_shop');
-    var a = localStorage.getItem('c_addr'); var nt = localStorage.getItem('c_notes'); var ph = localStorage.getItem('c_phone');
+    var n = localStorage.getItem('c_name'); var s = localStorage.getItem('c_shop'); var a = localStorage.getItem('c_addr'); var nt = localStorage.getItem('c_notes'); var ph = localStorage.getItem('c_phone');
     if (n && document.getElementById('custName')) document.getElementById('custName').value = n;
     if (s && document.getElementById('shopName')) document.getElementById('shopName').value = s;
     if (a && document.getElementById('custAddr')) document.getElementById('custAddr').value = a;
@@ -714,10 +716,7 @@ function buildCard(p) {
   img.src = p._proxyImg || imgUrl(p.image);
   img.className = 'w-full h-full object-cover ' + (p.rotateClass || '');
   img.loading = 'lazy'; img.alt = p.name;
-  img.onerror = function() {
-    if (this.src.indexOf('images.weserv.nl') > -1) { this.src = p.image; this.onerror = function() { replaceImgOnly(this); }; }
-    else replaceImgOnly(this);
-  };
+  img.onerror = function() { if (this.src.indexOf('images.weserv.nl') > -1) { this.src = p.image; this.onerror = function() { replaceImgOnly(this); }; } else replaceImgOnly(this); };
   imgBox.appendChild(img);
 
   var stBadge = document.createElement('span');
@@ -787,9 +786,20 @@ function buildCard(p) {
   desc.innerText = p.description || 'منتج مميز من مركز عاشور';
   body.appendChild(desc);
 
+  // ✅ التعديل 5: إظهار أسهم تغير السعر
+  var priceHtml = `<span class="text-amber-400 font-black text-xs">${esc(p.price || 'حسب الطلب')}</span>`;
+  if (p.oldPrice && p.price) {
+    var pNum = parseFloat(String(p.price).replace(/[^\d.]/g, ''));
+    var oNum = parseFloat(String(p.oldPrice).replace(/[^\d.]/g, ''));
+    if (!isNaN(pNum) && !isNaN(oNum)) {
+      if (pNum < oNum) priceHtml += ` <i class="fas fa-arrow-down text-emerald-500 text-[10px] ml-1"></i>`;
+      else if (pNum > oNum) priceHtml += ` <i class="fas fa-arrow-up text-rose-500 text-[10px] ml-1"></i>`;
+    }
+  }
+
   var priceBox = document.createElement('div');
   priceBox.className = 'flex flex-col gap-1 mt-1 mb-2 border-t border-slate-700/50 pt-2';
-  priceBox.innerHTML = `<div class="flex justify-between items-center bg-slate-900/60 p-1.5 rounded-lg border border-slate-700/50"><span class="text-[10px] text-slate-400"><i class="fas fa-tag text-amber-400/70"></i> الجملة:</span><span class="text-amber-400 font-black text-xs">${esc(p.price || 'حسب الطلب')}</span></div>${p.consumerPrice ? `<div class="flex justify-between items-center bg-emerald-950/30 p-1.5 rounded-lg border border-emerald-500/20"><span class="text-[10px] text-emerald-500/80"><i class="fas fa-user text-emerald-400/70"></i> المستهلك:</span><span class="text-emerald-400 font-bold text-[11px]">${esc(p.consumerPrice)}</span></div>` : ''}`;
+  priceBox.innerHTML = `<div class="flex justify-between items-center bg-slate-900/60 p-1.5 rounded-lg border border-slate-700/50"><span class="text-[10px] text-slate-400"><i class="fas fa-tag text-amber-400/70"></i> الجملة:</span>${priceHtml}</div>${p.consumerPrice ? `<div class="flex justify-between items-center bg-emerald-950/30 p-1.5 rounded-lg border border-emerald-500/20"><span class="text-[10px] text-emerald-500/80"><i class="fas fa-user text-emerald-400/70"></i> المستهلك:</span><span class="text-emerald-400 font-bold text-[11px]">${esc(p.consumerPrice)}</span></div>` : ''}`;
   body.appendChild(priceBox);
 
   var footer = document.createElement('div');
@@ -998,7 +1008,27 @@ function showCart() {
   document.getElementById('profileView').classList.add('hidden');
   document.getElementById('profileView').classList.remove('flex');
   document.getElementById('cartView').classList.remove('hidden');
+  
+  // ✅ تعبئة قائمة العناوين المحفوظة
+  var addressBox = document.getElementById('savedAddressDropdownBox');
+  var addressSelect = document.getElementById('savedAddressSelect');
+  if (window.currentProfileData && window.currentProfileData.savedAddresses && window.currentProfileData.savedAddresses.length > 0) {
+    addressBox.classList.remove('hidden');
+    addressSelect.innerHTML = '<option value="">-- اختر عنواناً --</option>' + window.currentProfileData.savedAddresses.map(addr => `<option value="${addr.id}">${addr.label}: ${addr.details}</option>`).join('');
+  } else {
+    addressBox.classList.add('hidden');
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function fillAddressFromSaved(addrId) {
+  if (!addrId || !window.currentProfileData.savedAddresses) return;
+  var addr = window.currentProfileData.savedAddresses.find(a => a.id === addrId);
+  if (addr) {
+    document.getElementById('custAddr').value = addr.details;
+    saveCust();
+  }
 }
 
 function showCatalog() {
@@ -1156,13 +1186,12 @@ window.showProfileView = function() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('viewUserName').innerText = window.currentProfileData.name || 'مستخدم';
   
+  // ✅ التعديل 3: عرض الهاتف بدل الإيميل الوهمي
   var isPhonePin = window.currentProfileData.authMethod === 'phone_pin' || (window.currentUser.email && window.currentUser.email.endsWith('@ashour.local'));
   if (isPhonePin && window.currentProfileData.phone) {
     document.getElementById('viewUserEmail').innerText = window.currentProfileData.phone;
-    document.getElementById('viewUserEmail').setAttribute('dir', 'ltr');
   } else {
     document.getElementById('viewUserEmail').innerText = window.currentUser.email || '';
-    document.getElementById('viewUserEmail').setAttribute('dir', 'ltr');
   }
   document.getElementById('viewUserAvatar').src = window.currentProfileData.avatarUrl || 'logo.png';
   switchAppTab('orders');
@@ -1178,6 +1207,53 @@ window.switchAppTab = function(tab) {
   });
   if (tab === 'orders') loadAppOrders();
   if (tab === 'favorites') renderWishlist();
+  if (tab === 'addresses') renderSavedAddressesList(); // ✅ التعديل 6
+};
+
+// ✅ التعديل 6: دوال العناوين
+window.renderSavedAddressesList = function() {
+  var container = document.getElementById('savedAddressesList');
+  var addrs = window.currentProfileData.savedAddresses || [];
+  if (addrs.length === 0) {
+    container.innerHTML = '<div class="text-center py-10"><div class="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-3"><i class="fas fa-map-marked-alt text-3xl text-slate-700"></i></div><p class="text-slate-500 text-sm">لا توجد عناوين محفوظة بعد.</p></div>';
+    return;
+  }
+  container.innerHTML = addrs.map(function(addr, i) {
+    return `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex justify-between items-center gap-3">
+      <div class="min-w-0"><p class="text-amber-400 font-bold text-xs mb-1"><i class="fas fa-tag"></i> ${esc(addr.label)}</p><p class="text-white text-sm truncate">${esc(addr.details)}</p></div>
+      <button onclick="deleteSavedAddress(${i})" class="w-8 h-8 rounded-lg bg-rose-950/40 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-trash text-xs"></i></button>
+    </div>`;
+  }).join('');
+};
+
+window.openAddAddressModal = function() { window.pushBackState(); document.getElementById('addAddressModal').classList.remove('hidden'); document.getElementById('newAddrLabel').value = ''; document.getElementById('newAddrDetails').value = ''; };
+window.closeAddAddressModal = function() { document.getElementById('addAddressModal').classList.add('hidden'); };
+
+window.saveNewAddress = async function() {
+  var label = document.getElementById('newAddrLabel').value.trim();
+  var details = document.getElementById('newAddrDetails').value.trim();
+  if (!details) { showToast('يرجى إدخال تفاصيل العنوان', 'error'); return; }
+  if (!label) label = 'عنوان ' + (window.currentProfileData.savedAddresses ? window.currentProfileData.savedAddresses.length + 1 : 1);
+  
+  if (!window.currentProfileData.savedAddresses) window.currentProfileData.savedAddresses = [];
+  window.currentProfileData.savedAddresses.push({ id: Date.now().toString(), label: label, details: details });
+  
+  if (typeof window.saveProfileToFirebase === 'function') {
+    await window.saveProfileToFirebase({ savedAddresses: window.currentProfileData.savedAddresses });
+  }
+  renderSavedAddressesList();
+  closeAddAddressModal();
+  showToast('تم حفظ العنوان ✅');
+};
+
+window.deleteSavedAddress = async function(index) {
+  if (!confirm('حذف هذا العنوان؟')) return;
+  window.currentProfileData.savedAddresses.splice(index, 1);
+  if (typeof window.saveProfileToFirebase === 'function') {
+    await window.saveProfileToFirebase({ savedAddresses: window.currentProfileData.savedAddresses });
+  }
+  renderSavedAddressesList();
+  showToast('تم حذف العنوان');
 };
 
 window.renderWishlist = function() {
@@ -1284,12 +1360,12 @@ window.openOrderDetails = function(orderId) {
 
 window.closeOrderDetails = function() { var m = document.getElementById('orderDetailsModal'); if (m) m.classList.add('hidden'); document.body.style.overflow = ''; };
 
+// ✅ التعديل 3: نافذة تعديل البيانات مع قفل الحقول
 window.openEditProfileModal = function() {
   window.pushBackState();
   document.getElementById('editProfileModal').classList.remove('hidden');
   
   var isPhonePin = window.currentProfileData.authMethod === 'phone_pin' || (window.currentUser.email && window.currentUser.email.endsWith('@ashour.local'));
-  
   var emailLabel = document.getElementById('profileEmailLabel');
   var emailInput = document.getElementById('profileEmail');
   var phoneInput = document.getElementById('profilePhone');
@@ -1361,9 +1437,7 @@ window.confirmSendOrder = async function() {
   var ph = document.getElementById('custPhone').value.trim();
   
   var date = new Date().toLocaleDateString('ar-SY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  
-  var savedOk = true;
-  var orderNumber = '';
+  var savedOk = true; var orderNumber = '';
   
   if (typeof window.saveOrderToFirebase === 'function') {
     try { orderNumber = await window.saveOrderToFirebase(cart, n, s, a, notes, ph); }
@@ -1407,8 +1481,8 @@ window.confirmSendOrder = async function() {
 window.shareProduct = function(pName) {
   var url = window.location.origin + '/?product=' + encodeURIComponent(pName);
   var text = '🌟 شاهد هذا المنتج من مركز عاشور للتجارة:\n*' + pName + '*\n' + url;
-  if (navigator.share) { navigator.share({ title: pName + ' - مركز عاشور', text: 'منتج من مركز عاشور للتجارة', url: url }).catch(function() {}); }
-  else { window.location.href = 'https://wa.me/?text=' + encodeURIComponent(text); }
+  if (navigator.share) navigator.share({ title: pName + ' - مركز عاشور', text: 'منتج من مركز عاشور للتجارة', url: url }).catch(function() {});
+  else window.location.href = 'https://wa.me/?text=' + encodeURIComponent(text);
 };
 
 function openProduct(pName) {
@@ -1756,10 +1830,11 @@ window.renderStoreReviews = function(reviews) {
   }).join('');
 };
 
+// --- التحميل والبدء ---
 function loadData() {
   return new Promise(function(resolve) {
     var s = document.createElement('script');
-    s.src = 'catalog-data.js?v=2026-11-06';
+    s.src = 'catalog-data.js?v=' + Date.now();
     s.onload = function() {
       try {
         if (window.catalogData && window.catalogData.products) {
@@ -1823,6 +1898,437 @@ document.addEventListener('keydown', function(e) {
     try { closeConfirmOrderModal(); } catch(e) {}
     try { closeStoreRatingModal(); } catch(e) {}
     try { closeOrderDetails(); } catch(e) {}
+    try { closeAddAddressModal(); } catch(e) {}
   }
 });
+</script><script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
+    authDomain: "ashour-e5e42.firebaseapp.com",
+    projectId: "ashour-e5e42",
+    storageBucket: "ashour-e5e42.firebasestorage.app",
+    messagingSenderId: "198701450405",
+    appId: "1:198701450405:web:80275ed45ff3da7941f94c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
+
+  window.currentUser = null;
+  window.currentProfileData = {};
+
+  window.savePlayerIdToFirebase = async function(playerId) {
+    if (!playerId) playerId = window._currentPlayerId;
+    if (!playerId || !window.currentUser) return;
+    try { await setDoc(doc(db, "users", window.currentUser.uid), { oneSignalPlayerId: playerId }, { merge: true }); }
+    catch(e) { console.error(e); }
+  };
+
+  // ✅ التعديل 2: تحديث دالة عرض نافذة الدخول لتناسب تطبيق PWA
+  window.openAuthModal = function() {
+    if (window.pushBackState) window.pushBackState();
+    document.getElementById('authModal').classList.remove('hidden');
+    document.getElementById('authError').classList.add('hidden');
+    
+    var isInApp = window.isInAppBrowser();
+    var warning = document.getElementById('inAppBrowserWarning');
+    var googleBtn = document.querySelector('button[onclick="loginWithGoogle()"]');
+    var emailForm = document.getElementById('emailLoginForm');
+    
+    if (isInApp) {
+      if (googleBtn) googleBtn.classList.add('hidden');
+      if (warning) warning.classList.remove('hidden');
+      if (emailForm) emailForm.classList.remove('hidden');
+    } else {
+      if (googleBtn) googleBtn.classList.remove('hidden');
+      if (warning) warning.classList.add('hidden');
+    }
+  };
+  window.closeAuthModal = function() { document.getElementById('authModal').classList.add('hidden'); };
+
+  window.switchAuthTab = function(tab) {
+    document.getElementById('authError').classList.add('hidden');
+    if (tab === 'login') {
+      document.getElementById('tabLogin').className = 'flex-1 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition';
+      document.getElementById('tabRegister').className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition';
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('registerForm').classList.add('hidden');
+    } else {
+      document.getElementById('tabRegister').className = 'flex-1 py-2 rounded-lg text-xs font-bold bg-emerald-600 text-white transition';
+      document.getElementById('tabLogin').className = 'flex-1 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition';
+      document.getElementById('registerForm').classList.remove('hidden');
+      document.getElementById('loginForm').classList.add('hidden');
+    }
+  };
+
+  window.handleEmailLogin = async function(e) {
+    e.preventDefault();
+    var email = document.getElementById('loginEmail').value.trim();
+    var pass = document.getElementById('loginPassword').value;
+    var btn = document.getElementById('loginSubmitBtn');
+    var errEl = document.getElementById('authError');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الدخول...'; btn.disabled = true;
+    errEl.classList.add('hidden');
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      window.showToast('مرحباً بك');
+      closeAuthModal();
+    } catch(e) { errEl.innerText = 'البريد الإلكتروني أو كلمة المرور غير صحيحة'; errEl.classList.remove('hidden'); }
+    finally { btn.innerHTML = 'تسجيل الدخول'; btn.disabled = false; }
+  };
+
+  window.handleEmailRegister = async function(e) {
+    e.preventDefault();
+    var name = document.getElementById('regName').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var pass = document.getElementById('regPassword').value;
+    var confirm = document.getElementById('regConfirmPassword').value;
+    var btn = document.getElementById('regSubmitBtn');
+    var errEl = document.getElementById('authError');
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) { errEl.innerText = 'البريد غير صحيح'; errEl.classList.remove('hidden'); return; }
+    if (pass !== confirm) { errEl.innerText = 'كلمتا المرور غير متطابقتين'; errEl.classList.remove('hidden'); return; }
+    if (pass.length < 6) { errEl.innerText = 'كلمة المرور 6 أحرف على الأقل'; errEl.classList.remove('hidden'); return; }
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...'; btn.disabled = true;
+    errEl.classList.add('hidden');
+    try {
+      var cred = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(cred.user, { displayName: name });
+      await setDoc(doc(db, "users", cred.user.uid), { name: name, email: email, phone: '', shopName: '', address: '', avatarUrl: 'logo.png', createdAt: serverTimestamp() });
+      window.showToast('تم إنشاء الحساب بنجاح!');
+      closeAuthModal();
+    } catch(error) {
+      if (error.code === 'auth/email-already-in-use') errEl.innerText = 'هذا البريد مستخدم بالفعل';
+      else errEl.innerText = 'حدث خطأ: ' + error.message;
+      errEl.classList.remove('hidden');
+    } finally { btn.innerHTML = 'إنشاء الحساب'; btn.disabled = false; }
+  };
+
+  window.loginWithGoogle = async function() {
+    try {
+      var isMobileOrInApp = window.isInAppBrowser() || /Mobi|Android/i.test(navigator.userAgent);
+      if (isMobileOrInApp) await signInWithRedirect(auth, provider);
+      else { await signInWithPopup(auth, provider); window.showToast('تم تسجيل الدخول بنجاح'); closeAuthModal(); }
+    } catch (error) {
+      console.error(error);
+      if (error.code === 'auth/popup-blocked') window.showToast('الرجاء السماح بالنوافذ المنبثقة', 'error');
+      else if (error.code === 'auth/unauthorized-domain') window.showToast('هذا النطاق غير مصرح به في Firebase', 'error');
+      else window.showToast('فشل تسجيل الدخول: ' + error.message, 'error');
+    }
+  };
+
+  window.logoutUser = async function() {
+    if (confirm('هل تريد تسجيل الخروج؟')) {
+      await signOut(auth);
+      window.showCatalog();
+      window.showToast('تم تسجيل الخروج');
+    }
+  };
+
+  window.resetPassword = async function() {
+    var email = document.getElementById('loginEmail').value.trim();
+    var errEl = document.getElementById('authError');
+    if (!email) { errEl.innerText = 'أدخل بريدك الإلكتروني أولاً ثم اضغط نسيت كلمة المرور'; errEl.classList.remove('hidden'); return; }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      window.showToast('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك ✅');
+      errEl.classList.add('hidden');
+    } catch(e) {
+      errEl.innerText = 'حدث خطأ، تأكد من صحة البريد الإلكتروني';
+      errEl.classList.remove('hidden');
+    }
+  };
+
+  window.handlePhonePinLogin = async function() {
+    const errEl = document.getElementById('authError');
+    const btn = document.getElementById('pinLoginBtn');
+    const phoneRaw = document.getElementById('pinPhone').value.trim();
+    const pin = document.getElementById('pinCode').value.trim();
+    errEl.classList.add('hidden');
+
+    const phone = window.normalizePhone(phoneRaw);
+    if (!window.validatePhone(phone)) {
+      errEl.innerText = 'رقم الهاتف غير صحيح. مثال: 0959248901';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if (!window.validatePin(pin)) {
+      errEl.innerText = 'الرمز السري يجب أن يكون 6 أرقام';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    const email = window.phoneToEmail(phone);
+    const password = window.pinToPassword(pin);
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...'; btn.disabled = true;
+
+    try {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.showToast('مرحباً بعودتك ✅');
+        closeAuthModal();
+        return;
+      } catch (loginErr) {
+        try {
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          await setDoc(doc(db, "users", cred.user.uid), {
+            name: '', phone: '0' + phone, email: '', shopName: '', address: '', avatarUrl: 'logo.png', authMethod: 'phone_pin', createdAt: serverTimestamp()
+          }, { merge: true });
+          window.showToast('تم إنشاء حسابك بنجاح ✅');
+          closeAuthModal();
+          return;
+        } catch (regErr) {
+          if (regErr.code === 'auth/email-already-in-use') {
+            errEl.innerText = 'الرمز السري غير صحيح. إذا نسيته، اضغط "نسيت الرمز السري؟"';
+            errEl.classList.remove('hidden');
+            return;
+          }
+          throw regErr;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') errEl.innerText = 'الرمز السري غير صحيح';
+      else if (e.code === 'auth/too-many-requests') errEl.innerText = 'محاولات كثيرة. انتظر قليلاً ثم حاول مجدداً';
+      else errEl.innerText = 'حدث خطأ: ' + (e.message || e.code || 'حاول لاحقاً');
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول / إنشاء حساب'; btn.disabled = false;
+    }
+  };
+
+  window.changePin = async function() {
+    if (!window.currentUser) { window.showToast('يجب تسجيل الدخول أولاً', 'error'); return; }
+    const newPin = document.getElementById('newPin').value.trim();
+    const confirmPin = document.getElementById('newPinConfirm').value.trim();
+    if (!window.validatePin(newPin)) { window.showToast('الرمز يجب أن يكون 6 أرقام', 'error'); return; }
+    if (newPin !== confirmPin) { window.showToast('الرمزان غير متطابقين', 'error'); return; }
+
+    const btn = document.getElementById('changePinBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التغيير...'; btn.disabled = true;
+    try {
+      await updatePassword(window.currentUser, window.pinToPassword(newPin));
+      await setDoc(doc(db, "users", window.currentUser.uid), { authMethod: 'phone_pin' }, { merge: true });
+      if (window.currentProfileData) window.currentProfileData.authMethod = 'phone_pin';
+      window.showToast('تم تغيير الرمز السري بنجاح ✅');
+      document.getElementById('newPin').value = '';
+      document.getElementById('newPinConfirm').value = '';
+    } catch (e) {
+      console.error(e);
+      if (e.code === 'auth/requires-recent-login') window.showToast('لأسباب أمنية، يرجى تسجيل الخروج ثم الدخول مجدداً قبل تغيير الرمز', 'error');
+      else window.showToast('حدث خطأ: ' + e.message, 'error');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-key"></i> تغيير الرمز'; btn.disabled = false;
+    }
+  };
+
+  onAuthStateChanged(auth, async function(user) {
+    if (user) {
+      window.currentUser = user;
+      document.getElementById('loginBtn').classList.add('hidden');
+      document.getElementById('userProfileBtn').classList.remove('hidden');
+      var docRef = doc(db, "users", user.uid);
+      var docSnap = await getDoc(docRef);
+      if (docSnap.exists()) window.currentProfileData = docSnap.data();
+      else {
+        window.currentProfileData = { name: user.displayName || 'مستخدم', email: user.email, phone: '', shopName: '', address: '', avatarUrl: user.photoURL || 'logo.png' };
+        await setDoc(docRef, Object.assign({}, window.currentProfileData, { createdAt: serverTimestamp() }));
+      }
+      document.getElementById('userAvatar').src = window.currentProfileData.avatarUrl || 'logo.png';
+      document.getElementById('userNameDisplay').innerText = window.currentProfileData.name || 'حسابي';
+      if (window.OneSignal && window.OneSignal.User) {
+        var pid = window.OneSignal.User.PushSubscription && window.OneSignal.User.PushSubscription.id;
+        if (pid) window.savePlayerIdToFirebase(pid);
+      }
+      var el1 = document.getElementById('custName'); var el2 = document.getElementById('shopName'); var el3 = document.getElementById('custAddr'); var el4 = document.getElementById('custPhone');
+      if (el1 && window.currentProfileData.name) el1.value = window.currentProfileData.name;
+      if (el2 && window.currentProfileData.shopName) el2.value = window.currentProfileData.shopName;
+      if (el3 && window.currentProfileData.address) el3.value = window.currentProfileData.address;
+      if (el4 && window.currentProfileData.phone) el4.value = window.currentProfileData.phone;
+    } else {
+      window.currentUser = null;
+      window.currentProfileData = {};
+      document.getElementById('loginBtn').classList.remove('hidden');
+      document.getElementById('userProfileBtn').classList.add('hidden');
+    }
+  });
+
+  window.handleProfileAvatarUpload = function(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var MAX = 300; var w = img.width; var h = img.height;
+        if (w > h) { if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; } } else { if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; } }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var base64 = canvas.toDataURL('image/jpeg', 0.85);
+        var btn = document.getElementById('saveProfileBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الرفع...'; btn.disabled = true;
+        var fd = new FormData();
+        fd.append('key', IMGBB_API_KEY);
+        fd.append('image', base64.split(',')[1]);
+        fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.success) {
+              window.currentProfileData.avatarUrl = data.data.url;
+              document.getElementById('profileAvatarPreview').src = data.data.url;
+              window.showToast('تم رفع الصورة');
+            }
+          }).catch(function() { window.showToast('فشل الرفع', 'error'); })
+          .finally(function() { btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; btn.disabled = false; event.target.value = ''; });
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.saveUserProfile = async function() {
+    if (!window.currentUser) return;
+    var btn = document.getElementById('saveProfileBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+    
+    // ✅ التعديل: عدم تحديث الهاتف إذا كان مقفلاً
+    var currentPhoneInput = document.getElementById('profilePhone');
+    var phoneValue = currentPhoneInput.disabled ? (window.currentProfileData.phone || '') : currentPhoneInput.value.trim();
+
+    var data = {
+      name: document.getElementById('profileName').value.trim(),
+      phone: phoneValue,
+      shopName: document.getElementById('profileShop').value.trim(),
+      address: document.getElementById('profileAddress').value.trim(),
+      avatarUrl: window.currentProfileData.avatarUrl || 'logo.png'
+    };
+    try {
+      await setDoc(doc(db, "users", window.currentUser.uid), data, { merge: true });
+      window.currentProfileData = Object.assign({}, window.currentProfileData, data);
+      document.getElementById('userAvatar').src = data.avatarUrl;
+      document.getElementById('userNameDisplay').innerText = data.name;
+      document.getElementById('viewUserAvatar').src = data.avatarUrl;
+      document.getElementById('viewUserName').innerText = data.name;
+      document.getElementById('custName').value = data.name;
+      document.getElementById('shopName').value = data.shopName;
+      document.getElementById('custAddr').value = data.address;
+      if (!currentPhoneInput.disabled) document.getElementById('custPhone').value = data.phone;
+      window.showToast('تم حفظ البيانات ✅');
+      window.closeEditProfileModal();
+    } catch(e) { window.showToast('خطأ في الحفظ', 'error'); }
+    finally { btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; }
+  };
+
+  // ✅ دالة مساعدة لحفظ بيانات معينة في الملف الشخصي
+  window.saveProfileToFirebase = async function(dataObj) {
+    if (!window.currentUser) return;
+    await setDoc(doc(db, "users", window.currentUser.uid), dataObj, { merge: true });
+  };
+
+  window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes, phone) {
+    if (!window.currentUser) return '';
+    var docRef = await addDoc(collection(db, "orders"), {
+      userId: window.currentUser.uid, userName: name, shopName: shop, address: address,
+      phone: phone || window.currentProfileData.phone || '',
+      notes: notes || '',
+      items: cartItems, status: 'جديد', createdAt: serverTimestamp()
+    });
+    return docRef.id.slice(-4).toUpperCase();
+  };
+
+  var ordersUnsubscribe = null;
+  window.listenToMyOrders = function(callback) {
+    if (ordersUnsubscribe) ordersUnsubscribe();
+    if (!window.currentUser) return;
+    var q = query(collection(db, "orders"), where("userId", "==", window.currentUser.uid));
+    ordersUnsubscribe = onSnapshot(q, function(snapshot) {
+      var orders = [];
+      snapshot.forEach(function(d) { orders.push(Object.assign({ id: d.id }, d.data())); });
+      orders.sort(function(a, b) { return (b.createdAt && b.createdAt.seconds || 0) - (a.createdAt && a.createdAt.seconds || 0); });
+      callback(orders);
+    });
+  };
+
+  window.getOrderById = async function(orderId) {
+    try {
+      var snap = await getDoc(doc(db, "orders", orderId));
+      if (snap.exists()) return Object.assign({ id: snap.id }, snap.data());
+      return null;
+    } catch(e) { return null; }
+  };
+
+  window.fetchReviewsFromFirebase = async function() {
+    try {
+      var localReviews = {};
+      products.forEach(function(p) { localReviews[p.name] = Array.isArray(p.reviews) ? p.reviews.slice() : []; });
+      var q = query(collection(db, "reviews"));
+      var snap = await getDocs(q);
+      products.forEach(function(p) { p.reviews = []; });
+      snap.forEach(function(d) {
+        var rev = d.data();
+        var p = products.find(function(prod) { return prod.name === rev.productName; });
+        if (p) p.reviews.push({ userId: rev.userId, stars: rev.stars, name: rev.userName || 'عميل', comment: rev.comment || '', date: rev.date || '' });
+      });
+      products.forEach(function(p) {
+        var locals = localReviews[p.name] || [];
+        var existing = new Set(p.reviews.map(function(r) { return r.name + '|' + r.stars + '|' + r.comment + '|' + r.date; }));
+        locals.forEach(function(r) {
+          var key = r.name + '|' + r.stars + '|' + r.comment + '|' + r.date;
+          if (!existing.has(key)) { p.reviews.push(r); existing.add(key); }
+        });
+      });
+      if (typeof window.filterProducts === 'function') window.filterProducts();
+    } catch(e) { console.error(e); }
+  };
+
+  window.saveReviewToFirebase = async function(productName, stars, comment) {
+    if (!window.currentUser) return Promise.reject("Not logged in");
+    if (stars < 1 || stars > 5) return Promise.reject("Stars must be 1-5");
+    return await addDoc(collection(db, "reviews"), {
+      productName: productName, userId: window.currentUser.uid,
+      userName: window.currentProfileData.name || 'عميل',
+      stars: stars, comment: comment, date: new Date().toISOString().slice(0, 10)
+    });
+  };
+
+  window.saveStoreReviewToFirebase = async function(userId, name, stars, comment) {
+    if (stars < 1 || stars > 5) throw new Error('Stars 1-5');
+    return await addDoc(collection(db, "store_reviews"), { userId: userId, name: name, stars: stars, comment: comment, createdAt: serverTimestamp() });
+  };
+
+  window.listenToStoreReviews = function() {
+    var q = query(collection(db, "store_reviews"));
+    onSnapshot(q, function(snapshot) {
+      var reviews = [];
+      snapshot.forEach(function(d) { reviews.push(d.data()); });
+      reviews.sort(function(a, b) { return (b.createdAt && b.createdAt.seconds || 0) - (a.createdAt && a.createdAt.seconds || 0); });
+      window.currentStoreReviews = reviews;
+      if (typeof window.renderStoreReviews === 'function') window.renderStoreReviews(reviews);
+    });
+  };
+
+  getRedirectResult(auth).then(function(result) {
+    if (result && result.user) {
+      window.showToast('تم تسجيل الدخول بنجاح ✅');
+      var modal = document.getElementById('authModal');
+      if (modal) modal.classList.add('hidden');
+    }
+  }).catch(function(error) {
+    console.error("Redirect Error:", error);
+    if (error.code === 'auth/unauthorized-domain') window.showToast('هذا النطاق غير مصرح به', 'error');
+    else if (error.code === 'auth/account-exists-with-different-credential') window.showToast('الحساب موجود بوسيلة دخول أخرى', 'error');
+  });
+
+  setTimeout(listenToStoreReviews, 1000);
 </script>
+</body>
+</html>
