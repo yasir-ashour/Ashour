@@ -486,7 +486,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ مودال دليل استعادة الرمز العام -->
 <div id="recoveryGuideModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto p-4">
   <div class="max-w-2xl mx-auto my-8 bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -532,7 +531,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ مودال استعادة الرمز لعميل محدد -->
 <div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -586,7 +584,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 </div><!-- /adminApp --><script>
-/* ============================ الإعدادات والمتغيرات ============================ */
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const IDLE_TIMEOUT = 30 * 60 * 1000;
@@ -630,7 +627,6 @@ function showToast(msg, type = 'success') {
 }
 window.showToast = showToast;
 
-// ✅ دوال استعادة الرمز + Firebase Console
 window.openRecoveryGuide = function() {
   document.getElementById('recoveryGuideModal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
@@ -662,12 +658,7 @@ function resolveConfirm(answer) {
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
-  if (typeof window.adminLogout === 'function') {
-    window.adminLogout();
-  } else {
-    sessionStorage.removeItem('ashour_admin_ok');
-    location.reload();
-  }
+  if (typeof window.adminLogout === 'function') { window.adminLogout(); } else { sessionStorage.removeItem('ashour_admin_ok'); location.reload(); }
 }
 
 function resetIdleTimer() {
@@ -761,15 +752,11 @@ function renderSettingsInputs() {
   if(el) {
     el.addEventListener('input', () => {
       const map = { setStoreName: 'storeName', setLogoUrl: 'logoUrl', setOrderWa: 'orderWhatsApp', setInquiryWa: 'inquiryWhatsApp', setAddress: 'address', setMapUrl: 'mapUrl', setGithubUser: 'githubUser', setGithubRepo: 'githubRepo', setGithubBranch: 'githubBranch' };
-      
       if (id === 'setOrderWa' || id === 'setInquiryWa') {
         const cleaned = el.value.replace(/[^\d]/g, '');
         if (cleaned !== el.value) el.value = cleaned;
         catalogData.settings[map[id]] = cleaned;
-      } else {
-        catalogData.settings[map[id]] = el.value;
-      }
-      
+      } else { catalogData.settings[map[id]] = el.value; }
       if (id === 'setLogoUrl') { const logo = document.getElementById('logoPreview'); logo.src = el.value; logo.style.display = 'block'; }
       persist();
     });
@@ -874,7 +861,6 @@ function openProductModal(pid = null) {
     currentGallery = Array.isArray(p.images) ? [...p.images] : []; renderGalleryImages();
     if (p.available === false) setProductStatus('unavailable'); else if (p.lowStock) setProductStatus('lowStock'); else setProductStatus('available');
     editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
-    
     currentReviews = Array.isArray(p.reviews) ? p.reviews.map(r => ({ ...r, _source: 'local' })) : [];
     
     setRotation(p.rotateClass || '');
@@ -884,9 +870,7 @@ function openProductModal(pid = null) {
     }
     renderReviews();
     
-    setTimeout(() => {
-      if (currentProductName === p.name) refreshReviewsFromCloud();
-    }, 800);
+    setTimeout(() => { if (currentProductName === p.name) refreshReviewsFromCloud(); }, 800);
   }
   renderFlavors(); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
 }
@@ -964,9 +948,7 @@ async function saveReview() {
       reviewObj._source = 'local';
       showToast('تعذّر الحفظ في السحابة — سيُحفظ محلياً فقط', 'error');
     }
-  } else {
-    reviewObj._source = 'local';
-  }
+  } else { reviewObj._source = 'local'; }
   
   currentReviews.push(reviewObj);
   renderReviews();
@@ -979,13 +961,8 @@ async function removeReview(i) {
   if (!rev) return;
   
   if (rev._docId && typeof window.deleteReviewFromFirebase === 'function') {
-    try {
-      await window.deleteReviewFromFirebase(rev._docId);
-    } catch (e) {
-      console.warn('فشل حذف التقييم من السحابة:', e);
-      showToast('تعذّر حذف التقييم من السحابة', 'error');
-      return;
-    }
+    try { await window.deleteReviewFromFirebase(rev._docId); }
+    catch (e) { console.warn('فشل حذف التقييم من السحابة:', e); showToast('تعذّر حذف التقييم من السحابة', 'error'); return; }
   }
   currentReviews.splice(i, 1);
   renderReviews();
@@ -1001,14 +978,7 @@ async function refreshReviewsFromCloud() {
     const cloudRevs = await window.fetchProductReviewsFromCloud(currentProductName);
     currentReviews = currentReviews.filter(r => !r._docId);
     cloudRevs.forEach(cr => {
-      currentReviews.push({
-        name: cr.userName || 'عميل',
-        stars: cr.stars,
-        comment: cr.comment || '',
-        date: cr.date || '',
-        _source: 'cloud',
-        _docId: cr.id
-      });
+      currentReviews.push({ name: cr.userName || 'عميل', stars: cr.stars, comment: cr.comment || '', date: cr.date || '', _source: 'cloud', _docId: cr.id });
     });
     renderReviews();
     showToast(`تم جلب ${cloudRevs.length} تقييم من السحابة`);
@@ -1089,10 +1059,7 @@ function saveAll() { persist(); clearDirty(); showToast('تم حفظ التغي�
 
 function buildCatalogJS() {
   const cleanSettings = { ...catalogData.settings };
-  delete cleanSettings.password;
-  delete cleanSettings.githubUser;
-  delete cleanSettings.githubRepo;
-  delete cleanSettings.githubBranch;
+  delete cleanSettings.password; delete cleanSettings.githubUser; delete cleanSettings.githubRepo; delete cleanSettings.githubBranch;
 
   const clean = {
     products: catalogData.products.map(p => { const o = { ...p }; if (!o.flavors || o.flavors.length === 0) delete o.flavors; if (!o.reviews || o.reviews.length === 0) delete o.reviews; if (!o.hasOffer) { delete o.hasOffer; delete o.oldPrice; } if (!o.isNew) delete o.isNew; return o; }),
@@ -1301,7 +1268,6 @@ document.addEventListener('keydown', (e) => {
     appId: "1:198701450405:web:80275ed45ff3da7941f94c"
   };
 
-  // ✅ UID الأدمن الوحيد المسموح له بالدخول
   const ADMIN_UID = 'ywqKEtrTHjWD7B0xAgYVn4q7Ybi1';
 
   const app = initializeApp(firebaseConfig);
@@ -1312,7 +1278,6 @@ document.addEventListener('keydown', (e) => {
     return (typeof window.escapeHtml === 'function') ? window.escapeHtml(v) : String(v || '');
   }
 
-  // ============ دوال مساعدة لاستعادة الرمز ============
   function normalizePhone(phone) {
     let p = String(phone || '').replace(/[^\d]/g, '');
     if (p.startsWith('00963')) p = p.slice(5);
@@ -1349,7 +1314,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ============ ✅ تسجيل دخول الأدمن مع فحص UID ============
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
@@ -1368,7 +1332,6 @@ document.addEventListener('keydown', (e) => {
     
     try {
       const cred = await signInWithEmailAndPassword(auth, email, pass);
-      // ✅ فحص إضافي: هل هذا الأدمن؟
       if (cred.user.uid !== ADMIN_UID) {
         await signOut(auth);
         errEl.innerText = '❌ هذا الحساب ليس لديه صلاحية الأدمن';
@@ -1377,7 +1340,6 @@ document.addEventListener('keydown', (e) => {
         btn.disabled = false;
         return;
       }
-      // نجح — onAuthStateChanged سيفتح اللوحة
     } catch (e) {
       errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة';
       errEl.classList.remove('hidden');
@@ -1391,7 +1353,6 @@ document.addEventListener('keydown', (e) => {
     location.reload();
   };
 
-  // ==================== الإشعارات ====================
   async function sendOneSignalNotification(playerId, title, message) {
     const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
     const restApiKey = localStorage.getItem('ashour_onesignal_key');
@@ -1474,7 +1435,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ==================== الطلبات ====================
   let allOrdersCache = [];
   let knownOrderIds = new Set();
   let isFirstLoad = true;
@@ -1683,7 +1643,6 @@ document.addEventListener('keydown', (e) => {
 
   window.loadOrders = function() { window.showToast('محدّث تلقائياً'); };
 
-  // ==================== التقييمات ====================
   window.addReviewToFirebase = async function(productName, stars, name, comment) {
     if (stars < 1 || stars > 5) throw new Error('التقييم يجب أن يكون 1-5');
     const docRef = await addDoc(collection(db, "reviews"), {
@@ -1705,7 +1664,6 @@ document.addEventListener('keydown', (e) => {
     return revs;
   };
 
-  // ==================== العملاء (مع شارة Phone+PIN) ====================
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
@@ -1778,7 +1736,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ==================== ✅ استماع لحالة الدخول مع فحص الأدمن ====================
   onAuthStateChanged(auth, async (user) => {
     const loginScreen = document.getElementById('loginScreen');
     const adminApp = document.getElementById('adminApp');
@@ -1786,7 +1743,6 @@ document.addEventListener('keydown', (e) => {
     const btn = document.getElementById('adminLoginBtn');
     
     if (user && user.uid === ADMIN_UID) {
-      // ✅ أدمن حقيقي → افتح اللوحة
       loginScreen.classList.add('hidden');
       adminApp.classList.remove('hidden');
       if (errEl) errEl.classList.add('hidden');
@@ -1794,7 +1750,6 @@ document.addEventListener('keydown', (e) => {
       if (typeof startIdleWatcher === 'function') startIdleWatcher();
       startOrdersListener();
     } else if (user) {
-      // ⚠️ مستخدم عادي حاول الدخول → اطرده
       await signOut(auth);
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
@@ -1808,7 +1763,6 @@ document.addEventListener('keydown', (e) => {
       }
       if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     } else {
-      // لا مستخدم → شاشة الدخول
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
       if (btn) {
