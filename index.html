@@ -55,7 +55,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </head>
 <body class="min-h-screen pb-20 sm:pb-0">
 
-<!-- ✅ شريط واتساب (يظهر فقط عند الفتح من واتساب) -->
 <div id="whatsappBanner" class="hidden bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 border-b-2 border-emerald-500 py-3 px-4 text-center sticky top-0 z-50 shadow-lg">
   <p class="text-white text-xs sm:text-sm font-bold mb-2">
     <i class="fas fa-info-circle text-amber-400"></i> أنت تتصفح من داخل واتساب. لتسجيل الدخول بجوجل بسرعة، افتح الموقع في متصفح Chrome:
@@ -116,22 +115,48 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </a>
     </div>
   </div>
-</header>
-
-<div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+</header><div id="authModal" class="hidden fixed inset-0 z-[90] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
-      <div class="text-center mb-6">
-        <img src="logo.png" class="w-24 h-24 mx-auto object-contain mb-3 glow">
+      <div class="text-center mb-5">
+        <img src="logo.png" class="w-20 h-20 mx-auto object-contain mb-2 glow">
         <h2 class="text-2xl font-black gold-text">مركز عاشور</h2>
         <p class="text-slate-400 text-xs mt-1">سجل دخولك لمتابعة طلباتك وتقييم المنتجات</p>
+      </div>
+
+      <!-- ✅ قسم الدخول السريع الجديد: هاتف + رمز سري -->
+      <div class="space-y-3 mb-4">
+        <div class="text-center mb-2">
+          <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+            <i class="fas fa-mobile-alt"></i> دخول سريع
+          </span>
+        </div>
+        <input type="tel" id="pinPhone" placeholder="رقم الهاتف (مثال: 0959248901)" maxlength="15" inputmode="tel" dir="ltr"
+          class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
+        <input type="password" id="pinCode" placeholder="رمز سري من 6 أرقام" maxlength="6" inputmode="numeric" pattern="\d*" dir="ltr"
+          onkeydown="if(event.key==='Enter') handlePhonePinLogin()"
+          class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
+        <button onclick="handlePhonePinLogin()" id="pinLoginBtn"
+          class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3.5 rounded-xl text-base flex items-center justify-center gap-2 transition shadow-lg">
+          <i class="fas fa-sign-in-alt"></i> دخول / إنشاء حساب
+        </button>
+        <p class="text-[10px] text-slate-500 text-center leading-relaxed">إذا كان رقمك جديداً، سيُنشأ حسابك تلقائياً</p>
+        <button onclick="forgotPinWhatsApp()" class="w-full text-xs text-amber-400 hover:text-amber-300 transition underline">
+          <i class="fas fa-question-circle"></i> نسيت الرمز السري؟
+        </button>
+      </div>
+
+      <div class="flex items-center my-4">
+        <div class="flex-grow border-t border-slate-700"></div>
+        <span class="px-3 text-slate-500 text-xs">أو طرق أخرى</span>
+        <div class="flex-grow border-t border-slate-700"></div>
       </div>
 
       <div id="inAppBrowserWarning" class="hidden bg-amber-950/40 border-2 border-amber-500/60 rounded-2xl p-4 mb-4 text-center">
         <i class="fas fa-exclamation-triangle text-amber-400 text-3xl mb-2"></i>
         <p class="text-amber-200 font-bold text-sm mb-2">أنت داخل متصفح واتساب</p>
-        <p class="text-amber-300/80 text-xs mb-3">جوجل لا يعمل داخل واتساب. استخدم البريد الإلكتروني، أو افتح الموقع في Chrome.</p>
+        <p class="text-amber-300/80 text-xs mb-3">جوجل لا يعمل داخل واتساب. استخدم الدخول السريع أو البريد، أو افتح الموقع في Chrome.</p>
         <button onclick="openInBrowser()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-sm"><i class="fas fa-external-link-alt"></i> فتح في Chrome</button>
       </div>
 
@@ -319,7 +344,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <p class="text-sm">يمكنك إضافة عنوانك أثناء إتمام الطلب.</p>
     </div>
   </div>
-</div><div id="editProfileModal" class="hidden fixed inset-0 z-[80] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+</div>
+
+<!-- ✅ مودال تعديل الملف الشخصي (مع قسم تغيير الرمز السري الجديد) -->
+<div id="editProfileModal" class="hidden fixed inset-0 z-[80] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-user-edit text-amber-400"></i> تعديل البيانات</h3>
@@ -342,12 +370,27 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">رقم الهاتف / واتساب</label><input type="tel" id="profilePhone" placeholder="مثال: 9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono" dir="ltr"></div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="profileShop" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">عنوان المحل</label><input type="text" id="profileAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
+
+      <!-- ✅ قسم تغيير الرمز السري الجديد -->
+      <div class="border-t border-slate-800 pt-4 mt-4">
+        <h4 class="text-amber-400 font-bold text-sm mb-3"><i class="fas fa-key"></i> تغيير الرمز السري</h4>
+        <p class="text-[10px] text-slate-500 mb-2 leading-relaxed">هذا الرمز يُستخدم للدخول السريع عبر رقم الهاتف. يجب أن يكون 6 أرقام.</p>
+        <div class="space-y-2">
+          <input type="password" id="newPin" placeholder="الرمز الجديد (6 أرقام)" maxlength="6" inputmode="numeric" pattern="\d*" dir="ltr"
+            class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
+          <input type="password" id="newPinConfirm" placeholder="تأكيد الرمز الجديد" maxlength="6" inputmode="numeric" pattern="\d*" dir="ltr"
+            class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
+          <button type="button" onclick="changePin()" id="changePinBtn"
+            class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition">
+            <i class="fas fa-key"></i> تغيير الرمز
+          </button>
+        </div>
+      </div>
+
       <div class="pt-2 flex gap-2"><button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
     </div>
   </div>
-</div>
-
-<div id="confirmOrderModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+</div><div id="confirmOrderModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
     <div class="p-6 text-center">
@@ -484,6 +527,41 @@ try {
   wishlist = JSON.parse(localStorage.getItem('ashour_wishlist') || '[]');
   if (!Array.isArray(wishlist)) wishlist = [];
 } catch(e) { cart = {}; wishlist = []; }
+
+// ============ ✅ دوال مساعدة جديدة: الهاتف + الرمز السري ============
+function normalizePhone(phone) {
+  let p = String(phone || '').replace(/[^\d]/g, '');
+  if (p.startsWith('00963')) p = p.slice(5);
+  else if (p.startsWith('963') && p.length > 9) p = p.slice(3);
+  else if (p.startsWith('0')) p = p.slice(1);
+  return p;
+}
+window.normalizePhone = normalizePhone;
+
+function validatePhone(p) { return /^9\d{8}$/.test(p); }
+window.validatePhone = validatePhone;
+
+function validatePin(pin) { return /^\d{6}$/.test(pin); }
+window.validatePin = validatePin;
+
+function phoneToEmail(phone) { return phone + '@ashour.local'; }
+window.phoneToEmail = phoneToEmail;
+
+function pinToPassword(pin) { return 'pin_' + pin + '_ashour2026'; }
+window.pinToPassword = pinToPassword;
+
+// ✅ نسيت الرمز السري - فتح واتساب
+window.forgotPinWhatsApp = function() {
+  var phoneRaw = document.getElementById('pinPhone') ? document.getElementById('pinPhone').value.trim() : '';
+  var phone = normalizePhone(phoneRaw);
+  var phoneDisplay = validatePhone(phone) ? ('0' + phone) : '';
+  var msg = encodeURIComponent(
+    'مرحباً، نسيت الرمز السري لحسابي في مركز عاشور للتجارة.' +
+    (phoneDisplay ? '\nرقم هاتفي: ' + phoneDisplay : '') +
+    '\nأرجو مساعدتي في استعادة حسابي.'
+  );
+  window.open('https://wa.me/963959248901?text=' + msg, '_blank');
+};
 
 // --- شاشة عدم الاتصال وزر الرجوع ---
 window.addEventListener('online', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.add('hidden'); });
@@ -1150,7 +1228,10 @@ function scrollToProduct(name) {
       return;
     }
   }
-}// --- إدارة الحساب ---
+}
+
+// --- إدارة الحساب ---
+// ✅ مُعدّل: عرض الهاتف بدل البريد الوهمي لحسابات phone_pin
 window.showProfileView = function() {
   if (!window.currentUser) return;
   window.pushBackState();
@@ -1160,7 +1241,13 @@ window.showProfileView = function() {
   document.getElementById('profileView').classList.add('flex');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('viewUserName').innerText = window.currentProfileData.name || 'مستخدم';
-  document.getElementById('viewUserEmail').innerText = window.currentUser.email || '';
+  
+  // ✅ إذا كان الحساب phone_pin، اعرض الهاتف بدل البريد
+  if (window.currentProfileData.authMethod === 'phone_pin' && window.currentProfileData.phone) {
+    document.getElementById('viewUserEmail').innerText = window.currentProfileData.phone;
+  } else {
+    document.getElementById('viewUserEmail').innerText = window.currentUser.email || '';
+  }
   document.getElementById('viewUserAvatar').src = window.currentProfileData.avatarUrl || 'logo.png';
   switchAppTab('orders');
 };
@@ -1281,19 +1368,31 @@ window.openOrderDetails = function(orderId) {
 
 window.closeOrderDetails = function() { var m = document.getElementById('orderDetailsModal'); if (m) m.classList.add('hidden'); document.body.style.overflow = ''; };
 
+// ✅ مُعدّل: عرض الهاتف بدل البريد + تفريغ حقول الرمز
 window.openEditProfileModal = function() {
   window.pushBackState();
   document.getElementById('editProfileModal').classList.remove('hidden');
-  document.getElementById('profileEmail').value = window.currentUser.email || '';
+  
+  // ✅ إذا كان الحساب phone_pin، اعرض الهاتف بدل البريد
+  var displayEmail = window.currentUser.email || '';
+  if (window.currentProfileData.authMethod === 'phone_pin' && window.currentProfileData.phone) {
+    displayEmail = window.currentProfileData.phone;
+  }
+  document.getElementById('profileEmail').value = displayEmail;
   document.getElementById('profileName').value = window.currentProfileData.name || '';
   document.getElementById('profilePhone').value = window.currentProfileData.phone || '';
   document.getElementById('profileShop').value = window.currentProfileData.shopName || '';
   document.getElementById('profileAddress').value = window.currentProfileData.address || '';
   document.getElementById('profileAvatarPreview').src = window.currentProfileData.avatarUrl || 'logo.png';
+  
+  // ✅ تفريغ حقول الرمز السري
+  var newPinEl = document.getElementById('newPin');
+  var newPinConfirmEl = document.getElementById('newPinConfirm');
+  if (newPinEl) newPinEl.value = '';
+  if (newPinConfirmEl) newPinConfirmEl.value = '';
 };
 window.closeEditProfileModal = function() { document.getElementById('editProfileModal').classList.add('hidden'); };
 
-// ✅ التحقق من الاسم والهاتف والعنوان قبل الطلب
 window.sendOrder = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
@@ -1315,7 +1414,6 @@ window.sendOrder = function() {
 };
 window.closeConfirmOrderModal = function() { document.getElementById('confirmOrderModal').classList.add('hidden'); };
 
-// ✅ إرسال الطلب مع رقم الهاتف ورقم الطلب
 window.confirmSendOrder = async function() {
   var btn = document.getElementById('confirmOrderBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
@@ -1372,7 +1470,6 @@ window.confirmSendOrder = async function() {
   setTimeout(function() { btn.innerHTML = '<i class="fas fa-check-double"></i> نعم، إتمام الطلب'; btn.disabled = false; }, 1000);
 };
 
-// --- دالة المشاركة ---
 window.shareProduct = function(pName) {
   var url = window.location.origin + '/?product=' + encodeURIComponent(pName);
   var text = '🌟 شاهد هذا المنتج من مركز عاشور للتجارة:\n*' + pName + '*\n' + url;
@@ -1388,7 +1485,6 @@ window.shareProduct = function(pName) {
   }
 };
 
-// --- نافذة المنتج والتقييمات ---
 function openProduct(pName) {
   window.pushBackState();
   var p = null;
@@ -1804,10 +1900,10 @@ document.addEventListener('keydown', function(e) {
     try { closeOrderDetails(); } catch(e) {}
   }
 });
-</script><!-- ✅ سكربت Firebase (مع معالجة تسجيل الدخول داخل متصفح واتساب) -->
+</script><!-- ✅ سكربت Firebase (مع نظام الهاتف + الرمز السري) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1836,7 +1932,121 @@ document.addEventListener('keydown', function(e) {
     catch(e) { console.error(e); }
   };
 
-  // ✅ نافذة الدخول: تخفي زر جوجل داخل واتساب وتفتح البريد
+  // ==================== ✅ نظام الدخول بالهاتف + الرمز السري ====================
+  // (الدوال المساعدة موجودة في السكربت الرئيسي: normalizePhone, validatePhone, validatePin, phoneToEmail, pinToPassword)
+
+  window.handlePhonePinLogin = async function() {
+    const errEl = document.getElementById('authError');
+    const btn = document.getElementById('pinLoginBtn');
+    const phoneRaw = document.getElementById('pinPhone').value.trim();
+    const pin = document.getElementById('pinCode').value.trim();
+
+    errEl.classList.add('hidden');
+
+    const phone = window.normalizePhone(phoneRaw);
+    if (!window.validatePhone(phone)) {
+      errEl.innerText = 'رقم الهاتف غير صحيح. مثال: 0959248901';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    if (!window.validatePin(pin)) {
+      errEl.innerText = 'الرمز السري يجب أن يكون 6 أرقام';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    const email = window.phoneToEmail(phone);
+    const password = window.pinToPassword(pin);
+
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+    btn.disabled = true;
+
+    try {
+      // 1) جرّب تسجيل الدخول
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.showToast('مرحباً بعودتك ✅');
+        closeAuthModal();
+        return;
+      } catch (loginErr) {
+        // 2) إذا الحساب غير موجود → جرّب إنشاء حساب جديد
+        try {
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          await setDoc(doc(db, "users", cred.user.uid), {
+            name: '',
+            phone: '0' + phone,
+            email: '',
+            shopName: '',
+            address: '',
+            avatarUrl: 'logo.png',
+            authMethod: 'phone_pin',
+            createdAt: serverTimestamp()
+          }, { merge: true });
+          window.showToast('تم إنشاء حسابك بنجاح ✅');
+          closeAuthModal();
+          return;
+        } catch (regErr) {
+          // إذا الإيميل مستخدم → الحساب موجود لكن الرمز خطأ
+          if (regErr.code === 'auth/email-already-in-use') {
+            errEl.innerText = 'الرمز السري غير صحيح. إذا نسيته، اضغط "نسيت الرمز السري؟"';
+            errEl.classList.remove('hidden');
+            return;
+          }
+          throw regErr;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+        errEl.innerText = 'الرمز السري غير صحيح';
+      } else if (e.code === 'auth/too-many-requests') {
+        errEl.innerText = 'محاولات كثيرة. انتظر قليلاً ثم حاول مجدداً';
+      } else {
+        errEl.innerText = 'حدث خطأ: ' + (e.message || e.code || 'حاول لاحقاً');
+      }
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول / إنشاء حساب';
+      btn.disabled = false;
+    }
+  };
+
+  // ✅ تغيير الرمز السري (للمستخدم المسجل دخوله)
+  window.changePin = async function() {
+    if (!window.currentUser) { window.showToast('يجب تسجيل الدخول أولاً', 'error'); return; }
+    const newPin = document.getElementById('newPin').value.trim();
+    const confirmPin = document.getElementById('newPinConfirm').value.trim();
+
+    if (!window.validatePin(newPin)) { window.showToast('الرمز يجب أن يكون 6 أرقام', 'error'); return; }
+    if (newPin !== confirmPin) { window.showToast('الرمزان غير متطابقين', 'error'); return; }
+
+    const btn = document.getElementById('changePinBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التغيير...';
+    btn.disabled = true;
+
+    try {
+      await updatePassword(window.currentUser, window.pinToPassword(newPin));
+      await setDoc(doc(db, "users", window.currentUser.uid), {
+        authMethod: 'phone_pin'
+      }, { merge: true });
+      if (window.currentProfileData) window.currentProfileData.authMethod = 'phone_pin';
+      window.showToast('تم تغيير الرمز السري بنجاح ✅');
+      document.getElementById('newPin').value = '';
+      document.getElementById('newPinConfirm').value = '';
+    } catch (e) {
+      console.error(e);
+      if (e.code === 'auth/requires-recent-login') {
+        window.showToast('لأسباب أمنية، يرجى تسجيل الخروج ثم الدخول مجدداً قبل تغيير الرمز', 'error');
+      } else {
+        window.showToast('حدث خطأ: ' + e.message, 'error');
+      }
+    } finally {
+      btn.innerHTML = '<i class="fas fa-key"></i> تغيير الرمز';
+      btn.disabled = false;
+    }
+  };
+
+  // ==================== نافذة الدخول ====================
   window.openAuthModal = function() {
     if (window.pushBackState) window.pushBackState();
     document.getElementById('authModal').classList.remove('hidden');
@@ -1916,7 +2126,6 @@ document.addEventListener('keydown', function(e) {
     } finally { btn.innerHTML = 'إنشاء الحساب'; btn.disabled = false; }
   };
 
-  // ✅ تسجيل الدخول بجوجل (يعمل داخل واتساب باستخدام Redirect)
   window.loginWithGoogle = async function() {
     try {
       var isMobileOrInApp = window.isInAppBrowser() || /Mobi|Android/i.test(navigator.userAgent);
@@ -1958,6 +2167,7 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
+  // ✅ مُعدّل: عرض الهاتف لحسابات phone_pin
   onAuthStateChanged(auth, async function(user) {
     if (user) {
       window.currentUser = user;
@@ -2133,7 +2343,6 @@ document.addEventListener('keydown', function(e) {
     });
   };
 
-  // ✅ معالجة العودة من صفحة جوجل بعد التحويل (Redirect)
   getRedirectResult(auth).then(function(result) {
     if (result && result.user) {
       window.showToast('تم تسجيل الدخول بنجاح ✅');
