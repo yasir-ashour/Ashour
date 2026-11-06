@@ -1333,7 +1333,7 @@ window.confirmSendOrder = async function() {
   setTimeout(function() { btn.innerHTML = '<i class="fas fa-check-double"></i> نعم، إتمام الطلب'; btn.disabled = false; }, 1000);
 };
 
-// --- دالة المشاركة (جديد) ---
+// --- دالة المشاركة ---
 window.shareProduct = function(pName) {
   var url = window.location.origin + '/?product=' + encodeURIComponent(pName);
   var text = '🌟 شاهد هذا المنتج من مركز عاشور للتجارة:\n*' + pName + '*\n' + url;
@@ -1524,7 +1524,7 @@ function openProduct(pName) {
     btnsBox.appendChild(noBtn);
   }
   
-  // ✅ زر المشاركة (جديد)
+  // ✅ زر المشاركة
   var shareBtn = document.createElement('button');
   shareBtn.type = 'button';
   shareBtn.className = 'bg-sky-600 hover:bg-sky-500 text-white font-bold px-5 py-3.5 rounded-xl text-sm';
@@ -1766,12 +1766,10 @@ document.addEventListener('keydown', function(e) {
     try { closeOrderDetails(); } catch(e) {}
   }
 });
-</script>
-
-<!-- ✅ سكربت Firebase (معدل) -->
+</script><!-- ✅ سكربت Firebase (مع إصلاح تسجيل الدخول داخل متصفح واتساب) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1867,11 +1865,20 @@ document.addEventListener('keydown', function(e) {
     } finally { btn.innerHTML = 'إنشاء الحساب'; btn.disabled = false; }
   };
 
+  // ✅ دالة تسجيل الدخول بجوجل (معدلة للعمل داخل متصفح واتساب)
   window.loginWithGoogle = async function() {
     try {
-      await signInWithPopup(auth, provider);
-      window.showToast('تم تسجيل الدخول بنجاح');
-      closeAuthModal();
+      var isMobileOrInApp = window.isInAppBrowser() || /Mobi|Android/i.test(navigator.userAgent);
+      
+      if (isMobileOrInApp) {
+        // داخل واتساب أو الهاتف: استخدم التحويل (Redirect) بدلاً من النافذة المنبثقة
+        await signInWithRedirect(auth, provider);
+      } else {
+        // على الحاسوب: استخدم النافذة المنبثقة (أسرع)
+        await signInWithPopup(auth, provider);
+        window.showToast('تم تسجيل الدخول بنجاح');
+        closeAuthModal();
+      }
     } catch (error) {
       console.error(error);
       if (error.code === 'auth/popup-blocked') window.showToast('الرجاء السماح بالنوافذ المنبثقة', 'error');
@@ -2076,6 +2083,17 @@ document.addEventListener('keydown', function(e) {
       if (typeof window.renderStoreReviews === 'function') window.renderStoreReviews(reviews);
     });
   };
+
+  // ✅ استقبال الزبون بعد عودته من صفحة جوجل (لإصلاح مشكلة واتساب)
+  getRedirectResult(auth).then(function(result) {
+    if (result && result.user) {
+      window.showToast('تم تسجيل الدخول بنجاح ✅');
+      if (typeof closeAuthModal === 'function') closeAuthModal();
+    }
+  }).catch(function(error) {
+    console.error("Redirect Error:", error);
+    if (error.code === 'auth/unauthorized-domain') window.showToast('هذا النطاق غير مصرح به', 'error');
+  });
 
   setTimeout(listenToStoreReviews, 1000);
 </script>
