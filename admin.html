@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- ✅ مكتبة قارئ الباركود -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <style>
 body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; }
 .gold-gradient-text { background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #997415 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -21,17 +23,18 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </head>
 <body class="min-h-screen">
 
-<!-- ✅ شاشة تسجيل الدخول (بالإيميل والباسورد) -->
+<!-- ✅ شاشة تسجيل الدخول (تم إخفاء البريد وطلب كلمة المرور فقط) -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
       <i class="fas fa-shield-halved text-3xl text-amber-400"></i>
     </div>
     <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
-    <p class="text-slate-400 text-sm mb-6">دخول آمن بحساب الأدمن</p>
+    <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
 
     <div class="space-y-3 mb-4">
-      <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-sm" onkeydown="if(event.key==='Enter') window.tryAdminLogin()">
+      <!-- ✅ البريد مخفي ويتم تعبئته تلقائياً -->
+      <input type="hidden" id="adminEmail" value="yasir3ashour@gmail.com">
       <input type="password" id="adminPassword" placeholder="كلمة المرور" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-sm" onkeydown="if(event.key==='Enter') window.tryAdminLogin()">
     </div>
 
@@ -44,7 +47,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ شاشة القفل السريع (PIN) - تظهر في المرات القادمة -->
+<!-- ✅ شاشة القفل السريع (PIN) -->
 <div id="pinLockScreen" class="hidden fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-emerald-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-emerald-500/10 border-2 border-emerald-500/40 flex items-center justify-center mx-auto mb-5">
@@ -172,12 +175,11 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label><input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"></div>
   </div>
 
-  <!-- ✅ إعدادات الدخول السريع للأدمن (جديد) -->
   <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-lock text-emerald-400"></i> قفل الأمان السريع (PIN)
     </h2>
-    <p class="text-xs text-slate-400">عند تفعيل هذا الرمز، ستحتاج فقط لإدخاله في المرات القادمة لفتح اللوحة بدلاً من كتابة البريد وكلمة المرور.</p>
+    <p class="text-xs text-slate-400">عند تفعيل هذا الرمز، ستحتاج فقط لإدخاله في المرات القادمة لفتح اللوحة بدلاً من كتابة كلمة المرور.</p>
     <div>
       <label class="block text-slate-300 font-bold mb-1.5 text-sm">رمز PIN (4 أرقام)</label>
       <input type="password" id="setAdminPin" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="مثال: 1234" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono text-center tracking-widest">
@@ -349,6 +351,17 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div class="md:col-span-2"><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المنتج <span class="text-rose-500">*</span></label><input type="text" id="fName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الفئة <span class="text-rose-500">*</span></label><input type="text" id="fCategory" list="categoriesList" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"><datalist id="categoriesList"></datalist></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">السعر</label><input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
+        
+        <!-- ✅ حقل الباركود الجديد -->
+        <div class="md:col-span-2">
+          <label class="block text-slate-300 font-bold mb-1.5 text-sm">الباركود (Barcode)</label>
+          <div class="flex gap-2">
+            <input type="text" id="fBarcode" placeholder="امسح الباركود أو اكتبه يدوياً..." class="flex-grow bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono" dir="ltr">
+            <button type="button" onclick="startScanner()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+              <i class="fas fa-camera"></i> مسح
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 bg-slate-950/40 p-3 rounded-xl border border-slate-800">
@@ -609,6 +622,20 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- ✅ نافذة قارئ الباركود -->
+<div id="barcodeScannerModal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4">
+  <div class="bg-slate-900 border-2 border-indigo-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between p-4 border-b border-slate-800">
+      <h3 class="text-lg font-black text-white"><i class="fas fa-camera text-indigo-400"></i> قارئ الباركود</h3>
+      <button onclick="stopScanner()" class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-4">
+      <div id="reader" class="w-full rounded-xl overflow-hidden bg-black"></div>
+      <p class="text-center text-xs text-slate-400 mt-3">وجه الكاميرا نحو الباركود</p>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p id="toastMsg" class="text-sm font-bold"></p></div>
 
 <div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
@@ -741,7 +768,7 @@ function resolveConfirm(answer) {
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
-  localStorage.removeItem('ashour_admin_pin'); // حذف PIN عند الخروج اليدوي
+  localStorage.removeItem('ashour_admin_pin');
   if (typeof window.adminLogout === 'function') { window.adminLogout(); } else { sessionStorage.removeItem('ashour_admin_ok'); location.reload(); }
 }
 
@@ -872,7 +899,7 @@ function getFilteredProducts() {
     if (status === 'available' && (p.available === false || p.lowStock)) return false;
     if (status === 'lowStock' && !p.lowStock) return false;
     if (status === 'unavailable' && p.available !== false) return false;
-    if (q) { const hay = (p.name + ' ' + (p.description || '') + ' ' + (p.category || '')).toLowerCase(); if (!hay.includes(q)) return false; }
+    if (q) { const hay = (p.name + ' ' + (p.description || '') + ' ' + (p.category || '') + ' ' + (p.barcode || '')).toLowerCase(); if (!hay.includes(q)) return false; }
     return true;
   });
 }
@@ -921,6 +948,7 @@ function openProductModal(pid = null) {
   document.getElementById('fImagePlaceholder').classList.remove('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden');
   document.getElementById('addReviewForm').classList.add('hidden'); document.getElementById('offerFields').classList.add('hidden');
   document.getElementById('fCompany').value = ''; document.getElementById('fConsumerPrice').value = ''; document.getElementById('fPiecesPerBox').value = ''; document.getElementById('fBoxesPerCarton').value = '';
+  document.getElementById('fBarcode').value = ''; // ✅ تفريغ الباركود
   renderGalleryImages();
 
   if (pid === null) {
@@ -940,6 +968,7 @@ function openProductModal(pid = null) {
     
     document.getElementById('fCompany').value = p.company || ''; 
     document.getElementById('fConsumerPrice').value = p.consumerPrice || '';
+    document.getElementById('fBarcode').value = p.barcode || ''; // ✅ تعبئة الباركود
     
     document.getElementById('fPiecesPerBox').value = p.piecesPerBox || ''; document.getElementById('fBoxesPerCarton').value = p.boxesPerCarton || '';
     currentGallery = Array.isArray(p.images) ? [...p.images] : []; renderGalleryImages();
@@ -1097,7 +1126,6 @@ function renderReviews() {
   }).join('');
 }
 
-// ✅ التعديل: منطق تتبع تغيرات الأسعار تلقائياً
 function saveProduct() {
   const name = document.getElementById('fName').value.trim(); const category = document.getElementById('fCategory').value.trim();
   if (!name) { showToast('اسم المنتج مطلوب', 'error'); return; }
@@ -1118,12 +1146,13 @@ function saveProduct() {
   if (pidVal !== '' && !hasOffer) {
     const oldProduct = catalogData.products[Number(pidVal)];
     if (oldProduct && oldProduct.price !== newPriceStr) {
-       oldPriceVal = oldProduct.price; // حفظ السعر القديم
+       oldPriceVal = oldProduct.price;
     }
   }
 
   const data = {
     name, category, price: newPriceStr,
+    barcode: document.getElementById('fBarcode').value.trim() || undefined, // ✅ حفظ الباركود
     image: currentImageData, description: document.getElementById('fDescription').value.trim(),
     available: status !== 'unavailable', lowStock: status === 'lowStock',
     hasOffer: hasOffer || undefined, oldPrice: oldPriceVal || undefined, isNew: document.getElementById('fIsNew').checked || undefined,
@@ -1336,6 +1365,41 @@ function uploadSingleToImgBB(file) {
   });
 }
 
+// ✅ دوال قارئ الباركود
+let html5QrCode;
+window.startScanner = function() {
+  document.getElementById('barcodeScannerModal').classList.remove('hidden');
+  html5QrCode = new Html5Qrcode("reader");
+  
+  html5QrCode.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: { width: 250, height: 150 } },
+    (decodedText) => {
+      document.getElementById('fBarcode').value = decodedText;
+      window.showToast('✅ تم قراءة الباركود');
+      window.stopScanner();
+    },
+    (errorMessage) => { /* تجاهل أخطاء القراءة المستمرة */ }
+  ).catch(err => {
+    window.showToast('تعذر فتح الكاميرا: ' + err, 'error');
+    document.getElementById('barcodeScannerModal').classList.add('hidden');
+  });
+};
+
+window.stopScanner = function() {
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      document.getElementById('barcodeScannerModal').classList.add('hidden');
+      html5QrCode.clear();
+    }).catch(err => {
+      console.log(err);
+      document.getElementById('barcodeScannerModal').classList.add('hidden');
+    });
+  } else {
+    document.getElementById('barcodeScannerModal').classList.add('hidden');
+  }
+};
+
 document.addEventListener('keydown', (e) => { 
   if (e.key === 'Escape') { 
     closeProductModal(); 
@@ -1344,6 +1408,8 @@ document.addEventListener('keydown', (e) => {
     if (rgm && !rgm.classList.contains('hidden')) closeRecoveryGuide();
     const crm = document.getElementById('customerRecoveryModal');
     if (crm && !crm.classList.contains('hidden')) closeCustomerRecovery();
+    const bcm = document.getElementById('barcodeScannerModal');
+    if (bcm && !bcm.classList.contains('hidden')) stopScanner();
   } 
 });
 
@@ -1409,14 +1475,15 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
+  // ✅ تعديل: دالة تسجيل الدخول (البريد مخفي في الخلفية)
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
     const btn = document.getElementById('adminLoginBtn');
     const errEl = document.getElementById('adminLoginError');
     
-    if (!email || !pass) { 
-      errEl.innerText = 'أدخل البريد الإلكتروني وكلمة المرور'; 
+    if (!pass) { 
+      errEl.innerText = 'أدخل كلمة المرور'; 
       errEl.classList.remove('hidden'); 
       return; 
     }
@@ -1436,7 +1503,7 @@ document.addEventListener('keydown', (e) => {
         return;
       }
     } catch (e) {
-      errEl.innerText = 'خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة';
+      errEl.innerText = 'خطأ: كلمة المرور غير صحيحة';
       errEl.classList.remove('hidden');
       btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
       btn.disabled = false;
@@ -1831,7 +1898,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ✅ استماع لحالة الدخول مع فحص الأدمن والقفل السريع
   onAuthStateChanged(auth, async (user) => {
     const loginScreen = document.getElementById('loginScreen');
     const adminApp = document.getElementById('adminApp');
@@ -1845,7 +1911,6 @@ document.addEventListener('keydown', (e) => {
       adminApp.classList.add('hidden'); 
       if (errEl) errEl.classList.add('hidden');
       
-      // ✅ فحص إذا كان هناك PIN محفوظ
       if (localStorage.getItem('ashour_admin_pin')) {
         pinLockScreen.classList.remove('hidden');
         setTimeout(() => document.getElementById('adminUnlockPin').focus(), 100);
