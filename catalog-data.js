@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٦‏/١١‏/٢٠٢٦، ٥:٢٤:٠٠ م
+   آخر تحديث: ٨‏/١١‏/٢٠٢٦، ٦:٥٠:٠٧ م
    ================================ */
 
 window.catalogData = {
@@ -163,7 +163,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fVD0CKR7/1791903879220.jpg",
   "description": "قهوة إكسترا هال 200 غرام",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -289,7 +289,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/1fhpsGzS/1791904344535.jpg",
   "description": "قهوة إكسترا هال 100 غرام",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -325,7 +325,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/CsWKrjZX/1791299650004.jpg",
   "description": "بسكويت ديجيستيف أمية كلاس الممتع والمغذي",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "أمية كلاس دايري",
   "consumerPrice": "10 ليرة جديدة",
@@ -510,7 +510,7 @@ window.catalogData.products.push({
   "name": "شيبتوز صغير",
   "category": "شيبس",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/343b0fb2-a7e9-4a2d-84b9-342185ab3852.jpg",
+  "image": "https://i.ibb.co/q3s3WWJk/6ebe5786eb7e.jpg",
   "description": "النكهات : كتشب وخل وباربكيو وحار وجبنه وذرة حلوة",
   "available": true,
   "lowStock": false,
@@ -624,7 +624,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/7d8VY4Ff/0e910f40d993.jpg",
   "description": "بذور دوار الشمس المحمصة والمملحة بعناية",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "flavors": [
     "خل",
@@ -680,7 +680,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/55190367-4e95-4961-851e-6120c3e79fbe.jpg",
   "description": "النكهات : شوكالا دارك - شوكالا بالحليب",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "شوكالا دارك",
@@ -1174,7 +1174,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/4RwS0XsV/Screenshot-2026-09-25-13-15-30-438-com-miui-gallery.jpg",
   "description": "النكهات فريز - مشمش - شوكالا",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "الينبوع المحدودة المسؤولية",
   "consumerPrice": "5 ليرة جديده"
@@ -1256,6 +1256,10 @@ window.catalogData.products.push({
   "description": "النكهات شوكالا ـ حليب",
   "available": true,
   "lowStock": false,
+  "flavors": [
+    "حليب",
+    "شوكالا"
+  ],
   "company": "أميه كلاس",
   "consumerPrice": "25 ليرة جديدة"
 });
@@ -1345,7 +1349,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MkF34q88/8d03f87b9e3d.jpg",
   "description": "شوكالا - شوكالا داكنه",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "الصناعات الحديثه",
   "consumerPrice": "10 ليرة جديدة"
@@ -1401,7 +1405,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/hxV0RJNc/17905913926648324840449697070687.jpg",
   "description": "النكهات : شوكالا - توت - فريز",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "شوكالا",
@@ -1784,17 +1788,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "بن الحموي قهوه اكسترا هال 100g",
-  "category": "قهوة",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/ymYRFN98/21baa2561ee7.jpg",
-  "description": "بن الحموي الفاخر مع نسبة هيل مضاعفة وزن 100 غرام",
-  "available": true,
-  "lowStock": false,
-  "company": "بن الحموي"
-});
-
-window.catalogData.products.push({
   "name": "سيتي كافيه غولد",
   "category": "قهوة",
   "price": "التواصل مع المبيعات",
@@ -1951,19 +1944,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "علكة مانكو",
-  "category": "سكاكر وعلكة",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/ns5y760R/ab74e359fc79.jpg",
-  "description": "علكة مانكو بنكهات طازجة",
-  "available": true,
-  "lowStock": false,
-  "company": "فجر الأوائل",
-  "consumerPrice": "5 ليره جديده",
-  "piecesPerBox": "24"
-});
-
-window.catalogData.products.push({
   "name": "ميسون علكة",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
@@ -2002,24 +1982,12 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "العاب عيون",
-  "category": "سكاكر وعلكة",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/nMx3hSQn/IMG-20260928-124707.jpg",
-  "description": "لعبة عيون مسلية للأطفال مع حلوى وسكاكر طازجة",
-  "available": true,
-  "lowStock": false,
-  "company": "بريتيج",
-  "consumerPrice": "10 ليرة جديدة"
-});
-
-window.catalogData.products.push({
   "name": "رول اب علكة متر",
   "category": "سكاكر وعلكة",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/mr0Z9qD7/6b675dede400.jpg",
   "description": "علكة رول اب شريط بطول متر ممتعة ومنعشة للأطفال",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "الأشبال",
   "consumerPrice": "10 ليرة جديدة"
@@ -2124,11 +2092,10 @@ window.catalogData.products.push({
   "name": "لجين حليب",
   "category": "عصائر ومشروبات",
   "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/8gKw3rh9/188d1319cb8f.jpg",
+  "image": "https://i.ibb.co/gL6BVdRn/f5b905c3876b.jpg",
   "description": "حليب وفريز",
   "available": true,
   "lowStock": false,
-  "isNew": true,
   "flavors": [
     "حليب",
     "فريز"
@@ -2310,7 +2277,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/yrqNKYF/b966583a1a54.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "معمل شوكالا الحياة",
   "consumerPrice": "5 ليرة جديده",
@@ -2443,7 +2410,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/gZm2dxLj/8b70bd921e7b.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "20 ليرة جديدة",
@@ -2456,7 +2423,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/kV5JtfmM/cf25a8c5b87e.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "20 ليرة جديدة",
@@ -2469,7 +2436,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/SXKjG3s4/11b7b63fcdfb.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "40 ليرة جديدة",
@@ -2482,7 +2449,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/3YMPGfmh/68d66630af0a.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "isNew": true,
   "consumerPrice": "20 ليرة جديدة",
@@ -2508,7 +2475,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MDCbqC1H/bfbde5b964a5.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "حلى الشام",
   "consumerPrice": "30 ليرة جديدة",
@@ -2556,6 +2523,134 @@ window.catalogData.products.push({
   "company": "الينبوع المحدودة المسؤولية",
   "consumerPrice": "10 ليرة جديدة",
   "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "كروسان لوريت",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/fm4jTsH/24614ebf5808.jpg",
+  "description": "كروسان لوريت",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "consumerPrice": "30 ليرة جديده",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "بسكوت بويبيز",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/NgRm03Jc/18a2ba4258be.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "ازرق",
+    "بني",
+    "برتقالي",
+    "اصفر"
+  ],
+  "company": "بويبيز",
+  "consumerPrice": "25 ليرة جديدة",
+  "piecesPerBox": "24",
+  "images": [
+    "https://i.ibb.co/dsY1RPWy/97f5a587f481.jpg"
+  ]
+});
+
+window.catalogData.products.push({
+  "name": "بكويت بيوك",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/B21nVgDQ/9d1fa4f8a66a.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "كراميل",
+    "فريز",
+    "بستاشيو",
+    "حليب"
+  ],
+  "company": "آميه كلاس",
+  "consumerPrice": "50 ليرة جديدة",
+  "images": [
+    "https://i.ibb.co/nqGqDnRf/f36471bc68cb.jpg",
+    "https://i.ibb.co/3yp1Y9pq/de80b278cc8c.jpg"
+  ]
+});
+
+window.catalogData.products.push({
+  "name": "قنينة عصير طبيعي اورنج",
+  "category": "عصائر ومشروبات",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/jmZK6QG/98df151aa456.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "flavors": [
+    "برتقال وجزر"
+  ],
+  "company": "أورانج",
+  "consumerPrice": "40 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "سيتي شوكالا",
+  "category": "قهوة",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/M5VjwKHB/352f5bfd5e98.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true,
+  "company": "سيتي كافية",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "أماتور  8 قطع",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/Zz7KcRxT/44fd2755ed1b.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "ساما",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "أماتور 4 قطع",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/zWJnTRnn/1021ef3a03a8.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "سامل",
+  "consumerPrice": "10 ليرة جديدة",
+  "piecesPerBox": "24"
+});
+
+window.catalogData.products.push({
+  "name": "شوميلك",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/FqyjnDWb/ff80f1ad5871.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "company": "تشيلو",
+  "consumerPrice": "20 ليرة جديدة",
+  "piecesPerBox": "12"
 });
 
 console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");
