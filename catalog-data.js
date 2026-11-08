@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٨‏/١١‏/٢٠٢٦، ٦:٥٠:٠٧ م
+   آخر تحديث: ٨‏/١١‏/٢٠٢٦، ٦:٥٣:٠٢ م
    ================================ */
 
 window.catalogData = {
@@ -570,7 +570,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/ac96aa6d-729a-4a79-85ec-708e6a4411da.jpg",
   "description": "النكهات : خل وملح - حار - ملح",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "خل وملح",
