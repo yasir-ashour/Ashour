@@ -33,8 +33,21 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .product-img { transition: opacity 0.5s ease-in-out; opacity: 0; }
 .product-img.loaded { opacity: 1; }
 
-/* شاشة الترحيب */
-#welcomeScreen { background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%); }
+/* ✅ شاشة الترحيب الزجاجية */
+#welcomeScreen { 
+  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%); 
+  position: fixed; inset: 0; z-index: 200; overflow: hidden;
+}
+.bg-blobs { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5; animation: float-blob 10s infinite alternate; }
+.blob-1 { width: 300px; height: 300px; background: #d4af37; top: -10%; left: -10%; }
+.blob-2 { width: 250px; height: 250px; background: #10b981; bottom: -10%; right: -10%; animation-delay: -5s; }
+@keyframes float-blob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.2); } }
+.glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
 </style>
 
 <script>
@@ -45,19 +58,26 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </head>
 <body class="min-h-screen pb-20 sm:pb-0">
 
-<!-- ✅ شاشة الترحيب (تظهر عند الدخول لأول مرة) -->
+<!-- ✅ شاشة الترحيب الزجاجية -->
 <div id="welcomeScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
-  <div class="w-40 h-40 sm:w-56 sm:h-56 mb-6 floating"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
-  <h1 class="text-3xl sm:text-5xl font-black text-white mb-2">مركز <span class="gold-text">عاشور</span></h1>
-  <p class="text-slate-400 text-sm sm:text-base mb-8 max-w-md">أهلاً بك في متجرك المفضل. سجل دخولك لمتابعة طلباتك، أو تصفح كزائر.</p>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
   
-  <div class="w-full max-w-xs space-y-3">
-    <button onclick="openAuthModal()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/30 transition transform hover:scale-105">
-      <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
-    </button>
-    <button onclick="skipWelcome()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-4 rounded-2xl transition">
-      التصفح كزائر
-    </button>
+  <div class="glass-card max-w-sm w-full rounded-[2.5rem] p-8 flex flex-col items-center relative z-10 fade-in">
+    <div class="w-32 h-32 sm:w-40 sm:h-40 mb-4 floating"><img src="logo.png" class="w-full h-full object-contain drop-shadow-2xl" alt="Logo"></div>
+    <h1 class="text-3xl sm:text-4xl font-black text-white mb-2 tracking-tight">مركز <span class="gold-text">عاشور</span></h1>
+    <p class="text-slate-300 text-sm mb-8 leading-relaxed">أهلاً بك في متجرك المفضل. سجل دخولك الآن لتجربة تسوق أسرع ومتابعة طلباتك.</p>
+    
+    <div class="w-full space-y-3">
+      <button onclick="openAuthModal()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/40 transition transform hover:scale-105 flex items-center justify-center gap-2">
+        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+      </button>
+      <button onclick="skipWelcome()" class="w-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold py-3.5 rounded-2xl transition border border-slate-600">
+        التصفح كزائر
+      </button>
+    </div>
   </div>
 </div>
 
@@ -95,7 +115,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <!-- ✅ زر الإعدادات الجديد (أيقونة 👤) -->
       <button id="loginBtn" onclick="openAuthModal()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
         <i class="fas fa-user-circle text-lg"></i>
         <span class="hidden sm:inline">دخول</span>
@@ -110,8 +129,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </button>
     </div>
   </div>
-</header><!-- ✅ نافذة تسجيل الدخول (Google, Email, Phone) -->
-<div id="authModal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+</header><div id="authModal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl relative my-8 fade-in">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
@@ -121,14 +139,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <p class="text-slate-400 text-xs mt-1">سجل دخولك لمتابعة طلباتك</p>
       </div>
 
-      <!-- Google Login (Popup) -->
       <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-base flex items-center justify-center gap-3 transition shadow-lg mb-4">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6"> الدخول باستخدام Google
       </button>
 
       <div class="flex items-center my-4"><div class="flex-grow border-t border-slate-700"></div><span class="px-3 text-slate-500 text-xs">أو</span><div class="flex-grow border-t border-slate-700"></div></div>
 
-      <!-- Phone + PIN -->
       <div class="space-y-3 mb-4">
         <div class="text-center mb-2"><span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30"><i class="fas fa-mobile-alt"></i> دخول برقم الهاتف</span></div>
         <input type="tel" id="pinPhone" placeholder="رقم الهاتف (09xxxxxxxx)" maxlength="15" dir="ltr" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
@@ -136,7 +152,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <button onclick="handlePhonePinLogin()" id="pinLoginBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3.5 rounded-xl text-base flex items-center justify-center gap-2 transition shadow-lg"><i class="fas fa-sign-in-alt"></i> دخول / إنشاء حساب</button>
       </div>
 
-      <!-- Email Login (Optional) -->
       <button onclick="document.getElementById('emailLoginForm').classList.toggle('hidden')" class="w-full text-xs text-slate-400 hover:text-white underline">استخدام البريد الإلكتروني</button>
       <div id="emailLoginForm" class="hidden space-y-3 mt-3">
         <form id="loginForm" onsubmit="handleEmailLogin(event)" class="space-y-3">
@@ -152,7 +167,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </div>
 
 <div id="catalogView" class="w-full flex flex-col flex-grow">
-  <!-- Hero Section -->
   <section class="py-6 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
   <div class="max-w-4xl mx-auto">
   <h2 class="text-2xl sm:text-4xl font-extrabold mb-2 text-white">أهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
@@ -177,7 +191,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
   </section>
 
-  <!-- Offers & New -->
   <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full fade-in">
     <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
@@ -187,7 +200,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         </div>
         <span id="offersCount" class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
-      <div id="offersGrid" class="flex gap-3 overflow-x-auto pb-2 snap-x"></div>
+      <div id="offersGrid" class="flex gap-3 overflow-x-auto pb-2 snap-x custom-scrollbar"></div>
     </div>
   </section>
 
@@ -200,11 +213,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         </div>
         <span id="newCount" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
-      <div id="newGrid" class="flex gap-3 overflow-x-auto pb-2 snap-x"></div>
+      <div id="newGrid" class="flex gap-3 overflow-x-auto pb-2 snap-x custom-scrollbar"></div>
     </div>
   </section>
 
-  <!-- All Products -->
   <section class="max-w-7xl mx-auto px-3 py-6 flex-grow w-full">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2"><i class="fas fa-th-large text-amber-400"></i> كل المنتجات</h3>
@@ -218,7 +230,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
-<!-- ✅ السلة -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full fade-in">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
@@ -231,7 +242,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</span>
       </h3>
       
-      <!-- Saved Addresses Dropdown -->
       <div id="savedAddressDropdownBox" class="hidden bg-slate-900 border border-emerald-500/30 rounded-xl p-3 mb-2">
         <label class="block text-emerald-400 font-bold mb-1.5 text-xs"><i class="fas fa-map-marker-alt"></i> استخدام عنوان محفوظ</label>
         <select id="savedAddressSelect" onchange="fillAddressFromSaved(this.value)" class="w-full bg-slate-950 text-white p-2.5 rounded-lg border border-slate-700 text-sm focus:outline-none focus:border-emerald-500">
@@ -250,7 +260,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
     <div class="mb-5">
       <h3 class="text-base font-black text-white mb-3 flex items-center justify-between border-b border-slate-800 pb-2"><span>المنتجات المحددة</span><span id="cartTotal" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span></h3>
-      <div id="cartList" class="space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+      <div id="cartList" class="space-y-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar"></div>
     </div>
 
     <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
@@ -258,8 +268,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="sendOrder()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black px-8 py-3 rounded-xl text-sm shadow-xl transition transform hover:scale-105"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
-</div><!-- ✅ صفحة الملف الشخصي -->
-<div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
+</div><div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
       <button onclick="showCatalog()" class="absolute top-0 right-0 bg-slate-800 text-slate-300 w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i></button>
@@ -286,7 +295,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
     <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500"></div>
     
-    <!-- العناوين -->
     <div id="appTabAddresses" class="hidden">
       <button onclick="openAddAddressModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm mb-4 flex items-center justify-center gap-2 transition">
         <i class="fas fa-plus"></i> إضافة عنوان جديد
@@ -296,14 +304,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ نافذة تعديل الملف الشخصي -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-user-edit text-amber-400"></i> تعديل البيانات</h3>
       <button onclick="closeEditProfileModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
     </div>
-    <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto">
+    <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
       <div class="flex flex-col items-center justify-center mb-4">
         <div class="relative w-24 h-24 rounded-full border-4 border-amber-500/50 overflow-hidden bg-slate-950 mb-2 group cursor-pointer" onclick="document.getElementById('profileAvatarFile').click()">
           <img id="profileAvatarPreview" src="logo.png" class="w-full h-full object-cover">
@@ -348,7 +355,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ نافذة إضافة عنوان -->
 <div id="addAddressModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -363,20 +369,18 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ نافذة تفاصيل الطلب والفاتورة -->
 <div id="orderDetailsModal" class="hidden fixed inset-0 z-[110] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex items-start justify-center">
   <div class="max-w-lg w-full my-8">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl shadow-2xl overflow-hidden fade-in">
       <div class="flex items-center justify-between p-5 border-b border-slate-800">
         <h3 class="text-lg font-black gold-text">تفاصيل الطلب</h3>
-        <button onclick="closeOrderDetails()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+        <button onclick="closeOrderDetails()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
       </div>
       <div id="orderDetailsContent" class="p-5"></div>
     </div>
   </div>
 </div>
 
-<!-- ✅ الفاتورة البيضاء للطباعة والمشاركة -->
 <div id="invoiceModal" class="hidden fixed inset-0 z-[120] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex flex-col items-center">
   <div class="max-w-md w-full my-4">
     <div id="invoice-content" class="bg-white text-slate-900 p-6 rounded-xl relative w-full shadow-2xl" dir="rtl">
@@ -403,8 +407,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> حفظ كصورة</button>
     </div>
   </div>
-</div><!-- ✅ نافذة المنتج -->
-<div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
+</div><div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
   <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in">
       <div class="flex items-center justify-between p-4 border-b border-slate-800">
@@ -416,7 +419,6 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ تأكيد الطلب -->
 <div id="confirmOrderModal" class="hidden fixed inset-0 z-[150] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
     <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
@@ -432,14 +434,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ تقييم المنتجات -->
 <div id="reviewsModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-star text-amber-400"></i> التقييمات</h3>
       <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
     </div>
-    <div class="p-5 max-h-96 overflow-y-auto"><p id="revTitle" class="text-white font-black text-center mb-4"></p><div id="revList" class="space-y-3"></div></div>
+    <div class="p-5 max-h-96 overflow-y-auto custom-scrollbar"><p id="revTitle" class="text-white font-black text-center mb-4"></p><div id="revList" class="space-y-3"></div></div>
     <div class="p-5 border-t border-slate-800"><button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition"><i class="fas fa-pen"></i> أضف تقييمك</button></div>
   </div>
 </div>
@@ -729,7 +730,6 @@ function replaceImgOnly(imgEl) {
   imgEl.parentNode.replaceChild(fallback, imgEl);
 }
 
-// ✅ تعديل buildCard ليتناسب مع كل الطلبات (Skeleton, Slider, حجم الأزرار، النكهات)
 function buildCard(p) {
   var pid = p._pid;
   var avail = p.available !== false;
@@ -745,7 +745,6 @@ function buildCard(p) {
   imgBox.className = 'w-full aspect-[745/640] bg-[#0f172a] relative cursor-pointer overflow-hidden';
   imgBox.onclick = function() { openProduct(p.name); };
 
-  // Skeleton loader
   var skeleton = document.createElement('div');
   skeleton.className = 'absolute inset-0 skeleton z-0';
   imgBox.appendChild(skeleton);
@@ -763,7 +762,7 @@ function buildCard(p) {
   img.onerror = function() { replaceImgOnly(this); };
   imgBox.appendChild(img);
 
-  // ✅ تحريك الصور تلقائياً إذا كانت أكثر من صورة
+  // تحريك الصور تلقائياً
   if (allImages.length > 1) {
     var currentIdx = 0;
     setInterval(function() {
@@ -777,7 +776,6 @@ function buildCard(p) {
     }, 3000);
   }
 
-  // Badges
   var stBadge = document.createElement('span');
   if (!avail) {
     stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-xs px-2 py-1 rounded-full z-20 shadow-lg';
@@ -857,7 +855,6 @@ function buildCard(p) {
     var fls = p.flavors || [];
     var hasFlavors = fls.length > 0;
     
-    // إذا لم توجد نكهات، نضع نكهة واحدة "عادي" ولا نظهر كلمة "النكهات:"
     if (!hasFlavors) fls = [{name: 'عادي', soldOut: false}];
     else fls = fls.map(f => typeof f === 'string' ? {name: f, soldOut: false} : f);
 
@@ -893,7 +890,6 @@ function buildCard(p) {
         ctrl.className = 'flex items-center gap-1.5';
         
         if (!isSoldOut) {
-          // ✅ تكبير أزرار الزائد والناقص
           var minus = document.createElement('button');
           minus.type = 'button'; minus.className = 'w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded-md text-sm font-black transition'; minus.innerText = '-';
           minus.onclick = function(e) { e.stopPropagation(); changeSel(p.name, pid, fIdx, flvName, -1); };
@@ -1051,7 +1047,7 @@ function updateCart() {
           
           var inp = document.createElement('input');
           inp.type = 'number'; inp.min = '0'; inp.value = qty; inp.disabled = isOutOfStock;
-          inp.className = 'w-12 bg-slate-950 border border-slate-700 text-amber-400 text-center text-sm rounded-lg py-1' + (isOutOfStock ? ' opacity-50' : '');
+          inp.className = 'w-14 bg-slate-950 border border-slate-700 text-amber-400 text-center text-sm rounded-lg py-1' + (isOutOfStock ? ' opacity-50' : '');
           inp.onchange = function() { setQty(name, flv, this.value); };
           ctrl.appendChild(inp);
           
@@ -1061,6 +1057,12 @@ function updateCart() {
           plus.innerText = '+'; plus.disabled = isOutOfStock;
           plus.onclick = function() { chQty(name, flv, 1); };
           ctrl.appendChild(plus);
+          
+          // ✅ إضافة كلمة "طرد" بجانب العداد في السلة
+          var unitSpan = document.createElement('span');
+          unitSpan.className = 'text-[10px] text-slate-400 mr-1';
+          unitSpan.innerText = 'طرد';
+          ctrl.appendChild(unitSpan);
           
           row.appendChild(ctrl);
           box.appendChild(row);
@@ -1151,7 +1153,6 @@ function filterProducts() {
     if (mc && ms) filtered.push(p);
   }
   
-  // ✅ ترتيب المنتجات (حسب اسم الشركة ثم اسم المنتج)
   filtered.sort(function(a, b) {
     var compA = a.company || 'بدون شركة'; var compB = b.company || 'بدون شركة';
     if (compA === compB) return (a.name || '').localeCompare(b.name || '', 'ar');
@@ -1226,6 +1227,27 @@ function buildMiniCard(p, type) {
   return card;
 }
 
+// ✅ دالة تحريك المنتجات الجديدة تلقائياً
+function startAutoScroll(gridId) {
+  const el = document.getElementById(gridId);
+  if (!el) return;
+  
+  let isHovered = false;
+  el.addEventListener('mouseenter', () => isHovered = true);
+  el.addEventListener('mouseleave', () => isHovered = false);
+  el.addEventListener('touchstart', () => isHovered = true);
+  el.addEventListener('touchend', () => setTimeout(() => isHovered = false, 3000));
+
+  setInterval(() => {
+    if (isHovered) return;
+    if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
+      el.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      el.scrollBy({ left: 160, behavior: 'smooth' });
+    }
+  }, 3000);
+}
+
 function renderSpecial() {
   var offers = []; var news = [];
   for (var i = 0; i < products.length; i++) {
@@ -1245,6 +1267,9 @@ function renderSpecial() {
     var ng = document.getElementById('newGrid');
     while (ng.firstChild) ng.removeChild(ng.firstChild);
     for (var k = 0; k < news.length; k++) ng.appendChild(buildMiniCard(news[k], 'new'));
+    
+    // ✅ تفعيل التمرير التلقائي
+    startAutoScroll('newGrid');
   }
 }
 
@@ -1387,7 +1412,7 @@ window.loadAppOrders = function() {
       var invoiceBtn = '<button onclick="event.stopPropagation();openInvoiceForUser(\'' + esc(order.id) + '\')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-3 rounded-lg text-xs mt-2"><i class="fas fa-file-invoice"></i> الفاتورة</button>';
       var reorderBtn = '<button onclick="event.stopPropagation();reorderFromOrder(\'' + esc(order.id) + '\')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-1.5 px-3 rounded-lg text-xs mt-2"><i class="fas fa-redo"></i> إعادة</button>';
       
-      return '<div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:border-amber-500/50 transition" onclick="openOrderDetails(\'' + esc(order.id) + '\')"><div class="p-4 flex justify-between items-center gap-3"><div class="flex-grow min-w-0"><div class="flex items-center gap-2 mb-1 flex-wrap"><p class="text-white font-black text-sm">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' border text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas ' + statusIcon + '"></i> ' + esc(statusText) + '</span></div><p class="text-slate-400 text-[11px] mb-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p><div class="space-y-0.5">' + firstItems + moreItems + '</div><div class="flex gap-2 flex-wrap">' + invoiceBtn + reorderBtn + '</div></div><div class="text-center flex-shrink-0"><div class="w-14 h-14 rounded-full bg-slate-950 border border-slate-700 flex flex-col items-center justify-center"><p class="text-amber-400 font-black text-lg">' + totalItems + '</p><p class="text-[8px] text-slate-500">قطعة</p></div></div></div>' + (order.deliveryAmount ? '<div class="bg-emerald-950/30 border-t border-emerald-500/20 px-4 py-2"><p class="text-emerald-400 text-xs font-bold"><i class="fas fa-money-bill-wave"></i> المبلغ: ' + esc(order.deliveryAmount) + ' ل.س</p></div>' : '') + '</div>';
+      return '<div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:border-amber-500/50 transition" onclick="openOrderDetails(\'' + esc(order.id) + '\')"><div class="p-4 flex justify-between items-center gap-3"><div class="flex-grow min-w-0"><div class="flex items-center gap-2 mb-1 flex-wrap"><p class="text-white font-black text-sm">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' border text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas ' + statusIcon + '"></i> ' + esc(statusText) + '</span></div><p class="text-slate-400 text-[11px] mb-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p><div class="space-y-0.5">' + firstItems + moreItems + '</div><div class="flex gap-2 flex-wrap">' + invoiceBtn + reorderBtn + '</div></div><div class="text-center flex-shrink-0"><div class="w-14 h-14 rounded-full bg-slate-950 border border-slate-700 flex flex-col items-center justify-center"><p class="text-amber-400 font-black text-lg">' + totalItems + '</p><p class="text-[8px] text-slate-500">طرد</p></div></div></div>' + (order.deliveryAmount ? '<div class="bg-emerald-950/30 border-t border-emerald-500/20 px-4 py-2"><p class="text-emerald-400 text-xs font-bold"><i class="fas fa-money-bill-wave"></i> المبلغ: ' + esc(order.deliveryAmount) + ' ل.س</p></div>' : '') + '</div>';
     }).join('');
   });
 };
@@ -1422,7 +1447,7 @@ window.openOrderDetails = function(orderId) {
     var itemsHtml = '';
     for (var item in order.items) {
       itemsHtml += '<div class="bg-slate-950 rounded-lg p-3 mb-2 border border-slate-800"><p class="text-amber-400 font-bold text-sm mb-1">' + esc(item) + '</p>';
-      for (var flavor in order.items[item]) itemsHtml += '<div class="flex justify-between text-xs text-slate-300"><span>' + esc(flavor) + '</span><span class="text-white font-bold">× ' + esc(order.items[item][flavor]) + '</span></div>';
+      for (var flavor in order.items[item]) itemsHtml += '<div class="flex justify-between text-xs text-slate-300"><span>' + esc(flavor) + '</span><span class="text-white font-bold">× ' + esc(order.items[item][flavor]) + ' طرد</span></div>';
       itemsHtml += '</div>';
     }
     var statusColor = 'bg-slate-800 text-slate-300';
@@ -1431,7 +1456,7 @@ window.openOrderDetails = function(orderId) {
     if (order.status === 'جاري التوصيل') statusColor = 'bg-sky-500 text-white';
     if (order.status === 'تم التسليم') statusColor = 'bg-emerald-600 text-white';
     
-    document.getElementById('orderDetailsContent').innerHTML = '<div class="text-center mb-4"><p class="text-2xl font-black text-white mb-1">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' text-xs font-bold px-3 py-1 rounded-full">' + esc(order.status || 'جديد') + '</span><p class="text-slate-400 text-xs mt-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p></div><div class="bg-slate-950/50 rounded-xl p-3 mb-4 border border-slate-800"><p class="text-slate-400 text-xs mb-1">العنوان:</p><p class="text-white text-sm">' + esc(order.address) + '</p>' + (order.notes ? '<p class="text-amber-400 text-xs mt-2"><i class="fas fa-comment-dots"></i> ' + esc(order.notes) + '</p>' : '') + '</div><p class="text-white font-bold mb-2">المنتجات:</p><div class="max-h-60 overflow-y-auto">' + itemsHtml + '</div>' + (order.deliveryAmount ? '<div class="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-3 mt-3 text-center"><p class="text-emerald-400 font-black"><i class="fas fa-money-bill-wave"></i> المبلغ المدفوع: ' + esc(order.deliveryAmount) + ' ل.س</p></div>' : '') + '<div class="mt-4"><button onclick="closeOrderDetails(); openInvoiceForUser(\'' + esc(order.id) + '\')" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-file-invoice"></i> عرض الفاتورة</button></div>';
+    document.getElementById('orderDetailsContent').innerHTML = '<div class="text-center mb-4"><p class="text-2xl font-black text-white mb-1">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' text-xs font-bold px-3 py-1 rounded-full">' + esc(order.status || 'جديد') + '</span><p class="text-slate-400 text-xs mt-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p></div><div class="bg-slate-950/50 rounded-xl p-3 mb-4 border border-slate-800"><p class="text-slate-400 text-xs mb-1">العنوان:</p><p class="text-white text-sm">' + esc(order.address) + '</p>' + (order.notes ? '<p class="text-amber-400 text-xs mt-2"><i class="fas fa-comment-dots"></i> ' + esc(order.notes) + '</p>' : '') + '</div><p class="text-white font-bold mb-2">المنتجات:</p><div class="max-h-60 overflow-y-auto custom-scrollbar">' + itemsHtml + '</div>' + (order.deliveryAmount ? '<div class="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-3 mt-3 text-center"><p class="text-emerald-400 font-black"><i class="fas fa-money-bill-wave"></i> المبلغ المدفوع: ' + esc(order.deliveryAmount) + ' ل.س</p></div>' : '') + '<div class="mt-4"><button onclick="closeOrderDetails(); openInvoiceForUser(\'' + esc(order.id) + '\')" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-file-invoice"></i> عرض الفاتورة</button></div>';
     
     document.getElementById('orderDetailsModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
     window.pushBackState();
@@ -1440,7 +1465,6 @@ window.openOrderDetails = function(orderId) {
 
 window.closeOrderDetails = function() { document.getElementById('orderDetailsModal').classList.add('hidden'); document.body.style.overflow = ''; };
 
-// ✅ دوال الفاتورة للزبون
 window.openInvoiceForUser = function(orderId) {
   if (typeof window.getOrderById !== 'function') return;
   window.getOrderById(orderId).then(function(order) {
@@ -1468,7 +1492,7 @@ window.openInvoiceForUser = function(orderId) {
             <p class="font-bold text-slate-800">${item}</p>
             ${flavorText}
           </td>
-          <td class="py-2 text-center font-black text-slate-700">${qty}</td>
+          <td class="py-2 text-center font-black text-slate-700">${qty} طرد</td>
         `;
         tbody.appendChild(tr);
       }
@@ -1607,11 +1631,14 @@ window.confirmSendOrder = async function() {
     for (var flv in cart[name]) { 
       if (!cart[name].hasOwnProperty(flv)) continue; 
       var qty = cart[name][flv]; 
-      if (qty > 0) { details.push('  ( ' + flv + ' × ' + qty + ' )'); total += qty; } 
+      if (qty > 0) { details.push('  ( ' + flv + ' × ' + qty + ' طرد )'); total += qty; } 
     }
     if (details.length > 0) { msg += ' *' + idx + '*• *' + name + '*\n' + details.join('\n') + '\n\n'; idx++; }
   }
-  msg += '━━━━━━━━━━━━━━━\n\n*🧾 إجمالي القطع:* ( ' + total + ' )\n\n📅 تاريخ الطلب : ' + date + '\n\n';
+  msg += '━━━━━━━━━━━━━━━\n\n*🧾 إجمالي الطرود:* ( ' + total + ' )\n\n📅 تاريخ الطلب : ' + date + '\n\n';
+  
+  // ✅ تفعيل شعار التقييم عند العودة من الواتساب
+  localStorage.setItem('show_rating_after_order', 'true');
   
   var waUrl = 'https://wa.me/' + orderWa + '?text=' + encodeURIComponent(msg);
   window.location.href = waUrl;
@@ -1953,7 +1980,7 @@ window.submitStoreRating = async function() {
   try {
     if (typeof window.saveStoreReviewToFirebase === 'function') {
       await window.saveStoreReviewToFirebase(window.currentUser.uid, window.currentProfileData.name || 'عميل', window.storeStars, comment);
-      showToast('تم نشر تقييمك بنجاح!');
+      showToast('تم نشر تقييمك بنجاح! شكراً لك.');
       closeStoreRatingModal();
     } else throw new Error('خدمة السحابة غير جاهزة');
   } catch(e) { console.error(e); showToast('حدث خطأ أثناء النشر', 'error'); }
@@ -1999,6 +2026,17 @@ function boot() {
     displayProducts(products);
     setTimeout(function() { var b = document.getElementById('preBar'); if (b) b.style.width = '100%'; }, 100);
     
+    // ✅ التحقق من العودة من الواتساب لطلب التقييم
+    setTimeout(() => {
+      if (localStorage.getItem('show_rating_after_order')) {
+        localStorage.removeItem('show_rating_after_order');
+        if (window.currentUser) {
+          // إظهار التقييم بعد ثانيتين ليفتح الواتساب ويعود المستخدم
+          setTimeout(() => { window.openStoreRatingModal(); }, 2000);
+        }
+      }
+    }, 1000);
+
     setTimeout(function() {
       var params = new URLSearchParams(window.location.search);
       var productParam = params.get('product');
@@ -2033,7 +2071,8 @@ document.addEventListener('keydown', function(e) {
 });
 </script><script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  // ✅ إضافة setPersistence, browserLocalPersistence
+  import { getAuth, setPersistence, browserLocalPersistence, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -2047,6 +2086,10 @@ document.addEventListener('keydown', function(e) {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+
+  // ✅ إجبار المتصفح على حفظ الجلسة دائماً (لمنع فقدان الحساب)
+  setPersistence(auth, browserLocalPersistence).catch(err => console.log('Persistence error:', err));
+
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
@@ -2055,13 +2098,11 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  // ✅ فتح نافذة الدخول
   window.openAuthModal = function() {
     if (window.pushBackState) window.pushBackState();
     document.getElementById('authModal').classList.remove('hidden');
     document.getElementById('authError').classList.add('hidden');
     
-    // إخفاء شاشة الترحيب إذا كانت مفتوحة
     const welcome = document.getElementById('welcomeScreen');
     if(welcome && !welcome.classList.contains('hidden')) {
       welcome.classList.add('hidden');
@@ -2069,7 +2110,6 @@ document.addEventListener('keydown', function(e) {
   };
   window.closeAuthModal = function() { document.getElementById('authModal').classList.add('hidden'); };
 
-  // ✅ تسجيل الدخول بجوجل (يستخدم Popup بدلاً من Redirect)
   window.loginWithGoogle = async function() {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -2207,7 +2247,6 @@ document.addEventListener('keydown', function(e) {
     }
   };
 
-  // ✅ مراقبة حالة الدخول (تخفي شاشة الترحيب وتظهر الحساب)
   onAuthStateChanged(auth, async function(user) {
     try {
       if (user) {
