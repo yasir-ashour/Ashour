@@ -12,18 +12,22 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- ✅ مكتبة قارئ الباركود -->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<!-- ✅ مكتبة تحويل الفاتورة إلى صورة -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; }
 .gold-gradient-text { background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #997415 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.flavor-tag { display: inline-flex; align-items: center; gap: 6px; }
+.flavor-tag { display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s; }
 @keyframes modalPop { from { transform: scale(0.85) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 @keyframes iconPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } }
 .review-star.active { background: #d4af37 !important; color: #0b0f19 !important; }
+.invoice-price-input::-webkit-outer-spin-button, .invoice-price-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.invoice-price-input { -moz-appearance: textfield; }
 </style>
 </head>
 <body class="min-h-screen">
 
-<!-- ✅ شاشة تسجيل الدخول (تم إخفاء البريد وطلب كلمة المرور فقط) -->
+<!-- ✅ شاشة تسجيل الدخول (بكلمة المرور فقط) -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
@@ -352,7 +356,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الفئة <span class="text-rose-500">*</span></label><input type="text" id="fCategory" list="categoriesList" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"><datalist id="categoriesList"></datalist></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">السعر</label><input type="text" id="fPrice" placeholder="التواصل مع المبيعات" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
         
-        <!-- ✅ حقل الباركود الجديد -->
         <div class="md:col-span-2">
           <label class="block text-slate-300 font-bold mb-1.5 text-sm">الباركود (Barcode)</label>
           <div class="flex gap-2">
@@ -418,9 +421,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
       <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الوصف</label><textarea id="fDescription" rows="3" placeholder="وصف مختصر..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea></div>
 
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-sm">النكهات (اختياري)</label>
-        <div id="flavorsContainer" class="flex flex-wrap gap-2 mb-2 min-h-[40px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
+      <!-- ✅ إدارة النكهات مع زر النفاد -->
+      <div class="bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+        <label class="block text-slate-300 font-bold mb-2 text-sm"><i class="fas fa-ice-cream text-amber-400"></i> النكهات</label>
+        <div id="flavorsContainer" class="flex flex-wrap gap-2 mb-3 min-h-[40px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
         <div class="flex gap-2">
           <input type="text" id="newFlavorInput" placeholder="أضف نكهة..." onkeydown="if(event.key==='Enter'){event.preventDefault();addFlavor();}" class="flex-grow bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 text-sm">
           <button type="button" onclick="addFlavor()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700"><i class="fas fa-plus"></i> إضافة</button>
@@ -538,6 +542,57 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
       <button onclick="closeDeliveryModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-times"></i> إلغاء</button>
       <button onclick="confirmDelivery()" id="confirmDeliveryBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black py-3.5 rounded-xl transition shadow-lg shadow-emerald-900/50 flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> تأكيد المبلغ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ نافذة الفاتورة الجديدة -->
+<div id="invoiceModal" class="hidden fixed inset-0 z-[120] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex flex-col items-center">
+  <div class="max-w-md w-full my-4">
+    
+    <!-- محتوى الفاتورة (سيتم تحويله لصورة) -->
+    <div id="invoice-content" class="bg-white text-slate-900 p-6 rounded-xl relative w-full shadow-2xl" dir="rtl">
+      <div class="text-center border-b-2 border-dashed border-slate-300 pb-4 mb-4">
+         <h2 class="text-2xl font-black mb-1 text-slate-800">مركز عاشور للتجارة</h2>
+         <p class="text-xs text-slate-500">جملة المواد الغذائية والبسكويت</p>
+         <p class="text-xs text-slate-500 mt-1">هاتف: 0959248901</p>
+      </div>
+      
+      <div class="mb-4 text-sm space-y-1">
+         <p><strong class="text-slate-700">الزبون:</strong> <span id="invCustName" class="text-slate-800"></span></p>
+         <p><strong class="text-slate-700">الهاتف:</strong> <span id="invCustPhone" dir="ltr" class="text-slate-800"></span></p>
+         <p><strong class="text-slate-700">التاريخ:</strong> <span id="invDate" class="text-slate-800"></span></p>
+      </div>
+
+      <table class="w-full text-sm mb-4">
+         <thead>
+           <tr class="border-b border-slate-300 text-slate-600">
+              <th class="text-right pb-2 font-bold">المنتج</th>
+              <th class="text-center pb-2 font-bold">الكمية</th>
+              <th class="text-left pb-2 font-bold">السعر</th>
+           </tr>
+         </thead>
+         <tbody id="invTableBody">
+           <!-- سيتم تعبئتها عبر JS -->
+         </tbody>
+      </table>
+
+      <div class="border-t-2 border-dashed border-slate-300 pt-4 flex justify-between items-center">
+         <span class="font-black text-lg text-slate-800">الإجمالي:</span>
+         <span id="invTotal" class="font-black text-xl text-emerald-600">0 ل.س</span>
+      </div>
+      
+      <div class="text-center mt-6 text-xs text-slate-400 font-bold">
+         شكراً لتعاملكم معنا!
+      </div>
+    </div>
+
+    <!-- أزرار التحكم -->
+    <div class="flex gap-2 mt-4 max-w-md w-full">
+      <button onclick="closeInvoiceModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition">إغلاق</button>
+      <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2">
+        <i class="fas fa-download"></i> حفظ كصورة
+      </button>
     </div>
   </div>
 </div>
@@ -660,7 +715,7 @@ const IDLE_TIMEOUT = 30 * 60 * 1000;
 const FIREBASE_CONSOLE_URL = 'https://console.firebase.google.com/project/ashour-e5e42/authentication/users';
 
 let catalogData = { products: [], settings: {}, categories: [] };
-let editingFlavors = [];
+let editingFlavors = []; // الآن ستحتوي على كائنات { name: string, soldOut: boolean }
 let currentRotation = '';
 let currentImageData = '';
 let currentGallery = [];
@@ -669,6 +724,7 @@ let _idleTimer = null;
 let currentReviews = [];
 let currentReviewStars = 0;
 let currentProductName = null;
+let currentInvoiceOrder = null; // لتخزين الطلب أثناء تسعير الفاتورة
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw-admin.js')
@@ -948,7 +1004,7 @@ function openProductModal(pid = null) {
   document.getElementById('fImagePlaceholder').classList.remove('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden');
   document.getElementById('addReviewForm').classList.add('hidden'); document.getElementById('offerFields').classList.add('hidden');
   document.getElementById('fCompany').value = ''; document.getElementById('fConsumerPrice').value = ''; document.getElementById('fPiecesPerBox').value = ''; document.getElementById('fBoxesPerCarton').value = '';
-  document.getElementById('fBarcode').value = ''; // ✅ تفريغ الباركود
+  document.getElementById('fBarcode').value = '';
   renderGalleryImages();
 
   if (pid === null) {
@@ -968,12 +1024,17 @@ function openProductModal(pid = null) {
     
     document.getElementById('fCompany').value = p.company || ''; 
     document.getElementById('fConsumerPrice').value = p.consumerPrice || '';
-    document.getElementById('fBarcode').value = p.barcode || ''; // ✅ تعبئة الباركود
+    document.getElementById('fBarcode').value = p.barcode || '';
     
     document.getElementById('fPiecesPerBox').value = p.piecesPerBox || ''; document.getElementById('fBoxesPerCarton').value = p.boxesPerCarton || '';
     currentGallery = Array.isArray(p.images) ? [...p.images] : []; renderGalleryImages();
     if (p.available === false) setProductStatus('unavailable'); else if (p.lowStock) setProductStatus('lowStock'); else setProductStatus('available');
-    editingFlavors = Array.isArray(p.flavors) ? [...p.flavors] : [];
+    
+    // تحويل النكهات القديمة إلى الكائن الجديد إذا كانت نصوصاً
+    if (Array.isArray(p.flavors)) {
+      editingFlavors = p.flavors.map(f => typeof f === 'string' ? { name: f, soldOut: false } : f);
+    } else { editingFlavors = []; }
+    
     currentReviews = Array.isArray(p.reviews) ? p.reviews.map(r => ({ ...r, _source: 'local' })) : [];
     
     setRotation(p.rotateClass || '');
@@ -1006,15 +1067,41 @@ function setRotation(rot) {
   });
 }
 
+// ✅ النكهات (الطريقة الأولى: زر نفد)
 function renderFlavors() {
   const c = document.getElementById('flavorsContainer'); if (!c) return;
   if (editingFlavors.length === 0) { c.innerHTML = '<span class="text-slate-500 text-xs py-1">لا توجد نكهات — المنتج سيُعامل كـ "عادي"</span>'; return; }
-  c.innerHTML = editingFlavors.map((f, i) => `<span class="flavor-tag bg-amber-500/15 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full text-xs font-bold">${escapeHtml(f)}<button type="button" onclick="removeFlavor(${i})" class="w-4 h-4 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center text-[10px]"><i class="fas fa-times"></i></button></span>`).join('');
+  
+  c.innerHTML = editingFlavors.map((f, i) => {
+    const fName = typeof f === 'string' ? f : f.name;
+    const isSoldOut = typeof f === 'string' ? false : f.soldOut;
+    
+    return `<span class="flavor-tag ${isSoldOut ? 'bg-rose-500/15 text-rose-300 border-rose-500/40 line-through' : 'bg-amber-500/15 text-amber-300 border-amber-500/40'} border px-2.5 py-1 rounded-full text-xs font-bold">
+      ${escapeHtml(fName)}
+      <button type="button" onclick="toggleFlavorStatus(${i})" class="w-5 h-5 rounded-full ${isSoldOut ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-slate-600 hover:bg-slate-500'} text-white flex items-center justify-center text-[10px] ml-1" title="${isSoldOut ? 'تفعيل النكهة' : 'تعيين كنفد'}">
+        <i class="fas ${isSoldOut ? 'fa-check' : 'fa-ban'}"></i>
+      </button>
+      <button type="button" onclick="removeFlavor(${i})" class="w-5 h-5 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center text-[10px]"><i class="fas fa-times"></i></button>
+    </span>`;
+  }).join('');
 }
+
+function toggleFlavorStatus(i) {
+  if (!editingFlavors[i]) return;
+  if (typeof editingFlavors[i] === 'string') {
+    editingFlavors[i] = { name: editingFlavors[i], soldOut: false };
+  }
+  editingFlavors[i].soldOut = !editingFlavors[i].soldOut;
+  renderFlavors();
+}
+
 function addFlavor() {
   const input = document.getElementById('newFlavorInput'); const v = input.value.trim();
-  if (!v) return; if (editingFlavors.includes(v)) { showToast('النكهة موجودة مسبقًا', 'error'); return; }
-  editingFlavors.push(v); input.value = ''; renderFlavors(); input.focus();
+  if (!v) return; 
+  const exists = editingFlavors.some(f => (typeof f === 'string' ? f : f.name) === v);
+  if (exists) { showToast('النكهة موجودة مسبقًا', 'error'); return; }
+  editingFlavors.push({ name: v, soldOut: false }); 
+  input.value = ''; renderFlavors(); input.focus();
 }
 function removeFlavor(i) { editingFlavors.splice(i, 1); renderFlavors(); }
 
@@ -1142,17 +1229,14 @@ function saveProduct() {
   const localReviewsOnly = currentReviews.filter(r => !r._docId).map(r => { const o = { ...r }; delete o._source; delete o._docId; return o; });
   const pidVal = document.getElementById('fPid').value;
   
-  // تتبع السعر تلقائياً
   if (pidVal !== '' && !hasOffer) {
     const oldProduct = catalogData.products[Number(pidVal)];
-    if (oldProduct && oldProduct.price !== newPriceStr) {
-       oldPriceVal = oldProduct.price;
-    }
+    if (oldProduct && oldProduct.price !== newPriceStr) { oldPriceVal = oldProduct.price; }
   }
 
   const data = {
     name, category, price: newPriceStr,
-    barcode: document.getElementById('fBarcode').value.trim() || undefined, // ✅ حفظ الباركود
+    barcode: document.getElementById('fBarcode').value.trim() || undefined,
     image: currentImageData, description: document.getElementById('fDescription').value.trim(),
     available: status !== 'unavailable', lowStock: status === 'lowStock',
     hasOffer: hasOffer || undefined, oldPrice: oldPriceVal || undefined, isNew: document.getElementById('fIsNew').checked || undefined,
@@ -1187,7 +1271,14 @@ function buildCatalogJS() {
   delete cleanSettings.password; delete cleanSettings.githubUser; delete cleanSettings.githubRepo; delete cleanSettings.githubBranch;
 
   const clean = {
-    products: catalogData.products.map(p => { const o = { ...p }; if (!o.flavors || o.flavors.length === 0) delete o.flavors; if (!o.reviews || o.reviews.length === 0) delete o.reviews; if (!o.hasOffer) { delete o.hasOffer; delete o.oldPrice; } if (!o.isNew) delete o.isNew; return o; }),
+    products: catalogData.products.map(p => { 
+      const o = { ...p }; 
+      if (!o.flavors || o.flavors.length === 0) delete o.flavors; 
+      if (!o.reviews || o.reviews.length === 0) delete o.reviews; 
+      if (!o.hasOffer) { delete o.hasOffer; delete o.oldPrice; } 
+      if (!o.isNew) delete o.isNew; 
+      return o; 
+    }),
     settings: cleanSettings, 
     categories: [...(catalogData.categories || [])]
   };
@@ -1379,7 +1470,7 @@ window.startScanner = function() {
       window.showToast('✅ تم قراءة الباركود');
       window.stopScanner();
     },
-    (errorMessage) => { /* تجاهل أخطاء القراءة المستمرة */ }
+    (errorMessage) => { }
   ).catch(err => {
     window.showToast('تعذر فتح الكاميرا: ' + err, 'error');
     document.getElementById('barcodeScannerModal').classList.add('hidden');
@@ -1400,6 +1491,96 @@ window.stopScanner = function() {
   }
 };
 
+// ✅ دوال الفاتورة
+window.openInvoiceModal = function(orderId) {
+  const order = allOrdersCache.find(o => o.id === orderId);
+  if (!order) return;
+  currentInvoiceOrder = order;
+  
+  document.getElementById('invCustName').innerText = order.userName || '—';
+  document.getElementById('invCustPhone').innerText = order.phone || '—';
+  const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('ar-SY', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleString('ar-SY');
+  document.getElementById('invDate').innerText = dateStr;
+  
+  const tbody = document.getElementById('invTableBody');
+  tbody.innerHTML = '';
+  
+  for (let item in order.items) {
+    for (let flavor in order.items[item]) {
+      const qty = order.items[item][flavor];
+      if (qty <= 0) continue;
+      
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-100 last:border-0';
+      
+      const flavorText = flavor === 'عادي' ? '' : `<p class="text-xs text-slate-500 mt-0.5">${flavor}</p>`;
+      
+      tr.innerHTML = `
+        <td class="py-2 text-right text-sm">
+          <p class="font-bold text-slate-800">${item}</p>
+          ${flavorText}
+        </td>
+        <td class="py-2 text-center font-black text-slate-700">${qty}</td>
+        <td class="py-2 text-left">
+          <input type="number" class="invoice-price-input w-24 text-left bg-transparent border-b border-dashed border-slate-300 focus:outline-none focus:border-indigo-500 font-black text-slate-800 placeholder-slate-300" placeholder="السعر" data-qty="${qty}" oninput="calculateInvoiceTotal()">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+  calculateInvoiceTotal();
+  document.getElementById('invoiceModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+};
+
+window.calculateInvoiceTotal = function() {
+  let total = 0;
+  document.querySelectorAll('.invoice-price-input').forEach(inp => {
+    const price = parseFloat(inp.value);
+    const qty = parseInt(inp.getAttribute('data-qty'));
+    if (!isNaN(price) && !isNaN(qty)) {
+      total += (price * qty);
+    }
+  });
+  document.getElementById('invTotal').innerText = total.toLocaleString('en-US') + ' ل.س';
+};
+
+window.downloadInvoiceImage = function() {
+  const btn = document.getElementById('downloadInvoiceBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التجهيز...';
+  btn.disabled = true;
+  
+  const inputs = document.querySelectorAll('.invoice-price-input');
+  inputs.forEach(inp => { inp.style.borderBottom = 'none'; inp.style.pointerEvents = 'none'; });
+
+  html2canvas(document.getElementById('invoice-content'), {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff'
+  }).then(canvas => {
+    inputs.forEach(inp => { inp.style.borderBottom = '1px dashed #cbd5e1'; inp.style.pointerEvents = 'auto'; });
+
+    const link = document.createElement('a');
+    link.download = `فاتورة-عاشور-${currentInvoiceOrder.id.slice(-4)}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    btn.innerHTML = '<i class="fas fa-download"></i> حفظ كصورة';
+    btn.disabled = false;
+  }).catch(err => {
+    console.error(err);
+    showToast('حدث خطأ أثناء إنشاء الصورة', 'error');
+    btn.innerHTML = '<i class="fas fa-download"></i> حفظ كصورة';
+    btn.disabled = false;
+  });
+};
+
+window.closeInvoiceModal = function() {
+  document.getElementById('invoiceModal').classList.add('hidden');
+  document.body.style.overflow = '';
+  currentInvoiceOrder = null;
+};
+
 document.addEventListener('keydown', (e) => { 
   if (e.key === 'Escape') { 
     closeProductModal(); 
@@ -1410,6 +1591,8 @@ document.addEventListener('keydown', (e) => {
     if (crm && !crm.classList.contains('hidden')) closeCustomerRecovery();
     const bcm = document.getElementById('barcodeScannerModal');
     if (bcm && !bcm.classList.contains('hidden')) stopScanner();
+    const invm = document.getElementById('invoiceModal');
+    if (invm && !invm.classList.contains('hidden')) closeInvoiceModal();
   } 
 });
 
@@ -1475,7 +1658,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ✅ تعديل: دالة تسجيل الدخول (البريد مخفي في الخلفية)
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
@@ -1717,12 +1899,17 @@ document.addEventListener('keydown', (e) => {
           </div>
           <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/50"><p class="text-slate-400 text-xs font-bold mb-2">المنتجات:</p>${itemsHtml}</div>
           ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام: ${safeText(order.deliveryAmount)} ل.س</p></div>` : ''}
-          <div class="flex gap-2 mt-2">
+          
+          <div class="flex gap-2 mt-2 flex-wrap">
+            <!-- ✅ زر الفاتورة الجديد -->
+            <button onclick="window.openInvoiceModal('${safeText(order.id)}')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1"><i class="fas fa-file-invoice-dollar"></i> تسعير الفاتورة</button>
+            
             ${order.status !== 'تم التسليم' ? `
               ${(order.status === 'جديد' || !order.status) ? `<button onclick="updateOrderStatus('${safeText(order.id)}', 'جاري التجهيز')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-lg text-xs">تجهيز</button>` : ''}
               ${order.status === 'جاري التجهيز' ? `<button onclick="updateOrderStatus('${safeText(order.id)}', 'جاري التوصيل')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 rounded-lg text-xs">بدء التوصيل</button>` : ''}
               ${order.status === 'جاري التوصيل' ? `<button onclick="markAsDelivered('${safeText(order.id)}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs">تم التسليم</button>` : ''}
             ` : `<div class="flex-1 text-center text-emerald-500 text-xs font-bold py-2"><i class="fas fa-check-circle"></i> تم التسليم</div>`}
+            
             <button onclick="window.deleteOrder('${safeText(order.id)}')" class="bg-rose-950 hover:bg-rose-900 text-rose-400 border border-rose-500/40 px-3 py-2 rounded-lg text-xs"><i class="fas fa-trash-alt"></i></button>
           </div>
         </div>`;
