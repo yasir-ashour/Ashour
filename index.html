@@ -23,8 +23,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .glow { animation: glow 2.5s ease-in-out infinite; }
 @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 .floating { animation: float 4s ease-in-out infinite; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in { animation: fadeIn 0.6s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
 .star-on { background: #d4af37 !important; color: #0b0f19 !important; }
 
 /* ✅ Skeleton Loading للصور */
@@ -45,8 +45,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 @keyframes float-blob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.2); } }
 .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 
-/* ✅ شاشة الدخول الزجاجية والحركات */
-#authModal { background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(10px); }
+/* ✅ شاشة تسجيل الدخول الكاملة (Full Page Glassmorphism) والحركات */
+#authView { background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0b0f19 100%); }
 .auth-container { position: relative; overflow: hidden; }
 .auth-form { transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); width: 100%; }
 .auth-form.hide-left { transform: translateX(-120%); opacity: 0; filter: blur(10px); position: absolute; pointer-events: none; }
@@ -55,7 +55,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 /* ✅ حركة زر إضافة للسلة (Progress Bar) */
 .btn-add-cart { position: relative; overflow: hidden; transition: all 0.3s; }
-.btn-add-cart .progress-bar { position: absolute; right: 0; top: 0; height: 100%; width: 0; background: rgba(16, 185, 129, 0.4); z-index: 0; transition: width 0.8s linear; }
+.btn-add-cart .progress-bar { position: absolute; right: 0; top: 0; height: 100%; width: 0; background: rgba(16, 185, 129, 0.5); z-index: 0; transition: width 0.8s linear; }
 .btn-add-cart .btn-content { position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
 .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -69,7 +69,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   }
 </script>
 </head>
-<body class="min-h-screen pb-20 sm:pb-0">
+<body class="min-h-screen pb-24">
 
 <!-- ✅ شاشة الترحيب الزجاجية -->
 <div id="welcomeScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
@@ -84,7 +84,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <p class="text-slate-300 text-sm mb-8 leading-relaxed">أهلاً بك في متجرك المفضل. سجل دخولك الآن لتجربة تسوق أسرع ومتابعة طلباتك.</p>
     
     <div class="w-full space-y-3">
-      <button onclick="openAuthModal()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/40 transition transform hover:scale-105 flex items-center justify-center gap-2">
+      <button onclick="showAuthView()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/40 transition transform hover:scale-105 flex items-center justify-center gap-2">
         <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
       </button>
       <button onclick="skipWelcome()" class="w-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold py-3.5 rounded-2xl transition border border-slate-600">
@@ -115,10 +115,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
   <div class="max-w-7xl mx-auto px-3 py-2 flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="showCatalog()">
-      <div class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
+      <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
       <div class="min-w-0">
         <h1 class="text-base sm:text-xl font-black gold-text truncate">مركز عاشور</h1>
-        <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">للتجارة والمواد الغذائية</p>
+        <p class="text-[10px] text-slate-400 hidden sm:block">للتجارة والمواد الغذائية</p>
       </div>
     </div>
     <div class="flex items-center gap-2 flex-shrink-0">
@@ -128,7 +128,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <button id="loginBtn" onclick="openAuthModal()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
+      <button id="loginBtn" onclick="showAuthView()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
         <i class="fas fa-user-circle text-lg"></i>
         <span class="hidden sm:inline">دخول</span>
       </button>
@@ -142,47 +142,53 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </button>
     </div>
   </div>
-</header><!-- ✅ نافذة تسجيل الدخول (تصميم زجاجي وحركات انزلاق) -->
-<div id="authModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-[2rem] max-w-sm w-full shadow-2xl relative my-8 auth-container fade-in" style="box-shadow: 0 0 40px rgba(212,175,55,0.15);">
-    <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
+</header>
+
+<!-- ✅ شاشة تسجيل الدخول الكاملة (Full Page View) -->
+<div id="authView" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 overflow-y-auto fade-in">
+  <div class="bg-slate-900/90 border border-amber-500/40 rounded-[2.5rem] max-w-md w-full shadow-2xl relative my-auto p-6 sm:p-8 auth-container backdrop-blur-xl" style="box-shadow: 0 0 50px rgba(212,175,55,0.2);">
+    <button onclick="showCatalog()" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10 transition"><i class="fas fa-arrow-right"></i></button>
     
-    <div class="p-6 sm:p-8">
-      <div class="text-center mb-6">
-        <img src="logo.png" class="w-20 h-20 mx-auto object-contain mb-2 glow">
-        <h2 class="text-2xl font-black gold-text">مركز عاشور</h2>
-      </div>
+    <div class="text-center mb-6">
+      <img src="logo.png" class="w-24 h-24 mx-auto object-contain mb-2 glow">
+      <h2 class="text-3xl font-black gold-text">مركز عاشور</h2>
+      <p class="text-slate-400 text-xs mt-1">سجل دخولك لمتابعة طلباتك بكل سهولة</p>
+    </div>
 
-      <!-- التبويبات -->
-      <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative">
-        <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all auth-tab-active bg-transparent text-slate-400 border border-transparent">تسجيل الدخول</button>
-        <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
-      </div>
+    <!-- التبويبات -->
+    <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative border border-slate-800">
+      <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all auth-tab-active bg-transparent text-slate-400 border border-transparent">تسجيل الدخول</button>
+      <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
+    </div>
 
-      <div class="relative h-[320px]">
+    <div class="relative h-[320px]">
+      <!-- نموذج الدخول -->
+      <div id="loginFormBox" class="auth-form space-y-4 absolute w-full">
+        <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
+        </button>
         
-        <!-- نموذج الدخول -->
-        <div id="loginFormBox" class="auth-form space-y-4 absolute w-full">
-          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
-          </button>
-          
-          <div class="flex items-center"><div class="flex-grow border-t border-slate-700"></div><span class="px-3 text-slate-500 text-xs">أو</span><div class="flex-grow border-t border-slate-700"></div></div>
-          
-          <input type="tel" id="pinPhone" placeholder="رقم الهاتف (09xxxxxxxx)" maxlength="15" dir="ltr" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
-          <input type="password" id="pinCode" placeholder="رمز سري من 6 أرقام" maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
-          
-          <button onclick="handlePhonePinLogin()" id="pinLoginBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-base shadow-lg transition"><i class="fas fa-sign-in-alt"></i> دخول</button>
-          
-          <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2 rounded-lg" id="authError"></p>
+        <div class="flex items-center"><div class="flex-grow border-t border-slate-700"></div><span class="px-3 text-slate-500 text-xs">أو برقم الهاتف</span><div class="flex-grow border-t border-slate-700"></div></div>
+        
+        <input type="tel" id="pinPhone" placeholder="رقم الهاتف (09xxxxxxxx)" maxlength="15" dir="ltr" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
+        <input type="password" id="pinCode" placeholder="رمز سري من 6 أرقام" maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
+        
+        <button onclick="handlePhonePinLogin()" id="pinLoginBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-base shadow-lg transition"><i class="fas fa-sign-in-alt"></i> دخول</button>
+        
+        <div class="flex justify-between items-center text-xs px-1">
+          <button onclick="forgotPinWhatsApp()" class="text-amber-400 hover:underline">نسيت الرمز السري؟</button>
         </div>
+        
+        <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2 rounded-lg" id="authError"></p>
+      </div>
 
-        <!-- نموذج إنشاء الحساب (نفس الحقول لكن مخفي) -->
-        <div id="registerFormBox" class="auth-form hide-right space-y-4 absolute w-full">
-          <p class="text-center text-xs text-slate-400 mb-2">التسجيل السريع يتم عبر رقم الهاتف في تبويب الدخول.</p>
-          <button onclick="switchAuthTab('login')" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl">العودة لتسجيل الدخول</button>
+      <!-- نموذج إنشاء الحساب -->
+      <div id="registerFormBox" class="auth-form hide-right space-y-4 absolute w-full">
+        <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 text-center space-y-3">
+          <i class="fas fa-mobile-alt text-3xl text-amber-400"></i>
+          <p class="text-xs text-slate-300 leading-relaxed">التسجيل السريع يتم فوراً بإدخال رقم هاتفك ورمز سري تختاره في تبويب تسجيل الدخول.</p>
+          <button onclick="switchAuthTab('login')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">الذهاب لتسجيل الدخول</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -251,6 +257,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
+<!-- ✅ سلة المشتريات كصفحة مستقلة -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full fade-in">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
@@ -287,7 +294,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="sendOrder()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black px-8 py-3 rounded-xl text-sm shadow-xl transition transform hover:scale-105"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
-</div><div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
+</div>
+
+<!-- ✅ الملف الشخصي كصفحة مستقلة -->
+<div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
       <button onclick="showCatalog()" class="absolute top-0 right-0 bg-slate-800 text-slate-300 w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i></button>
@@ -323,6 +333,24 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
+<!-- ✅ شريط التنقل السفلي الثابت (Bottom Navigation Bar) -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-t border-slate-800 py-2.5 px-6 flex justify-around items-center shadow-2xl">
+  <button onclick="showCatalog()" id="navBtnCatalog" class="flex flex-col items-center gap-1 text-amber-400 transition hover:scale-110">
+    <i class="fas fa-store text-xl"></i>
+    <span class="text-[10px] font-bold">الرئيسية</span>
+  </button>
+  <button onclick="showCart()" id="navBtnCart" class="flex flex-col items-center gap-1 text-slate-400 transition hover:scale-110 relative">
+    <i class="fas fa-shopping-basket text-xl"></i>
+    <span class="text-[10px] font-bold">السلة</span>
+    <span id="navCartBadge" class="absolute -top-1 -right-2 bg-amber-500 text-slate-950 font-extrabold px-1.5 py-0.2 rounded-full text-[9px]">0</span>
+  </button>
+  <button onclick="handleNavProfileClick()" id="navBtnProfile" class="flex flex-col items-center gap-1 text-slate-400 transition hover:scale-110">
+    <i class="fas fa-user-circle text-xl"></i>
+    <span id="navProfileText" class="text-[10px] font-bold">حسابي</span>
+  </button>
+</nav>
+
+<!-- Modals & Dialogs -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -426,7 +454,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> حفظ كصورة</button>
     </div>
   </div>
-</div><div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
+</div>
+
+<div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
   <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in">
       <div class="flex items-center justify-between p-4 border-b border-slate-800">
@@ -516,12 +546,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <button onclick="document.getElementById('imageFullscreen').classList.add('hidden'); document.body.style.overflow='';" class="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
 </div>
 
-<div class="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-2">
-  <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-emerald-400 transition hover:scale-110"><i class="fab fa-whatsapp text-3xl"></i></a>
-  <button onclick="showCart()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black w-14 h-14 rounded-full shadow-2xl border-2 border-amber-300 relative transition hover:scale-110"><i class="fas fa-clipboard-list text-2xl"></i><span id="floatBadge" class="absolute -top-1 -right-1 bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold border border-amber-500/40">0</span></button>
-</div>
-
-<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6">
+<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6 mb-16">
 <div class="max-w-4xl mx-auto space-y-3">
   <div class="w-24 h-24 flex items-center justify-center mx-auto"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
   <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
@@ -532,7 +557,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <span class="text-slate-500">جميع الحقوق محفوظة 2026</span>
   </div>
 </div>
-</footer><script>
+</footer>
+
+<script>
 var orderWa = "963982572810";
 var inquiryWa = "963959248901";
 var products = [];
@@ -597,7 +624,7 @@ window.pushBackState = function() { history.pushState({ appState: 'open' }, '', 
 
 window.addEventListener('popstate', function(e) {
   let acted = false;
-  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'authModal', 'confirmOrderModal', 'storeRatingModal', 'imageFullscreen', 'orderDetailsModal', 'addAddressModal', 'invoiceModal', 'welcomeScreen'];
+  const modals = ['productModal', 'reviewsModal', 'addReviewModal', 'editProfileModal', 'confirmOrderModal', 'storeRatingModal', 'imageFullscreen', 'orderDetailsModal', 'addAddressModal', 'invoiceModal', 'welcomeScreen'];
   for (let id of modals) {
     let m = document.getElementById(id);
     if (m && !m.classList.contains('hidden')) {
@@ -609,9 +636,11 @@ window.addEventListener('popstate', function(e) {
     }
   }
   if (!acted) {
+    let authView = document.getElementById('authView');
     let cartView = document.getElementById('cartView');
     let profileView = document.getElementById('profileView');
-    if (cartView && !cartView.classList.contains('hidden')) showCatalog();
+    if (authView && !authView.classList.contains('hidden')) showCatalog();
+    else if (cartView && !cartView.classList.contains('hidden')) showCatalog();
     else if (profileView && !profileView.classList.contains('hidden')) showCatalog();
   }
 });
@@ -660,12 +689,6 @@ function hidePre() {
 }
 setTimeout(hidePre, 2000);
 
-function isInAppBrowser() {
-  var ua = navigator.userAgent || navigator.vendor || window.opera;
-  return /FBAN|FBAV|Instagram|Line|WhatsApp|Twitter|Snapchat/i.test(ua) || (ua.indexOf('wv') > -1);
-}
-window.isInAppBrowser = isInAppBrowser;
-
 window.skipWelcome = function() {
   document.getElementById('welcomeScreen').style.opacity = '0';
   setTimeout(() => document.getElementById('welcomeScreen').classList.add('hidden'), 500);
@@ -673,8 +696,7 @@ window.skipWelcome = function() {
 
 function applyWa() {
   var t = encodeURIComponent("السلام عليكم، أود الاستفسار عن منتجات مركز عاشور");
-  var h = document.getElementById('headerWa'); var f = document.getElementById('floatWa');
-  if (h) h.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
+  var f = document.getElementById('floatWa');
   if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
 }
 
@@ -935,7 +957,6 @@ function buildCard(p) {
     flBox.appendChild(flList);
     footer.appendChild(flBox);
     
-    // ✅ زر الإضافة للسلة مع شريط التحميل
     var addBtn = document.createElement('button');
     addBtn.type = 'button';
     addBtn.className = 'btn-add-cart w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1 transition relative overflow-hidden';
@@ -945,24 +966,17 @@ function buildCard(p) {
     `;
     addBtn.onclick = function(e) { 
       e.stopPropagation(); 
-      
       var sels = selections[p.name];
       if (!sels || Object.keys(sels).length === 0) { showToast('حدد الكمية أولاً', 'error'); return; }
       
-      // تشغيل الحركة
       var pb = addBtn.querySelector('.progress-bar');
       var content = addBtn.querySelector('.btn-content');
       pb.style.width = '100%';
       addBtn.classList.remove('bg-amber-500', 'hover:bg-amber-400');
       addBtn.classList.add('bg-emerald-600');
       
-      setTimeout(() => {
-        content.innerHTML = '<i class="fas fa-check"></i> تمت';
-      }, 800);
-
-      setTimeout(() => {
-        addToCart(p.name, addBtn);
-      }, 1000);
+      setTimeout(() => { content.innerHTML = '<i class="fas fa-check"></i> تمت'; }, 800);
+      setTimeout(() => { addToCart(p.name, addBtn); }, 1000);
     };
     footer.appendChild(addBtn);
   } else {
@@ -1014,7 +1028,6 @@ function addToCart(pName, btnElement) {
   
   showToast('✅ تمت إضافة "' + pName + '" للسلة');
   
-  // إعادة الزر لحالته الأصلية بعد ثانية
   setTimeout(() => {
     if (btnElement && document.body.contains(btnElement)) {
       var pb = btnElement.querySelector('.progress-bar');
@@ -1024,7 +1037,6 @@ function addToCart(pName, btnElement) {
       btnElement.classList.add('bg-amber-500');
       content.innerHTML = '<i class="fas fa-cart-plus"></i> إضافة';
     }
-    // تصفير العدادات في الكارد
     var cards = document.querySelectorAll('[data-name]');
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].getAttribute('data-name') === pName) {
@@ -1040,7 +1052,7 @@ function saveCart() { try { localStorage.setItem('ashour_cart', JSON.stringify(c
 function updateCart() {
   var names = Object.keys(cart);
   document.getElementById('cartBadge').innerText = names.length;
-  document.getElementById('floatBadge').innerText = names.length;
+  document.getElementById('navCartBadge').innerText = names.length;
   document.getElementById('cartTotal').innerText = names.length + ' أصناف';
   var c = document.getElementById('cartList');
   while (c.firstChild) c.removeChild(c.firstChild);
@@ -1136,12 +1148,35 @@ function setQty(pName, flavor, val) {
   saveCart(); updateCart();
 }
 
-function showCart() {
+// Navigation helpers
+function updateBottomNavActive(activeTab) {
+  const cBtn = document.getElementById('navBtnCatalog');
+  const cartBtn = document.getElementById('navBtnCart');
+  const pBtn = document.getElementById('navBtnProfile');
+  
+  cBtn.className = 'flex flex-col items-center gap-1 transition hover:scale-110 ' + (activeTab === 'catalog' ? 'text-amber-400' : 'text-slate-400');
+  cartBtn.className = 'flex flex-col items-center gap-1 transition hover:scale-110 relative ' + (activeTab === 'cart' ? 'text-amber-400' : 'text-slate-400');
+  pBtn.className = 'flex flex-col items-center gap-1 transition hover:scale-110 ' + (activeTab === 'profile' || activeTab === 'auth' ? 'text-amber-400' : 'text-slate-400');
+}
+
+window.showCatalog = function() {
+  document.getElementById('authView').classList.add('hidden');
+  document.getElementById('cartView').classList.add('hidden');
+  document.getElementById('profileView').classList.add('hidden');
+  document.getElementById('profileView').classList.remove('flex');
+  document.getElementById('catalogView').classList.remove('hidden');
+  updateBottomNavActive('catalog');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.showCart = function() {
   window.pushBackState(); updateCart();
+  document.getElementById('authView').classList.add('hidden');
   document.getElementById('catalogView').classList.add('hidden');
   document.getElementById('profileView').classList.add('hidden');
   document.getElementById('profileView').classList.remove('flex');
   document.getElementById('cartView').classList.remove('hidden');
+  updateBottomNavActive('cart');
   
   var addressBox = document.getElementById('savedAddressDropdownBox');
   var addressSelect = document.getElementById('savedAddressSelect');
@@ -1151,23 +1186,73 @@ function showCart() {
   } else {
     addressBox.classList.add('hidden');
   }
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
 
-function fillAddressFromSaved(addrId) {
-  if (!addrId || !window.currentProfileData.savedAddresses) return;
-  var addr = window.currentProfileData.savedAddresses.find(a => a.id === addrId);
-  if (addr) { document.getElementById('custAddr').value = addr.details; saveCust(); }
-}
+window.showProfileView = function() {
+  if (!window.currentUser) { showAuthView(); return; }
+  window.pushBackState();
+  document.getElementById('authView').classList.add('hidden');
+  document.getElementById('catalogView').classList.add('hidden');
+  document.getElementById('cartView').classList.add('hidden');
+  document.getElementById('profileView').classList.remove('hidden');
+  document.getElementById('profileView').classList.add('flex');
+  updateBottomNavActive('profile');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('viewUserName').innerText = window.currentProfileData.name || 'مستخدم';
+  
+  var isPhonePin = window.currentProfileData.authMethod === 'phone_pin' || (window.currentUser.email && window.currentUser.email.endsWith('@ashour.local'));
+  if (isPhonePin && window.currentProfileData.phone) {
+    document.getElementById('viewUserEmail').innerText = window.currentProfileData.phone;
+  } else {
+    document.getElementById('viewUserEmail').innerText = window.currentUser.email || '';
+  }
+  document.getElementById('viewUserAvatar').src = window.currentProfileData.avatarUrl || 'logo.png';
+  switchAppTab('orders');
+};
 
-function showCatalog() {
+window.showAuthView = function() {
+  window.pushBackState();
+  document.getElementById('catalogView').classList.add('hidden');
   document.getElementById('cartView').classList.add('hidden');
   document.getElementById('profileView').classList.add('hidden');
   document.getElementById('profileView').classList.remove('flex');
-  document.getElementById('catalogView').classList.remove('hidden');
+  document.getElementById('authView').classList.remove('hidden');
+  document.getElementById('authError').classList.add('hidden');
+  updateBottomNavActive('auth');
+  
+  const welcome = document.getElementById('welcomeScreen');
+  if(welcome && !welcome.classList.contains('hidden')) welcome.classList.add('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
+
+window.handleNavProfileClick = function() {
+  if (window.currentUser) {
+    window.showProfileView();
+  } else {
+    window.showAuthView();
+  }
+};
+
+window.switchAuthTab = function(tab) {
+  const loginBox = document.getElementById('loginFormBox');
+  const regBox = document.getElementById('registerFormBox');
+  const loginBtn = document.getElementById('tabLoginBtn');
+  const regBtn = document.getElementById('tabRegisterBtn');
+  
+  if (tab === 'register') {
+    loginBox.classList.add('hide-left');
+    regBox.classList.remove('hide-right');
+    loginBtn.classList.remove('auth-tab-active');
+    regBtn.classList.add('auth-tab-active');
+  } else {
+    regBox.classList.add('hide-right');
+    loginBox.classList.remove('hide-left');
+    regBtn.classList.remove('auth-tab-active');
+    loginBtn.classList.add('auth-tab-active');
+  }
+  document.getElementById('authError').classList.add('hidden');
+};
 
 function onSearch() {
   var v = document.getElementById('searchBox').value;
@@ -1328,26 +1413,6 @@ function scrollToProduct(name) {
     }
   }
 }
-
-window.showProfileView = function() {
-  if (!window.currentUser) return;
-  window.pushBackState();
-  document.getElementById('catalogView').classList.add('hidden');
-  document.getElementById('cartView').classList.add('hidden');
-  document.getElementById('profileView').classList.remove('hidden');
-  document.getElementById('profileView').classList.add('flex');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.getElementById('viewUserName').innerText = window.currentProfileData.name || 'مستخدم';
-  
-  var isPhonePin = window.currentProfileData.authMethod === 'phone_pin' || (window.currentUser.email && window.currentUser.email.endsWith('@ashour.local'));
-  if (isPhonePin && window.currentProfileData.phone) {
-    document.getElementById('viewUserEmail').innerText = window.currentProfileData.phone;
-  } else {
-    document.getElementById('viewUserEmail').innerText = window.currentUser.email || '';
-  }
-  document.getElementById('viewUserAvatar').src = window.currentProfileData.avatarUrl || 'logo.png';
-  switchAppTab('orders');
-};
 
 window.switchAppTab = function(tab) {
   var tabs = ['orders', 'favorites', 'addresses'];
@@ -1618,7 +1683,7 @@ window.openEditProfileModal = function() {
 window.closeEditProfileModal = function() { document.getElementById('editProfileModal').classList.add('hidden'); };
 
 window.sendOrder = function() {
-  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
+  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); showAuthView(); return; }
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
   var a = document.getElementById('custAddr') ? document.getElementById('custAddr').value.trim() : '';
   var ph = document.getElementById('custPhone') ? document.getElementById('custPhone').value.trim() : '';
@@ -1966,7 +2031,7 @@ function closeReviews() { document.getElementById('reviewsModal').classList.add(
 
 function openAddReview() {
   if (!curRevProduct) return;
-  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); closeReviews(); openAuthModal(); return; }
+  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); closeReviews(); showAuthView(); return; }
   var already = (curRevProduct.reviews || []).some(function(r) { return r.userId === window.currentUser.uid; });
   if (already) { showToast('لقد قمت بتقييم هذا المنتج مسبقاً', 'error'); return; }
   window.pushBackState();
@@ -2000,7 +2065,7 @@ function submitReview() {
 }
 
 window.openStoreRatingModal = function() {
-  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
+  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); showAuthView(); return; }
   if (window.currentStoreReviews.some(function(r) { return r.userId === window.currentUser.uid; })) { showToast('لقد قمت بتقييم المتجر مسبقاً', 'error'); return; }
   window.pushBackState();
   document.getElementById('storeRatingModal').classList.remove('hidden');
@@ -2030,7 +2095,6 @@ window.submitStoreRating = async function() {
   finally { btn.innerHTML = '<i class="fas fa-check"></i> نشر'; btn.disabled = false; }
 };
 
-// --- التحميل والبدء ---
 function loadData() {
   return new Promise(function(resolve) {
     var s = document.createElement('script');
@@ -2102,7 +2166,6 @@ document.addEventListener('keydown', function(e) {
     try { closeReviews(); } catch(e) {}
     try { closeAddReview(); } catch(e) {}
     try { closeEditProfileModal(); } catch(e) {}
-    try { closeAuthModal(); } catch(e) {}
     try { closeConfirmOrderModal(); } catch(e) {}
     try { closeStoreRatingModal(); } catch(e) {}
     try { closeOrderDetails(); } catch(e) {}
@@ -2110,7 +2173,9 @@ document.addEventListener('keydown', function(e) {
     try { closeInvoiceModal(); } catch(e) {}
   }
 });
-</script><script type="module">
+</script>
+
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, setPersistence, browserLocalPersistence, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -2127,7 +2192,6 @@ document.addEventListener('keydown', function(e) {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // ✅ حفظ الجلسة دائماً
   setPersistence(auth, browserLocalPersistence).catch(err => console.log('Persistence error:', err));
 
   const db = getFirestore(app);
@@ -2138,42 +2202,11 @@ document.addEventListener('keydown', function(e) {
   window.currentUser = null;
   window.currentProfileData = {};
 
-  window.openAuthModal = function() {
-    if (window.pushBackState) window.pushBackState();
-    document.getElementById('authModal').classList.remove('hidden');
-    document.getElementById('authError').classList.add('hidden');
-    
-    const welcome = document.getElementById('welcomeScreen');
-    if(welcome && !welcome.classList.contains('hidden')) welcome.classList.add('hidden');
-  };
-  window.closeAuthModal = function() { document.getElementById('authModal').classList.add('hidden'); };
-
-  // ✅ الحركة السلسة بين نماذج الدخول
-  window.switchAuthTab = function(tab) {
-    const loginBox = document.getElementById('loginFormBox');
-    const regBox = document.getElementById('registerFormBox');
-    const loginBtn = document.getElementById('tabLoginBtn');
-    const regBtn = document.getElementById('tabRegisterBtn');
-    
-    if (tab === 'register') {
-      loginBox.classList.add('hide-left');
-      regBox.classList.remove('hide-right');
-      loginBtn.classList.remove('auth-tab-active');
-      regBtn.classList.add('auth-tab-active');
-    } else {
-      regBox.classList.add('hide-right');
-      loginBox.classList.remove('hide-left');
-      regBtn.classList.remove('auth-tab-active');
-      loginBtn.classList.add('auth-tab-active');
-    }
-    document.getElementById('authError').classList.add('hidden');
-  };
-
   window.loginWithGoogle = async function() {
     try {
       const result = await signInWithPopup(auth, provider);
       window.showToast('تم تسجيل الدخول بنجاح');
-      closeAuthModal();
+      showCatalog();
     } catch (error) {
       console.error("Google Login Error:", error);
       const errEl = document.getElementById('authError');
@@ -2237,9 +2270,7 @@ document.addEventListener('keydown', function(e) {
       if (loginBtn) loginBtn.classList.add('hidden');
       if (userProfileBtn) userProfileBtn.classList.remove('hidden');
       
-      const authModal = document.getElementById('authModal');
-      if (authModal) authModal.classList.add('hidden');
-      
+      showCatalog();
       window.showToast(isNewUser ? 'تم إنشاء حسابك بنجاح ✅' : 'مرحباً بعودتك ✅');
 
     } catch (error) {
@@ -2310,8 +2341,10 @@ document.addEventListener('keydown', function(e) {
         
         const userAvatar = document.getElementById('userAvatar');
         const userNameDisplay = document.getElementById('userNameDisplay');
+        const navProfileText = document.getElementById('navProfileText');
         if (userAvatar) userAvatar.src = window.currentProfileData.avatarUrl || 'logo.png';
         if (userNameDisplay) userNameDisplay.innerText = window.currentProfileData.name || 'حسابي';
+        if (navProfileText) navProfileText.innerText = window.currentProfileData.name ? window.currentProfileData.name.split(' ')[0] : 'حسابي';
         
         var el1 = document.getElementById('custName'); 
         var el2 = document.getElementById('shopName'); 
@@ -2322,8 +2355,8 @@ document.addEventListener('keydown', function(e) {
         if (el3 && window.currentProfileData.address) el3.value = window.currentProfileData.address;
         if (el4 && window.currentProfileData.phone) el4.value = window.currentProfileData.phone;
         
-        const authModal = document.getElementById('authModal');
-        if (authModal && !authModal.classList.contains('hidden')) authModal.classList.add('hidden');
+        const authView = document.getElementById('authView');
+        if (authView && !authView.classList.contains('hidden')) authView.classList.add('hidden');
         const welcome = document.getElementById('welcomeScreen');
         if (welcome && !welcome.classList.contains('hidden')) welcome.classList.add('hidden');
         
@@ -2334,6 +2367,8 @@ document.addEventListener('keydown', function(e) {
         const userProfileBtn = document.getElementById('userProfileBtn');
         if (loginBtn) loginBtn.classList.remove('hidden');
         if (userProfileBtn) userProfileBtn.classList.add('hidden');
+        const navProfileText = document.getElementById('navProfileText');
+        if (navProfileText) navProfileText.innerText = 'حسابي';
       }
     } catch (error) { console.error("Auth State Error:", error); }
   });
