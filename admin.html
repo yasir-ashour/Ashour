@@ -718,11 +718,7 @@ let currentReviewStars = 0;
 let currentProductName = null;
 let currentInvoiceOrder = null;
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw-admin.js')
-    .then(() => console.log('Admin SW registered'))
-    .catch(err => console.log('Admin SW registration failed', err));
-}
+// ✅ تم إزالة كود serviceWorker.register('sw-admin.js') بناء على طلبك
 
 function escapeHtml(s) { 
   return String(s == null ? '' : s)
@@ -820,7 +816,6 @@ function logoutAdmin() {
   if (typeof window.adminLogout === 'function') { window.adminLogout(); } else { sessionStorage.removeItem('ashour_admin_ok'); location.reload(); }
 }
 
-// ✅ استبدال alert بـ Toast + تأخير
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
   _idleTimer = setTimeout(() => {
@@ -861,7 +856,6 @@ function loadInitialData() {
   });
 }
 
-// ✅ دالة جديدة: تحديث من السيرفر
 window.refreshFromServer = async function() {
   if (!confirm('سيتم مسح البيانات المحلية وإعادة تحميل آخر إصدار من السيرفر.\nأي تعديلات غير منشورة ستُفقد.\n\nمتابعة؟')) return;
   localStorage.removeItem(STORAGE_KEY);
@@ -1056,12 +1050,15 @@ function openProductModal(pid = null) {
   }
   renderFlavors(); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
 }
+window.openProductModal = openProductModal;
 
 function closeProductModal() { 
   document.getElementById('productModal').classList.add('hidden'); 
   document.body.style.overflow = ''; 
   currentProductName = null;
 }
+window.closeProductModal = closeProductModal;
+
 function previewImage() {
   const url = document.getElementById('fImage').value.trim(); const preview = document.getElementById('fImagePreview'); const placeholder = document.getElementById('fImagePlaceholder');
   if (url) { currentImageData = url; preview.src = url; preview.classList.remove('hidden'); placeholder.classList.add('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden'); }
@@ -1501,8 +1498,12 @@ window.stopScanner = function() {
 
 // Invoice
 window.openInvoiceModal = function(orderId) {
-  const order = allOrdersCache.find(o => o.id === orderId);
-  if (!order) return;
+  // ✅ إصلاح: استخدام window.allOrdersCache التي تُعرّف في السكربت الثاني
+  const order = window.allOrdersCache.find(o => o.id === orderId);
+  if (!order) {
+    showToast('لم يتم العثور على الطلب', 'error');
+    return;
+  }
   currentInvoiceOrder = order;
   
   document.getElementById('invCustName').innerText = order.userName || '—';
@@ -1530,13 +1531,13 @@ window.openInvoiceModal = function(orderId) {
         </td>
         <td class="py-2 text-center font-black text-slate-700">${qty}</td>
         <td class="py-2 text-left">
-          <input type="number" class="invoice-price-input w-24 text-left bg-transparent border-b border-dashed border-slate-300 focus:outline-none focus:border-indigo-500 font-black text-slate-800 placeholder-slate-300" placeholder="السعر" data-qty="${qty}" oninput="calculateInvoiceTotal()">
+          <input type="number" class="invoice-price-input w-24 text-left bg-transparent border-b border-dashed border-slate-300 focus:outline-none focus:border-indigo-500 font-black text-slate-800 placeholder-slate-300" placeholder="السعر" data-qty="${qty}" oninput="window.calculateInvoiceTotal()">
         </td>
       `;
       tbody.appendChild(tr);
     }
   }
-  calculateInvoiceTotal();
+  window.calculateInvoiceTotal();
   document.getElementById('invoiceModal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 };
@@ -1668,7 +1669,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ✅ معالجة أخطاء محسنة لتسجيل الدخول
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
@@ -1798,7 +1798,8 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  let allOrdersCache = [];
+  // ✅ إصلاح: تعريف المتغير على window ليكون متاحاً للسكربت الأول
+  window.allOrdersCache = [];
   let knownOrderIds = new Set();
   let isFirstLoad = true;
   let ordersUnsubscribe = null;
@@ -1826,7 +1827,7 @@ document.addEventListener('keydown', (e) => {
     const search = (document.getElementById('ordersSearch')?.value || '').trim().toLowerCase();
     const statusFilter = document.getElementById('ordersFilterStatus')?.value || '';
     const dateFilter = document.getElementById('ordersFilterDate')?.value || '';
-    let filtered = allOrdersCache.slice();
+    let filtered = window.allOrdersCache.slice();
     
     if (statusFilter) {
       filtered = (statusFilter === 'جديد') ? filtered.filter(o => o.status === 'جديد' || !o.status) : filtered.filter(o => o.status === statusFilter);
@@ -1865,13 +1866,13 @@ document.addEventListener('keydown', (e) => {
         knownOrderIds.add(change.doc.id);
       });
       isFirstLoad = false;
-      allOrdersCache = [];
-      snapshot.forEach(d => allOrdersCache.push({ id: d.id, ...d.data() }));
-      window.updateOrderStats(allOrdersCache);
+      window.allOrdersCache = [];
+      snapshot.forEach(d => window.allOrdersCache.push({ id: d.id, ...d.data() }));
+      window.updateOrderStats(window.allOrdersCache);
       
       const badge = document.getElementById('newOrdersBadge');
       if (badge) {
-        const n = allOrdersCache.filter(o => o.status === 'جديد' || !o.status).length;
+        const n = window.allOrdersCache.filter(o => o.status === 'جديد' || !o.status).length;
         if (n > 0) { badge.innerText = n; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
       }
       window.filterOrdersRender();
@@ -1903,10 +1904,13 @@ document.addEventListener('keydown', (e) => {
       if (order.status === 'جاري التوصيل') statusColor = 'bg-sky-500 text-white';
       if (order.status === 'تم التسليم') statusColor = 'bg-emerald-600 text-white';
       
+      // ✅ عرض كود الطلب 4 أرقام إذا وجد
+      const displayCode = order.orderCode ? `#${order.orderCode}` : `#${order.id.slice(-4).toUpperCase()}`;
+      
       return `
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3">
           <div class="flex justify-between items-start border-b border-slate-800 pb-2">
-            <div><p class="text-white font-black text-lg">طلب #${safeText(order.id.slice(-4).toUpperCase())}</p><p class="text-slate-400 text-xs">${safeText(dateStr)}</p></div>
+            <div><p class="text-white font-black text-lg">طلب ${displayCode}</p><p class="text-slate-400 text-xs">${safeText(dateStr)}</p></div>
             <span class="${statusColor} text-xs font-bold px-3 py-1 rounded-full">${safeText(order.status || 'جديد')}</span>
           </div>
           <div class="grid grid-cols-2 gap-2 text-sm">
