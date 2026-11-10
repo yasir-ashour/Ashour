@@ -88,12 +88,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
   </div>
-  
   <div class="glass-card max-w-sm w-full rounded-[2.5rem] p-8 flex flex-col items-center relative z-10 fade-in text-white">
     <div class="w-32 h-32 sm:w-40 sm:h-40 mb-4 floating"><img src="logo.png" class="w-full h-full object-contain drop-shadow-2xl" alt="Logo"></div>
     <h1 class="text-3xl sm:text-4xl font-black mb-2 tracking-tight">مركز <span class="gold-text">عاشور</span></h1>
     <p class="text-slate-300 text-sm mb-8 leading-relaxed">أهلاً بك في متجرك المفضل. سجل دخولك الآن لتجربة تسوق ناعمة وأسرع.</p>
-    
     <div class="w-full space-y-3">
       <button onclick="showAuthView()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/40 transition transform hover:scale-105 flex items-center justify-center gap-2">
         <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
@@ -126,7 +124,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </div>
 </div>
 
-<header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
+<header class="sticky top-0 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-b border-[var(--border-color)] shadow-lg">
   <div class="max-w-7xl mx-auto px-3 py-2.5 flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="showCatalog()">
       <div class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
@@ -137,8 +135,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
     </div>
     
     <div class="flex items-center gap-2 flex-shrink-0">
-      <!-- زر الوضع الفاتح والداكن المتحرك -->
-      <button onclick="toggleDarkMode()" id="darkModeBtn" class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center shadow-lg transition hover:scale-110" title="تبديل الوضع الليلي / الفاتح">
+      <button onclick="toggleDarkMode()" id="darkModeBtn" class="w-10 h-10 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] text-amber-400 flex items-center justify-center shadow-lg transition hover:scale-110" title="تبديل الوضع الليلي / الفاتح">
         <i id="darkModeIcon" class="fas fa-moon text-lg"></i>
       </button>
 
@@ -148,12 +145,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <button id="loginBtn" onclick="showAuthView()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
+      <button id="loginBtn" onclick="showAuthView()" class="bg-[var(--input-bg)] border border-amber-500 text-amber-400 font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
         <i class="fas fa-user-circle text-lg"></i>
         <span class="hidden sm:inline">دخول</span>
       </button>
       
-      <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2 transition hover:bg-slate-700 relative">
+      <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-[var(--input-bg)] border-2 border-emerald-500 font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2 transition hover:opacity-90 relative">
         <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover">
         <div class="flex flex-col items-start px-1">
           <span id="userNameDisplay" class="max-w-[70px] truncate leading-tight text-xs">حسابي</span>
@@ -164,27 +161,27 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </div>
 </header>
 
-<!-- نافذة تعليمات كيف تطلب -->
+<!-- نافذة دليل كيف تطلب -->
 <div id="guideModal" class="hidden fixed inset-0 z-[160] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in text-white p-6">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+  <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in p-6">
+    <div class="flex justify-between items-center border-b border-[var(--border-color)] pb-3 mb-4">
       <h3 class="text-xl font-black gold-text"><i class="fas fa-book-open"></i> دليل الاستخدام وكيفية الطلب</h3>
-      <button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
+      <button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
     </div>
     <div class="space-y-4 text-sm text-slate-300 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
-      <div class="flex gap-3 items-start bg-slate-950 p-3 rounded-xl border border-slate-800">
+      <div class="flex gap-3 items-start bg-[var(--input-bg)] p-3 rounded-xl border border-[var(--border-color)]">
         <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">1</div>
-        <div><h4 class="font-bold text-white text-base mb-1">تصفح المنتجات</h4><p class="text-xs">اختر القسم المناسب أو استخدم شحنة البحث السريع للعثور على الصنف المطلوب.</p></div>
+        <div><h4 class="font-bold text-white text-base mb-1">تصفح المنتجات</h4><p class="text-xs">اختر القسم المناسب أو استخدم شريط البحث السريع للعثور على الصنف المطلوب.</p></div>
       </div>
-      <div class="flex gap-3 items-start bg-slate-950 p-3 rounded-xl border border-slate-800">
+      <div class="flex gap-3 items-start bg-[var(--input-bg)] p-3 rounded-xl border border-[var(--border-color)]">
         <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">2</div>
-        <div><h4 class="font-bold text-white text-base mb-1">تحديد الكميات</h4><p class="text-xs">اضغط على زر (+) أو (-) لتحديد العدد المطلوب، ويمكنك الضغط المطول على الزر لزيادة أو نقص العدد بسرعة متسارعة مع سماع صوت النقرات.</p></div>
+        <div><h4 class="font-bold text-white text-base mb-1">تحديد العدد</h4><p class="text-xs">اضغط على زر (+) أو (-) لتحديد الكمية، ويمكنك الضغط المطول على الزر لزيادة أو نقص العدد بسرعة متسارعة مع سماع صوت النقرات.</p></div>
       </div>
-      <div class="flex gap-3 items-start bg-slate-950 p-3 rounded-xl border border-slate-800">
+      <div class="flex gap-3 items-start bg-[var(--input-bg)] p-3 rounded-xl border border-[var(--border-color)]">
         <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">3</div>
         <div><h4 class="font-bold text-white text-base mb-1">إتمام السلة وإرسال الطلب</h4><p class="text-xs">انتقل إلى سلة المشتريات، املأ معلومات المحل والعنوان، ثم اضغط "إتمام الطلب" ليتم إرساله فوراً عبر واتساب مع حفظه في سجل طلباتك.</p></div>
       </div>
-      <div class="flex gap-3 items-start bg-slate-950 p-3 rounded-xl border border-slate-800">
+      <div class="flex gap-3 items-start bg-[var(--input-bg)] p-3 rounded-xl border border-[var(--border-color)]">
         <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">4</div>
         <div><h4 class="font-bold text-white text-base mb-1">الفواتير والتقييمات</h4><p class="text-xs">يمكنك استعراض الفواتير السابقة وحفظها كصور بضغطة زر، وتقييم المتجر والمنتجات بكل سهولة.</p></div>
       </div>
@@ -193,10 +190,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </div>
 </div>
 
-<!-- صفحة تسجيل الدخول -->
-<div id="authView" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 overflow-y-auto fade-in bg-slate-950/90 backdrop-blur-md">
-  <div class="bg-slate-900 border border-slate-700/80 rounded-[2.5rem] max-w-md w-full shadow-2xl overflow-hidden relative my-auto">
-    <div class="relative w-full h-44 bg-gradient-to-br from-amber-600/30 via-slate-900 to-emerald-900/30 overflow-hidden flex flex-col justify-end p-5 border-b border-slate-800">
+<!-- شاشة تسجيل الدخول القابلة للتمرير للشاشات الصغيرة -->
+<div id="authView" class="hidden fixed inset-0 z-[100] flex flex-col items-start justify-center py-10 px-4 overflow-y-auto fade-in bg-slate-950/90 backdrop-blur-md">
+  <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-[2.5rem] max-w-md w-full shadow-2xl overflow-hidden relative mx-auto my-auto">
+    <div class="relative w-full h-44 bg-gradient-to-br from-amber-600/30 via-slate-900 to-emerald-900/30 overflow-hidden flex flex-col justify-end p-5 border-b border-[var(--border-color)]">
       <button onclick="showCatalog()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-slate-950/70 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center z-20 transition"><i class="fas fa-arrow-right"></i></button>
       <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
       <div class="flex items-end justify-between relative z-10 text-white">
@@ -209,7 +206,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
       </div>
     </div>
     <div class="p-6 sm:p-8">
-      <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative border border-slate-800">
+      <div class="flex bg-[var(--input-bg)] p-1 rounded-2xl mb-6 relative border border-[var(--border-color)]">
         <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-amber-500/20 text-amber-400 border border-amber-500/30">تسجيل الدخول</button>
         <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
       </div>
@@ -218,7 +215,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
           <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-2xl text-sm flex items-center justify-center gap-3 transition shadow-lg transform hover:scale-[1.02]">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
           </button>
-          <div class="flex items-center"><div class="flex-grow border-t border-slate-800"></div><span class="px-3 text-slate-500 text-xs">أو برقم الهاتف والرمز</span><div class="flex-grow border-t border-slate-800"></div></div>
+          <div class="flex items-center"><div class="flex-grow border-t border-[var(--border-color)]"></div><span class="px-3 text-slate-500 text-xs">أو برقم الهاتف والرمز</span><div class="flex-grow border-t border-[var(--border-color)]"></div></div>
           <div class="floating-input-group"><input type="tel" id="pinPhone" placeholder=" " maxlength="15" dir="ltr"><label for="pinPhone">رقم الهاتف (09xxxxxxxx)</label></div>
           <div class="floating-input-group"><input type="password" id="pinCode" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()"><label for="pinCode">رمز سري من 6 أرقام</label></div>
           <div class="flex items-center justify-between text-xs px-1 text-slate-400">
@@ -231,15 +228,15 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
           <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20" id="authError"></p>
         </div>
         <div id="registerFormBox" class="space-y-4 absolute w-full hidden transition-all duration-500">
-          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 text-center space-y-3">
+          <div class="bg-[var(--input-bg)] p-5 rounded-2xl border border-[var(--border-color)] text-center space-y-3">
             <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl"><i class="fas fa-user-plus"></i></div>
-            <h4 class="text-white font-bold text-sm">إنشاء حساب جديد</h4>
+            <h4 class="font-bold text-sm">إنشاء حساب جديد</h4>
             <p class="text-xs text-slate-400 leading-relaxed">أدخل رقم هاتفك ورمزاً سرياً مخصصاً من تبويب تسجيل الدخول لإنشاء حسابك وسجل طلباتك فوراً.</p>
             <button onclick="switchAuthTab('login')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">العودة لتسجيل الدخول</button>
           </div>
         </div>
       </div>
-      <div class="text-center mt-12 pt-4 border-t border-slate-800/80">
+      <div class="text-center mt-12 pt-4 border-t border-[var(--border-color)]">
         <p class="text-xs text-slate-500">ليس لديك حساب؟ <button onclick="switchAuthTab('register')" class="text-amber-400 font-bold hover:underline">أنشئ حساباً الآن</button></p>
       </div>
     </div>
@@ -247,24 +244,24 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 </div>
 
 <div id="catalogView" class="w-full flex flex-col flex-grow">
-  <section class="py-6 px-4 text-center bg-gradient-to-b from-slate-900 to-[var(--bg-main)] border-b border-slate-800/60">
+  <section class="py-6 px-4 text-center bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-main)] border-b border-[var(--border-color)]">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-2xl sm:text-4xl font-extrabold mb-2">أهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
       <div class="max-w-md mx-auto flex flex-col gap-3 mt-6">
         <div class="relative">
-          <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 shadow-inner transition">
+          <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-[var(--input-bg)] placeholder-slate-400 pr-10 pl-12 py-3.5 rounded-xl border border-[var(--border-color)] focus:outline-none focus:border-amber-500 shadow-inner transition">
           <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
           <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-7 h-7 rounded-full items-center justify-center hover:bg-rose-500/50 transition"><i class="fas fa-times text-xs"></i></button>
         </div>
         <div class="flex items-center justify-between px-2 mt-1">
-          <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
+          <div class="flex items-center gap-2 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg py-1.5 px-4 text-xs">
             <i class="fas fa-boxes text-amber-400"></i>
-            <span class="text-slate-300">المنتجات:</span>
+            <span class="text-slate-400">المنتجات:</span>
             <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-md">0</span>
           </div>
           <div class="flex gap-2">
             <button onclick="openStoreRatingModal()" class="bg-amber-500/20 text-amber-400 border border-amber-500/40 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-amber-500 hover:text-slate-950 transition"><i class="fas fa-star"></i> قيم المتجر</button>
-            <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-700 transition"><i class="fas fa-rotate-left"></i> الكل</button>
+            <button onclick="clearSearch()" class="bg-[var(--input-bg)] text-amber-400 border border-[var(--border-color)] px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-80 transition"><i class="fas fa-rotate-left"></i> الكل</button>
           </div>
         </div>
       </div>
@@ -272,11 +269,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </section>
 
   <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full fade-in">
-    <div class="bg-gradient-to-br from-rose-950/40 to-slate-900 border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
+    <div class="bg-gradient-to-br from-rose-950/40 to-[var(--bg-card)] border-2 border-rose-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center flex-shrink-0"><i class="fas fa-fire text-rose-400 text-xl"></i></div>
-          <div><h3 class="text-xl font-black text-white flex items-center gap-2"><i class="fas fa-tags text-rose-400"></i> عروض وخصومات</h3></div>
+          <div><h3 class="text-xl font-black flex items-center gap-2"><i class="fas fa-tags text-rose-400"></i> عروض وخصومات</h3></div>
         </div>
         <span id="offersCount" class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
@@ -285,11 +282,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </section>
 
   <section id="newBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full fade-in">
-    <div class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border-2 border-emerald-500/40 rounded-3xl p-4 shadow-2xl">
+    <div class="bg-gradient-to-br from-emerald-950/40 to-[var(--bg-card)] border-2 border-emerald-500/40 rounded-3xl p-4 shadow-2xl">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0"><i class="fas fa-star-of-life text-emerald-400 text-xl"></i></div>
-          <div><h3 class="text-xl font-black text-white flex items-center gap-2"><i class="fas fa-sparkles text-emerald-400"></i> منتجات جديدة</h3></div>
+          <div><h3 class="text-xl font-black flex items-center gap-2"><i class="fas fa-sparkles text-emerald-400"></i> منتجات جديدة</h3></div>
         </div>
         <span id="newCount" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs px-3 py-1.5 rounded-full font-bold">0</span>
       </div>
@@ -312,18 +309,17 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 
 <!-- صفحة السلة -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full fade-in">
-  <div class="bg-[var(--bg-card)] border border-slate-700/85 rounded-3xl p-4 sm:p-8 shadow-2xl">
-    <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
+  <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-4 sm:p-8 shadow-2xl">
+    <div class="flex items-center justify-between pb-5 mb-5 border-b border-[var(--border-color)] flex-wrap gap-3">
       <div><h2 class="text-2xl font-black gold-text">سلة المشتريات</h2></div>
-      <button onclick="showCatalog()" class="bg-slate-800 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-sm hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i> متابعة التسوق</button>
+      <button onclick="showCatalog()" class="bg-[var(--input-bg)] border border-[var(--border-color)] font-bold px-4 py-2.5 rounded-xl text-sm hover:opacity-80 transition"><i class="fas fa-arrow-right"></i> متابعة التسوق</button>
     </div>
 
-    <div class="bg-[var(--input-bg)] border border-slate-800 rounded-2xl p-4 mb-5 space-y-3">
-      <h3 class="text-base font-black border-b border-slate-800 pb-2 flex justify-between items-center"><span><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</span></h3>
-      
-      <div id="savedAddressDropdownBox" class="hidden bg-slate-900 border border-emerald-500/30 rounded-xl p-3 mb-2">
+    <div class="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-2xl p-4 mb-5 space-y-3">
+      <h3 class="text-base font-black border-b border-[var(--border-color)] pb-2 flex justify-between items-center"><span><i class="fas fa-user-edit text-amber-400"></i> معلومات المستلم</span></h3>
+      <div id="savedAddressDropdownBox" class="hidden bg-[var(--bg-card)] border border-emerald-500/30 rounded-xl p-3 mb-2">
         <label class="block text-emerald-400 font-bold mb-1.5 text-xs"><i class="fas fa-map-marker-alt"></i> استخدام عنوان محفوظ</label>
-        <select id="savedAddressSelect" onchange="fillAddressFromSaved(this.value)" class="w-full bg-slate-950 text-white p-2.5 rounded-lg border border-slate-700 text-sm focus:outline-none focus:border-emerald-500">
+        <select id="savedAddressSelect" onchange="fillAddressFromSaved(this.value)" class="w-full bg-[var(--input-bg)] p-2.5 rounded-lg border border-[var(--border-color)] text-sm focus:outline-none focus:border-emerald-500">
           <option value="">-- اختر عنواناً --</option>
         </select>
       </div>
@@ -338,12 +334,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
     </div>
 
     <div class="mb-5">
-      <h3 class="text-base font-black mb-3 flex items-center justify-between border-b border-slate-800 pb-2"><span>المنتجات المحددة</span><span id="cartTotal" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span></h3>
+      <h3 class="text-base font-black mb-3 flex items-center justify-between border-b border-[var(--border-color)] pb-2"><span>المنتجات المحددة</span><span id="cartTotal" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">0 أصناف</span></h3>
       <div id="cartList" class="space-y-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar"></div>
     </div>
 
-    <div class="flex justify-between items-center pt-4 border-t border-slate-800 flex-wrap gap-3">
-      <button onclick="showCatalog()" class="bg-slate-800 text-slate-300 font-bold px-5 py-3 rounded-xl text-sm hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i> العودة</button>
+    <div class="flex justify-between items-center pt-4 border-t border-[var(--border-color)] flex-wrap gap-3">
+      <button onclick="showCatalog()" class="bg-[var(--input-bg)] border border-[var(--border-color)] font-bold px-5 py-3 rounded-xl text-sm hover:opacity-80 transition"><i class="fas fa-arrow-right"></i> العودة</button>
       <button onclick="sendOrder()" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black px-8 py-3 rounded-xl text-sm shadow-xl transition transform hover:scale-105"><i class="fab fa-whatsapp text-xl"></i> إتمام الطلب</button>
     </div>
   </div>
@@ -351,9 +347,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 
 <!-- صفحة الملف الشخصي -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
-  <div class="bg-gradient-to-b from-[#1e293b] to-[var(--bg-main)] border-b border-slate-800 pt-8 pb-6 px-4 text-white">
+  <div class="bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-main)] border-b border-[var(--border-color)] pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
-      <button onclick="showCatalog()" class="absolute top-0 right-0 bg-slate-800 text-slate-300 w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-700 transition"><i class="fas fa-arrow-right"></i></button>
+      <button onclick="showCatalog()" class="absolute top-0 right-0 bg-[var(--input-bg)] border border-[var(--border-color)] w-10 h-10 rounded-full flex items-center justify-center hover:opacity-85 transition"><i class="fas fa-arrow-right"></i></button>
       <div class="relative w-24 h-24 rounded-full border-4 border-amber-500 overflow-hidden bg-slate-950 mb-3 group cursor-pointer shadow-2xl" onclick="openEditProfileModal()">
         <img id="viewUserAvatar" src="logo.png" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center transition"><i class="fas fa-camera text-white text-2xl"></i></div>
@@ -361,13 +357,13 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
       <h2 id="viewUserName" class="text-2xl font-black mb-1">اسم المستخدم</h2>
       <p id="viewUserEmail" class="text-sm text-slate-400 mb-4" dir="ltr">email@example.com</p>
       <div class="flex gap-2">
-        <button onclick="openEditProfileModal()" class="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2"><i class="fas fa-edit text-amber-400"></i> تعديل البيانات</button>
+        <button onclick="openEditProfileModal()" class="bg-[var(--input-bg)] border border-[var(--border-color)] px-4 py-2 rounded-xl text-xs font-bold hover:opacity-80 transition flex items-center gap-2"><i class="fas fa-edit text-amber-400"></i> تعديل البيانات</button>
         <button onclick="logoutUser()" class="bg-rose-950/60 border border-rose-500/30 text-rose-400 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-900 transition flex items-center gap-2"><i class="fas fa-sign-out-alt text-sm"></i> خروج</button>
       </div>
     </div>
   </div>
   <div class="max-w-4xl mx-auto w-full px-3 mt-6">
-    <div class="flex border-b border-slate-800 mb-6">
+    <div class="flex border-b border-[var(--border-color)] mb-6">
       <button onclick="switchAppTab('orders')" id="btnTabOrders" class="flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 flex items-center justify-center gap-2"><i class="fas fa-shopping-bag"></i> طلباتي</button>
       <button onclick="switchAppTab('favorites')" id="btnTabFavorites" class="flex-1 py-3 text-sm font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-2"><i class="fas fa-heart"></i> المفضلة</button>
       <button onclick="switchAppTab('addresses')" id="btnTabAddresses" class="flex-1 py-3 text-sm font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-2"><i class="fas fa-map-marker-alt"></i> العناوين</button>
@@ -385,8 +381,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   </div>
 </div>
 
-<!-- شريط التنقل السفلي -->
-<nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-t border-slate-800 py-2.5 px-6 flex justify-around items-center shadow-2xl">
+<!-- شريط التنقل السفلي المتكيف مع الوضع الليلي والفاتح -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-card)]/95 backdrop-blur-md border-t border-[var(--border-color)] py-2.5 px-6 flex justify-around items-center shadow-2xl">
   <button onclick="showCatalog()" id="navBtnCatalog" class="flex flex-col items-center gap-1 text-amber-400 transition hover:scale-110">
     <i class="fas fa-store text-xl"></i>
     <span class="text-[10px] font-bold">الرئيسية</span>
@@ -404,12 +400,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 
 <!-- Modals -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
+    <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-user-edit text-amber-400"></i> تعديل البيانات</h3>
-      <button onclick="closeEditProfileModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
+      <button onclick="closeEditProfileModal()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
     </div>
-    <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar text-white">
+    <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
       <div class="flex flex-col items-center justify-center mb-4">
         <div class="relative w-24 h-24 rounded-full border-4 border-amber-500/50 overflow-hidden bg-slate-950 mb-2 group cursor-pointer" onclick="document.getElementById('profileAvatarFile').click()">
           <img id="profileAvatarPreview" src="logo.png" class="w-full h-full object-cover">
@@ -423,11 +419,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
       <div class="floating-input-group"><input type="tel" id="profilePhone" placeholder=" " dir="ltr"><label for="profilePhone">رقم الهاتف / واتساب</label></div>
       <div class="floating-input-group"><input type="text" id="profileShop" placeholder=" "><label for="profileShop">اسم المحل</label></div>
       <div class="floating-input-group"><input type="text" id="profileAddress" placeholder=" "><label for="profileAddress">عنوان المحل</label></div>
-      <div class="border-t border-slate-800 pt-4 mt-4 space-y-3">
+      <div class="border-t border-[var(--border-color)] pt-4 mt-4 space-y-3">
         <h4 class="text-amber-400 font-bold text-sm mb-3"><i class="fas fa-key"></i> تغيير الرمز السري</h4>
         <div class="floating-input-group"><input type="password" id="newPin" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr"><label for="newPin">الرمز الجديد (6 أرقام)</label></div>
         <div class="floating-input-group"><input type="password" id="newPinConfirm" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr"><label for="newPinConfirm">تأكيد الرمز</label></div>
-        <button type="button" onclick="changePin()" id="changePinBtn" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition"><i class="fas fa-key"></i> تغيير الرمز السري</button>
+        <button type="button" onclick="changePin()" id="changePinBtn" class="w-full bg-[var(--input-bg)] border border-[var(--border-color)] hover:opacity-85 text-amber-400 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition"><i class="fas fa-key"></i> تغيير الرمز السري</button>
       </div>
       <div class="pt-2"><button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition shadow-lg"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
     </div>
@@ -435,10 +431,10 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 </div>
 
 <div id="addAddressModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in text-white">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="bg-[var(--bg-card)] border border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
+    <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
       <h3 class="text-lg font-black text-emerald-400"><i class="fas fa-map-marker-alt"></i> إضافة عنوان جديد</h3>
-      <button onclick="closeAddAddressModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
+      <button onclick="closeAddAddressModal()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 space-y-4">
       <div class="floating-input-group"><input type="text" id="newAddrLabel" placeholder=" "><label for="newAddrLabel">اسم العنوان (مثال: المحل الرئيسي)</label></div>
@@ -449,11 +445,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 </div>
 
 <div id="orderDetailsModal" class="hidden fixed inset-0 z-[110] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex items-start justify-center">
-  <div class="max-w-lg w-full my-8 text-white">
-    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl shadow-2xl overflow-hidden fade-in">
-      <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="max-w-lg w-full my-8">
+    <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl shadow-2xl overflow-hidden fade-in">
+      <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
         <h3 class="text-lg font-black gold-text">تفاصيل الطلب</h3>
-        <button onclick="closeOrderDetails()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
+        <button onclick="closeOrderDetails()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
       </div>
       <div id="orderDetailsContent" class="p-5"></div>
     </div>
@@ -489,11 +485,11 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 </div>
 
 <div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
-  <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center text-white">
-    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in">
-      <div class="flex items-center justify-between p-4 border-b border-slate-800">
+  <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
+    <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in">
+      <div class="flex items-center justify-between p-4 border-b border-[var(--border-color)]">
         <h3 class="text-lg font-black gold-text"><i class="fas fa-box-open text-amber-400"></i> تفاصيل المنتج</h3>
-        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
+        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
       </div>
       <div id="productContent" class="p-4 sm:p-6"></div>
     </div>
@@ -501,71 +497,70 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
 </div>
 
 <div id="confirmOrderModal" class="hidden fixed inset-0 z-[150] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in text-white">
+  <div class="bg-gradient-to-br from-[var(--bg-card)] via-[var(--bg-card)] to-[var(--input-bg)] border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
     <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
     <div class="p-6 text-center">
       <div class="w-20 h-20 mx-auto rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mb-4 glow"><i class="fas fa-shopping-basket text-4xl text-amber-400"></i></div>
       <h3 class="text-2xl font-black mb-2">تأكيد الطلب</h3>
       <p class="text-slate-400 text-sm mb-6">هل أنت متأكد من إتمام الطلب؟ سيتم فتح الواتساب لإرسال التفاصيل.</p>
     </div>
-    <div class="p-5 border-t border-slate-800 bg-slate-950/50 flex gap-3">
-      <button onclick="closeConfirmOrderModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3.5 rounded-xl transition"><i class="fas fa-times"></i> إلغاء</button>
+    <div class="p-5 border-t border-[var(--border-color)] bg-[var(--input-bg)]/50 flex gap-3">
+      <button onclick="closeConfirmOrderModal()" class="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] font-bold py-3.5 rounded-xl transition">إلغاء</button>
       <button onclick="confirmSendOrder()" id="confirmOrderBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2"><i class="fab fa-whatsapp"></i> نعم، اطلب الآن</button>
     </div>
   </div>
 </div>
 
 <div id="reviewsModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in text-white">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in">
+    <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
       <h3 class="text-lg font-black gold-text"><i class="fas fa-star text-amber-400"></i> التقييمات</h3>
-      <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
+      <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 max-h-96 overflow-y-auto custom-scrollbar"><p id="revTitle" class="font-black text-center mb-4"></p><div id="revList" class="space-y-3"></div></div>
-    <div class="p-5 border-t border-slate-800"><button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition shadow-lg"><i class="fas fa-pen"></i> أضف تقييمك</button></div>
+    <div class="p-5 border-t border-[var(--border-color)]"><button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition shadow-lg"><i class="fas fa-pen"></i> أضف تقييمك</button></div>
   </div>
 </div>
 
 <div id="addReviewModal" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in text-white">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in">
+    <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
       <h3 class="text-lg font-black gold-text">أضف تقييمك</h3>
-      <button onclick="closeAddReview()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fas fa-times"></i></button>
+      <button onclick="closeAddReview()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 space-y-4">
-      <p id="addRevTitle" class="font-bold text-center text-sm bg-slate-950/60 rounded-xl p-3"></p>
+      <p id="addRevTitle" class="font-bold text-center text-sm bg-[var(--input-bg)] rounded-xl p-3 border border-[var(--border-color)]"></p>
       <div class="flex gap-2 justify-center">
-        <button onclick="setStar(1)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="1"><i class="fas fa-star"></i></button>
-        <button onclick="setStar(2)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="2"><i class="fas fa-star"></i></button>
-        <button onclick="setStar(3)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="3"><i class="fas fa-star"></i></button>
-        <button onclick="setStar(4)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="4"><i class="fas fa-star"></i></button>
-        <button onclick="setStar(5)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="5"><i class="fas fa-star"></i></button>
+        <button onclick="setStar(1)" class="starBtn w-12 h-12 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] text-slate-600 text-2xl transition" data-s="1"><i class="fas fa-star"></i></button>
+        <button onclick="setStar(2)" class="starBtn w-12 h-12 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] text-slate-600 text-2xl transition" data-s="2"><i class="fas fa-star"></i></button>
+        <button onclick="setStar(3)" class="starBtn w-12 h-12 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] text-slate-600 text-2xl transition" data-s="3"><i class="fas fa-star"></i></button>
+        <button onclick="setStar(4)" class="starBtn w-12 h-12 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] text-slate-600 text-2xl transition" data-s="4"><i class="fas fa-star"></i></button>
+        <button onclick="setStar(5)" class="starBtn w-12 h-12 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] text-slate-600 text-2xl transition" data-s="5"><i class="fas fa-star"></i></button>
       </div>
       <div class="floating-input-group mb-0"><textarea id="revComment" rows="3" placeholder=" " maxlength="200"></textarea><label for="revComment">اكتب تعليقك هنا (اختياري)</label></div>
       <div class="flex gap-2">
-        <button onclick="closeAddReview()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
+        <button onclick="closeAddReview()" class="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] font-bold py-3 rounded-xl text-sm">إلغاء</button>
         <button onclick="submitReview()" id="submitRevBtn" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm"><i class="fas fa-check"></i> نشر</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- نافذة تقييم المتجر ورأي العميل -->
 <div id="storeRatingModal" class="hidden fixed inset-0 z-[150] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in text-white">
-    <div class="flex items-center justify-between p-5 border-b border-slate-800">
+  <div class="bg-[var(--bg-card)] border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in">
+    <div class="flex items-center justify-between p-5 border-b border-[var(--border-color)]">
       <h3 class="text-xl font-black gold-text"><i class="fas fa-star text-amber-400"></i> تقييم وآراء العملاء بالمتجر</h3>
-      <button onclick="closeStoreRatingModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
+      <button onclick="closeStoreRatingModal()" class="w-9 h-9 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar">
-      <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center space-y-3">
+      <div class="bg-[var(--input-bg)] p-4 rounded-2xl border border-[var(--border-color)] text-center space-y-3">
         <h4 class="font-bold text-sm text-amber-300">كيف تقيم تجربتك مع مركز عاشور للتجارة؟</h4>
         <div class="flex gap-2 justify-center">
-          <button onclick="setStoreStar(1)" class="storeStar w-10 h-10 rounded-xl bg-slate-800 text-slate-600 text-xl transition" data-s="1"><i class="fas fa-star"></i></button>
-          <button onclick="setStoreStar(2)" class="storeStar w-10 h-10 rounded-xl bg-slate-800 text-slate-600 text-xl transition" data-s="2"><i class="fas fa-star"></i></button>
-          <button onclick="setStoreStar(3)" class="storeStar w-10 h-10 rounded-xl bg-slate-800 text-slate-600 text-xl transition" data-s="3"><i class="fas fa-star"></i></button>
-          <button onclick="setStoreStar(4)" class="storeStar w-10 h-10 rounded-xl bg-slate-800 text-slate-600 text-xl transition" data-s="4"><i class="fas fa-star"></i></button>
-          <button onclick="setStoreStar(5)" class="storeStar w-10 h-10 rounded-xl bg-slate-800 text-slate-600 text-xl transition" data-s="5"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(1)" class="storeStar w-10 h-10 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-600 text-xl transition" data-s="1"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(2)" class="storeStar w-10 h-10 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-600 text-xl transition" data-s="2"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(3)" class="storeStar w-10 h-10 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-600 text-xl transition" data-s="3"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(4)" class="storeStar w-10 h-10 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-600 text-xl transition" data-s="4"><i class="fas fa-star"></i></button>
+          <button onclick="setStoreStar(5)" class="storeStar w-10 h-10 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-600 text-xl transition" data-s="5"><i class="fas fa-star"></i></button>
         </div>
         <div class="floating-input-group mb-0"><textarea id="storeReviewComment" rows="2" placeholder=" " maxlength="200"></textarea><label for="storeReviewComment">رأيك يساعدنا في التطور...</label></div>
         <button onclick="submitStoreRating()" id="submitStoreRatingBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-sm transition shadow-lg"><i class="fas fa-check"></i> إرسال التقييم</button>
@@ -583,15 +578,15 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-main); col
   <button onclick="document.getElementById('imageFullscreen').classList.add('hidden'); document.body.style.overflow='';" class="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
 </div>
 
-<footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6 mb-16">
+<footer class="bg-[var(--bg-card)] border-t border-[var(--border-color)] py-8 px-4 text-center text-slate-400 text-sm mt-6 mb-16">
 <div class="max-w-4xl mx-auto space-y-3">
   <div class="w-24 h-24 flex items-center justify-center mx-auto"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
-  <p class="font-bold text-slate-200 text-base">مركز عاشور للتجارة</p>
+  <p class="font-bold text-base">مركز عاشور للتجارة</p>
   <p class="text-xs text-amber-400/90"><i class="fas fa-map-marker-alt ml-1"></i> دمشق أوتوستراد درعا الدولي</p>
   <div class="flex justify-center gap-3 flex-wrap text-xs">
     <a href="#" onclick="openGuideModal(); return false;" class="text-amber-400 hover:underline">كيف تطلب</a>
     <span class="text-slate-600">•</span>
-    <a href="privacy.html" class="text-slate-400 hover:text-amber-400 transition underline">سياسة الخصوصية</a>
+    <a href="privacy.html" class="hover:text-amber-400 transition underline">سياسة الخصوصية</a>
     <span class="text-slate-600">•</span>
     <span class="text-slate-500">جميع الحقوق محفوظة 2026</span>
   </div>
@@ -615,7 +610,6 @@ var currentInvoiceOrder = null;
 window.storeStars = 0;
 window.currentStoreReviews = [];
 
-// نظام أصوات النقرات الواقعية (Web Audio API)
 function playClickSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -634,7 +628,6 @@ function playClickSound() {
 }
 window.playClickSound = playClickSound;
 
-// نظام الوضع الفاتح والداكن
 window.toggleDarkMode = function() {
   playClickSound();
   const root = document.getElementById('htmlRoot');
@@ -822,7 +815,7 @@ function showSkeleton() {
   if (!grid) return;
   var html = '';
   for (var i = 0; i < 8; i++) {
-    html += `<div class="bg-[var(--bg-card)] rounded-2xl overflow-hidden border border-slate-700/80"><div class="aspect-[745/640] skeleton"></div><div class="p-3 space-y-2"><div class="h-3 bg-slate-800 rounded w-3/4 skeleton"></div><div class="h-8 bg-slate-800 rounded skeleton mt-4"></div></div></div>`;
+    html += `<div class="bg-[var(--bg-card)] rounded-2xl overflow-hidden border border-[var(--border-color)]"><div class="aspect-[745/640] skeleton"></div><div class="p-3 space-y-2"><div class="h-3 bg-slate-800 rounded w-3/4 skeleton"></div><div class="h-8 bg-slate-800 rounded skeleton mt-4"></div></div></div>`;
   }
   grid.innerHTML = html;
 }
@@ -854,7 +847,7 @@ function replaceImgOnly(imgEl) {
   imgEl.parentNode.replaceChild(fallback, imgEl);
 }
 
-// دالة تفعيل الضغط المطول للزيادة/النقصان السريع
+// دالة الضغط المطول المحسنة لتجنب التكرار العشوائي
 function attachLongPress(btn, callback) {
   let timer = null;
   let interval = null;
@@ -876,11 +869,10 @@ function attachLongPress(btn, callback) {
     clearInterval(interval);
   };
   
-  btn.addEventListener('mousedown', startAction);
-  btn.addEventListener('mouseup', stopAction);
-  btn.addEventListener('mouseleave', stopAction);
-  btn.addEventListener('touchstart', startAction);
-  btn.addEventListener('touchend', stopAction);
+  btn.addEventListener('pointerdown', startAction);
+  btn.addEventListener('pointerup', stopAction);
+  btn.addEventListener('pointerleave', stopAction);
+  btn.addEventListener('pointercancel', stopAction);
 }
 
 function buildCard(p) {
@@ -891,7 +883,7 @@ function buildCard(p) {
   var avg = avgStars(revs);
 
   var card = document.createElement('div');
-  card.className = 'product-card bg-[var(--bg-card)] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-lg hover:shadow-amber-500/10 transition-all duration-300 h-full group';
+  card.className = 'product-card bg-[var(--bg-card)] rounded-2xl overflow-hidden border border-[var(--border-color)] flex flex-col justify-between shadow-lg hover:shadow-amber-500/10 transition-all duration-300 h-full group';
   card.setAttribute('data-name', p.name);
 
   var imgBox = document.createElement('div');
@@ -987,21 +979,20 @@ function buildCard(p) {
 
   var priceHtml = `<span class="text-amber-400 font-black text-xs">${esc(p.price || 'حسب الطلب')}</span>`;
   var priceBox = document.createElement('div');
-  priceBox.className = 'flex flex-col gap-1 mt-1 mb-2 border-t border-slate-700/50 pt-2';
-  priceBox.innerHTML = `<div class="flex justify-between items-center bg-slate-900/60 p-1.5 rounded-lg border border-slate-700/50"><span class="text-[10px] text-slate-400"><i class="fas fa-tag text-amber-400/70"></i> الجملة:</span>${priceHtml}</div>`;
+  priceBox.className = 'flex flex-col gap-1 mt-1 mb-2 border-t border-[var(--border-color)] pt-2';
+  priceBox.innerHTML = `<div class="flex justify-between items-center bg-[var(--input-bg)] p-1.5 rounded-lg border border-[var(--border-color)]"><span class="text-[10px] text-slate-400"><i class="fas fa-tag text-amber-400/70"></i> الجملة:</span>${priceHtml}</div>`;
   body.appendChild(priceBox);
 
   var footer = document.createElement('div');
-  footer.className = 'border-t border-slate-700/60 pt-2 mt-auto';
+  footer.className = 'border-t border-[var(--border-color)] pt-2 mt-auto';
 
   if (avail) {
     var fls = p.flavors || [];
-    var hasFlavors = fls.length > 0;
     if (!fls.length) fls = [{name: 'العدد', soldOut: false}];
     else fls = fls.map(f => typeof f === 'string' ? {name: f, soldOut: false} : f);
 
     var flBox = document.createElement('div');
-    flBox.className = 'space-y-1 mb-2 bg-[var(--input-bg)] p-1.5 rounded-lg border border-slate-800';
+    flBox.className = 'space-y-1 mb-2 bg-[var(--input-bg)] p-1.5 rounded-lg border border-[var(--border-color)]';
 
     var flList = document.createElement('div');
     flList.className = 'max-h-24 overflow-y-auto space-y-1 custom-scrollbar';
@@ -1027,7 +1018,6 @@ function buildCard(p) {
         if (!isSoldOut) {
           var minus = document.createElement('button');
           minus.type = 'button'; minus.className = 'w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded-md text-sm font-black transition'; minus.innerText = '-';
-          minus.onclick = function(e) { e.stopPropagation(); playClickSound(); changeSel(p.name, pid, fIdx, flvName, -1); };
           attachLongPress(minus, () => changeSel(p.name, pid, fIdx, flvName, -1));
           ctrl.appendChild(minus);
           
@@ -1039,7 +1029,6 @@ function buildCard(p) {
           
           var plus = document.createElement('button');
           plus.type = 'button'; plus.className = 'w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded-md text-sm font-black transition'; plus.innerText = '+';
-          plus.onclick = function(e) { e.stopPropagation(); playClickSound(); changeSel(p.name, pid, fIdx, flvName, 1); };
           attachLongPress(plus, () => changeSel(p.name, pid, fIdx, flvName, 1));
           ctrl.appendChild(plus);
         } else {
@@ -1086,7 +1075,7 @@ function buildCard(p) {
 
   var revBtn = document.createElement('button');
   revBtn.type = 'button';
-  revBtn.className = 'w-full mt-1.5 bg-slate-800/60 text-amber-400 border border-slate-700/80 font-bold py-1.5 rounded-lg text-[10px] hover:bg-slate-700 transition';
+  revBtn.className = 'w-full mt-1.5 bg-[var(--input-bg)] text-amber-400 border border-[var(--border-color)] font-bold py-1.5 rounded-lg text-[10px] hover:opacity-85 transition';
   revBtn.innerHTML = '<i class="fas fa-star text-amber-400"></i> ' + (revs.length > 0 ? 'التقييمات (' + revs.length + ')' : 'أضف تقييمك');
   revBtn.onclick = function(e) { e.stopPropagation(); openReviews(p.name); };
   footer.appendChild(revBtn);
@@ -1156,7 +1145,7 @@ function updateCart() {
   while (c.firstChild) c.removeChild(c.firstChild);
   if (names.length === 0) {
     var empty = document.createElement('p');
-    empty.className = 'text-center text-slate-500 text-sm py-8 bg-[var(--input-bg)] rounded-2xl border border-slate-800';
+    empty.className = 'text-center text-slate-500 text-sm py-8 bg-[var(--input-bg)] rounded-2xl border border-[var(--border-color)]';
     empty.innerText = 'لم تقم بإضافة أي منتج';
     c.appendChild(empty);
     return;
@@ -1164,7 +1153,7 @@ function updateCart() {
   for (var i = 0; i < names.length; i++) {
     (function(name) {
       var box = document.createElement('div');
-      box.className = 'bg-[var(--input-bg)] p-3 rounded-2xl border border-slate-700/80';
+      box.className = 'bg-[var(--input-bg)] p-3 rounded-2xl border border-[var(--border-color)]';
       var p = products.find(function(prod) { return prod.name === name; });
       if (!p) { delete cart[name]; saveCart(); updateCart(); return; }
       
@@ -1172,7 +1161,7 @@ function updateCart() {
       if (isOutOfStock) box.className = 'bg-rose-950/20 p-3 rounded-2xl border border-rose-500/50';
       
       var head = document.createElement('div');
-      head.className = 'flex items-center justify-between border-b border-slate-800 pb-2';
+      head.className = 'flex items-center justify-between border-b border-[var(--border-color)] pb-2';
       var n = document.createElement('span');
       n.className = 'text-sm font-black'; n.innerText = name;
       if (isOutOfStock) n.innerHTML = name + ' <span class="text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded-full mr-2">نفد</span>';
@@ -1190,7 +1179,7 @@ function updateCart() {
         if (!cart[name].hasOwnProperty(flv)) continue;
         (function(flv, qty) {
           var row = document.createElement('div');
-          row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700/60 mt-2 text-white';
+          row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-[var(--border-color)] mt-2 text-white';
           var flvSpan = document.createElement('span');
           flvSpan.className = 'text-xs text-amber-300 font-bold'; flvSpan.innerText = flv === 'العدد' ? 'العدد' : flv;
           row.appendChild(flvSpan);
@@ -1200,13 +1189,12 @@ function updateCart() {
           minus.type = 'button';
           minus.className = 'w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-black transition' + (isOutOfStock ? ' opacity-50 cursor-not-allowed' : '');
           minus.innerText = '-'; minus.disabled = isOutOfStock;
-          minus.onclick = function() { playClickSound(); chQty(name, flv, -1); };
-          attachLongPress(minus, () => chQty(name, flv, -1));
+          attachLongPress(minus, () => { playClickSound(); chQty(name, flv, -1); });
           ctrl.appendChild(minus);
           
           var inp = document.createElement('input');
           inp.type = 'number'; inp.min = '0'; inp.value = qty; inp.disabled = isOutOfStock;
-          inp.className = 'w-14 bg-slate-950 border border-slate-700 text-amber-400 text-center text-sm rounded-lg py-1' + (isOutOfStock ? ' opacity-50' : '');
+          inp.className = 'w-14 bg-slate-950 border border-[var(--border-color)] text-amber-400 text-center text-sm rounded-lg py-1' + (isOutOfStock ? ' opacity-50' : '');
           inp.onchange = function() { setQty(name, flv, this.value); };
           ctrl.appendChild(inp);
           
@@ -1214,8 +1202,7 @@ function updateCart() {
           plus.type = 'button';
           plus.className = 'w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-black transition' + (isOutOfStock ? ' opacity-50 cursor-not-allowed' : '');
           plus.innerText = '+'; plus.disabled = isOutOfStock;
-          plus.onclick = function() { playClickSound(); chQty(name, flv, 1); };
-          attachLongPress(plus, () => chQty(name, flv, 1));
+          attachLongPress(plus, () => { playClickSound(); chQty(name, flv, 1); });
           ctrl.appendChild(plus);
           
           row.appendChild(ctrl);
@@ -1390,7 +1377,7 @@ function filterCat(cat) {
   var btns = document.querySelectorAll('.catBtn');
   for (var i = 0; i < btns.length; i++) {
     if (btns[i].getAttribute('data-cat') === cat) btns[i].className = 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm transition shadow-md';
-    else btns[i].className = 'catBtn bg-[var(--bg-card)] text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700 transition hover:bg-slate-700';
+    else btns[i].className = 'catBtn bg-[var(--bg-card)] text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-[var(--border-color)] transition hover:opacity-85';
   }
   filterProducts();
 }
@@ -1405,7 +1392,7 @@ function renderCategories() {
   for (var j = 0; j < cats.length; j++) {
     (function(cat, idx) {
       var btn = document.createElement('button');
-      btn.className = (idx === 0) ? 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm transition shadow-md' : 'catBtn bg-[var(--bg-card)] text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-slate-700 transition hover:bg-slate-700';
+      btn.className = (idx === 0) ? 'catBtn bg-amber-500 text-slate-950 font-extrabold px-4 py-2 rounded-full text-sm transition shadow-md' : 'catBtn bg-[var(--bg-card)] text-slate-300 font-bold px-4 py-2 rounded-full text-sm border border-[var(--border-color)] transition hover:opacity-85';
       btn.setAttribute('data-cat', cat); btn.innerText = cat;
       btn.onclick = function() { filterCat(cat); };
       c.appendChild(btn);
@@ -1415,7 +1402,7 @@ function renderCategories() {
 
 function buildMiniCard(p, type) {
   var card = document.createElement('div');
-  card.className = 'flex-shrink-0 w-36 bg-[var(--input-bg)] border border-slate-700/80 rounded-2xl overflow-hidden cursor-pointer snap-start transition hover:-translate-y-1';
+  card.className = 'flex-shrink-0 w-36 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-2xl overflow-hidden cursor-pointer snap-start transition hover:-translate-y-1';
   card.onclick = function() { scrollToProduct(p.name); };
   var imgBox = document.createElement('div');
   imgBox.className = 'aspect-[745/640] bg-[var(--input-bg)] relative overflow-hidden';
@@ -1524,7 +1511,7 @@ window.renderSavedAddressesList = function() {
     return;
   }
   container.innerHTML = addrs.map(function(addr, i) {
-    return `<div class="bg-[var(--input-bg)] border border-slate-800 rounded-xl p-3 flex justify-between items-center gap-3">
+    return `<div class="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl p-3 flex justify-between items-center gap-3">
       <div class="min-w-0"><p class="text-amber-400 font-bold text-xs mb-1"><i class="fas fa-tag"></i> ${esc(addr.label)}</p><p class="text-sm truncate">${esc(addr.details)}</p></div>
       <button onclick="deleteSavedAddress(${i})" class="w-8 h-8 rounded-lg bg-rose-950/40 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0 hover:bg-rose-900"><i class="fas fa-trash text-xs"></i></button>
     </div>`;
@@ -1570,7 +1557,7 @@ window.renderWishlist = function() {
   }
   var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full text-right">';
   wishedProds.forEach(function(p) {
-    html += '<div class="bg-[var(--input-bg)] border border-slate-800 rounded-2xl p-3 flex gap-3 items-center">';
+    html += '<div class="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-2xl p-3 flex gap-3 items-center">';
     html += '<img src="' + esc(imgUrl(p.image)) + '" class="w-16 h-16 rounded-xl object-cover cursor-pointer" onclick="openProduct(\'' + esc(p.name).replace(/'/g, "\\'") + '\')">';
     html += '<div class="flex-grow min-w-0"><h4 class="font-bold text-sm truncate cursor-pointer" onclick="openProduct(\'' + esc(p.name).replace(/'/g, "\\'") + '\')">' + esc(p.name) + '</h4><p class="text-amber-400 font-bold text-xs mt-1">' + esc(p.price || 'حسب الطلب') + '</p></div>';
     html += '<button data-wish-remove="' + esc(p.name) + '" class="w-8 h-8 rounded-lg bg-rose-950/40 text-rose-400 border border-rose-500/30 flex items-center justify-center flex-shrink-0"><i class="fas fa-trash text-xs"></i></button>';
@@ -1610,7 +1597,7 @@ window.loadAppOrders = function() {
       var invoiceBtn = '<button onclick="event.stopPropagation();openInvoiceForUser(\'' + esc(order.id) + '\')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-3 rounded-lg text-xs mt-2"><i class="fas fa-file-invoice"></i> الفاتورة</button>';
       var reorderBtn = '<button onclick="event.stopPropagation();reorderFromOrder(\'' + esc(order.id) + '\')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-1.5 px-3 rounded-lg text-xs mt-2"><i class="fas fa-redo"></i> إعادة</button>';
       
-      return '<div class="bg-[var(--bg-card)] border border-slate-800 rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:border-amber-500/50 transition" onclick="openOrderDetails(\'' + esc(order.id) + '\')"><div class="p-4 flex justify-between items-center gap-3"><div class="flex-grow min-w-0"><div class="flex items-center gap-2 mb-1 flex-wrap"><p class="font-black text-sm">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' border text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas ' + statusIcon + '"></i> ' + esc(statusText) + '</span></div><p class="text-slate-400 text-[11px] mb-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p><div class="space-y-0.5">' + firstItems + moreItems + '</div><div class="flex gap-2 flex-wrap">' + invoiceBtn + reorderBtn + '</div></div><div class="text-center flex-shrink-0"><div class="w-14 h-14 rounded-full bg-[var(--input-bg)] border border-slate-700 flex flex-col items-center justify-center"><p class="text-amber-400 font-black text-lg">' + totalItems + '</p><p class="text-[8px] text-slate-500">قطعة</p></div></div></div></div>';
+      return '<div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:border-amber-500/50 transition" onclick="openOrderDetails(\'' + esc(order.id) + '\')"><div class="p-4 flex justify-between items-center gap-3"><div class="flex-grow min-w-0"><div class="flex items-center gap-2 mb-1 flex-wrap"><p class="font-black text-sm">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><span class="' + statusColor + ' border text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas ' + statusIcon + '"></i> ' + esc(statusText) + '</span></div><p class="text-slate-400 text-[11px] mb-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p><div class="space-y-0.5">' + firstItems + moreItems + '</div><div class="flex gap-2 flex-wrap">' + invoiceBtn + reorderBtn + '</div></div><div class="text-center flex-shrink-0"><div class="w-14 h-14 rounded-full bg-[var(--input-bg)] border border-[var(--border-color)] flex flex-col items-center justify-center"><p class="text-amber-400 font-black text-lg">' + totalItems + '</p><p class="text-[8px] text-slate-500">قطعة</p></div></div></div></div>';
     }).join('');
   });
 };
@@ -1633,7 +1620,7 @@ window.reorderFromOrder = async function(orderId) {
     saveCart(); updateCart();
     if (added > 0) { showToast('تمت إعادة الإضافة للسلة ✅'); showCart(); }
     else showToast('لا توجد منتجات متوفرة من هذا الطلب', 'error');
-  } catch(e) { console.error(e); showToast('حدث خطأ', 'error'); }
+  } catch(e) { showToast('حدث خطأ', 'error'); }
 };
 
 window.openOrderDetails = function(orderId) {
@@ -1643,11 +1630,11 @@ window.openOrderDetails = function(orderId) {
     var dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'غير معروف';
     var itemsHtml = '';
     for (var item in order.items) {
-      itemsHtml += '<div class="bg-[var(--input-bg)] rounded-lg p-3 mb-2 border border-slate-800"><p class="text-amber-400 font-bold text-sm mb-1">' + esc(item) + '</p>';
+      itemsHtml += '<div class="bg-[var(--input-bg)] rounded-lg p-3 mb-2 border border-[var(--border-color)]"><p class="text-amber-400 font-bold text-sm mb-1">' + esc(item) + '</p>';
       for (var flavor in order.items[item]) itemsHtml += '<div class="flex justify-between text-xs text-slate-300"><span>' + esc(flavor) + '</span><span class="font-bold">× ' + esc(order.items[item][flavor]) + '</span></div>';
       itemsHtml += '</div>';
     }
-    document.getElementById('orderDetailsContent').innerHTML = '<div class="text-center mb-4"><p class="text-2xl font-black mb-1">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><p class="text-slate-400 text-xs mt-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p></div><div class="bg-[var(--input-bg)] rounded-xl p-3 mb-4 border border-slate-800"><p class="text-slate-400 text-xs mb-1">العنوان:</p><p class="text-sm">' + esc(order.address) + '</p></div><p class="font-bold mb-2">المنتجات:</p><div class="max-h-60 overflow-y-auto custom-scrollbar">' + itemsHtml + '</div><div class="mt-4"><button onclick="closeOrderDetails(); openInvoiceForUser(\'' + esc(order.id) + '\')" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-file-invoice"></i> عرض الفاتورة</button></div>';
+    document.getElementById('orderDetailsContent').innerHTML = '<div class="text-center mb-4"><p class="text-2xl font-black mb-1">طلب #' + esc(order.id.slice(-4).toUpperCase()) + '</p><p class="text-slate-400 text-xs mt-2"><i class="fas fa-calendar-alt ml-1"></i> ' + esc(dateStr) + '</p></div><div class="bg-[var(--input-bg)] rounded-xl p-3 mb-4 border border-[var(--border-color)]"><p class="text-slate-400 text-xs mb-1">العنوان:</p><p class="text-sm">' + esc(order.address) + '</p></div><p class="font-bold mb-2">المنتجات:</p><div class="max-h-60 overflow-y-auto custom-scrollbar">' + itemsHtml + '</div><div class="mt-4"><button onclick="closeOrderDetails(); openInvoiceForUser(\'' + esc(order.id) + '\')" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-file-invoice"></i> عرض الفاتورة</button></div>';
     document.getElementById('orderDetailsModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
     window.pushBackState();
   });
@@ -1683,7 +1670,6 @@ window.openInvoiceForUser = function(orderId) {
   });
 };
 
-// تحسين سرعة ووظيفة حفظ الفاتورة كصورة
 window.downloadInvoiceImage = function() {
   const btn = document.getElementById('downloadInvoiceBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التجهيز...';
@@ -1700,7 +1686,6 @@ window.downloadInvoiceImage = function() {
       btn.innerHTML = '<i class="fas fa-download"></i> حفظ كصورة';
       btn.disabled = false;
     }).catch(err => {
-      console.error(err);
       showToast('حدث خطأ أثناء إنشاء الصورة', 'error');
       btn.innerHTML = '<i class="fas fa-download"></i> حفظ كصورة';
       btn.disabled = false;
@@ -1804,6 +1789,7 @@ window.confirmSendOrder = async function() {
   setTimeout(function() { btn.innerHTML = '<i class="fab fa-whatsapp"></i> نعم، اطلب الآن'; btn.disabled = false; }, 1000);
 };
 
+// نافذة تفاصيل المنتج مع استعادة كافة المعلومات وزر المشاركة
 function openProduct(pName) {
   window.pushBackState();
   var p = products.find(function(prod) { return prod.name === pName; });
@@ -1835,9 +1821,29 @@ function openProduct(pName) {
   catEl.className = 'inline-block px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-1.5';
   catEl.innerText = p.category || '';
   info.appendChild(catEl);
+
+  var topHeader = document.createElement('div');
+  topHeader.className = 'flex justify-between items-start gap-2 mb-1.5';
   var h2 = document.createElement('h2');
-  h2.className = 'text-lg sm:text-2xl font-black mb-1.5'; h2.innerText = p.name;
-  info.appendChild(h2);
+  h2.className = 'text-lg sm:text-2xl font-black'; h2.innerText = p.name;
+  topHeader.appendChild(h2);
+
+  // زر المشاركة للمنتج
+  var shareBtn = document.createElement('button');
+  shareBtn.className = 'bg-[var(--input-bg)] border border-[var(--border-color)] text-amber-400 p-2 rounded-xl text-xs hover:bg-amber-500 hover:text-slate-950 transition flex items-center gap-1.5';
+  shareBtn.innerHTML = '<i class="fas fa-share-alt"></i> مشاركة';
+  shareBtn.onclick = function() {
+    playClickSound();
+    const shareData = { title: p.name, text: `تفضل بطلب منتج ${p.name} من مركز عاشور للتجارة`, url: window.location.href.split('?')[0] + '?product=' + encodeURIComponent(p.name) };
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(shareData.url);
+      showToast('تم نسخ رابط المنتج إلى الحافظة 📋');
+    }
+  };
+  topHeader.appendChild(shareBtn);
+  info.appendChild(topHeader);
   
   if (parseFloat(avg) > 0) {
     var starsDiv = document.createElement('div');
@@ -1848,7 +1854,17 @@ function openProduct(pName) {
   
   var pricesBox = document.createElement('div');
   pricesBox.className = 'grid grid-cols-2 gap-2 mb-3';
-  pricesBox.innerHTML = '<div class="bg-[var(--input-bg)] border border-amber-500/30 rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400 mb-0.5">سعر الجملة</p><p class="text-amber-400 font-black text-base">' + esc(p.price || 'حسب الطلب') + '</p></div>';
+  pricesBox.innerHTML = `
+    <div class="bg-[var(--input-bg)] border border-amber-500/30 rounded-xl p-2.5 text-center">
+      <p class="text-[10px] text-slate-400 mb-0.5">سعر الجملة</p>
+      <p class="text-amber-400 font-black text-base">${esc(p.price || 'حسب الطلب')}</p>
+    </div>
+    ${p.consumerPrice ? `
+    <div class="bg-[var(--input-bg)] border border-emerald-500/30 rounded-xl p-2.5 text-center">
+      <p class="text-[10px] text-slate-400 mb-0.5">سعر المستهلك</p>
+      <p class="text-emerald-400 font-black text-base">${esc(p.consumerPrice)}</p>
+    </div>` : ''}
+  `;
   info.appendChild(pricesBox);
   
   if (p.description) {
@@ -1856,13 +1872,22 @@ function openProduct(pName) {
     descBox.innerHTML = '<p class="font-bold text-xs mb-1">الوصف:</p><p class="text-slate-300 text-xs leading-relaxed">' + esc(p.description) + '</p>';
     info.appendChild(descBox);
   }
+
+  var detailsBox = document.createElement('div');
+  detailsBox.className = 'bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl p-3 text-xs mb-3 space-y-1.5';
+  detailsBox.innerHTML = '<p class="font-bold text-xs mb-2 border-b border-[var(--border-color)] pb-1"><i class="fas fa-info-circle text-amber-400"></i> تفاصيل إضافية:</p>';
+  if (p.company) detailsBox.innerHTML += `<div class="flex justify-between"><span class="text-slate-400">اسم الشركة:</span><span class="font-bold">${esc(p.company)}</span></div>`;
+  if (p.piecesPerBox) detailsBox.innerHTML += `<div class="flex justify-between"><span class="text-slate-400">القطع بالعلبة:</span><span class="font-bold">${esc(p.piecesPerBox)}</span></div>`;
+  if (p.boxesPerCarton) detailsBox.innerHTML += `<div class="flex justify-between"><span class="text-slate-400">الأكياس بالكرتونة:</span><span class="font-bold">${esc(p.boxesPerCarton)}</span></div>`;
+  detailsBox.innerHTML += `<div class="flex justify-between"><span class="text-slate-400">حالة التوفر:</span><span class="font-bold ${avail ? 'text-emerald-400' : 'text-rose-400'}">${avail ? 'متوفر' : 'غير متوفر'}</span></div>`;
+  info.appendChild(detailsBox);
   
   grid.appendChild(imgWrap); grid.appendChild(info);
   scrollArea.appendChild(grid);
   
   if (avail) {
     var flsBox = document.createElement('div');
-    flsBox.className = 'bg-[var(--input-bg)] border border-slate-800 rounded-xl p-3 mt-3';
+    flsBox.className = 'bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl p-3 mt-3';
     var flsList = p.flavors || [];
     if (!flsList.length) flsList = [{name: 'العدد', soldOut: false}];
     else flsList = flsList.map(f => typeof f === 'string' ? {name: f, soldOut: false} : f);
@@ -1877,7 +1902,7 @@ function openProduct(pName) {
         var cur = (selections[p.name] && selections[p.name][flvName]) || 0;
         
         var row = document.createElement('div');
-        row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80 text-white ' + (isSoldOut ? 'opacity-50' : '');
+        row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-[var(--border-color)] text-white ' + (isSoldOut ? 'opacity-50' : '');
         
         var nameSpan = document.createElement('span');
         nameSpan.className = 'text-xs font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300');
@@ -1888,8 +1913,7 @@ function openProduct(pName) {
         if (!isSoldOut) {
           var minus = document.createElement('button');
           minus.type = 'button'; minus.className = 'w-9 h-9 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-black text-base transition'; minus.innerText = '-';
-          minus.onclick = function() { playClickSound(); prodSel(p._pid, fIdx, flvName, -1); };
-          attachLongPress(minus, () => prodSel(p._pid, fIdx, flvName, -1));
+          attachLongPress(minus, () => { playClickSound(); prodSel(p._pid, fIdx, flvName, -1); });
           ctrl.appendChild(minus);
           
           var span = document.createElement('span');
@@ -1898,8 +1922,7 @@ function openProduct(pName) {
           
           var plus = document.createElement('button');
           plus.type = 'button'; plus.className = 'w-9 h-9 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-black text-base transition'; plus.innerText = '+';
-          plus.onclick = function() { playClickSound(); prodSel(p._pid, fIdx, flvName, 1); };
-          attachLongPress(plus, () => prodSel(p._pid, fIdx, flvName, 1));
+          attachLongPress(plus, () => { playClickSound(); prodSel(p._pid, fIdx, flvName, 1); });
           ctrl.appendChild(plus);
         } else {
           ctrl.innerHTML = '<span class="text-xs text-slate-500">غير متوفر</span>';
@@ -1911,7 +1934,7 @@ function openProduct(pName) {
   }
   
   wrapper.appendChild(scrollArea);
-  var btnsBox = document.createElement('div'); btnsBox.className = 'mt-3 pt-3 border-t border-slate-800 flex gap-2';
+  var btnsBox = document.createElement('div'); btnsBox.className = 'mt-3 pt-3 border-t border-[var(--border-color)] flex gap-2';
   if (avail) {
     var addBtn = document.createElement('button');
     addBtn.type = 'button';
@@ -1927,7 +1950,7 @@ function openProduct(pName) {
     btnsBox.appendChild(addBtn);
   }
   var closeBtn = document.createElement('button');
-  closeBtn.className = 'bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-5 py-3.5 rounded-xl text-sm transition';
+  closeBtn.className = 'bg-[var(--input-bg)] border border-[var(--border-color)] hover:opacity-85 font-bold px-5 py-3.5 rounded-xl text-sm transition';
   closeBtn.innerText = 'رجوع'; closeBtn.onclick = closeProduct;
   btnsBox.appendChild(closeBtn);
   wrapper.appendChild(btnsBox);
@@ -1975,7 +1998,7 @@ function openReviews(pName) {
     for (var r = revs.length - 1; r >= 0; r--) {
       var rev = revs[r];
       var item = document.createElement('div');
-      item.className = 'bg-[var(--input-bg)] border border-slate-800 rounded-xl p-3';
+      item.className = 'bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl p-3';
       item.innerHTML = '<div class="flex items-center gap-2 mb-1.5"><span class="text-amber-400 text-sm font-bold">' + stars(rev.stars || 0) + '</span><span class="text-xs font-bold">' + esc(rev.name || 'عميل') + '</span></div>' + (rev.comment ? '<p class="text-slate-300 text-xs">' + esc(rev.comment) + '</p>' : '');
       list.appendChild(item);
     }
@@ -2016,7 +2039,6 @@ function submitReview() {
   .finally(function() { btn.innerHTML = '<i class="fas fa-check"></i> نشر'; btn.disabled = false; });
 }
 
-// تقييم المتجر ورأي العميل
 window.openStoreRatingModal = function() {
   window.pushBackState();
   document.getElementById('storeRatingModal').classList.remove('hidden');
@@ -2041,7 +2063,7 @@ function renderStoreReviewsList() {
     return;
   }
   container.innerHTML = revs.map(r => `
-    <div class="bg-[var(--input-bg)] border border-slate-800 rounded-xl p-3">
+    <div class="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl p-3">
       <div class="flex items-center justify-between mb-1">
         <span class="font-bold text-xs text-amber-300">${esc(r.name || 'عميل')}</span>
         <span class="text-amber-400 text-xs">${stars(r.stars)}</span>
@@ -2249,10 +2271,12 @@ setTimeout(hidePre, 3500);
 
   onAuthStateChanged(auth, async function(user) {
     try {
+      const welcome = document.getElementById('welcomeScreen');
       if (user) {
         window.currentUser = user;
         document.getElementById('loginBtn').classList.add('hidden');
         document.getElementById('userProfileBtn').classList.remove('hidden');
+        if (welcome && !welcome.classList.contains('hidden')) welcome.classList.add('hidden');
         
         var docRef = doc(db, "users", user.uid);
         var docSnap = await getDoc(docRef);
@@ -2274,8 +2298,6 @@ setTimeout(hidePre, 3500);
         
         const authView = document.getElementById('authView');
         if (authView && !authView.classList.contains('hidden')) authView.classList.add('hidden');
-        const welcome = document.getElementById('welcomeScreen');
-        if (welcome && !welcome.classList.contains('hidden')) welcome.classList.add('hidden');
       } else {
         window.currentUser = null;
         window.currentProfileData = {};
