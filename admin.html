@@ -10,9 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- ✅ مكتبة قارئ الباركود -->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-<!-- ✅ مكتبة تحويل الفاتورة إلى صورة -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; }
@@ -27,7 +25,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 </head>
 <body class="min-h-screen">
 
-<!-- ✅ شاشة تسجيل الدخول (بكلمة المرور فقط) -->
+<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
@@ -35,23 +33,19 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <h1 class="text-2xl font-black gold-gradient-text mb-2">لوحة إدارة الكتالوج</h1>
     <p class="text-slate-400 text-sm mb-6">أدخل كلمة المرور للدخول</p>
-
     <div class="space-y-3 mb-4">
-      <!-- ✅ البريد مخفي ويتم تعبئته تلقائياً -->
       <input type="hidden" id="adminEmail" value="yasir3ashour@gmail.com">
       <input type="password" id="adminPassword" placeholder="كلمة المرور" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-center text-sm" onkeydown="if(event.key==='Enter') window.tryAdminLogin()">
     </div>
-
     <button onclick="window.tryAdminLogin()" id="adminLoginBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed">
       <i class="fas fa-sign-in-alt ml-2"></i> دخول آمن
     </button>
-
     <p id="adminLoginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
     <p class="text-[10px] text-slate-500 mt-4"><i class="fas fa-lock"></i> الدخول مقتصر على الأدمن فقط</p>
   </div>
 </div>
 
-<!-- ✅ شاشة القفل السريع (PIN) -->
+<!-- شاشة القفل السريع -->
 <div id="pinLockScreen" class="hidden fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-emerald-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-emerald-500/10 border-2 border-emerald-500/40 flex items-center justify-center mx-auto mb-5">
@@ -59,11 +53,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <h1 class="text-2xl font-black gold-gradient-text mb-2">مرحباً بعودتك</h1>
     <p class="text-slate-400 text-sm mb-6">أدخل رمز الأمان السريع (PIN)</p>
-    
     <div class="mb-4">
       <input type="password" id="adminUnlockPin" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="••••" class="w-full bg-slate-950 text-white p-4 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 text-center text-3xl tracking-[1em] font-mono" onkeydown="if(event.key==='Enter') window.unlockAdmin()">
     </div>
-    
     <button onclick="window.unlockAdmin()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3.5 rounded-xl transition">
       <i class="fas fa-unlock-alt"></i> فتح اللوحة
     </button>
@@ -89,7 +81,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <button onclick="enableAdminNotifications()" id="notifyBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2 transition">
         <i class="fas fa-bell"></i> تفعيل التنبيهات
       </button>
-      
       <span id="dirtyBadge" class="hidden bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xs px-2.5 py-1.5 rounded-full font-bold">
         <i class="fas fa-circle text-[6px]"></i> غير منشور
       </span>
@@ -162,7 +153,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
     <p class="text-lg">لا توجد منتجات تطابق البحث</p>
   </div>
-</div><div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
+</div>
+
+<div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fas fa-store text-amber-400"></i> إعدادات المتجر</h2>
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المتجر</label><input type="text" id="setStoreName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
@@ -303,7 +296,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       <p>جاري تحميل الطلبات...</p>
     </div>
   </div>
-</div><div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
+</div>
+
+<div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
     <h2 class="text-xl font-black text-white flex items-center gap-2">
       <i class="fas fa-users text-amber-400"></i> سجل العملاء
@@ -339,8 +334,15 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <input type="file" id="importFile" accept=".js,.json" class="hidden" onchange="importData(event)">
     <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-upload"></i> اختيار ملف للاستيراد</button>
   </div>
+  <!-- ✅ جديد: تحديث من السيرفر -->
+  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5">
+    <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-cloud-download-alt text-sky-400"></i> تحديث من السيرفر</h2>
+    <p class="text-xs text-slate-400 mb-3 leading-relaxed">مسح البيانات المحلية (localStorage) وإعادة تحميل آخر إصدار من <code class="bg-slate-950 px-1.5 py-0.5 rounded font-mono text-amber-400">catalog-data.js</code> المنشور على GitHub. مفيد إذا حدّثت الملف من جهاز آخر ولا ترى التغييرات هنا.</p>
+    <button onclick="refreshFromServer()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-sync-alt"></i> تحديث الآن</button>
+  </div>
 </div>
 
+<!-- Product Modal -->
 <div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
     <div class="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800">
@@ -383,18 +385,15 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
             <div id="fImagePlaceholder" class="text-center text-slate-600 p-4"><i class="fas fa-image text-4xl mb-2"></i><p class="text-xs">الصورة الرئيسية</p></div>
             <button type="button" onclick="removeImage()" class="absolute inset-0 bg-rose-600/80 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition"><i class="fas fa-trash-alt text-xl"></i></button>
           </div>
-
           <div class="flex-grow space-y-2">
             <input type="file" id="fImageFile" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
             <button type="button" onclick="document.getElementById('fImageFile').click()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
               <i class="fas fa-camera"></i> اختيار الصورة الرئيسية
             </button>
-            
             <input type="file" id="fGalleryFiles" accept="image/*" multiple class="hidden" onchange="handleGalleryUpload(event)">
             <button type="button" onclick="document.getElementById('fGalleryFiles').click()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition">
               <i class="fas fa-layer-group"></i> رفع صور إضافية (متعدد)
             </button>
-
             <div class="flex gap-2">
               <input type="text" id="fImage" oninput="previewImage()" placeholder="أو ألصق رابط الصورة الرئيسية هنا..." class="flex-grow bg-slate-950 text-white p-2.5 rounded-xl border border-slate-700 text-xs font-mono">
             </div>
@@ -421,7 +420,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 
       <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الوصف</label><textarea id="fDescription" rows="3" placeholder="وصف مختصر..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea></div>
 
-      <!-- ✅ إدارة النكهات مع زر النفاد -->
       <div class="bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
         <label class="block text-slate-300 font-bold mb-2 text-sm"><i class="fas fa-ice-cream text-amber-400"></i> النكهات</label>
         <div id="flavorsContainer" class="flex flex-wrap gap-2 mb-3 min-h-[40px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
@@ -468,12 +466,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
           <span id="reviewsCountBadge" class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30 font-bold">0 تقييم</span>
         </div>
         <div id="reviewsList" class="space-y-2 mb-3 max-h-60 overflow-y-auto pr-1"></div>
-        
         <div class="grid grid-cols-2 gap-2 mb-3">
           <button type="button" onclick="openAddReviewForm()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-plus"></i> تقييم جديد</button>
           <button type="button" onclick="refreshReviewsFromCloud()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fas fa-cloud-download-alt"></i> تحديث من السحابة</button>
         </div>
-        
         <div id="addReviewForm" class="hidden bg-slate-950/60 border border-amber-500/30 rounded-xl p-3 mt-3 space-y-3">
           <p class="text-amber-400 font-bold text-xs flex items-center gap-1.5"><i class="fas fa-pen"></i> تقييم جديد</p>
           <div>
@@ -504,7 +500,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       </div>
     </div>
   </div>
-</div><div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+</div>
+
+<!-- Confirm Modal -->
+<div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500"></div>
     <div class="p-6 text-center">
@@ -523,6 +522,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- Delivery Amount Modal -->
 <div id="deliveryAmountModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden" style="animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"></div>
@@ -532,7 +532,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
       </div>
       <h3 class="text-2xl font-black text-white mb-2">تم التسليم بنجاح</h3>
       <p class="text-slate-400 text-sm mb-5">أدخل المبلغ الذي تم استلامه من الزبون بالليرة السورية</p>
-      
       <div class="relative mb-2">
         <input type="number" id="deliveryAmountInput" placeholder="مثال: 50000" class="w-full bg-slate-950 text-emerald-400 text-center text-2xl font-black p-4 rounded-2xl border-2 border-slate-700 focus:outline-none focus:border-emerald-500">
         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">ل.س</span>
@@ -546,48 +545,38 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ نافذة الفاتورة الجديدة -->
+<!-- Invoice Modal -->
 <div id="invoiceModal" class="hidden fixed inset-0 z-[120] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex flex-col items-center">
   <div class="max-w-md w-full my-4">
-    
-    <!-- محتوى الفاتورة (سيتم تحويله لصورة) -->
     <div id="invoice-content" class="bg-white text-slate-900 p-6 rounded-xl relative w-full shadow-2xl" dir="rtl">
       <div class="text-center border-b-2 border-dashed border-slate-300 pb-4 mb-4">
-         <h2 class="text-2xl font-black mb-1 text-slate-800">مركز عاشور للتجارة</h2>
-         <p class="text-xs text-slate-500">جملة المواد الغذائية والبسكويت</p>
-         <p class="text-xs text-slate-500 mt-1">هاتف: 0959248901</p>
+        <h2 class="text-2xl font-black mb-1 text-slate-800">مركز عاشور للتجارة</h2>
+        <p class="text-xs text-slate-500">جملة المواد الغذائية والبسكويت</p>
+        <p class="text-xs text-slate-500 mt-1">هاتف: 0959248901</p>
       </div>
-      
       <div class="mb-4 text-sm space-y-1">
-         <p><strong class="text-slate-700">الزبون:</strong> <span id="invCustName" class="text-slate-800"></span></p>
-         <p><strong class="text-slate-700">الهاتف:</strong> <span id="invCustPhone" dir="ltr" class="text-slate-800"></span></p>
-         <p><strong class="text-slate-700">التاريخ:</strong> <span id="invDate" class="text-slate-800"></span></p>
+        <p><strong class="text-slate-700">الزبون:</strong> <span id="invCustName" class="text-slate-800"></span></p>
+        <p><strong class="text-slate-700">الهاتف:</strong> <span id="invCustPhone" dir="ltr" class="text-slate-800"></span></p>
+        <p><strong class="text-slate-700">التاريخ:</strong> <span id="invDate" class="text-slate-800"></span></p>
       </div>
-
       <table class="w-full text-sm mb-4">
-         <thead>
-           <tr class="border-b border-slate-300 text-slate-600">
-              <th class="text-right pb-2 font-bold">المنتج</th>
-              <th class="text-center pb-2 font-bold">الكمية</th>
-              <th class="text-left pb-2 font-bold">السعر</th>
-           </tr>
-         </thead>
-         <tbody id="invTableBody">
-           <!-- سيتم تعبئتها عبر JS -->
-         </tbody>
+        <thead>
+          <tr class="border-b border-slate-300 text-slate-600">
+            <th class="text-right pb-2 font-bold">المنتج</th>
+            <th class="text-center pb-2 font-bold">الكمية</th>
+            <th class="text-left pb-2 font-bold">السعر</th>
+          </tr>
+        </thead>
+        <tbody id="invTableBody"></tbody>
       </table>
-
       <div class="border-t-2 border-dashed border-slate-300 pt-4 flex justify-between items-center">
-         <span class="font-black text-lg text-slate-800">الإجمالي:</span>
-         <span id="invTotal" class="font-black text-xl text-emerald-600">0 ل.س</span>
+        <span class="font-black text-lg text-slate-800">الإجمالي:</span>
+        <span id="invTotal" class="font-black text-xl text-emerald-600">0 ل.س</span>
       </div>
-      
       <div class="text-center mt-6 text-xs text-slate-400 font-bold">
-         شكراً لتعاملكم معنا!
+        شكراً لتعاملكم معنا!
       </div>
     </div>
-
-    <!-- أزرار التحكم -->
     <div class="flex gap-2 mt-4 max-w-md w-full">
       <button onclick="closeInvoiceModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition">إغلاق</button>
       <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2">
@@ -597,6 +586,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- Recovery Guide Modal -->
 <div id="recoveryGuideModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto p-4">
   <div class="max-w-2xl mx-auto my-8 bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -642,6 +632,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
+<!-- Customer Recovery Modal -->
 <div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -677,7 +668,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-<!-- ✅ نافذة قارئ الباركود -->
+<!-- Barcode Scanner Modal -->
 <div id="barcodeScannerModal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-indigo-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
     <div class="flex items-center justify-between p-4 border-b border-slate-800">
@@ -708,6 +699,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <p class="text-slate-400 text-xs mt-1">لا تغلق الصفحة</p>
   </div>
 </div>
+
 </div><!-- /adminApp --><script>
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
@@ -715,7 +707,7 @@ const IDLE_TIMEOUT = 30 * 60 * 1000;
 const FIREBASE_CONSOLE_URL = 'https://console.firebase.google.com/project/ashour-e5e42/authentication/users';
 
 let catalogData = { products: [], settings: {}, categories: [] };
-let editingFlavors = []; // الآن ستحتوي على كائنات { name: string, soldOut: boolean }
+let editingFlavors = [];
 let currentRotation = '';
 let currentImageData = '';
 let currentGallery = [];
@@ -724,7 +716,7 @@ let _idleTimer = null;
 let currentReviews = [];
 let currentReviewStars = 0;
 let currentProductName = null;
-let currentInvoiceOrder = null; // لتخزين الطلب أثناء تسعير الفاتورة
+let currentInvoiceOrder = null;
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw-admin.js')
@@ -828,12 +820,13 @@ function logoutAdmin() {
   if (typeof window.adminLogout === 'function') { window.adminLogout(); } else { sessionStorage.removeItem('ashour_admin_ok'); location.reload(); }
 }
 
+// ✅ استبدال alert بـ Toast + تأخير
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
   _idleTimer = setTimeout(() => {
     if (document.getElementById('adminApp').classList.contains('hidden') === false) { 
-      alert('تم تسجيل الخروج تلقائيًا بسبب عدم النشاط'); 
-      logoutAdmin(); 
+      showToast('تم تسجيل الخروج تلقائياً بسبب عدم النشاط', 'error');
+      setTimeout(() => logoutAdmin(), 1500);
     }
   }, IDLE_TIMEOUT);
 }
@@ -868,7 +861,23 @@ function loadInitialData() {
   });
 }
 
-function initAdmin() { renderCategories(); renderSettingsInputs(); renderProductList(); renderStats(); const pinBtn = document.getElementById('setAdminPin'); if(pinBtn) pinBtn.value = localStorage.getItem('ashour_admin_pin') || ''; }
+// ✅ دالة جديدة: تحديث من السيرفر
+window.refreshFromServer = async function() {
+  if (!confirm('سيتم مسح البيانات المحلية وإعادة تحميل آخر إصدار من السيرفر.\nأي تعديلات غير منشورة ستُفقد.\n\nمتابعة؟')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  showToast('جاري التحديث من السيرفر...');
+  await new Promise(r => setTimeout(r, 500));
+  location.reload();
+};
+
+function initAdmin() { 
+  renderCategories(); 
+  renderSettingsInputs(); 
+  renderProductList(); 
+  renderStats(); 
+  const pinBtn = document.getElementById('setAdminPin'); 
+  if(pinBtn) pinBtn.value = localStorage.getItem('ashour_admin_pin') || ''; 
+}
 window.initAdmin = initAdmin;
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1030,7 +1039,6 @@ function openProductModal(pid = null) {
     currentGallery = Array.isArray(p.images) ? [...p.images] : []; renderGalleryImages();
     if (p.available === false) setProductStatus('unavailable'); else if (p.lowStock) setProductStatus('lowStock'); else setProductStatus('available');
     
-    // تحويل النكهات القديمة إلى الكائن الجديد إذا كانت نصوصاً
     if (Array.isArray(p.flavors)) {
       editingFlavors = p.flavors.map(f => typeof f === 'string' ? { name: f, soldOut: false } : f);
     } else { editingFlavors = []; }
@@ -1067,7 +1075,6 @@ function setRotation(rot) {
   });
 }
 
-// ✅ النكهات (الطريقة الأولى: زر نفد)
 function renderFlavors() {
   const c = document.getElementById('flavorsContainer'); if (!c) return;
   if (editingFlavors.length === 0) { c.innerHTML = '<span class="text-slate-500 text-xs py-1">لا توجد نكهات — المنتج سيُعامل كـ "عادي"</span>'; return; }
@@ -1282,7 +1289,7 @@ function buildCatalogJS() {
     settings: cleanSettings, 
     categories: [...(catalogData.categories || [])]
   };
-  let jsContent = '/* ================================\n   ملف بيانات الكتالوج\n   مركز عاشور للتجارة\n   آخر تحديث: ' + new Date().toLocaleString('ar-SY') + '\n   ================================ */\n\n';
+  let jsContent = '/* ================================\n   ملف بيانات الكتالوج\n   مركز عاشور للتجارة\n   آخر تحديث: ' + new Date().toLocaleString('ar-SY', { numberingSystem: 'latn' }) + '\n   ================================ */\n\n';
   jsContent += 'window.catalogData = {\n  products: [],\n  settings: ' + JSON.stringify(clean.settings, null, 2) + ',\n  categories: ' + JSON.stringify(clean.categories) + '\n};\n\n// ============ المنتجات ============\n\n';
   clean.products.forEach(p => { jsContent += 'window.catalogData.products.push(' + JSON.stringify(p, null, 2) + ');\n\n'; });
   jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n'; return jsContent;
@@ -1292,6 +1299,7 @@ async function saveToGitHub() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour';
   const repo = catalogData.settings.githubRepo || 'Ashour'; const branch = catalogData.settings.githubBranch || 'main'; const filePath = 'catalog-data.js';
   if (!token) { showToast('يرجى إدخال GitHub Token في الإعدادات أولًا', 'error'); return; }
+  if (!Array.isArray(catalogData.products)) { showToast('خطأ في بيانات المنتجات', 'error'); return; }
   document.getElementById('publishOverlay').classList.remove('hidden'); document.getElementById('publishStatusText').innerText = 'جاري التحضير...';
   try {
     document.getElementById('publishStatusText').innerText = 'جاري قراءة الملف الحالي...';
@@ -1299,7 +1307,7 @@ async function saveToGitHub() {
     let sha = null; if (getRes.ok) { const data = await getRes.json(); sha = data.sha; } else if (getRes.status !== 404) { throw new Error('فشل الاتصال بـ GitHub: ' + getRes.status); }
     document.getElementById('publishStatusText').innerText = 'جاري الرفع إلى GitHub...';
     const content = buildCatalogJS(); const base64Content = btoa(unescape(encodeURIComponent(content)));
-    const body = { message: `تحديث الكتالوج - ${new Date().toLocaleString('ar-SY')}`, content: base64Content, branch: branch }; if (sha) body.sha = sha;
+    const body = { message: `تحديث الكتالوج - ${new Date().toLocaleString('ar-SY', { numberingSystem: 'latn' })}`, content: base64Content, branch: branch }; if (sha) body.sha = sha;
     const putRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}`, { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     document.getElementById('publishOverlay').classList.add('hidden');
     if (putRes.ok) { clearDirty(); showToast('✅ تم النشر بنجاح — الموقع سيُحدَّث خلال دقيقة'); }
@@ -1456,7 +1464,7 @@ function uploadSingleToImgBB(file) {
   });
 }
 
-// ✅ دوال قارئ الباركود
+// Barcode Scanner
 let html5QrCode;
 window.startScanner = function() {
   document.getElementById('barcodeScannerModal').classList.remove('hidden');
@@ -1491,7 +1499,7 @@ window.stopScanner = function() {
   }
 };
 
-// ✅ دوال الفاتورة
+// Invoice
 window.openInvoiceModal = function(orderId) {
   const order = allOrdersCache.find(o => o.id === orderId);
   if (!order) return;
@@ -1499,7 +1507,7 @@ window.openInvoiceModal = function(orderId) {
   
   document.getElementById('invCustName').innerText = order.userName || '—';
   document.getElementById('invCustPhone').innerText = order.phone || '—';
-  const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('ar-SY', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleString('ar-SY');
+  const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('ar-SY', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', numberingSystem: 'latn' }) : new Date().toLocaleString('ar-SY', { numberingSystem: 'latn' });
   document.getElementById('invDate').innerText = dateStr;
   
   const tbody = document.getElementById('invTableBody');
@@ -1513,11 +1521,11 @@ window.openInvoiceModal = function(orderId) {
       const tr = document.createElement('tr');
       tr.className = 'border-b border-slate-100 last:border-0';
       
-      const flavorText = flavor === 'عادي' ? '' : `<p class="text-xs text-slate-500 mt-0.5">${flavor}</p>`;
+      const flavorText = flavor === 'عادي' ? '' : `<p class="text-xs text-slate-500 mt-0.5">${escapeHtml(flavor)}</p>`;
       
       tr.innerHTML = `
         <td class="py-2 text-right text-sm">
-          <p class="font-bold text-slate-800">${item}</p>
+          <p class="font-bold text-slate-800">${escapeHtml(item)}</p>
           ${flavorText}
         </td>
         <td class="py-2 text-center font-black text-slate-700">${qty}</td>
@@ -1599,7 +1607,9 @@ document.addEventListener('keydown', (e) => {
 (async function boot() {
   await loadInitialData();
 })();
-</script><script type="module">
+</script>
+
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, addDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -1658,6 +1668,7 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
+  // ✅ معالجة أخطاء محسنة لتسجيل الدخول
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
     const pass = document.getElementById('adminPassword').value;
@@ -1685,7 +1696,15 @@ document.addEventListener('keydown', (e) => {
         return;
       }
     } catch (e) {
-      errEl.innerText = 'خطأ: كلمة المرور غير صحيحة';
+      if (e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
+        errEl.innerText = '❌ كلمة المرور غير صحيحة';
+      } else if (e.code === 'auth/network-request-failed') {
+        errEl.innerText = '❌ تحقق من اتصال الإنترنت';
+      } else if (e.code === 'auth/too-many-requests') {
+        errEl.innerText = '❌ محاولات كثيرة — حاول لاحقاً';
+      } else {
+        errEl.innerText = '❌ خطأ: ' + (e.message || 'غير معروف');
+      }
       errEl.classList.remove('hidden');
       btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
       btn.disabled = false;
@@ -1869,7 +1888,7 @@ document.addEventListener('keydown', (e) => {
       return; 
     }
     container.innerHTML = orders.map(order => {
-      const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' }) : 'غير معروف';
+      const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit', numberingSystem: 'latn' }) : 'غير معروف';
       let itemsHtml = '';
       for (let item in order.items) {
         itemsHtml += `<div class="text-xs text-slate-300 mb-1 border-b border-slate-800 pb-1"><span class="font-bold text-amber-400">${safeText(item)}:</span> `;
@@ -1901,7 +1920,6 @@ document.addEventListener('keydown', (e) => {
           ${order.deliveryAmount ? `<div class="bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg text-center"><p class="text-emerald-400 text-sm font-bold">تم استلام: ${safeText(order.deliveryAmount)} ل.س</p></div>` : ''}
           
           <div class="flex gap-2 mt-2 flex-wrap">
-            <!-- ✅ زر الفاتورة الجديد -->
             <button onclick="window.openInvoiceModal('${safeText(order.id)}')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-1"><i class="fas fa-file-invoice-dollar"></i> تسعير الفاتورة</button>
             
             ${order.status !== 'تم التسليم' ? `
@@ -2013,6 +2031,7 @@ document.addEventListener('keydown', (e) => {
     return revs;
   };
 
+  // ✅ إصلاح ثغرة الحقن في زر استعادة العملاء
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
@@ -2038,7 +2057,7 @@ document.addEventListener('keydown', (e) => {
         
         if (userOrders.length > 0) {
           ordersHtml = `<div class="mt-3 border-t border-slate-800 pt-3"><p class="text-xs font-black text-amber-400 mb-2"><i class="fas fa-shopping-bag"></i> الطلبات (${userOrders.length}):</p><div class="space-y-2 max-h-48 overflow-y-auto pr-1">${userOrders.map(order => {
-            const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+            const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('ar-SY', { year: 'numeric', month: 'short', day: 'numeric', numberingSystem: 'latn' }) : '—';
             return `<div class="bg-slate-950 border border-slate-700/50 rounded-lg p-2.5 text-xs"><div class="flex justify-between mb-1"><span class="text-emerald-400 font-bold">${safeText(order.status || 'جديد')}</span><span class="text-slate-400 text-[10px]">${safeText(dateStr)}</span></div><p class="text-slate-400 text-[10px] mt-1 truncate">${safeText(order.address)}</p></div>`;
           }).join('')}</div></div>`;
         }
@@ -2049,7 +2068,7 @@ document.addEventListener('keydown', (e) => {
           ? `<span class="text-[9px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-1.5 py-0.5 rounded font-mono whitespace-nowrap"><i class="fas fa-mobile-alt"></i> Phone+PIN</span>` 
           : '';
         const recoverBtn = isPhonePin && internalEmail
-          ? `<button onclick="openCustomerRecovery('${safeText(user.name || '').replace(/'/g, "&#39;")}', '${safeText(user.phone || '')}', '${safeText(internalEmail)}')" class="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold py-1.5 rounded-lg flex items-center justify-center gap-1"><i class="fas fa-key"></i> استعادة الرمز</button>` 
+          ? `<button class="recover-btn mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold py-1.5 rounded-lg flex items-center justify-center gap-1" data-name="${safeText(user.name || '')}" data-phone="${safeText(user.phone || '')}" data-email="${safeText(internalEmail)}"><i class="fas fa-key"></i> استعادة الرمز</button>` 
           : '';
         const displayContact = isPhonePin ? (user.phone || '—') : (user.email || '—');
         const contactIcon = isPhonePin ? 'fa-mobile-alt text-purple-400' : 'fa-envelope text-slate-500';
@@ -2078,6 +2097,17 @@ document.addEventListener('keydown', (e) => {
           ${ordersHtml}`;
         
         container.appendChild(card);
+      });
+      
+      // ✅ Event delegation بدل inline onclick
+      container.querySelectorAll('.recover-btn').forEach(btn => {
+        btn.onclick = () => {
+          window.openCustomerRecovery(
+            btn.dataset.name,
+            btn.dataset.phone,
+            btn.dataset.email
+          );
+        };
       });
     } catch(e) {
       console.error(e);
