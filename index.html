@@ -18,26 +18,36 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 .gold-text { background: linear-gradient(135deg,#fce08f,#d4af37,#997415); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 #preBar { transition: width 2s linear; }
 
-/* حركات عامة */
+/* حركات متطورة مستوحاة من تفاصيل التصميم الناعم */
 @keyframes glow { 0%,100% { filter: drop-shadow(0 0 15px rgba(212,175,55,.5)); } 50% { filter: drop-shadow(0 0 30px rgba(212,175,55,.9)); } }
 .glow { animation: glow 2.5s ease-in-out infinite; }
 @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 .floating { animation: float 4s ease-in-out infinite; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+.fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .star-on { background: #d4af37 !important; color: #0b0f19 !important; }
 
-/* ✅ Skeleton Loading للصور */
+/* شلال ظهور العناصر (Cascade Animation) */
+@keyframes cascadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.cascade-item { animation: cascadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Skeleton Loading */
 .skeleton { background: #1e293b; background-image: linear-gradient(90deg, #1e293b 0px, #334155 40px, #1e293b 80px); background-size: 200% 100%; animation: shimmer 1.5s infinite linear; }
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-.product-img { transition: opacity 0.5s ease-in-out; opacity: 0; }
+.product-img { transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
 .product-img.loaded { opacity: 1; }
+.product-card:hover .product-img { transform: scale(1.05); }
 
-/* ✅ شاشة الترحيب الزجاجية */
-#welcomeScreen { 
-  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%); 
-  position: fixed; inset: 0; z-index: 200; overflow: hidden;
-}
+/* حقول الإدخال ذات التسمية المتحركة العائمة (Floating Label Inputs) */
+.floating-input-group { position: relative; margin-bottom: 1rem; }
+.floating-input-group input, .floating-input-group textarea { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 1rem; padding: 1rem 1rem 0.5rem 1rem; color: white; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); outline: none; }
+.floating-input-group input:focus, .floating-input-group textarea:focus { border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+.floating-input-group label { position: absolute; right: 1rem; top: 0.9rem; color: #94a3b8; font-size: 0.85rem; pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); background: #0f172a; padding: 0 0.25rem; }
+.floating-input-group input:focus ~ label, .floating-input-group input:not(:placeholder-shown) ~ label,
+.floating-input-group textarea:focus ~ label, .floating-input-group textarea:not(:placeholder-shown) ~ label { top: -0.5rem; font-size: 0.7rem; color: #d4af37; font-weight: bold; }
+
+/* شاشة الترحيب الزجاجية */
+#welcomeScreen { background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%); position: fixed; inset: 0; z-index: 200; overflow: hidden; }
 .bg-blobs { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; overflow: hidden; }
 .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5; animation: float-blob 10s infinite alternate; }
 .blob-1 { width: 300px; height: 300px; background: #d4af37; top: -10%; left: -10%; }
@@ -45,16 +55,8 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 @keyframes float-blob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.2); } }
 .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 
-/* ✅ شاشة تسجيل الدخول الكاملة (Full Page Glassmorphism) والحركات */
-#authView { background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0b0f19 100%); }
-.auth-container { position: relative; overflow: hidden; }
-.auth-form { transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); width: 100%; }
-.auth-form.hide-left { transform: translateX(-120%); opacity: 0; filter: blur(10px); position: absolute; pointer-events: none; }
-.auth-form.hide-right { transform: translateX(120%); opacity: 0; filter: blur(10px); position: absolute; pointer-events: none; }
-.auth-tab-active { background: rgba(212, 175, 55, 0.2) !important; color: #d4af37 !important; border-color: #d4af37 !important; }
-
-/* ✅ حركة زر إضافة للسلة (Progress Bar) */
-.btn-add-cart { position: relative; overflow: hidden; transition: all 0.3s; }
+/* أزرار السلة المتحركة بدقة */
+.btn-add-cart { position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .btn-add-cart .progress-bar { position: absolute; right: 0; top: 0; height: 100%; width: 0; background: rgba(16, 185, 129, 0.5); z-index: 0; transition: width 0.8s linear; }
 .btn-add-cart .btn-content { position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
@@ -71,7 +73,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 </head>
 <body class="min-h-screen pb-24">
 
-<!-- ✅ شاشة الترحيب الزجاجية -->
+<!-- شاشة الترحيب الزجاجية -->
 <div id="welcomeScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
   <div class="bg-blobs">
     <div class="blob blob-1"></div>
@@ -81,7 +83,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <div class="glass-card max-w-sm w-full rounded-[2.5rem] p-8 flex flex-col items-center relative z-10 fade-in">
     <div class="w-32 h-32 sm:w-40 sm:h-40 mb-4 floating"><img src="logo.png" class="w-full h-full object-contain drop-shadow-2xl" alt="Logo"></div>
     <h1 class="text-3xl sm:text-4xl font-black text-white mb-2 tracking-tight">مركز <span class="gold-text">عاشور</span></h1>
-    <p class="text-slate-300 text-sm mb-8 leading-relaxed">أهلاً بك في متجرك المفضل. سجل دخولك الآن لتجربة تسوق أسرع ومتابعة طلباتك.</p>
+    <p class="text-slate-300 text-sm mb-8 leading-relaxed">أهلاً بك في متجرك المفضل. سجل دخولك الآن لتجربة تسوق ناعمة وأسرع.</p>
     
     <div class="w-full space-y-3">
       <button onclick="showAuthView()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-xl shadow-amber-900/40 transition transform hover:scale-105 flex items-center justify-center gap-2">
@@ -99,41 +101,41 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3"><div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div></div>
 </div>
 
-<div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[300] hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p class="text-sm font-bold" id="toastMsg"></p></div>
+<div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[300] hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl transition-all duration-300"><p class="text-sm font-bold" id="toastMsg"></p></div>
 
 <div id="offlineScreen" class="hidden fixed inset-0 z-[250] bg-[#0b0f19] flex flex-col items-center justify-center p-6 text-center">
-  <i class="fas fa-wifi text-6xl text-rose-500 mb-4"></i>
-  <h2 class="text-2xl font-black text-white mb-2">لا يوجد اتصال</h2>
-  <button onclick="location.reload()" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl mt-4"><i class="fas fa-sync-alt"></i> إعادة المحاولة</button>
+  <i class="fas fa-wifi text-6xl text-rose-500 mb-4 animate-bounce"></i>
+  <h2 class="text-2xl font-black text-white mb-2">لا يوجد اتصال بالإنترنت</h2>
+  <button onclick="location.reload()" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl mt-4 shadow-lg hover:bg-amber-400 transition"><i class="fas fa-sync-alt"></i> إعادة المحاولة</button>
 </div>
 
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-map-marker-alt ml-1"></i> دمشق - أوتوستراد درعا</span>
-  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full text-[10px]">موقعنا</a>
+  <a href="https://maps.app.goo.gl/djUWNAnBhh3pPwfn6" target="_blank" rel="noopener" class="bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full text-[10px] transition hover:scale-105">موقعنا على الخريطة</a>
 </div>
 
-<header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
-  <div class="max-w-7xl mx-auto px-3 py-2 flex justify-between items-center gap-2">
+<header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
+  <div class="max-w-7xl mx-auto px-3 py-2.5 flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="showCatalog()">
-      <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
+      <div class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
       <div class="min-w-0">
         <h1 class="text-base sm:text-xl font-black gold-text truncate">مركز عاشور</h1>
         <p class="text-[10px] text-slate-400 hidden sm:block">للتجارة والمواد الغذائية</p>
       </div>
     </div>
     <div class="flex items-center gap-2 flex-shrink-0">
-      <button onclick="showCart()" class="bg-amber-500 text-slate-950 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:scale-105">
+      <button onclick="showCart()" class="bg-amber-500 text-slate-950 font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:scale-105 relative">
         <i class="fas fa-shopping-basket text-lg"></i>
         <span class="hidden sm:inline">السلة</span>
         <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       
-      <button id="loginBtn" onclick="showAuthView()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
+      <button id="loginBtn" onclick="showAuthView()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
         <i class="fas fa-user-circle text-lg"></i>
         <span class="hidden sm:inline">دخول</span>
       </button>
       
-      <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-2 transition hover:bg-slate-700 relative">
+      <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2 transition hover:bg-slate-700 relative">
         <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover">
         <div class="flex flex-col items-start px-1">
           <span id="userNameDisplay" class="max-w-[70px] truncate leading-tight text-xs">حسابي</span>
@@ -144,51 +146,76 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </header>
 
-<!-- ✅ شاشة تسجيل الدخول الكاملة (Full Page View) -->
-<div id="authView" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 overflow-y-auto fade-in">
-  <div class="bg-slate-900/90 border border-amber-500/40 rounded-[2.5rem] max-w-md w-full shadow-2xl relative my-auto p-6 sm:p-8 auth-container backdrop-blur-xl" style="box-shadow: 0 0 50px rgba(212,175,55,0.2);">
-    <button onclick="showCatalog()" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10 transition"><i class="fas fa-arrow-right"></i></button>
+<!-- صفحة تسجيل الدخول المتطورة ذات الحقول ذات التسميات العائمة -->
+<div id="authView" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 overflow-y-auto fade-in bg-slate-950/90 backdrop-blur-md">
+  <div class="bg-slate-900 border border-slate-700/80 rounded-[2.5rem] max-w-md w-full shadow-2xl overflow-hidden relative my-auto" style="box-shadow: 0 25px 60px rgba(0,0,0,0.8);">
     
-    <div class="text-center mb-6">
-      <img src="logo.png" class="w-24 h-24 mx-auto object-contain mb-2 glow">
-      <h2 class="text-3xl font-black gold-text">مركز عاشور</h2>
-      <p class="text-slate-400 text-xs mt-1">سجل دخولك لمتابعة طلباتك بكل سهولة</p>
-    </div>
-
-    <!-- التبويبات -->
-    <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative border border-slate-800">
-      <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all auth-tab-active bg-transparent text-slate-400 border border-transparent">تسجيل الدخول</button>
-      <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
-    </div>
-
-    <div class="relative h-[320px]">
-      <!-- نموذج الدخول -->
-      <div id="loginFormBox" class="auth-form space-y-4 absolute w-full">
-        <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
-        </button>
-        
-        <div class="flex items-center"><div class="flex-grow border-t border-slate-700"></div><span class="px-3 text-slate-500 text-xs">أو برقم الهاتف</span><div class="flex-grow border-t border-slate-700"></div></div>
-        
-        <input type="tel" id="pinPhone" placeholder="رقم الهاتف (09xxxxxxxx)" maxlength="15" dir="ltr" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
-        <input type="password" id="pinCode" placeholder="رمز سري من 6 أرقام" maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
-        
-        <button onclick="handlePhonePinLogin()" id="pinLoginBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-base shadow-lg transition"><i class="fas fa-sign-in-alt"></i> دخول</button>
-        
-        <div class="flex justify-between items-center text-xs px-1">
-          <button onclick="forgotPinWhatsApp()" class="text-amber-400 hover:underline">نسيت الرمز السري؟</button>
+    <div class="relative w-full h-44 bg-gradient-to-br from-amber-600/30 via-slate-900 to-emerald-900/30 overflow-hidden flex flex-col justify-end p-5 border-b border-slate-800">
+      <button onclick="showCatalog()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-slate-950/70 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center z-20 transition"><i class="fas fa-arrow-right"></i></button>
+      <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      
+      <div class="flex items-end justify-between relative z-10">
+        <div>
+          <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20 inline-block mb-1.5"><i class="fas fa-store"></i> مركز عاشور للتجارة</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">أهلاً بعودتك</h2>
+          <p class="text-slate-400 text-xs mt-1">سجل دخولك لتصفح طلباتك ومتابعة حصادك بنعومة فائقة.</p>
         </div>
-        
-        <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2 rounded-lg" id="authError"></p>
+        <img src="logo.png" class="w-16 h-16 object-contain drop-shadow-xl floating">
+      </div>
+    </div>
+
+    <div class="p-6 sm:p-8">
+      <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative border border-slate-800">
+        <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-amber-500/20 text-amber-400 border border-amber-500/30">تسجيل الدخول</button>
+        <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
       </div>
 
-      <!-- نموذج إنشاء الحساب -->
-      <div id="registerFormBox" class="auth-form hide-right space-y-4 absolute w-full">
-        <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 text-center space-y-3">
-          <i class="fas fa-mobile-alt text-3xl text-amber-400"></i>
-          <p class="text-xs text-slate-300 leading-relaxed">التسجيل السريع يتم فوراً بإدخال رقم هاتفك ورمز سري تختاره في تبويب تسجيل الدخول.</p>
-          <button onclick="switchAuthTab('login')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">الذهاب لتسجيل الدخول</button>
+      <div class="relative min-h-[290px]">
+        <div id="loginFormBox" class="space-y-4 absolute w-full transition-all duration-500">
+          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-2xl text-sm flex items-center justify-center gap-3 transition shadow-lg transform hover:scale-[1.02]">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
+          </button>
+          
+          <div class="flex items-center"><div class="flex-grow border-t border-slate-800"></div><span class="px-3 text-slate-500 text-xs">أو برقم الهاتف والرمز</span><div class="flex-grow border-t border-slate-800"></div></div>
+          
+          <!-- حقل رقم الهاتف مع تسمية عائمة -->
+          <div class="floating-input-group">
+            <input type="tel" id="pinPhone" placeholder=" " maxlength="15" dir="ltr">
+            <label for="pinPhone">رقم الهاتف (09xxxxxxxx)</label>
+          </div>
+
+          <!-- حقل الرمز السري مع تسمية عائمة -->
+          <div class="floating-input-group">
+            <input type="password" id="pinCode" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()">
+            <label for="pinCode">رمز سري من 6 أرقام</label>
+          </div>
+
+          <div class="flex items-center justify-between text-xs px-1">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-400 hover:text-white">
+              <input type="checkbox" checked class="rounded bg-slate-950 border-slate-700 text-amber-500 focus:ring-0"> تذكرني
+            </label>
+            <button onclick="forgotPinWhatsApp()" class="text-amber-400 hover:underline">نسيت الرمز السري؟</button>
+          </div>
+          
+          <button onclick="handlePhonePinLogin()" id="pinLoginBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-3.5 rounded-2xl text-base shadow-lg transition transform hover:scale-[1.02] flex items-center justify-center gap-2">
+            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+          </button>
+          
+          <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20" id="authError"></p>
         </div>
+
+        <div id="registerFormBox" class="space-y-4 absolute w-full hidden transition-all duration-500">
+          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 text-center space-y-3">
+            <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl"><i class="fas fa-user-plus"></i></div>
+            <h4 class="text-white font-bold text-sm">إنشاء حساب جديد</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">أدخل رقم هاتفك ورمزاً سرياً مخصصاً من تبويب تسجيل الدخول لإنشاء حسابك وسجل طلباتك فوراً.</p>
+            <button onclick="switchAuthTab('login')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition">العودة لتسجيل الدخول</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12 pt-4 border-t border-slate-800/80">
+        <p class="text-xs text-slate-500">ليس لديك حساب؟ <button onclick="switchAuthTab('register')" class="text-amber-400 font-bold hover:underline">أنشئ حساباً الآن</button></p>
       </div>
     </div>
   </div>
@@ -196,26 +223,26 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
 
 <div id="catalogView" class="w-full flex flex-col flex-grow">
   <section class="py-6 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0b0f19] border-b border-slate-800/60">
-  <div class="max-w-4xl mx-auto">
-  <h2 class="text-2xl sm:text-4xl font-extrabold mb-2 text-white">أهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
-  
-  <div class="max-w-md mx-auto flex flex-col gap-3 mt-6">
-    <div class="relative">
-      <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 shadow-inner transition">
-      <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
-      <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-7 h-7 rounded-full items-center justify-center hover:bg-rose-500/50 transition"><i class="fas fa-times text-xs"></i></button>
-    </div>
-    
-    <div class="flex items-center justify-between px-2 mt-1">
-      <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
-        <i class="fas fa-boxes text-amber-400"></i>
-        <span class="text-slate-300">المنتجات:</span>
-        <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-md">0</span>
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl sm:text-4xl font-extrabold mb-2 text-white">أهلاً بكم في <span class="gold-text">مركز عاشور</span></h2>
+      
+      <div class="max-w-md mx-auto flex flex-col gap-3 mt-6">
+        <div class="relative">
+          <input type="text" id="searchBox" placeholder="ابحث عن منتج..." oninput="onSearch()" class="w-full bg-slate-800/80 text-white placeholder-slate-400 pr-10 pl-12 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 shadow-inner transition">
+          <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
+          <button id="clearBtn" onclick="clearSearch()" class="absolute left-3 top-3.5 text-slate-400 hidden text-sm bg-slate-700/60 w-7 h-7 rounded-full items-center justify-center hover:bg-rose-500/50 transition"><i class="fas fa-times text-xs"></i></button>
+        </div>
+        
+        <div class="flex items-center justify-between px-2 mt-1">
+          <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-lg py-1.5 px-4 text-xs">
+            <i class="fas fa-boxes text-amber-400"></i>
+            <span class="text-slate-300">المنتجات:</span>
+            <span id="productCount" class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-md">0</span>
+          </div>
+          <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-700 transition"><i class="fas fa-rotate-left"></i> إرجاع الكل</button>
+        </div>
       </div>
-      <button onclick="clearSearch()" class="bg-slate-800 text-amber-400 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-700 transition"><i class="fas fa-rotate-left"></i> إرجاع الكل</button>
     </div>
-  </div>
-  </div>
   </section>
 
   <section id="offersBox" class="hidden max-w-7xl mx-auto px-3 pt-4 w-full fade-in">
@@ -257,7 +284,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </section>
 </div>
 
-<!-- ✅ سلة المشتريات كصفحة مستقلة -->
+<!-- صفحة السلة المستقلة -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full fade-in">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
@@ -276,12 +303,12 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل *</label><input type="text" id="custName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
-        <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="shopName" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
+        <div class="floating-input-group mb-0"><input type="text" id="custName" oninput="saveCust()" placeholder=" "><label for="custName">الاسم الكامل *</label></div>
+        <div class="floating-input-group mb-0"><input type="text" id="shopName" oninput="saveCust()" placeholder=" "><label for="shopName">اسم المحل</label></div>
       </div>
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">رقم الهاتف / واتساب *</label><input type="tel" id="custPhone" oninput="saveCust()" placeholder="مثال: 0959248901" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm font-mono" dir="ltr"></div>
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="custAddr" oninput="saveCust()" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">ملاحظات إضافية</label><textarea id="custNotes" oninput="saveCust()" rows="2" class="w-full bg-slate-900 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></textarea></div>
+      <div class="floating-input-group mb-0"><input type="tel" id="custPhone" oninput="saveCust()" placeholder=" " dir="ltr"><label for="custPhone">رقم الهاتف / واتساب *</label></div>
+      <div class="floating-input-group mb-0"><input type="text" id="custAddr" oninput="saveCust()" placeholder=" "><label for="custAddr">العنوان التفصيلي *</label></div>
+      <div class="floating-input-group mb-0"><textarea id="custNotes" oninput="saveCust()" rows="2" placeholder=" "></textarea><label for="custNotes">ملاحظات إضافية</label></div>
     </div>
 
     <div class="mb-5">
@@ -296,7 +323,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ الملف الشخصي كصفحة مستقلة -->
+<!-- صفحة الملف الشخصي المستقلة -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
@@ -325,7 +352,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <div id="appTabFavorites" class="hidden text-center py-16 text-slate-500"></div>
     
     <div id="appTabAddresses" class="hidden">
-      <button onclick="openAddAddressModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm mb-4 flex items-center justify-center gap-2 transition">
+      <button onclick="openAddAddressModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm mb-4 flex items-center justify-center gap-2 transition shadow-lg">
         <i class="fas fa-plus"></i> إضافة عنوان جديد
       </button>
       <div id="savedAddressesList" class="space-y-3"></div>
@@ -333,7 +360,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
   </div>
 </div>
 
-<!-- ✅ شريط التنقل السفلي الثابت (Bottom Navigation Bar) -->
+<!-- شريط التنقل السفلي الثابت -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-t border-slate-800 py-2.5 px-6 flex justify-around items-center shadow-2xl">
   <button onclick="showCatalog()" id="navBtnCatalog" class="flex flex-col items-center gap-1 text-amber-400 transition hover:scale-110">
     <i class="fas fa-store text-xl"></i>
@@ -364,40 +391,27 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
           <div class="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center transition"><i class="fas fa-camera text-white text-2xl"></i></div>
         </div>
         <input type="file" id="profileAvatarFile" accept="image/*" class="hidden" onchange="handleProfileAvatarUpload(event)">
-        <p class="text-[10px] text-slate-400">اضغط لتغيير الصورة</p>
+        <p class="text-[10px] text-slate-400">اضغط لتغيير الصورة الشخصية</p>
       </div>
       
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-xs flex justify-between">
-          <span id="profileEmailLabel">البريد الإلكتروني</span>
-          <span class="text-amber-500 text-[10px]"><i class="fas fa-lock"></i> لا يمكن تعديله</span>
-        </label>
-        <input type="text" id="profileEmail" disabled class="w-full bg-slate-950/50 text-slate-400 p-3 rounded-xl border border-slate-800 text-sm cursor-not-allowed" dir="ltr">
+      <div class="floating-input-group">
+        <input type="text" id="profileEmail" disabled placeholder=" " dir="ltr">
+        <label for="profileEmail" id="profileEmailLabel">البريد الإلكتروني</label>
       </div>
       
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">الاسم الكامل</label><input type="text" id="profileName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500"></div>
-      
-      <div>
-        <label class="block text-slate-300 font-bold mb-1.5 text-xs flex justify-between">
-          <span>رقم الهاتف / واتساب</span>
-          <span id="profilePhoneLockLabel" class="hidden text-amber-500 text-[10px]"><i class="fas fa-lock"></i> رقم الدخول</span>
-        </label>
-        <input type="tel" id="profilePhone" placeholder="مثال: 9639xxxxxxxx" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono focus:border-amber-500" dir="ltr">
-      </div>
-      
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم المحل</label><input type="text" id="profileShop" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500"></div>
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">عنوان المحل</label><input type="text" id="profileAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-amber-500"></div>
+      <div class="floating-input-group"><input type="text" id="profileName" placeholder=" "><label for="profileName">الاسم الكامل</label></div>
+      <div class="floating-input-group"><input type="tel" id="profilePhone" placeholder=" " dir="ltr"><label for="profilePhone">رقم الهاتف / واتساب</label></div>
+      <div class="floating-input-group"><input type="text" id="profileShop" placeholder=" "><label for="profileShop">اسم المحل</label></div>
+      <div class="floating-input-group"><input type="text" id="profileAddress" placeholder=" "><label for="profileAddress">عنوان المحل</label></div>
 
-      <div class="border-t border-slate-800 pt-4 mt-4">
+      <div class="border-t border-slate-800 pt-4 mt-4 space-y-3">
         <h4 class="text-amber-400 font-bold text-sm mb-3"><i class="fas fa-key"></i> تغيير الرمز السري</h4>
-        <div class="space-y-2">
-          <input type="password" id="newPin" placeholder="الرمز الجديد (6 أرقام)" maxlength="6" inputmode="numeric" dir="ltr" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500">
-          <input type="password" id="newPinConfirm" placeholder="تأكيد الرمز" maxlength="6" inputmode="numeric" dir="ltr" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500">
-          <button type="button" onclick="changePin()" id="changePinBtn" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition"><i class="fas fa-key"></i> تغيير الرمز</button>
-        </div>
+        <div class="floating-input-group"><input type="password" id="newPin" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr"><label for="newPin">الرمز الجديد (6 أرقام)</label></div>
+        <div class="floating-input-group"><input type="password" id="newPinConfirm" placeholder=" " maxlength="6" inputmode="numeric" dir="ltr"><label for="newPinConfirm">تأكيد الرمز</label></div>
+        <button type="button" onclick="changePin()" id="changePinBtn" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition"><i class="fas fa-key"></i> تغيير الرمز السري</button>
       </div>
 
-      <div class="pt-2 flex gap-2"><button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
+      <div class="pt-2"><button onclick="saveUserProfile()" id="saveProfileBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-sm transition shadow-lg"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
     </div>
   </div>
 </div>
@@ -409,9 +423,9 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="closeAddAddressModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 space-y-4">
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">اسم العنوان (مثال: المحل، المنزل)</label><input type="text" id="newAddrLabel" placeholder="المحل" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-emerald-500"></div>
-      <div><label class="block text-slate-300 font-bold mb-1.5 text-xs">العنوان التفصيلي *</label><input type="text" id="newAddrDetails" placeholder="دمشق - المزة - شارع الجلاء" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm focus:border-emerald-500"></div>
-      <button onclick="saveNewAddress()" id="saveAddressBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl text-sm transition"><i class="fas fa-save"></i> حفظ العنوان</button>
+      <div class="floating-input-group"><input type="text" id="newAddrLabel" placeholder=" "><label for="newAddrLabel">اسم العنوان (مثال: المحل الرئيسي)</label></div>
+      <div class="floating-input-group"><input type="text" id="newAddrDetails" placeholder=" "><label for="newAddrDetails">العنوان التفصيلي *</label></div>
+      <button onclick="saveNewAddress()" id="saveAddressBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl text-sm transition shadow-lg"><i class="fas fa-save"></i> حفظ العنوان</button>
     </div>
   </div>
 </div>
@@ -451,7 +465,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     </div>
     <div class="flex gap-2 mt-4 max-w-md w-full">
       <button onclick="closeInvoiceModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition">إغلاق</button>
-      <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> حفظ كصورة</button>
+      <button onclick="downloadInvoiceImage()" id="downloadInvoiceBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg"><i class="fas fa-download"></i> حفظ كصورة</button>
     </div>
   </div>
 </div>
@@ -461,7 +475,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in">
       <div class="flex items-center justify-between p-4 border-b border-slate-800">
         <h3 class="text-lg font-black gold-text"><i class="fas fa-box-open text-amber-400"></i> تفاصيل المنتج</h3>
-        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
+        <button onclick="closeProduct()" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
       </div>
       <div id="productContent" class="p-4 sm:p-6"></div>
     </div>
@@ -490,7 +504,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
       <button onclick="closeReviews()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600"><i class="fas fa-times"></i></button>
     </div>
     <div class="p-5 max-h-96 overflow-y-auto custom-scrollbar"><p id="revTitle" class="text-white font-black text-center mb-4"></p><div id="revList" class="space-y-3"></div></div>
-    <div class="p-5 border-t border-slate-800"><button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition"><i class="fas fa-pen"></i> أضف تقييمك</button></div>
+    <div class="p-5 border-t border-slate-800"><button onclick="openAddReview()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition shadow-lg"><i class="fas fa-pen"></i> أضف تقييمك</button></div>
   </div>
 </div>
 
@@ -509,7 +523,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <button onclick="setStar(4)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="4"><i class="fas fa-star"></i></button>
         <button onclick="setStar(5)" class="starBtn w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl transition" data-s="5"><i class="fas fa-star"></i></button>
       </div>
-      <textarea id="revComment" rows="3" placeholder="اكتب تعليقك هنا (اختياري)" maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+      <div class="floating-input-group mb-0"><textarea id="revComment" rows="3" placeholder=" " maxlength="200"></textarea><label for="revComment">اكتب تعليقك هنا (اختياري)</label></div>
       <div class="flex gap-2">
         <button onclick="closeAddReview()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
         <button onclick="submitReview()" id="submitRevBtn" class="flex-1 bg-emerald-600 text-white font-black py-3 rounded-xl text-sm"><i class="fas fa-check"></i> نشر</button>
@@ -532,7 +546,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: #0b0f19; color: #f8
         <button onclick="setStoreStar(4)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="4"><i class="fas fa-star"></i></button>
         <button onclick="setStoreStar(5)" class="storeStar w-12 h-12 rounded-xl bg-slate-800 text-slate-600 text-2xl" data-s="5"><i class="fas fa-star"></i></button>
       </div>
-      <textarea id="storeReviewComment" rows="3" placeholder="اكتب رأيك هنا (اختياري)..." maxlength="200" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea>
+      <div class="floating-input-group mb-0"><textarea id="storeReviewComment" rows="3" placeholder=" " maxlength="200"></textarea><label for="storeReviewComment">اكتب رأيك هنا (اختياري)...</label></div>
       <div class="flex gap-2">
         <button onclick="closeStoreRatingModal()" class="flex-1 bg-slate-800 text-slate-300 font-bold py-3 rounded-xl text-sm">إلغاء</button>
         <button onclick="submitStoreRating()" id="submitStoreRatingBtn" class="flex-1 bg-amber-500 text-slate-950 font-black py-3 rounded-xl text-sm"><i class="fas fa-check"></i> نشر</button>
@@ -759,7 +773,12 @@ function displayProducts(items) {
     cnt.innerText = items.length;
     if (items.length === 0) { noRes.classList.remove('hidden'); return; }
     noRes.classList.add('hidden');
-    for (var i = 0; i < items.length; i++) grid.appendChild(buildCard(items[i]));
+    for (var i = 0; i < items.length; i++) {
+      var card = buildCard(items[i]);
+      card.style.animationDelay = (i * 0.05) + 's';
+      card.classList.add('cascade-item');
+      grid.appendChild(card);
+    }
   } catch(e) { console.error('displayProducts:', e); }
 }
 
@@ -779,7 +798,7 @@ function buildCard(p) {
   var avg = avgStars(revs);
 
   var card = document.createElement('div');
-  card.className = 'bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-lg hover:shadow-amber-500/10 transition-all duration-300 h-full group';
+  card.className = 'product-card bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between shadow-lg hover:shadow-amber-500/10 transition-all duration-300 h-full group';
   card.setAttribute('data-name', p.name);
 
   var imgBox = document.createElement('div');
@@ -1148,7 +1167,6 @@ function setQty(pName, flavor, val) {
   saveCart(); updateCart();
 }
 
-// Navigation helpers
 function updateBottomNavActive(activeTab) {
   const cBtn = document.getElementById('navBtnCatalog');
   const cartBtn = document.getElementById('navBtnCart');
@@ -1227,11 +1245,8 @@ window.showAuthView = function() {
 };
 
 window.handleNavProfileClick = function() {
-  if (window.currentUser) {
-    window.showProfileView();
-  } else {
-    window.showAuthView();
-  }
+  if (window.currentUser) window.showProfileView();
+  else window.showAuthView();
 };
 
 window.switchAuthTab = function(tab) {
@@ -1241,15 +1256,15 @@ window.switchAuthTab = function(tab) {
   const regBtn = document.getElementById('tabRegisterBtn');
   
   if (tab === 'register') {
-    loginBox.classList.add('hide-left');
-    regBox.classList.remove('hide-right');
-    loginBtn.classList.remove('auth-tab-active');
-    regBtn.classList.add('auth-tab-active');
+    loginBox.classList.add('hidden');
+    regBox.classList.remove('hidden');
+    loginBtn.className = 'flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white';
+    regBtn.className = 'flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-amber-500/20 text-amber-400 border border-amber-500/30';
   } else {
-    regBox.classList.add('hide-right');
-    loginBox.classList.remove('hide-left');
-    regBtn.classList.remove('auth-tab-active');
-    loginBtn.classList.add('auth-tab-active');
+    regBox.classList.add('hidden');
+    loginBox.classList.remove('hidden');
+    regBtn.className = 'flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white';
+    loginBtn.className = 'flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-amber-500/20 text-amber-400 border border-amber-500/30';
   }
   document.getElementById('authError').classList.add('hidden');
 };
@@ -1362,7 +1377,6 @@ function buildMiniCard(p, type) {
 function startAutoScroll(gridId) {
   const el = document.getElementById(gridId);
   if (!el) return;
-  
   let isHovered = false;
   el.addEventListener('mouseenter', () => isHovered = true);
   el.addEventListener('mouseleave', () => isHovered = false);
@@ -1648,26 +1662,17 @@ window.openEditProfileModal = function() {
   var emailLabel = document.getElementById('profileEmailLabel');
   var emailInput = document.getElementById('profileEmail');
   var phoneInput = document.getElementById('profilePhone');
-  var phoneLockLabel = document.getElementById('profilePhoneLockLabel');
   
   if (isPhonePin && window.currentProfileData.phone) {
     emailLabel.innerText = 'رقم الهاتف (للدخول)';
     emailInput.value = window.currentProfileData.phone;
-    
     phoneInput.value = window.currentProfileData.phone;
     phoneInput.disabled = true;
-    phoneInput.classList.add('bg-slate-900/50', 'text-slate-500', 'cursor-not-allowed');
-    phoneInput.classList.remove('bg-slate-950', 'text-white');
-    if (phoneLockLabel) phoneLockLabel.classList.remove('hidden');
   } else {
     emailLabel.innerText = 'البريد الإلكتروني';
     emailInput.value = window.currentUser.email || '';
-    
     phoneInput.value = window.currentProfileData.phone || '';
     phoneInput.disabled = false;
-    phoneInput.classList.remove('bg-slate-900/50', 'text-slate-500', 'cursor-not-allowed');
-    phoneInput.classList.add('bg-slate-950', 'text-white');
-    if (phoneLockLabel) phoneLockLabel.classList.add('hidden');
   }
   
   document.getElementById('profileName').value = window.currentProfileData.name || '';
@@ -2177,7 +2182,7 @@ document.addEventListener('keydown', function(e) {
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, setPersistence, browserLocalPersistence, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, setPersistence, browserLocalPersistence, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -2210,7 +2215,7 @@ document.addEventListener('keydown', function(e) {
     } catch (error) {
       console.error("Google Login Error:", error);
       const errEl = document.getElementById('authError');
-      errEl.innerText = 'فشل تسجيل الدخول بجوجل. تأكد من فتح الموقع في متصفح (Chrome/Safari) وليس واتساب.';
+      errEl.innerText = 'فشل تسجيل الدخول بجوجل. تأكد من فتح الموقع في متصفح خارجي (Chrome/Safari).';
       errEl.classList.remove('hidden');
     }
   };
@@ -2278,7 +2283,7 @@ document.addEventListener('keydown', function(e) {
       errEl.innerText = error.message || 'حدث خطأ. تأكد من اتصالك.';
       errEl.classList.remove('hidden');
     } finally {
-      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول'; 
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> تسجيل الدخول'; 
       btn.disabled = false;
     }
   };
@@ -2317,7 +2322,7 @@ document.addEventListener('keydown', function(e) {
       if (e.code === 'auth/requires-recent-login') window.showToast('لأسباب أمنية، يرجى تسجيل الخروج ثم الدخول مجدداً قبل تغيير الرمز', 'error');
       else window.showToast('حدث خطأ: ' + e.message, 'error');
     } finally {
-      btn.innerHTML = '<i class="fas fa-key"></i> تغيير الرمز'; btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-key"></i> تغيير الرمز السري'; btn.disabled = false;
     }
   };
 
@@ -2397,10 +2402,10 @@ document.addEventListener('keydown', function(e) {
             if (data.success) {
               window.currentProfileData.avatarUrl = data.data.url;
               document.getElementById('profileAvatarPreview').src = data.data.url;
-              window.showToast('تم رفع الصورة');
+              window.showToast('تم رفع الصورة بنجاح');
             }
-          }).catch(function() { window.showToast('فشل الرفع', 'error'); })
-          .finally(function() { btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; btn.disabled = false; event.target.value = ''; });
+          }).catch(function() { window.showToast('فشل رفع الصورة', 'error'); })
+          .finally(function() { btn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات'; btn.disabled = false; event.target.value = ''; });
       };
       img.src = e.target.result;
     };
@@ -2436,7 +2441,7 @@ document.addEventListener('keydown', function(e) {
       window.showToast('تم حفظ البيانات ✅');
       window.closeEditProfileModal();
     } catch(e) { window.showToast('خطأ في الحفظ', 'error'); }
-    finally { btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; }
+    finally { btn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات'; }
   };
 
   window.saveProfileToFirebase = async function(dataObj) {
@@ -2518,12 +2523,11 @@ document.addEventListener('keydown', function(e) {
 
   window.listenToStoreReviews = function() {
     var q = query(collection(db, "store_reviews"));
-    onSnapshot(q, function(snapshot) {
+    onSnapshot(q, function(qSnap) {
       var reviews = [];
-      snapshot.forEach(function(d) { reviews.push(d.data()); });
+      qSnap.forEach(function(d) { reviews.push(d.data()); });
       reviews.sort(function(a, b) { return (b.createdAt && b.createdAt.seconds || 0) - (a.createdAt && a.createdAt.seconds || 0); });
       window.currentStoreReviews = reviews;
-      if (typeof window.renderStoreReviews === 'function') window.renderStoreReviews(reviews);
     });
   };
 
