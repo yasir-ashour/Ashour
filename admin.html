@@ -6,19 +6,19 @@
 <title>لوحة إدارة الكتالوج - مركز عاشور</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="manifest" href="manifest-admin.json">
-<meta name="theme-color" content="#0b0f19">
+<meta name="theme-color" content="#0a0e1a">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; }
-.gold-gradient-text { background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #997415 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; }
+.gold-gradient-text { background: linear-gradient(135deg, #fce08f 0%, #d4af37 50%, #b8860b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .flavor-tag { display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s; }
 @keyframes modalPop { from { transform: scale(0.85) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 @keyframes iconPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } }
-.review-star.active { background: #d4af37 !important; color: #0b0f19 !important; }
+.review-star.active { background: #d4af37 !important; color: #0a0e1a !important; }
 .invoice-price-input::-webkit-outer-spin-button, .invoice-price-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .invoice-price-input { -moz-appearance: textfield; }
 </style>
@@ -26,7 +26,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
 <body class="min-h-screen">
 
 <!-- شاشة تسجيل الدخول -->
-<div id="loginScreen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
+<div id="loginScreen" class="fixed inset-0 z-50 bg-[#0a0e1a] flex items-center justify-center p-6">
   <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
       <i class="fas fa-shield-halved text-3xl text-amber-400"></i>
@@ -42,26 +42,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </button>
     <p id="adminLoginError" class="hidden text-rose-400 text-sm mt-3 font-bold"></p>
     <p class="text-[10px] text-slate-500 mt-4"><i class="fas fa-lock"></i> الدخول مقتصر على الأدمن فقط</p>
-  </div>
-</div>
-
-<!-- شاشة القفل السريع -->
-<div id="pinLockScreen" class="hidden fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-6">
-  <div class="bg-slate-900 border border-emerald-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
-    <div class="w-20 h-20 rounded-full bg-emerald-500/10 border-2 border-emerald-500/40 flex items-center justify-center mx-auto mb-5">
-      <i class="fas fa-lock text-3xl text-emerald-400"></i>
-    </div>
-    <h1 class="text-2xl font-black gold-gradient-text mb-2">مرحباً بعودتك</h1>
-    <p class="text-slate-400 text-sm mb-6">أدخل رمز الأمان السريع (PIN)</p>
-    <div class="mb-4">
-      <input type="password" id="adminUnlockPin" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="••••" class="w-full bg-slate-950 text-white p-4 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 text-center text-3xl tracking-[1em] font-mono" onkeydown="if(event.key==='Enter') window.unlockAdmin()">
-    </div>
-    <button onclick="window.unlockAdmin()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3.5 rounded-xl transition">
-      <i class="fas fa-unlock-alt"></i> فتح اللوحة
-    </button>
-    <button onclick="window.forgetAdminPin()" class="w-full mt-3 text-xs text-slate-400 hover:text-rose-400 underline transition">
-      نسيت الرمز؟ (تسجيل خروج)
-    </button>
   </div>
 </div>
 
@@ -170,25 +150,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     </div>
     <div class="border-t border-slate-800 pt-5"><label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان المتجر</label><input type="text" id="setAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label><input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"></div>
-  </div>
-
-  <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-4 mt-5">
-    <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-      <i class="fas fa-lock text-emerald-400"></i> قفل الأمان السريع (PIN)
-    </h2>
-    <p class="text-xs text-slate-400">عند تفعيل هذا الرمز، ستحتاج فقط لإدخاله في المرات القادمة لفتح اللوحة بدلاً من كتابة كلمة المرور.</p>
-    <div>
-      <label class="block text-slate-300 font-bold mb-1.5 text-sm">رمز PIN (4 أرقام)</label>
-      <input type="password" id="setAdminPin" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="مثال: 1234" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm font-mono text-center tracking-widest">
-    </div>
-    <div class="flex gap-2">
-      <button onclick="saveAdminPin()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center justify-center gap-2">
-        <i class="fas fa-save"></i> حفظ الرمز
-      </button>
-      <button onclick="removeAdminPin()" class="bg-slate-800 hover:bg-rose-900 text-rose-400 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center justify-center gap-2">
-        <i class="fas fa-trash"></i> إلغاء تفعيل الرمز
-      </button>
-    </div>
   </div>
 
   <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
@@ -334,7 +295,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
     <input type="file" id="importFile" accept=".js,.json" class="hidden" onchange="importData(event)">
     <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-upload"></i> اختيار ملف للاستيراد</button>
   </div>
-  <!-- ✅ جديد: تحديث من السيرفر -->
   <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-cloud-download-alt text-sky-400"></i> تحديث من السيرفر</h2>
     <p class="text-xs text-slate-400 mb-3 leading-relaxed">مسح البيانات المحلية (localStorage) وإعادة تحميل آخر إصدار من <code class="bg-slate-950 px-1.5 py-0.5 rounded font-mono text-amber-400">catalog-data.js</code> المنشور على GitHub. مفيد إذا حدّثت الملف من جهاز آخر ولا ترى التغييرات هنا.</p>
@@ -700,7 +660,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0b0f19; color: #f8fafc; 
   </div>
 </div>
 
-</div><!-- /adminApp --><script>
+</div><!-- /adminApp -->
+
+<script>
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const IDLE_TIMEOUT = 30 * 60 * 1000;
@@ -717,8 +679,7 @@ let currentReviews = [];
 let currentReviewStars = 0;
 let currentProductName = null;
 let currentInvoiceOrder = null;
-
-// ✅ تم إزالة كود serviceWorker.register('sw-admin.js') بناء على طلبك
+let _dataReady = false;
 
 function escapeHtml(s) { 
   return String(s == null ? '' : s)
@@ -753,46 +714,6 @@ window.openFirebaseConsole = function() {
   window.open(FIREBASE_CONSOLE_URL, '_blank', 'noopener,noreferrer');
 };
 
-// ✅ دوال قفل PIN
-window.saveAdminPin = function() {
-  const pin = document.getElementById('setAdminPin').value.trim();
-  if (pin.length === 4 && /^\d+$/.test(pin)) {
-    localStorage.setItem('ashour_admin_pin', pin);
-    showToast('تم تفعيل القفل السريع ✅');
-    document.getElementById('setAdminPin').value = '';
-  } else {
-    showToast('يرجى إدخال 4 أرقام صحيحة', 'error');
-  }
-};
-window.removeAdminPin = function() {
-  if (confirm('إلغاء تفعيل القفل السريع؟')) {
-    localStorage.removeItem('ashour_admin_pin');
-    showToast('تم إلغاء القفل السريع');
-  }
-};
-window.unlockAdmin = function() {
-  const inputPin = document.getElementById('adminUnlockPin').value;
-  const savedPin = localStorage.getItem('ashour_admin_pin');
-  if (inputPin === savedPin) {
-    document.getElementById('pinLockScreen').classList.add('hidden');
-    document.getElementById('adminApp').classList.remove('hidden');
-    if (typeof initAdmin === 'function') initAdmin();
-    if (typeof startIdleWatcher === 'function') startIdleWatcher();
-    if (typeof startOrdersListener === 'function') startOrdersListener();
-    document.getElementById('adminUnlockPin').value = '';
-  } else {
-    showToast('الرمز السري خطأ', 'error');
-    document.getElementById('adminUnlockPin').value = '';
-  }
-};
-window.forgetAdminPin = function() {
-  if (confirm('تسجيل الخروج لحذف الرمز؟')) {
-    localStorage.removeItem('ashour_admin_pin');
-    if (typeof window.adminLogout === 'function') window.adminLogout();
-    else location.reload();
-  }
-};
-
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData)); document.getElementById('dirtyBadge').classList.remove('hidden'); }
 function clearDirty() { document.getElementById('dirtyBadge').classList.add('hidden'); }
 
@@ -812,14 +733,17 @@ function resolveConfirm(answer) {
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
-  localStorage.removeItem('ashour_admin_pin');
-  if (typeof window.adminLogout === 'function') { window.adminLogout(); } else { sessionStorage.removeItem('ashour_admin_ok'); location.reload(); }
+  if (typeof window.adminLogout === 'function') { 
+    window.adminLogout(); 
+  } else { 
+    location.reload(); 
+  }
 }
 
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
   _idleTimer = setTimeout(() => {
-    if (document.getElementById('adminApp').classList.contains('hidden') === false) { 
+    if (!document.getElementById('adminApp').classList.contains('hidden')) { 
       showToast('تم تسجيل الخروج تلقائياً بسبب عدم النشاط', 'error');
       setTimeout(() => logoutAdmin(), 1500);
     }
@@ -836,13 +760,14 @@ function loadInitialData() {
   return new Promise((resolve) => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      try { const d = JSON.parse(stored); if (d && Array.isArray(d.products)) { catalogData = d; return resolve(); } } catch (e) {}
+      try { const d = JSON.parse(stored); if (d && Array.isArray(d.products)) { catalogData = d; _dataReady = true; return resolve(); } } catch (e) {}
     }
     const script = document.createElement('script'); script.src = 'catalog-data.js?v=' + Date.now();
     script.onload = () => {
       if (window.catalogData && Array.isArray(window.catalogData.products)) {
         catalogData = { products: window.catalogData.products, settings: window.catalogData.settings || {}, categories: window.catalogData.categories || [] };
       }
+      _dataReady = true;
       resolve();
     };
     script.onerror = () => {
@@ -850,11 +775,14 @@ function loadInitialData() {
         products: [],
         settings: { storeName: 'مركز عاشور للتجارة', logoUrl: 'logo.png', orderWhatsApp: '963982572810', inquiryWhatsApp: '963959248901', address: 'دمشق أوتوستراد درعا الدولي', mapUrl: 'https://maps.app.goo.gl/djUWNAnBhh3pPwfn6', githubUser: 'yasir-ashour', githubRepo: 'Ashour', githubBranch: 'main' },
         categories: ['بسكويت', 'شيبس', 'سكاكر وعلكة', 'عصائر ومشروبات', 'قهوة']
-      }; resolve();
+      };
+      _dataReady = true;
+      resolve();
     };
     document.head.appendChild(script);
   });
 }
+window.isDataReady = () => _dataReady;
 
 window.refreshFromServer = async function() {
   if (!confirm('سيتم مسح البيانات المحلية وإعادة تحميل آخر إصدار من السيرفر.\nأي تعديلات غير منشورة ستُفقد.\n\nمتابعة؟')) return;
@@ -865,12 +793,15 @@ window.refreshFromServer = async function() {
 };
 
 function initAdmin() { 
+  // إذا لم تُحمّل البيانات بعد، أعد المحاولة
+  if (!_dataReady) {
+    setTimeout(initAdmin, 200);
+    return;
+  }
   renderCategories(); 
   renderSettingsInputs(); 
   renderProductList(); 
   renderStats(); 
-  const pinBtn = document.getElementById('setAdminPin'); 
-  if(pinBtn) pinBtn.value = localStorage.getItem('ashour_admin_pin') || ''; 
 }
 window.initAdmin = initAdmin;
 
@@ -1498,7 +1429,6 @@ window.stopScanner = function() {
 
 // Invoice
 window.openInvoiceModal = function(orderId) {
-  // ✅ إصلاح: استخدام window.allOrdersCache التي تُعرّف في السكربت الثاني
   const order = window.allOrdersCache.find(o => o.id === orderId);
   if (!order) {
     showToast('لم يتم العثور على الطلب', 'error');
@@ -1798,7 +1728,6 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
-  // ✅ إصلاح: تعريف المتغير على window ليكون متاحاً للسكربت الأول
   window.allOrdersCache = [];
   let knownOrderIds = new Set();
   let isFirstLoad = true;
@@ -1904,7 +1833,6 @@ document.addEventListener('keydown', (e) => {
       if (order.status === 'جاري التوصيل') statusColor = 'bg-sky-500 text-white';
       if (order.status === 'تم التسليم') statusColor = 'bg-emerald-600 text-white';
       
-      // ✅ عرض كود الطلب 4 أرقام إذا وجد
       const displayCode = order.orderCode ? `#${order.orderCode}` : `#${order.id.slice(-4).toUpperCase()}`;
       
       return `
@@ -2035,7 +1963,6 @@ document.addEventListener('keydown', (e) => {
     return revs;
   };
 
-  // ✅ إصلاح ثغرة الحقن في زر استعادة العملاء
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
     container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p>جاري التحميل...</p></div>';
@@ -2103,7 +2030,6 @@ document.addEventListener('keydown', (e) => {
         container.appendChild(card);
       });
       
-      // ✅ Event delegation بدل inline onclick
       container.querySelectorAll('.recover-btn').forEach(btn => {
         btn.onclick = () => {
           window.openCustomerRecovery(
@@ -2122,30 +2048,32 @@ document.addEventListener('keydown', (e) => {
   onAuthStateChanged(auth, async (user) => {
     const loginScreen = document.getElementById('loginScreen');
     const adminApp = document.getElementById('adminApp');
-    const pinLockScreen = document.getElementById('pinLockScreen');
     const errEl = document.getElementById('adminLoginError');
     const btn = document.getElementById('adminLoginBtn');
     
     if (user && user.uid === ADMIN_UID) {
+      // ✅ تسجيل دخول ناجح → عرض اللوحة مباشرة (بدون PIN)
       loginScreen.classList.add('hidden');
-      pinLockScreen.classList.add('hidden');
-      adminApp.classList.add('hidden'); 
+      adminApp.classList.remove('hidden');
       if (errEl) errEl.classList.add('hidden');
       
-      if (localStorage.getItem('ashour_admin_pin')) {
-        pinLockScreen.classList.remove('hidden');
-        setTimeout(() => document.getElementById('adminUnlockPin').focus(), 100);
-      } else {
-        adminApp.classList.remove('hidden');
-        if (typeof initAdmin === 'function') initAdmin();
-        if (typeof startIdleWatcher === 'function') startIdleWatcher();
-        if (typeof startOrdersListener === 'function') startOrdersListener();
-      }
+      // ✅ انتظر تحميل البيانات قبل بدء أي عرض
+      const waitForData = setInterval(() => {
+        if (typeof window.isDataReady === 'function' && window.isDataReady()) {
+          clearInterval(waitForData);
+          if (typeof initAdmin === 'function') initAdmin();
+        }
+      }, 150);
+      setTimeout(() => clearInterval(waitForData), 10000);
+      
+      if (typeof startIdleWatcher === 'function') startIdleWatcher();
+      if (typeof startOrdersListener === 'function') startOrdersListener();
+      
     } else if (user) {
+      // مستخدم آخر غير الأدمن
       await signOut(auth);
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
-      pinLockScreen.classList.add('hidden');
       if (errEl) {
         errEl.innerText = '❌ هذا الحساب ليس لديه صلاحية الأدمن';
         errEl.classList.remove('hidden');
@@ -2156,9 +2084,9 @@ document.addEventListener('keydown', (e) => {
       }
       if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     } else {
+      // غير مسجل
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
-      pinLockScreen.classList.add('hidden');
       if (btn) {
         btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
         btn.disabled = false;
