@@ -74,7 +74,21 @@ body {
 @media (min-width: 640px) { #productsGrid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1024px) { #productsGrid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
 
-.flavor-name-full { white-space: normal !important; word-break: break-word; overflow-wrap: break-word; text-overflow: unset !important; overflow: visible !important; max-width: none !important; line-height: 1.3; font-size: 12px; }
+/* ✅ إصلاح مشكلة النكهات المقطعة (تعديل CSS) */
+.flavor-name-full {
+  white-space: normal !important;
+  word-break: normal !important; /* منع كسر الكلمة لحروف */
+  overflow-wrap: normal !important;
+  text-overflow: unset !important;
+  overflow: visible !important;
+  max-width: none !important;
+  line-height: 1.3;
+  font-size: 13px;
+  flex: 1; /* أخذ المساحة المتاحة */
+  min-width: 0;
+  text-align: right;
+}
+
 #darkModeBtn { display: none !important; }
 
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(15, 23, 42, 0.97); backdrop-filter: blur(12px); border-top: 1px solid #1e293b; padding: 8px 6px; padding-bottom: max(8px, env(safe-area-inset-bottom)); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); }
@@ -772,14 +786,11 @@ function showToast(name, type) {
 }
 window.showToast = showToast;
 
-/* ✅ التعديل الأول: دالة مشاركة المنتج */
 window.shareProduct = function(productName) {
   var p = products.find(function(prod) { return prod.name === productName; });
   if (!p) return;
-  
   var url = window.location.href.split('?')[0] + '?product=' + encodeURIComponent(p.name);
   var text = 'اطلب ' + p.name + ' من مركز عاشور للتجارة';
-  
   if (navigator.share) {
     navigator.share({ title: 'مركز عاشور للتجارة', text: text, url: url }).catch(function(err) { console.log('Share failed', err); });
   } else {
@@ -822,10 +833,22 @@ function replaceImgOnly(imgEl) {
   imgEl.parentNode.replaceChild(fallback, imgEl);
 }
 
+/* ✅ إصلاح جذري للنكهات المقطعة */
 function normalizeFlavors(flavors) {
   if (!flavors) return [{ name: 'العدد', soldOut: false }];
   if (Array.isArray(flavors)) {
     if (flavors.length === 0) return [{ name: 'العدد', soldOut: false }];
+    
+    // فحص إذا كانت المصفوفة حروفاً مقطعة (نصوص)
+    if (flavors.length > 1 && flavors.every(function(f) { return typeof f === 'string' && f.length === 1; })) {
+      return [{ name: flavors.join('').trim(), soldOut: false }];
+    }
+    
+    // فحص إذا كانت المصفوفة كائنات تحتوي على حروف مقطعة
+    if (flavors.length > 1 && flavors.every(function(f) { return f && typeof f === 'object' && f.name && typeof f.name === 'string' && f.name.length === 1; })) {
+      return [{ name: flavors.map(function(f){ return f.name; }).join('').trim(), soldOut: false }];
+    }
+
     return flavors.map(function(f) {
       if (typeof f === 'string') return { name: f, soldOut: false };
       if (f && typeof f === 'object') {
@@ -919,7 +942,6 @@ function buildCard(p) {
     imgBox.appendChild(offerBadge);
   }
 
-  /* ✅ التعديل الثاني: زر المشاركة في بطاقة المنتج */
   var shareBtn = document.createElement('button');
   shareBtn.type = 'button';
   shareBtn.className = 'absolute bottom-2 right-2 bg-slate-950/90 border border-slate-700 w-9 h-9 rounded-full flex items-center justify-center z-20 transition hover:scale-110 text-amber-400';
@@ -1919,7 +1941,6 @@ function openProduct(pName) {
   catEl.innerText = p.category || '';
   info.appendChild(catEl);
 
-  /* ✅ التعديل الثالث: زر المشاركة في نافذة تفاصيل المنتج */
   var titleContainer = document.createElement('div');
   titleContainer.className = 'flex justify-between items-start gap-2 mb-2';
   
