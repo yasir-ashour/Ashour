@@ -70,112 +70,32 @@ body {
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
 
-/* ✅ شبكة منتجات أوسع وأريح للعين */
-#productsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-@media (min-width: 640px) {
-  #productsGrid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-}
-@media (min-width: 1024px) {
-  #productsGrid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
-}
+#productsGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (min-width: 640px) { #productsGrid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+@media (min-width: 1024px) { #productsGrid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
 
-/* ✅ منع قطع أسماء النكهات */
-.flavor-name-full {
-  white-space: normal !important;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  text-overflow: unset !important;
-  overflow: visible !important;
-  max-width: none !important;
-  line-height: 1.3;
-  font-size: 12px;
-}
-
-/* ✅ إخفاء زر الوضع الليلي نهائياً */
+.flavor-name-full { white-space: normal !important; word-break: break-word; overflow-wrap: break-word; text-overflow: unset !important; overflow: visible !important; max-width: none !important; line-height: 1.3; font-size: 12px; }
 #darkModeBtn { display: none !important; }
 
-/* ✅ شريط التنقل السفلي */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 50;
-  background: rgba(15, 23, 42, 0.97);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid #1e293b;
-  padding: 8px 6px;
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
-}
-.bottom-nav button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  color: #94a3b8;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 12px;
-  transition: all 0.25s;
-  position: relative;
-  background: transparent;
-}
-.bottom-nav button.active {
-  color: #d4af37;
-}
-.bottom-nav button i {
-  font-size: 20px;
-  margin-bottom: 2px;
-}
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(15, 23, 42, 0.97); backdrop-filter: blur(12px); border-top: 1px solid #1e293b; padding: 8px 6px; padding-bottom: max(8px, env(safe-area-inset-bottom)); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); }
+.bottom-nav button { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #94a3b8; font-size: 10px; font-weight: 700; padding: 6px 14px; border-radius: 12px; transition: all 0.25s; position: relative; background: transparent; }
+.bottom-nav button.active { color: #d4af37; }
+.bottom-nav button i { font-size: 20px; margin-bottom: 2px; }
 .bottom-nav button:active { transform: scale(0.94); }
-.bottom-nav .nav-badge {
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  transform: translateX(-50%) translateX(14px);
-  background: #ef4444;
-  color: white;
-  font-size: 9px;
-  font-weight: 900;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #0f172a;
-}
+.bottom-nav .nav-badge { position: absolute; top: 2px; left: 50%; transform: translateX(-50%) translateX(14px); background: #ef4444; color: white; font-size: 9px; font-weight: 900; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px solid #0f172a; }
 .nav-badge.hidden-badge { display: none; }
-
-/* ✅ مساحة سفلية للشريط */
 body { padding-bottom: 80px; }
 </style>
 
 <script>
-  // ✅ إزالة Service Worker القديم لتحديث الموقع فوراً بعد النشر
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(regs) {
-      regs.forEach(function(reg) { reg.unregister(); });
-    }).catch(function() {});
-    if (window.caches && caches.keys) {
-      caches.keys().then(function(names) {
-        names.forEach(function(name) { caches.delete(name); });
-      }).catch(function() {});
-    }
+    navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(reg) { reg.unregister(); }); }).catch(function() {});
+    if (window.caches && caches.keys) { caches.keys().then(function(names) { names.forEach(function(name) { caches.delete(name); }); }).catch(function() {}); }
   }
 </script>
 </head>
 <body class="min-h-screen">
 
-<!-- شاشة الترحيب -->
 <div id="welcomeScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
   <div class="bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
   <div class="glass-card max-w-sm w-full rounded-[2.5rem] p-8 flex flex-col items-center relative z-10 fade-in">
@@ -191,23 +111,19 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
-<!-- Preloader -->
 <div id="preloader" class="fixed inset-0 z-[150] bg-[#070a12] flex flex-col items-center justify-center p-6 text-center">
   <div class="w-72 h-72 mb-2 flex items-center justify-center glow"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-3 p-0.5 overflow-hidden mb-3"><div id="preBar" class="bg-gradient-to-r from-amber-600 to-amber-200 h-full rounded-full w-0"></div></div>
 </div>
 
-<!-- Toast -->
 <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[300] hidden bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p class="text-sm font-bold" id="toastMsg"></p></div>
 
-<!-- Offline -->
 <div id="offlineScreen" class="hidden fixed inset-0 z-[250] bg-[#0b0f19] flex flex-col items-center justify-center p-6 text-center">
   <i class="fas fa-wifi text-6xl text-rose-500 mb-4"></i>
   <h2 class="text-2xl font-black text-white mb-2">لا يوجد اتصال</h2>
   <button onclick="location.reload()" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl mt-4"><i class="fas fa-sync-alt"></i> إعادة المحاولة</button>
 </div>
 
-<!-- Topbar -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-map-marker-alt ml-1"></i> دمشق - أوتوستراد درعا</span>
   <div class="flex items-center gap-2">
@@ -216,7 +132,6 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
-<!-- Header -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
   <div class="max-w-7xl mx-auto px-3 py-2 flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="showCatalog()">
@@ -228,13 +143,10 @@ body { padding-bottom: 80px; }
     </div>
     <div class="flex items-center gap-2 flex-shrink-0">
       <button onclick="showCart()" class="bg-amber-500 text-slate-950 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm transition hover:scale-105">
-        <i class="fas fa-shopping-basket text-lg"></i>
-        <span class="hidden sm:inline">السلة</span>
-        <span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
+        <i class="fas fa-shopping-basket text-lg"></i><span class="hidden sm:inline">السلة</span><span id="cartBadge" class="bg-slate-950 text-amber-400 font-extrabold px-2 py-0.5 rounded-full text-xs">0</span>
       </button>
       <button id="loginBtn" onclick="openAuthModal()" class="bg-slate-900 border border-amber-500 text-amber-400 font-black px-3 py-2 rounded-full shadow-lg flex items-center gap-2 text-xs sm:text-sm transition hover:bg-amber-500 hover:text-slate-950">
-        <i class="fas fa-user-circle text-lg"></i>
-        <span class="hidden sm:inline">دخول</span>
+        <i class="fas fa-user-circle text-lg"></i><span class="hidden sm:inline">دخول</span>
       </button>
       <button id="userProfileBtn" onclick="showProfileView()" class="hidden bg-slate-800 border-2 border-emerald-500 text-white font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-2 transition hover:bg-slate-700 relative">
         <img id="userAvatar" src="logo.png" class="w-8 h-8 rounded-full object-cover">
@@ -247,24 +159,18 @@ body { padding-bottom: 80px; }
   </div>
 </header>
 
-<!-- Auth Modal -->
 <div id="authModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-[2rem] max-w-sm w-full shadow-2xl relative my-8 auth-container fade-in" style="box-shadow: 0 0 40px rgba(212,175,55,0.15);">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
-      <div class="text-center mb-6">
-        <img src="logo.png" class="w-20 h-20 mx-auto object-contain mb-2 glow">
-        <h2 class="text-2xl font-black gold-text">مركز عاشور</h2>
-      </div>
+      <div class="text-center mb-6"><img src="logo.png" class="w-20 h-20 mx-auto object-contain mb-2 glow"><h2 class="text-2xl font-black gold-text">مركز عاشور</h2></div>
       <div class="flex bg-slate-950 p-1 rounded-2xl mb-6 relative">
         <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all auth-tab-active bg-transparent text-slate-400 border border-transparent">تسجيل الدخول</button>
         <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-slate-400 hover:text-white">إنشاء حساب</button>
       </div>
       <div class="relative h-[320px]">
         <div id="loginFormBox" class="auth-form space-y-4 absolute w-full">
-          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل
-          </button>
+          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-3 transition shadow-lg"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> الدخول بجوجل</button>
           <div class="flex items-center"><div class="flex-grow border-t border-slate-700"></div><span class="px-3 text-slate-500 text-xs">أو</span><div class="flex-grow border-t border-slate-700"></div></div>
           <input type="tel" id="pinPhone" placeholder="رقم الهاتف (09xxxxxxxx)" maxlength="15" dir="ltr" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono focus:border-amber-500 focus:outline-none">
           <input type="password" id="pinCode" placeholder="رمز سري من 6 أرقام" maxlength="6" inputmode="numeric" dir="ltr" onkeydown="if(event.key==='Enter') handlePhonePinLogin()" class="w-full bg-slate-950 text-white p-3.5 rounded-xl border border-slate-700 text-sm text-center font-mono tracking-widest focus:border-amber-500 focus:outline-none">
@@ -273,10 +179,7 @@ body { padding-bottom: 80px; }
           <p class="text-rose-500 text-xs text-center mt-2 hidden bg-rose-500/10 p-2 rounded-lg" id="authError"></p>
         </div>
         <div id="registerFormBox" class="auth-form hide-right space-y-4 absolute w-full">
-          <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-center">
-            <i class="fas fa-user-plus text-2xl text-amber-400 mb-2"></i>
-            <p class="text-xs text-slate-300 leading-relaxed">أدخل رقم هاتفك ورمزاً سرياً مخصصاً في تبويب "تسجيل الدخول" — سيتم إنشاء حسابك تلقائياً.</p>
-          </div>
+          <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-center"><i class="fas fa-user-plus text-2xl text-amber-400 mb-2"></i><p class="text-xs text-slate-300 leading-relaxed">أدخل رقم هاتفك ورمزاً سرياً مخصصاً في تبويب "تسجيل الدخول" — سيتم إنشاء حسابك تلقائياً.</p></div>
           <button onclick="switchAuthTab('login')" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl">اذهب لإنشاء الحساب</button>
         </div>
       </div>
@@ -284,34 +187,15 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
-<!-- Guide Modal -->
 <div id="guideModal" class="hidden fixed inset-0 z-[160] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in p-6">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
-      <h3 class="text-xl font-black gold-text"><i class="fas fa-book-open"></i> كيف تطلب من مركز عاشور؟</h3>
-      <button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button>
-    </div>
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4"><h3 class="text-xl font-black gold-text"><i class="fas fa-book-open"></i> كيف تطلب من مركز عاشور؟</h3><button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button></div>
     <div class="space-y-3 text-sm text-slate-300 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
-      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-        <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">1</div>
-        <div><h4 class="font-bold text-white text-sm mb-1">تصفح المنتجات</h4><p class="text-xs">اختر القسم أو استخدم شريط البحث للعثور على الصنف المطلوب.</p></div>
-      </div>
-      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-        <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">2</div>
-        <div><h4 class="font-bold text-white text-sm mb-1">حدد العدد</h4><p class="text-xs">اضغط (+) أو (-) لتحديد عدد العلب/الطرود. اضغط مطولاً للزيادة السريعة.</p></div>
-      </div>
-      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-        <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">3</div>
-        <div><h4 class="font-bold text-white text-sm mb-1">أضف للسلة</h4><p class="text-xs">بعد تحديد الكميات، اضغط "إضافة" لكل منتج لجمعه في السلة.</p></div>
-      </div>
-      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-        <div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">4</div>
-        <div><h4 class="font-bold text-white text-sm mb-1">أرسل الطلب</h4><p class="text-xs">انتقل للسلة، املأ بياناتك، ثم اضغط "إتمام الطلب" ليصلنا عبر واتساب.</p></div>
-      </div>
-      <div class="flex gap-3 items-start bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/30">
-        <div class="w-8 h-8 bg-emerald-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-truck text-sm"></i></div>
-        <div><h4 class="font-bold text-emerald-300 text-sm mb-1">الدفع عند الاستلام</h4><p class="text-xs text-emerald-200/80">توصيل مجاني داخل حي القدم ومحيطه. الدفع نقداً عند استلام طلبك.</p></div>
-      </div>
+      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800"><div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">1</div><div><h4 class="font-bold text-white text-sm mb-1">تصفح المنتجات</h4><p class="text-xs">اختر القسم أو استخدم شريط البحث للعثور على الصنف المطلوب.</p></div></div>
+      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800"><div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">2</div><div><h4 class="font-bold text-white text-sm mb-1">حدد العدد</h4><p class="text-xs">اضغط (+) أو (-) لتحديد عدد العلب/الطرود. اضغط مطولاً للزيادة السريعة.</p></div></div>
+      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800"><div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">3</div><div><h4 class="font-bold text-white text-sm mb-1">أضف للسلة</h4><p class="text-xs">بعد تحديد الكميات، اضغط "إضافة" لكل منتج لجمعه في السلة.</p></div></div>
+      <div class="flex gap-3 items-start bg-slate-950/60 p-3 rounded-xl border border-slate-800"><div class="w-8 h-8 bg-amber-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0">4</div><div><h4 class="font-bold text-white text-sm mb-1">أرسل الطلب</h4><p class="text-xs">انتقل للسلة، املأ بياناتك، ثم اضغط "إتمام الطلب" ليصلنا عبر واتساب.</p></div></div>
+      <div class="flex gap-3 items-start bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/30"><div class="w-8 h-8 bg-emerald-500 text-slate-950 font-black rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-truck text-sm"></i></div><div><h4 class="font-bold text-emerald-300 text-sm mb-1">الدفع عند الاستلام</h4><p class="text-xs text-emerald-200/80">توصيل مجاني داخل حي القدم ومحيطه. الدفع نقداً عند استلام طلبك.</p></div></div>
     </div>
     <div class="mt-5"><button onclick="closeGuideModal()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl hover:bg-amber-400 transition">فهمت، ابدأ التسوق</button></div>
   </div>
@@ -443,7 +327,7 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
-<!-- Profile View (بدون تبويب المفضلة) -->
+<!-- Profile View -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in">
   <div class="bg-gradient-to-b from-[#1e293b] to-[#0b0f19] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
@@ -461,7 +345,6 @@ body { padding-bottom: 80px; }
     </div>
   </div>
   <div class="max-w-4xl mx-auto w-full px-3 mt-6">
-    <!-- ✅ تم حذف تبويب المفضلة -->
     <div class="flex border-b border-slate-800 mb-6">
       <button onclick="switchAppTab('orders')" id="btnTabOrders" class="flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 flex items-center justify-center gap-2"><i class="fas fa-shopping-bag"></i> طلباتي</button>
       <button onclick="switchAppTab('addresses')" id="btnTabAddresses" class="flex-1 py-3 text-sm font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-2"><i class="fas fa-map-marker-alt"></i> العناوين</button>
@@ -653,7 +536,7 @@ body { padding-bottom: 80px; }
   <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-emerald-400 transition hover:scale-110"><i class="fab fa-whatsapp text-3xl"></i></a>
 </div>
 
-<!-- ✅ شريط التنقل السفلي (البند 13) -->
+<!-- شريط التنقل السفلي -->
 <nav class="bottom-nav">
   <button onclick="showCatalog()" id="navBtnCatalog" class="active">
     <i class="fas fa-store"></i>
@@ -700,25 +583,18 @@ var _lastPushTime = 0;
 window.storeStars = 0;
 window.currentStoreReviews = [];
 
-/* ============ التخزين المحلي للسلة ============ */
 try {
   cart = JSON.parse(localStorage.getItem('ashour_cart') || '{}');
   if (!cart || typeof cart !== 'object') cart = {};
 } catch(e) { cart = {}; }
 
-/* ============ الأصوات التفاعلية (محسّن - البند 12) ============ */
 var audioCtx = null;
 function initAudio() {
   if (!audioCtx) {
-    try {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    } catch(e) {}
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
   }
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
 }
-
 function playClickSound(type) {
   try {
     initAudio();
@@ -738,13 +614,8 @@ function playClickSound(type) {
   } catch(e) {}
 }
 window.playClickSound = playClickSound;
+document.addEventListener('pointerdown', function() { initAudio(); }, { once: true });
 
-// ✅ تهيئة الصوت عند أول تفاعل (ضروري للمتصفحات)
-document.addEventListener('pointerdown', function() {
-  initAudio();
-}, { once: true });
-
-/* ============ أدوات مساعدة ============ */
 function normalizePhone(phone) {
   var p = String(phone || '').replace(/[^\d]/g, '');
   if (p.startsWith('00963')) p = p.slice(5);
@@ -754,13 +625,8 @@ function normalizePhone(phone) {
 }
 window.normalizePhone = normalizePhone;
 
-function validatePhone(p) {
-  if (!/^9[2-9]\d{7}$/.test(p)) return false;
-  if (/^(\d)\1{8}$/.test(p)) return false;
-  return true;
-}
+function validatePhone(p) { return /^9[2-9]\d{7}$/.test(p) && !/^(\d)\1{8}$/.test(p); }
 window.validatePhone = validatePhone;
-
 function validatePin(pin) { return /^\d{6}$/.test(pin); }
 window.validatePin = validatePin;
 function phoneToEmail(phone) { return phone + '@ashour.local'; }
@@ -776,12 +642,10 @@ window.forgotPinWhatsApp = function() {
   window.open('https://wa.me/963959248901?text=' + msg, '_blank');
 };
 
-/* ============ حالة الاتصال ============ */
 window.addEventListener('online', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.add('hidden'); });
 window.addEventListener('offline', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); });
 if (!navigator.onLine) { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); }
 
-/* ============ History / Back ============ */
 window.pushBackState = function() {
   var now = Date.now();
   if (now - _lastPushTime < 300) return;
@@ -810,7 +674,6 @@ window.addEventListener('popstate', function() {
   }
 });
 
-/* ============ escapes ============ */
 function esc(s) {
   if (s === null || s === undefined) return '';
   s = String(s);
@@ -841,7 +704,6 @@ function toBlob(b64) {
   } catch(e) { return b64; }
 }
 
-/* ✅ تحسين تحميل الصور (البند 14) */
 function imgUrl(u, size) {
   if (!u) return '';
   if (u.indexOf('data:') === 0 || u.length > 2000) return u;
@@ -874,7 +736,6 @@ function applyWa() {
   if (f) f.href = 'https://wa.me/' + inquiryWa + '?text=' + t;
 }
 
-/* ============ بيانات المستلم ============ */
 function saveCust() {
   try {
     var cn = document.getElementById('custName'); var cs = document.getElementById('shopName');
@@ -899,7 +760,6 @@ function loadCust() {
   } catch(e) {}
 }
 
-/* ============ Toast ============ */
 function showToast(name, type) {
   type = type || 'success';
   var t = document.getElementById('toast'); var msg = document.getElementById('toastMsg');
@@ -912,11 +772,24 @@ function showToast(name, type) {
 }
 window.showToast = showToast;
 
-function stars(n) { n = Math.max(0, Math.min(5, Math.floor(n || 0))); return '★'.repeat(n) + '☆'.repeat(5 - n); }
+/* ✅ التعديل الأول: دالة مشاركة المنتج */
+window.shareProduct = function(productName) {
+  var p = products.find(function(prod) { return prod.name === productName; });
+  if (!p) return;
+  
+  var url = window.location.href.split('?')[0] + '?product=' + encodeURIComponent(p.name);
+  var text = 'اطلب ' + p.name + ' من مركز عاشور للتجارة';
+  
+  if (navigator.share) {
+    navigator.share({ title: 'مركز عاشور للتجارة', text: text, url: url }).catch(function(err) { console.log('Share failed', err); });
+  } else {
+    navigator.clipboard.writeText(url).then(function() { showToast('تم نسخ رابط المنتج ✅'); }).catch(function() { showToast('فشل نسخ الرابط', 'error'); });
+  }
+};
 
+function stars(n) { n = Math.max(0, Math.min(5, Math.floor(n || 0))); return '★'.repeat(n) + '☆'.repeat(5 - n); }
 applyWa();
 
-/* ============ Skeleton ============ */
 function showSkeleton() {
   var grid = document.getElementById('productsGrid');
   if (!grid) return;
@@ -949,7 +822,6 @@ function replaceImgOnly(imgEl) {
   imgEl.parentNode.replaceChild(fallback, imgEl);
 }
 
-/* ✅ دالة توحيد النكهات (البند 1 و 10 - حل undefined نهائياً) */
 function normalizeFlavors(flavors) {
   if (!flavors) return [{ name: 'العدد', soldOut: false }];
   if (Array.isArray(flavors)) {
@@ -957,7 +829,6 @@ function normalizeFlavors(flavors) {
     return flavors.map(function(f) {
       if (typeof f === 'string') return { name: f, soldOut: false };
       if (f && typeof f === 'object') {
-        // ✅ نأخذ name من عدة احتمالات
         var n = f.name || f.flavor || f.title || f.label || f.value || '';
         if (typeof n !== 'string') n = '';
         return { name: n || 'العدد', soldOut: f.soldOut === true || f.available === false };
@@ -977,7 +848,6 @@ function normalizeFlavors(flavors) {
 }
 window.normalizeFlavors = normalizeFlavors;
 
-/* ✅ الضغط المطول */
 function attachLongPress(btn, callback) {
   var timer = null;
   var interval = null;
@@ -996,7 +866,6 @@ function attachLongPress(btn, callback) {
   btn.addEventListener('pointercancel', stopAction);
 }
 
-/* ============ بطاقة المنتج (البند 2 و 5 و 9) ============ */
 function buildCard(p) {
   var pid = p._pid;
   var avail = p.available !== false;
@@ -1026,7 +895,6 @@ function buildCard(p) {
   img.onerror = function() { replaceImgOnly(this); };
   imgBox.appendChild(img);
 
-  // حالة المنتج
   var stBadge = document.createElement('span');
   if (!avail) {
     stBadge.className = 'absolute top-2 right-2 bg-rose-600 text-white font-black text-xs px-2 py-1 rounded-full z-20 shadow-lg';
@@ -1051,6 +919,14 @@ function buildCard(p) {
     imgBox.appendChild(offerBadge);
   }
 
+  /* ✅ التعديل الثاني: زر المشاركة في بطاقة المنتج */
+  var shareBtn = document.createElement('button');
+  shareBtn.type = 'button';
+  shareBtn.className = 'absolute bottom-2 right-2 bg-slate-950/90 border border-slate-700 w-9 h-9 rounded-full flex items-center justify-center z-20 transition hover:scale-110 text-amber-400';
+  shareBtn.innerHTML = '<i class="fas fa-share-alt"></i>';
+  shareBtn.onclick = function(e) { e.stopPropagation(); window.shareProduct(p.name); };
+  imgBox.appendChild(shareBtn);
+
   card.appendChild(imgBox);
 
   var body = document.createElement('div');
@@ -1068,7 +944,6 @@ function buildCard(p) {
   title.onclick = function() { openProduct(p.name); };
   body.appendChild(title);
 
-  /* ✅ أسعار: جملة + مستهلك (البند 2) */
   var priceBox = document.createElement('div');
   priceBox.className = 'grid ' + (p.consumerPrice ? 'grid-cols-2' : 'grid-cols-1') + ' gap-1.5 mt-1 mb-2';
   var priceHtml = '<div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-1.5 text-center"><p class="text-[9px] text-amber-400/80 font-bold mb-0.5">الجملة</p><p class="text-amber-400 font-black text-xs leading-tight">' + esc(p.price || 'حسب الطلب') + '</p></div>';
@@ -1107,7 +982,6 @@ function buildCard(p) {
         var row = document.createElement('div');
         row.className = 'flex items-center justify-between bg-slate-900/90 px-2 py-1.5 rounded border border-slate-700/80 ' + (isSoldOut ? 'opacity-50' : '');
 
-        // ✅ اسم النكهة كامل (البند 10)
         var nameSpan = document.createElement('span');
         nameSpan.className = 'text-xs font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300') + ' flavor-name-full';
         nameSpan.innerText = flvName + (isSoldOut ? ' (نفد)' : '');
@@ -1179,7 +1053,6 @@ function buildCard(p) {
   return card;
 }
 
-/* ============ تحديد الكمية ============ */
 function changeSel(pName, pid, fIdx, flavor, delta) {
   if (!selections[pName]) selections[pName] = {};
   var cur = selections[pName][flavor] || 0;
@@ -1194,7 +1067,6 @@ function changeSel(pName, pid, fIdx, flavor, delta) {
   if (el) el.innerText = next;
 }
 
-/* ============ إضافة للسلة ============ */
 function addToCart(pName, btnElement) {
   var sels = selections[pName];
   if (!sels || Object.keys(sels).length === 0) { showToast('حدد العدد أولاً', 'error'); return; }
@@ -1226,7 +1098,6 @@ function saveCart() {
   try { localStorage.setItem('ashour_cart', JSON.stringify(cart)); } catch(e) {}
 }
 
-/* ============ تحديث السلة (البند 4 - العدد) ============ */
 function updateCart() {
   var names = Object.keys(cart);
   var totalQty = 0;
@@ -1313,7 +1184,6 @@ function updateCart() {
           attachLongPress(plus, function() { playClickSound(); chQty(name, flv, 1); });
           ctrl.appendChild(plus);
 
-          // ✅ "العدد" بدل "طرد" (البند 4)
           var unitSpan = document.createElement('span');
           unitSpan.className = 'text-[10px] text-slate-400 mr-1';
           unitSpan.innerText = 'العدد';
@@ -1363,7 +1233,6 @@ window.clearCart = function() {
   showToast('تم تفريغ السلة');
 };
 
-/* ============ التنقل ============ */
 window.showCart = function() {
   pushBackState(); updateCart();
   document.getElementById('catalogView').classList.add('hidden');
@@ -1424,7 +1293,6 @@ window.handleProfileNavClick = function() {
   else window.openAuthModal();
 };
 
-/* ============ البحث ============ */
 function onSearch() {
   var v = document.getElementById('searchBox').value;
   var c = document.getElementById('clearBtn');
@@ -1493,7 +1361,6 @@ function renderCategories() {
   }
 }
 
-/* ============ بطاقة مصغرة + عروض ============ */
 function buildMiniCard(p, type) {
   var card = document.createElement('div');
   card.className = 'flex-shrink-0 w-40 bg-slate-950/60 border border-slate-700/80 rounded-2xl overflow-hidden cursor-pointer snap-start transition hover:-translate-y-1';
@@ -1584,7 +1451,6 @@ function scrollToProduct(name) {
   }
 }
 
-/* ============ الملف الشخصي ============ */
 window.showProfileView = function() {
   if (!window.currentUser) { window.openAuthModal(); return; }
   pushBackState();
@@ -1856,7 +1722,6 @@ window.closeInvoiceModal = function() {
   currentInvoiceOrder = null;
 };
 
-/* ============ تعديل الملف ============ */
 window.openEditProfileModal = function() {
   pushBackState();
   document.getElementById('editProfileModal').classList.remove('hidden');
@@ -1887,7 +1752,6 @@ window.openEditProfileModal = function() {
 };
 window.closeEditProfileModal = function() { document.getElementById('editProfileModal').classList.add('hidden'); };
 
-/* ============ إتمام الطلب ============ */
 window.sendOrder = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
@@ -1991,7 +1855,6 @@ window.confirmSendOrder = async function() {
   }, 400);
 };
 
-/* ============ نافذة المنتج (البند 1 و 10 - إصلاح كامل) ============ */
 function openProduct(pName) {
   pushBackState();
   var p = null;
@@ -2009,7 +1872,6 @@ function openProduct(pName) {
   var grid = document.createElement('div');
   grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
 
-  // الصورة
   var imgWrap = document.createElement('div');
   imgWrap.className = 'w-full';
   var imgBox = document.createElement('div');
@@ -2051,18 +1913,29 @@ function openProduct(pName) {
     imgWrap.appendChild(thumbContainer);
   }
 
-  // المعلومات
   var info = document.createElement('div');
   var catEl = document.createElement('span');
   catEl.className = 'inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 mb-2';
   catEl.innerText = p.category || '';
   info.appendChild(catEl);
-  var h2 = document.createElement('h2');
-  h2.className = 'text-xl sm:text-2xl font-black text-white mb-2';
-  h2.innerText = p.name;
-  info.appendChild(h2);
 
-  // الأسعار - كلاهما يظهر
+  /* ✅ التعديل الثالث: زر المشاركة في نافذة تفاصيل المنتج */
+  var titleContainer = document.createElement('div');
+  titleContainer.className = 'flex justify-between items-start gap-2 mb-2';
+  
+  var h2 = document.createElement('h2');
+  h2.className = 'text-xl sm:text-2xl font-black text-white';
+  h2.innerText = p.name;
+  titleContainer.appendChild(h2);
+
+  var shareBtnDetail = document.createElement('button');
+  shareBtnDetail.className = 'bg-slate-950/60 border border-slate-700 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-amber-500 hover:text-slate-950 transition';
+  shareBtnDetail.innerHTML = '<i class="fas fa-share-alt text-lg"></i>';
+  shareBtnDetail.onclick = function() { window.shareProduct(p.name); };
+  titleContainer.appendChild(shareBtnDetail);
+
+  info.appendChild(titleContainer);
+
   var pricesBox = document.createElement('div');
   pricesBox.className = 'grid grid-cols-2 gap-2 mb-3';
   pricesBox.innerHTML =
@@ -2101,14 +1974,12 @@ function openProduct(pName) {
   grid.appendChild(info);
   scrollArea.appendChild(grid);
 
-  // ✅ قسم النكهات مع العنوان الصحيح
   if (avail) {
     var flsBox = document.createElement('div');
     flsBox.className = 'bg-slate-950/60 border border-slate-800 rounded-xl p-4 mt-3';
     var flsList = normalizeFlavors(p.flavors);
     var hasFlavors = flsList.length > 1 || (flsList.length === 1 && flsList[0].name !== 'العدد');
 
-    // ✅ العنوان الصحيح (البند 1)
     var titleText = hasFlavors ? 'اختر النكهة والعدد:' : 'اختر العدد:';
     flsBox.innerHTML = '<p class="text-white font-bold text-sm mb-3"><i class="fas fa-list text-amber-400"></i> ' + titleText + '</p>';
 
@@ -2164,7 +2035,6 @@ function openProduct(pName) {
 
   wrapper.appendChild(scrollArea);
 
-  // الأزرار
   var btnsBox = document.createElement('div');
   btnsBox.className = 'mt-3 pt-3 border-t border-slate-800 flex gap-2';
   if (avail) {
@@ -2238,7 +2108,6 @@ function closeProduct() {
   clearSlider();
 }
 
-/* ============ تقييم المتجر ============ */
 window.openStoreRatingModal = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   if (window.currentStoreReviews.some(function(r) { return r.userId === window.currentUser.uid; })) {
@@ -2310,7 +2179,6 @@ window.submitStoreRating = async function() {
   }
 };
 
-/* ============ دليل ============ */
 window.openGuideModal = function() {
   pushBackState();
   document.getElementById('guideModal').classList.remove('hidden');
@@ -2319,7 +2187,6 @@ window.closeGuideModal = function() {
   document.getElementById('guideModal').classList.add('hidden');
 };
 
-/* ============ التحميل والبدء ============ */
 function loadData() {
   return new Promise(function(resolve) {
     var s = document.createElement('script');
@@ -2413,10 +2280,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
-// ✅ إصلاح مشكلة تسجيل الخروج (البند 15)
 setPersistence(auth, browserLocalPersistence).catch(err => console.log('Persistence error:', err));
-
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
@@ -2425,7 +2289,6 @@ const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 window.currentUser = null;
 window.currentProfileData = {};
 
-/* ✅ كود طلب 4 أرقام بدون حروف (البند 7) */
 function generateOrderCode() {
   return String(Math.floor(1000 + Math.random() * 9000));
 }
@@ -2467,7 +2330,7 @@ window.loginWithGoogle = async function() {
   } catch (error) {
     console.error("Google Login Error:", error);
     const errEl = document.getElementById('authError');
-    errEl.innerText = 'فشل تسجيل الدخول بجوجل. تأكد من فتح الموقع في متصفح (Chrome/Safari) وليس واتساب.';
+    errEl.innerText = 'فشل تسجيل الدخول بجوجل. تأكد من فتح الموقع في متصفح.';
     errEl.classList.remove('hidden');
   }
 };
@@ -2571,7 +2434,6 @@ window.changePin = async function() {
   }
 };
 
-/* ✅ onAuthStateChanged - إصلاح البند 15 */
 onAuthStateChanged(auth, async function(user) {
   try {
     if (user) {
@@ -2690,7 +2552,6 @@ window.saveProfileToFirebase = async function(dataObj) {
   await setDoc(doc(db, "users", window.currentUser.uid), dataObj, { merge: true });
 };
 
-/* ✅ saveOrderToFirebase مع كود 4 أرقام */
 window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes, phone) {
   if (!window.currentUser) throw new Error("User not logged in");
   var orderCode = generateOrderCode();
@@ -2732,10 +2593,7 @@ window.getOrderById = async function(orderId) {
   } catch(e) { return null; }
 };
 
-/* ✅ fetchReviewsFromFirebase - بدون تقييمات منتجات (البند 5) */
-window.fetchReviewsFromFirebase = async function() {
-  // تقييمات المنتجات محذوفة — لا نفعل شيئاً
-};
+window.fetchReviewsFromFirebase = async function() { /* تقييمات المنتجات محذوفة - البند 5 */ };
 
 window.saveStoreReviewToFirebase = async function(userId, name, stars, comment) {
   if (stars < 1 || stars > 5) throw new Error('Stars 1-5');
