@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: ٨‏/١١‏/٢٠٢٦، ٦:٥٣:٠٢ م
+   آخر تحديث: 13‏/11‏/2026، 12:52:29 ص
    ================================ */
 
 window.catalogData = {
@@ -45,19 +45,40 @@ window.catalogData.products.push({
 window.catalogData.products.push({
   "name": "اربيكا طبيعي جامبو",
   "category": "شيبس",
-  "price": "التواصل مع المبيعات",
+  "price": "غير متوفر حاليا",
   "image": "https://i.ibb.co/jkfPR6Zy/1791902579906.jpg",
   "description": "النكهات : مكسيكي - فلفل حار - جبنة - ملح وخل - باربكيو - مالح - كتشب",
   "available": false,
   "lowStock": false,
   "flavors": [
-    "مكسيكي",
-    "فلفل حار",
-    "جبنة",
-    "ملح وخل",
-    "باربكيو",
-    "مالح",
-    "كتشب"
+    {
+      "name": "مكسيكي",
+      "soldOut": false
+    },
+    {
+      "name": "فلفل حار",
+      "soldOut": false
+    },
+    {
+      "name": "جبنة",
+      "soldOut": false
+    },
+    {
+      "name": "ملح وخل",
+      "soldOut": false
+    },
+    {
+      "name": "باربكيو",
+      "soldOut": false
+    },
+    {
+      "name": "مالح",
+      "soldOut": false
+    },
+    {
+      "name": "كتشب",
+      "soldOut": false
+    }
   ],
   "company": "أربيكا",
   "consumerPrice": "50 ليرة جديدة",
