@@ -39,7 +39,6 @@ body {
   background-clip: text;
 }
 
-/* ========== حركات أساسية ========== */
 @keyframes glowPulse {
   0%, 100% { filter: drop-shadow(0 0 20px rgba(212,175,55,.5)); }
   50% { filter: drop-shadow(0 0 45px rgba(212,175,55,.95)); }
@@ -83,7 +82,6 @@ body {
 .fade-in-up { animation: fadeInUp 0.7s cubic-bezier(.2,.7,.3,1) both; }
 .fade-in-scale { animation: fadeInScale 0.6s cubic-bezier(.2,.7,.3,1) both; }
 
-/* ========== Landing Page ========== */
 #landingView {
   position: fixed; inset: 0; z-index: 90;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -175,11 +173,9 @@ body {
 .landing-login-link:hover { color: #fce08f; }
 .landing-footer { margin-top: 26px; color: #64748b; font-size: 11px; animation: fadeInUp 0.8s cubic-bezier(.2,.7,.3,1) 0.9s both; }
 
-/* ========== Catalog transition ========== */
 #catalogView.entering { opacity: 0; transform: translateY(30px); transition: opacity 0.55s cubic-bezier(.4,0,.2,1), transform 0.55s cubic-bezier(.4,0,.2,1); }
 #catalogView.entered { opacity: 1; transform: translateY(0); }
 
-/* ========== Product Cards ========== */
 #productsGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 @media (min-width: 640px) { #productsGrid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1024px) { #productsGrid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
@@ -198,7 +194,6 @@ body {
 .product-img { transition: opacity 0.4s, transform 0.5s; opacity: 0; }
 .product-img.loaded { opacity: 1; }
 
-/* ========== Bottom Nav ========== */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
   background: rgba(15, 23, 42, 0.97);
@@ -227,27 +222,23 @@ body {
 }
 .nav-badge.hidden-badge { display: none; }
 
-/* ========== Auth Modal ========== */
 #authModal { background: rgba(10, 14, 26, 0.9); backdrop-filter: blur(12px); }
 .auth-form { transition: all 0.55s cubic-bezier(0.68, -0.55, 0.265, 1.55); width: 100%; }
 .auth-form.hide-left { transform: translateX(-120%); opacity: 0; filter: blur(8px); position: absolute; pointer-events: none; }
 .auth-form.hide-right { transform: translateX(120%); opacity: 0; filter: blur(8px); position: absolute; pointer-events: none; }
 .auth-tab-active { background: rgba(212, 175, 55, 0.2) !important; color: #d4af37 !important; border-color: #d4af37 !important; }
 
-/* ========== Misc ========== */
 .btn-add-cart { position: relative; overflow: hidden; transition: all 0.3s; }
 .btn-add-cart .progress-bar { position: absolute; right: 0; top: 0; height: 100%; width: 0; background: rgba(16, 185, 129, 0.4); z-index: 0; transition: width 0.8s linear; }
 .btn-add-cart .btn-content { position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-.flavor-name-full { white-space: normal !important; word-break: normal !important; overflow-wrap: normal !important; line-height: 1.3; font-size: 11px; flex: 1; min-width: 0; text-align: right; }
 body.modal-open { overflow: hidden; }
 </style>
 </head>
 <body>
 
-<!-- ==================== LANDING PAGE ==================== -->
 <div id="landingView">
   <div class="landing-blob b1"></div>
   <div class="landing-blob b2"></div>
@@ -301,7 +292,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Preloader -->
 <div id="preloader" class="fixed inset-0 z-[150] bg-[#070a12] flex flex-col items-center justify-center p-6 text-center">
   <div class="w-56 h-56 mb-4 flex items-center justify-center glow-anim"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
   <div class="w-full max-w-md bg-slate-800/80 rounded-full h-2 p-0.5 overflow-hidden">
@@ -317,7 +307,6 @@ body.modal-open { overflow: hidden; }
   <button onclick="location.reload()" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl mt-4"><i class="fas fa-sync-alt"></i> إعادة المحاولة</button>
 </div>
 
-<!-- Top Info Bar -->
 <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-xs text-amber-300 flex justify-between items-center flex-wrap gap-2">
   <span><i class="fas fa-map-marker-alt ml-1"></i> دمشق - أوتوستراد درعا</span>
   <div class="flex items-center gap-2">
@@ -326,7 +315,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ==================== HEADER ==================== -->
 <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
   <div class="max-w-7xl mx-auto px-3 py-2 flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="showLanding()">
@@ -353,8 +341,7 @@ body.modal-open { overflow: hidden; }
       </button>
     </div>
   </div>
-</header><!-- ==================== AUTH MODAL ==================== -->
-<div id="authModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+</header><div id="authModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-amber-500/40 rounded-[2rem] max-w-sm w-full shadow-2xl relative my-8 fade-in-scale" style="box-shadow: 0 0 40px rgba(212,175,55,0.15);">
     <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center z-10"><i class="fas fa-times"></i></button>
     <div class="p-6 sm:p-8">
@@ -384,7 +371,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ==================== GUIDE MODAL ==================== -->
 <div id="guideModal" class="hidden fixed inset-0 z-[160] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in-scale p-6">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4"><h3 class="text-xl font-black gold-text"><i class="fas fa-book-open"></i> كيف تطلب من مركز عاشور؟</h3><button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-rose-600 transition"><i class="fas fa-times"></i></button></div>
@@ -399,7 +385,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ==================== CATALOG VIEW ==================== -->
 <div id="catalogView" class="hidden w-full flex flex-col flex-grow">
   <section class="py-6 px-4 text-center bg-gradient-to-b from-slate-900 to-[#0a0e1a] border-b border-slate-800/60">
     <div class="max-w-4xl mx-auto">
@@ -467,7 +452,6 @@ body.modal-open { overflow: hidden; }
   </section>
 </div>
 
-<!-- ==================== CART VIEW ==================== -->
 <div id="cartView" class="hidden max-w-4xl mx-auto px-3 py-6 flex-grow w-full fade-in-scale">
   <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-8 shadow-2xl">
     <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 flex-wrap gap-3">
@@ -523,7 +507,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ==================== PROFILE VIEW ==================== -->
 <div id="profileView" class="hidden w-full flex-col flex-grow pb-20 fade-in-scale">
   <div class="bg-gradient-to-b from-[#1a2438] to-[#0a0e1a] border-b border-slate-800 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative">
@@ -554,8 +537,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ==================== MODALS ==================== -->
-<!-- Edit Profile Modal -->
 <div id="editProfileModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in-scale">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -594,7 +575,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Add Address Modal -->
 <div id="addAddressModal" class="hidden fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in-scale">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -609,7 +589,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Order Details Modal -->
 <div id="orderDetailsModal" class="hidden fixed inset-0 z-[110] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex items-start justify-center">
   <div class="max-w-lg w-full my-8">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl shadow-2xl overflow-hidden fade-in-scale">
@@ -622,7 +601,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Invoice Modal -->
 <div id="invoiceModal" class="hidden fixed inset-0 z-[120] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex flex-col items-center">
   <div class="max-w-md w-full my-4">
     <div id="invoice-content" class="bg-white text-slate-900 p-6 rounded-xl relative w-full shadow-2xl" dir="rtl">
@@ -649,7 +627,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Product Modal -->
 <div id="productModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto">
   <div class="max-w-4xl mx-auto p-3 min-h-full flex items-center justify-center">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl w-full shadow-2xl overflow-hidden my-4 fade-in-scale">
@@ -662,7 +639,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Confirm Order Modal -->
 <div id="confirmOrderModal" class="hidden fixed inset-0 z-[150] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden fade-in-scale">
     <div class="h-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500"></div>
@@ -683,7 +659,6 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Store Rating Modal -->
 <div id="storeRatingModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden fade-in-scale">
     <div class="flex items-center justify-between p-5 border-b border-slate-800">
@@ -711,18 +686,15 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- Image Fullscreen -->
 <div id="imageFullscreen" class="hidden fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4">
   <img id="fullscreenImg" class="max-w-full max-h-full object-contain">
   <button onclick="document.getElementById('imageFullscreen').classList.add('hidden'); document.body.style.overflow='';" class="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
 </div>
 
-<!-- Floating WhatsApp -->
 <div class="fixed bottom-24 right-4 z-40">
   <a id="floatWa" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-black w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 border-emerald-400 transition hover:scale-110"><i class="fab fa-whatsapp text-3xl"></i></a>
 </div>
 
-<!-- Bottom Nav -->
 <nav class="bottom-nav">
   <button onclick="showCatalog()" id="navBtnCatalog" class="active">
     <i class="fas fa-store"></i>
@@ -739,7 +711,6 @@ body.modal-open { overflow: hidden; }
   </button>
 </nav>
 
-<!-- Footer -->
 <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 text-center text-slate-400 text-sm mt-6 mb-4">
   <div class="max-w-4xl mx-auto space-y-3">
     <div class="w-24 h-24 flex items-center justify-center mx-auto"><img src="logo.png" class="w-full h-full object-contain" alt="Logo"></div>
@@ -755,7 +726,6 @@ body.modal-open { overflow: hidden; }
     </div>
   </div>
 </footer><script>
-// ==================== Core Variables ====================
 var orderWa = "963982572810";
 var inquiryWa = "963959248901";
 var products = [];
@@ -766,7 +736,7 @@ var _searchTimer;
 var _currentSliderInterval = null;
 var currentInvoiceOrder = null;
 var _lastPushTime = 0;
-var currentView = 'landing'; // 'landing' | 'catalog' | 'cart' | 'profile'
+var currentView = 'landing';
 
 window.storeStars = 0;
 window.currentStoreReviews = [];
@@ -776,7 +746,6 @@ try {
   if (!cart || typeof cart !== 'object') cart = {};
 } catch(e) { cart = {}; }
 
-// ==================== Utils ====================
 function esc(s) {
   if (s === null || s === undefined) return '';
   s = String(s);
@@ -865,12 +834,10 @@ function applyWa() {
 }
 applyWa();
 
-// ==================== Landing / Catalog transitions ====================
 window.enterCatalog = function() {
   var landing = document.getElementById('landingView');
   var catalog = document.getElementById('catalogView');
   if (!landing || !catalog) return;
-
   landing.classList.add('leaving');
   setTimeout(function() {
     landing.classList.add('hidden');
@@ -879,7 +846,6 @@ window.enterCatalog = function() {
     catalog.classList.add('entering');
     currentView = 'catalog';
     window.scrollTo({ top: 0, behavior: 'instant' });
-
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
         catalog.classList.remove('entering');
@@ -898,7 +864,6 @@ window.showLanding = function() {
   document.getElementById('profileView').classList.remove('flex');
   var landing = document.getElementById('landingView');
   landing.classList.remove('hidden');
-  // re-trigger animations
   var card = landing.querySelector('.landing-card');
   if (card) {
     card.style.animation = 'none';
@@ -959,7 +924,6 @@ function setActiveNav(tab) {
   }
 }
 
-// ==================== Back state ====================
 window.pushBackState = function() {
   var now = Date.now();
   if (now - _lastPushTime < 300) return;
@@ -986,7 +950,6 @@ window.addEventListener('popstate', function() {
   }
 });
 
-// ==================== Customer Info Save/Load ====================
 function saveCust() {
   try {
     var cn = document.getElementById('custName'); var cs = document.getElementById('shopName');
@@ -1011,7 +974,6 @@ function loadCust() {
   } catch(e) {}
 }
 
-// ==================== Products Display ====================
 function normalizeFlavors(flavors) {
   if (!flavors) return [{ name: 'العدد', soldOut: false }];
   if (Array.isArray(flavors)) {
@@ -1148,12 +1110,7 @@ function buildCard(p) {
     imgBox.appendChild(offerBadge);
   }
 
-  var shareBtn = document.createElement('button');
-  shareBtn.type = 'button';
-  shareBtn.className = 'absolute bottom-2 right-2 bg-slate-950/90 border border-slate-700 w-9 h-9 rounded-full flex items-center justify-center z-20 transition hover:scale-110 text-amber-400';
-  shareBtn.innerHTML = '<i class="fas fa-share-alt"></i>';
-  shareBtn.onclick = function(e) { e.stopPropagation(); window.shareProduct(p.name); };
-  imgBox.appendChild(shareBtn);
+  // تم إزالة زر المشاركة من هنا بناءً على طلبك
 
   card.appendChild(imgBox);
 
@@ -1199,7 +1156,7 @@ function buildCard(p) {
     }
 
     var flList = document.createElement('div');
-    flList.className = 'max-h-32 overflow-y-auto space-y-1 custom-scrollbar';
+    flList.className = 'max-h-40 overflow-y-auto space-y-1.5 custom-scrollbar';
 
     for (var f = 0; f < fls.length; f++) {
       (function(flvObj, fIdx) {
@@ -1208,12 +1165,20 @@ function buildCard(p) {
         var cur = (selections[p.name] && selections[p.name][flvName]) || 0;
 
         var row = document.createElement('div');
-        row.className = 'flex items-center justify-between bg-slate-900/90 px-2 py-1.5 rounded-lg border border-slate-700/80 gap-2 ' + (isSoldOut ? 'opacity-50' : '');
+        // استخدام flex-col لضمان عدم تداخل النص مع الأزرار
+        row.className = 'flex flex-col bg-slate-900/90 p-2 rounded-lg border border-slate-700/80 gap-2 ' + (isSoldOut ? 'opacity-50' : '');
 
         var nameSpan = document.createElement('span');
-        nameSpan.className = 'text-[11px] font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300') + ' flavor-name-full leading-tight';
+        nameSpan.className = 'text-[12px] font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300') + ' w-full text-right break-words leading-tight';
         nameSpan.innerText = flvName + (isSoldOut ? ' (نفد)' : '');
         row.appendChild(nameSpan);
+
+        var ctrlWrapper = document.createElement('div');
+        ctrlWrapper.className = 'flex justify-between items-center w-full mt-1';
+
+        var ctrlLabel = document.createElement('span');
+        ctrlLabel.className = 'text-[10px] text-slate-400 font-bold';
+        ctrlLabel.innerText = 'العدد:';
 
         var ctrl = document.createElement('div');
         ctrl.className = 'flex items-center bg-slate-950 rounded-md border border-slate-700 p-0.5 flex-shrink-0';
@@ -1221,20 +1186,20 @@ function buildCard(p) {
         if (!isSoldOut) {
           var minus = document.createElement('button');
           minus.type = 'button';
-          minus.className = 'w-7 h-7 flex items-center justify-center text-white hover:bg-slate-800 rounded text-base font-black transition';
+          minus.className = 'w-8 h-8 flex items-center justify-center text-white hover:bg-slate-800 rounded text-base font-black transition';
           minus.innerText = '-';
           attachLongPress(minus, function() { playClickSound(); changeSel(p.name, pid, fIdx, flvName, -1); });
           ctrl.appendChild(minus);
 
           var countSpan = document.createElement('span');
           countSpan.id = 'sel-' + pid + '-' + fIdx;
-          countSpan.className = 'w-7 text-center font-bold text-amber-400 text-xs';
+          countSpan.className = 'w-8 text-center font-bold text-amber-400 text-sm';
           countSpan.innerText = cur;
           ctrl.appendChild(countSpan);
 
           var plus = document.createElement('button');
           plus.type = 'button';
-          plus.className = 'w-7 h-7 flex items-center justify-center text-white hover:bg-slate-800 rounded text-base font-black transition';
+          plus.className = 'w-8 h-8 flex items-center justify-center text-white hover:bg-slate-800 rounded text-base font-black transition';
           plus.innerText = '+';
           attachLongPress(plus, function() { playClickSound(); changeSel(p.name, pid, fIdx, flvName, 1); });
           ctrl.appendChild(plus);
@@ -1242,7 +1207,9 @@ function buildCard(p) {
           ctrl.innerHTML = '<span class="text-[10px] text-slate-500 px-2">غير متوفر</span>';
         }
 
-        row.appendChild(ctrl);
+        ctrlWrapper.appendChild(ctrlLabel);
+        ctrlWrapper.appendChild(ctrl);
+        row.appendChild(ctrlWrapper);
         flList.appendChild(row);
       })(fls[f], f);
     }
@@ -1281,7 +1248,6 @@ function buildCard(p) {
   return card;
 }
 
-// ==================== Sound ====================
 var audioCtx = null;
 function initAudio() {
   if (!audioCtx) {
@@ -1310,7 +1276,6 @@ function playClickSound(type) {
 window.playClickSound = playClickSound;
 document.addEventListener('pointerdown', function() { initAudio(); }, { once: true });
 
-// ==================== Cart Operations ====================
 function changeSel(pName, pid, fIdx, flavor, delta) {
   if (!selections[pName]) selections[pName] = {};
   var cur = selections[pName][flavor] || 0;
@@ -1415,7 +1380,7 @@ function updateCart() {
           var row = document.createElement('div');
           row.className = 'flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700/60 mt-2 gap-2';
           var flvSpan = document.createElement('span');
-          flvSpan.className = 'text-xs text-amber-300 font-bold flavor-name-full';
+          flvSpan.className = 'text-xs text-amber-300 font-bold flex-1 break-words';
           flvSpan.innerText = flv;
           row.appendChild(flvSpan);
 
@@ -1491,7 +1456,6 @@ window.clearCart = function() {
   showToast('تم تفريغ السلة');
 };
 
-// ==================== Search & Filter ====================
 function norm(t) {
   if (!t) return '';
   return t.toLowerCase().replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
@@ -1650,7 +1614,6 @@ function scrollToProduct(name) {
   }
 }
 
-// ==================== Share ====================
 window.shareProduct = function(productName) {
   var p = products.find(function(prod) { return prod.name === productName; });
   if (!p) return;
@@ -1662,8 +1625,7 @@ window.shareProduct = function(productName) {
     navigator.clipboard.writeText(url).then(function() { showToast('تم نسخ رابط المنتج ✅'); }).catch(function() { showToast('فشل نسخ الرابط', 'error'); });
   }
 };
-
-// ==================== Profile Navigation ====================
+</script><script>
 window.handleProfileNavClick = function() {
   if (window.currentUser) window.showProfileView();
   else window.openAuthModal();
@@ -1784,7 +1746,6 @@ window.fillAddressFromSaved = function(addrId) {
   if (el) { el.value = addr.details; saveCust(); showToast('تم تعبئة العنوان ✅'); }
 };
 
-// ==================== Orders ====================
 window.loadAppOrders = function() {
   var list = document.getElementById('appMyOrdersList');
   list.innerHTML = '<div class="text-center py-10"><i class="fas fa-spinner fa-spin text-3xl text-amber-500 mb-3"></i><p class="text-slate-400">جاري تحميل الطلبات...</p></div>';
@@ -1957,7 +1918,6 @@ window.closeInvoiceModal = function() {
   currentInvoiceOrder = null;
 };
 
-// ==================== Profile Edit ====================
 window.openEditProfileModal = function() {
   pushBackState();
   document.getElementById('editProfileModal').classList.remove('hidden');
@@ -1992,7 +1952,6 @@ window.closeEditProfileModal = function() {
   document.body.classList.remove('modal-open');
 };
 
-// ==================== Send Order ====================
 window.sendOrder = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
@@ -2098,7 +2057,8 @@ window.confirmSendOrder = async function() {
     btn.innerHTML = '<i class="fab fa-whatsapp"></i> نعم، اطلب الآن';
     btn.disabled = false;
   }, 400);
-};// ==================== Product Modal ====================
+};
+
 window.openProduct = function(pName) {
   pushBackState();
   var p = null;
@@ -2168,6 +2128,7 @@ window.openProduct = function(pName) {
   h2.innerText = p.name;
   titleContainer.appendChild(h2);
 
+  // زر المشاركة موجود هنا فقط
   var shareBtnDetail = document.createElement('button');
   shareBtnDetail.className = 'bg-slate-950/60 border border-slate-700 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-amber-500 hover:text-slate-950 transition';
   shareBtnDetail.innerHTML = '<i class="fas fa-share-alt text-lg"></i>';
@@ -2233,15 +2194,23 @@ window.openProduct = function(pName) {
         var cur = (selections[p.name] && selections[p.name][flvName]) || 0;
 
         var row = document.createElement('div');
-        row.className = 'flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/80 gap-2 ' + (isSoldOut ? 'opacity-50' : '');
+        row.className = 'flex flex-col bg-slate-900 px-3 py-2.5 rounded-xl border border-slate-700/80 gap-2 ' + (isSoldOut ? 'opacity-50' : '');
 
         var nameSpan = document.createElement('span');
-        nameSpan.className = 'text-sm font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300') + ' flavor-name-full';
+        nameSpan.className = 'text-sm font-bold ' + (isSoldOut ? 'text-rose-400 line-through' : 'text-amber-300') + ' w-full text-right break-words';
         nameSpan.innerText = flvName + (isSoldOut ? ' (نفد)' : '');
         row.appendChild(nameSpan);
 
+        var ctrlWrapper = document.createElement('div');
+        ctrlWrapper.className = 'flex justify-between items-center w-full mt-1 border-t border-slate-800 pt-2';
+
+        var ctrlLabel = document.createElement('span');
+        ctrlLabel.className = 'text-xs text-slate-400 font-bold';
+        ctrlLabel.innerText = 'الكمية:';
+
         var ctrl = document.createElement('div');
         ctrl.className = 'flex items-center bg-slate-950 rounded-lg border border-slate-700 p-0.5 flex-shrink-0';
+
         if (!isSoldOut) {
           var minus = document.createElement('button');
           minus.type = 'button';
@@ -2252,7 +2221,7 @@ window.openProduct = function(pName) {
 
           var span = document.createElement('span');
           span.id = 'pSel-' + fIdx;
-          span.className = 'w-8 text-center font-bold text-amber-400 text-sm';
+          span.className = 'w-10 text-center font-bold text-amber-400 text-sm';
           span.innerText = cur;
           ctrl.appendChild(span);
 
@@ -2263,9 +2232,12 @@ window.openProduct = function(pName) {
           attachLongPress(plus, function() { playClickSound(); prodSel(p._pid, fIdx, flvName, 1); });
           ctrl.appendChild(plus);
         } else {
-          ctrl.innerHTML = '<span class="text-xs text-slate-500">غير متوفر</span>';
+          ctrl.innerHTML = '<span class="text-xs text-slate-500 px-2">غير متوفر</span>';
         }
-        row.appendChild(ctrl);
+
+        ctrlWrapper.appendChild(ctrlLabel);
+        ctrlWrapper.appendChild(ctrl);
+        row.appendChild(ctrlWrapper);
         listDiv.appendChild(row);
       })(flsList[f], f);
     }
@@ -2346,7 +2318,6 @@ function closeProduct() {
   clearSlider();
 }
 
-// ==================== Store Rating ====================
 window.openStoreRatingModal = function() {
   if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
   if (window.currentStoreReviews.some(function(r) { return r.userId === window.currentUser.uid; })) {
@@ -2422,7 +2393,6 @@ window.submitStoreRating = async function() {
   }
 };
 
-// ==================== Guide Modal ====================
 window.openGuideModal = function() {
   pushBackState();
   document.getElementById('guideModal').classList.remove('hidden');
@@ -2433,7 +2403,6 @@ window.closeGuideModal = function() {
   document.body.classList.remove('modal-open');
 };
 
-// ==================== Load & Boot ====================
 function loadData() {
   return new Promise(function(resolve) {
     var s = document.createElement('script');
@@ -2499,7 +2468,6 @@ else boot();
 window.addEventListener('load', function() { setTimeout(hidePre, 400); });
 setTimeout(hidePre, 3500);
 
-// Keyboard
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     try { closeProduct(); } catch(err) {}
@@ -2514,12 +2482,10 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Online/offline
 window.addEventListener('online', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.add('hidden'); });
 window.addEventListener('offline', function() { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); });
 if (!navigator.onLine) { var s = document.getElementById('offlineScreen'); if (s) s.classList.remove('hidden'); }
 
-// Forgot PIN
 window.forgotPinWhatsApp = function() {
   var phoneRaw = document.getElementById('pinPhone') ? document.getElementById('pinPhone').value.trim() : '';
   var phone = normalizePhone(phoneRaw);
