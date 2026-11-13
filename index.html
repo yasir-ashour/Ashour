@@ -1953,7 +1953,7 @@ window.closeEditProfileModal = function() {
 };
 
 window.sendOrder = function() {
-  if (!window.currentUser) { showToast('يرجى تسجيل الدخول أولاً', 'error'); openAuthModal(); return; }
+  // تم إزالة شرط تسجيل الدخول من هنا ليتمكن الزوار من الطلب
   var n = document.getElementById('custName') ? document.getElementById('custName').value.trim() : '';
   var a = document.getElementById('custAddr') ? document.getElementById('custAddr').value.trim() : '';
   var ph = document.getElementById('custPhone') ? document.getElementById('custPhone').value.trim() : '';
@@ -2789,10 +2789,11 @@ window.saveProfileToFirebase = async function(dataObj) {
 };
 
 window.saveOrderToFirebase = async function(cartItems, name, shop, address, notes, phone) {
-  if (!window.currentUser) throw new Error("User not logged in");
+  // إذا كان مسجلاً نأخذ الآي دي الخاص به، وإذا كان زائراً نعطيه آي دي فريد
+  var uId = window.currentUser ? window.currentUser.uid : 'guest_' + Date.now(); 
   var orderCode = generateOrderCode();
   await addDoc(collection(db, "orders"), {
-    userId: window.currentUser.uid,
+    userId: uId,
     userName: name,
     shopName: shop,
     address: address,
