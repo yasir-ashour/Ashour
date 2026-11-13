@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 13‏/11‏/2026، 12:52:29 ص
+   آخر تحديث: 14‏/11‏/2026، 12:36:27 ص
    ================================ */
 
 window.catalogData = {
@@ -2672,6 +2672,17 @@ window.catalogData.products.push({
   "company": "تشيلو",
   "consumerPrice": "20 ليرة جديدة",
   "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "99Aشوفي",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/6RNV8yMn/b92be0171f36.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "isNew": true
 });
 
 console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");
