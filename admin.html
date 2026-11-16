@@ -9,8 +9,8 @@
 <meta name="theme-color" content="#0a0e1a">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- تم استبدال Tailwind CDN بملف البديل الخفيف السريع tw-lite.css -->
-<link rel="stylesheet" href="tw-lite.css">
+<!-- استعادة مكتبة Tailwind الأصلية القديمة -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -141,8 +141,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <p class="text-lg">لا توجد منتجات تطابق البحث</p>
   </div>
 </div>
-
-
 <div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fas fa-store text-amber-400"></i> إعدادات المتجر</h2>
@@ -317,8 +315,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <button onclick="refreshFromServer()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-sync-alt"></i> تحديث الآن</button>
   </div>
 </div>
-
-
 <!-- Product Modal -->
 <div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
@@ -700,8 +696,6 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
 
 
 </div><!-- /adminApp -->
-
-
 <script>
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
@@ -1482,7 +1476,6 @@ function uploadSingleToImgBB(file) {
 }
 
 
-// Barcode Scanner
 let html5QrCode;
 window.startScanner = function() {
   document.getElementById('barcodeScannerModal').classList.remove('hidden');
@@ -1519,7 +1512,6 @@ window.stopScanner = function() {
 };
 
 
-// Invoice
 window.openInvoiceModal = function(orderId) {
   const order = window.allOrdersCache.find(o => o.id === orderId);
   if (!order) {
