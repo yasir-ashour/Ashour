@@ -9,7 +9,8 @@
 <meta name="theme-color" content="#0a0e1a">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.tailwindcss.com"></script>
+<!-- تم استبدال Tailwind CDN بملف البديل الخفيف السريع tw-lite.css -->
+<link rel="stylesheet" href="tw-lite.css">
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -24,6 +25,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
 </style>
 </head>
 <body class="min-h-screen">
+
 
 <!-- شاشة تسجيل الدخول -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0a0e1a] flex items-center justify-center p-6">
@@ -44,6 +46,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <p class="text-[10px] text-slate-500 mt-4"><i class="fas fa-lock"></i> الدخول مقتصر على الأدمن فقط</p>
   </div>
 </div>
+
 
 <div id="adminApp" class="hidden">
 <header class="sticky top-0 z-30 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 shadow-md">
@@ -80,6 +83,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </header>
 
+
 <div class="max-w-7xl mx-auto px-3 sm:px-4 pt-5">
   <div class="flex gap-2 mb-5 flex-wrap">
     <button data-tab="products" class="tab-btn active bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-sm transition">
@@ -101,6 +105,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <div id="tab-products" class="tab-content max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-4 mb-5 flex items-center gap-3 flex-wrap">
     <div class="relative flex-grow min-w-[200px]">
@@ -121,6 +126,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </button>
   </div>
 
+
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">إجمالي المنتجات</p><p id="statTotal" class="text-2xl font-black text-white">0</p></div>
     <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">متوفرة</p><p id="statAvailable" class="text-2xl font-black text-emerald-400">0</p></div>
@@ -128,12 +134,14 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <div class="bg-slate-900 border border-rose-500/30 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">غير متوفرة</p><p id="statUnavailable" class="text-2xl font-black text-rose-400">0</p></div>
   </div>
 
+
   <div id="productList" class="grid grid-cols-2 lg:grid-cols-3 gap-3"></div>
   <div id="emptyState" class="hidden text-center py-16 text-slate-500">
     <i class="fas fa-inbox text-6xl mb-4 text-amber-500/30"></i>
     <p class="text-lg">لا توجد منتجات تطابق البحث</p>
   </div>
 </div>
+
 
 <div id="tab-settings" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
@@ -151,6 +159,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <div class="border-t border-slate-800 pt-5"><label class="block text-slate-300 font-bold mb-1.5 text-sm">عنوان المتجر</label><input type="text" id="setAddress" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label><input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"></div>
   </div>
+
 
   <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
@@ -170,6 +179,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
       <i class="fas fa-save"></i> حفظ المفتاح
     </button>
   </div>
+
 
   <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
@@ -191,6 +201,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </button>
   </div>
 
+
   <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub</h2>
     <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200"><i class="fas fa-lock mr-1"></i> الـ Token يُحفظ في متصفحك فقط. لا تشاركه مع أحد.</div>
@@ -209,6 +220,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <button onclick="testGithubConnection()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plug"></i> اختبار الاتصال</button>
   </div>
 </div>
+
 
 <div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
@@ -231,6 +243,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 
+
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 mb-4 flex items-center gap-3 flex-wrap">
     <div class="relative flex-grow min-w-[200px]">
       <input type="text" id="ordersSearch" placeholder="ابحث بالاسم أو الهاتف أو رقم الطلب..." oninput="window.filterOrdersRender()" class="w-full bg-slate-950 text-white placeholder-slate-500 pr-10 pl-3 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm">
@@ -251,6 +264,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </select>
   </div>
 
+
   <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="col-span-full text-center py-10 text-slate-500">
       <i class="fas fa-spinner fa-spin text-3xl mb-3 text-amber-500"></i>
@@ -258,6 +272,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 </div>
+
 
 <div id="tab-customers" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
@@ -285,6 +300,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
 
+
 <div id="tab-backup" class="tab-content hidden max-w-3xl mx-auto px-3 sm:px-4 pb-16 space-y-5">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-file-export text-emerald-400"></i> تصدير يدوي</h2>
@@ -302,6 +318,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <!-- Product Modal -->
 <div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full mx-auto my-4 sm:my-8 shadow-2xl">
@@ -310,8 +327,10 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
       <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition"><i class="fas fa-times"></i></button>
     </div>
 
+
     <div class="p-4 sm:p-5 space-y-4 max-h-[70vh] overflow-y-auto">
       <input type="hidden" id="fPid">
+
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2"><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم المنتج <span class="text-rose-500">*</span></label><input type="text" id="fName" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
@@ -329,12 +348,14 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
         </div>
       </div>
 
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 bg-slate-950/40 p-3 rounded-xl border border-slate-800">
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">اسم الشركة</label><input type="text" id="fCompany" placeholder="مثال: شركة نستله" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">سعر المستهلك</label><input type="text" id="fConsumerPrice" placeholder="مثال: 5000 ل.س" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد القطع بالعلبة</label><input type="text" id="fPiecesPerBox" placeholder="مثال: 24 قطعة" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
         <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">عدد الأكياس بالكرتونة</label><input type="text" id="fBoxesPerCarton" placeholder="مثال: 12 كيس" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></div>
       </div>
+
 
       <div class="border-t border-slate-800 pt-4 mt-4 bg-slate-900/50 p-4 rounded-2xl">
         <label class="block text-slate-300 font-bold mb-3 text-base"><i class="fas fa-images text-amber-400"></i> إدارة صور المنتج</label>
@@ -360,6 +381,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
           </div>
         </div>
 
+
         <div class="mb-4 border-t border-slate-800 pt-3">
           <p class="text-slate-400 text-xs mb-2">تصحيح اتجاه الصور المعروضة:</p>
           <div class="flex gap-2 flex-wrap">
@@ -370,6 +392,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
           </div>
         </div>
 
+
         <div class="border-t border-slate-800 pt-3">
           <label class="block text-slate-300 font-bold mb-2 text-xs">صور المعرض الإضافية (اضغط على الصورة لحذفها)</label>
           <div id="galleryContainer" class="flex flex-wrap gap-2 min-h-[60px] p-2 bg-slate-950 rounded-xl border border-slate-700"></div>
@@ -378,7 +401,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
         <p id="imageSizeInfo" class="hidden text-xs text-slate-400 mt-2"></p>
       </div>
 
+
       <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">الوصف</label><textarea id="fDescription" rows="3" placeholder="وصف مختصر..." class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-sm"></textarea></div>
+
 
       <div class="bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
         <label class="block text-slate-300 font-bold mb-2 text-sm"><i class="fas fa-ice-cream text-amber-400"></i> النكهات</label>
@@ -388,6 +413,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
           <button type="button" onclick="addFlavor()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-sm border border-slate-700"><i class="fas fa-plus"></i> إضافة</button>
         </div>
       </div>
+
 
       <div class="pt-3 border-t border-slate-800">
         <label class="block text-slate-300 font-bold mb-3 text-sm"><i class="fas fa-fire text-rose-400"></i> التميز والعروض</label>
@@ -411,6 +437,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
         </div>
       </div>
 
+
       <div class="pt-3 border-t border-slate-800">
         <label class="block text-slate-300 font-bold mb-2 text-sm">حالة المنتج</label>
         <div class="grid grid-cols-1 gap-2">
@@ -419,6 +446,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
           <label class="flex items-center gap-3 bg-rose-950/40 border-2 border-rose-500/40 p-3 rounded-xl cursor-pointer"><input type="radio" name="fStatus" value="unavailable" class="w-5 h-5 accent-rose-500"><span class="text-rose-300 font-bold text-sm flex-1"><i class="fas fa-times-circle ml-1"></i> غير متوفر</span></label>
         </div>
       </div>
+
 
       <div class="pt-3 border-t border-slate-800">
         <div class="flex items-center justify-between mb-3">
@@ -452,6 +480,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
       </div>
     </div>
 
+
     <div class="flex justify-between items-center p-4 sm:p-5 border-t border-slate-800 gap-3 flex-wrap">
       <button type="button" onclick="deleteProductFromModal()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-trash-alt"></i> حذف المنتج</button>
       <div class="flex gap-2">
@@ -461,6 +490,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 </div>
+
 
 <!-- Confirm Modal -->
 <div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
@@ -481,6 +511,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 </div>
+
 
 <!-- Delivery Amount Modal -->
 <div id="deliveryAmountModal" class="hidden fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
@@ -504,6 +535,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 </div>
+
 
 <!-- Invoice Modal -->
 <div id="invoiceModal" class="hidden fixed inset-0 z-[120] bg-black/95 backdrop-blur-md overflow-y-auto p-4 flex flex-col items-center">
@@ -545,6 +577,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </div>
   </div>
 </div>
+
 
 <!-- Recovery Guide Modal -->
 <div id="recoveryGuideModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md overflow-y-auto p-4">
@@ -592,6 +625,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <!-- Customer Recovery Modal -->
 <div id="customerRecoveryModal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
@@ -628,6 +662,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <!-- Barcode Scanner Modal -->
 <div id="barcodeScannerModal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-indigo-500/40 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
@@ -642,7 +677,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-slate-900 border-2 border-amber-500 text-white px-5 py-3 rounded-2xl shadow-2xl"><p id="toastMsg" class="text-sm font-bold"></p></div>
+
 
 <div id="imageProcessingOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 text-center max-w-sm">
@@ -652,6 +689,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 <div id="publishOverlay" class="hidden fixed inset-0 z-[105] bg-black/80 flex items-center justify-center p-4">
   <div class="bg-slate-900 border-2 border-sky-500 rounded-2xl p-6 text-center max-w-sm">
     <i class="fas fa-cloud-upload-alt text-4xl text-sky-400 mb-3 animate-pulse"></i>
@@ -660,13 +698,16 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
   </div>
 </div>
 
+
 </div><!-- /adminApp -->
+
 
 <script>
 const STORAGE_KEY = 'ashour_catalog_data_v1';
 const IMGBB_API_KEY = '70b4e311df693d62296a24a885c9a42f';
 const IDLE_TIMEOUT = 30 * 60 * 1000;
 const FIREBASE_CONSOLE_URL = 'https://console.firebase.google.com/project/ashour-e5e42/authentication/users';
+
 
 let catalogData = { products: [], settings: {}, categories: [] };
 let editingFlavors = [];
@@ -681,6 +722,7 @@ let currentProductName = null;
 let currentInvoiceOrder = null;
 let _dataReady = false;
 
+
 function escapeHtml(s) { 
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
@@ -690,6 +732,7 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;'); 
 }
 window.escapeHtml = escapeHtml;
+
 
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast'); const toastMsg = document.getElementById('toastMsg');
@@ -701,6 +744,7 @@ function showToast(msg, type = 'success') {
   showToast._t = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
 window.showToast = showToast;
+
 
 window.openRecoveryGuide = function() {
   document.getElementById('recoveryGuideModal').classList.remove('hidden');
@@ -714,8 +758,10 @@ window.openFirebaseConsole = function() {
   window.open(FIREBASE_CONSOLE_URL, '_blank', 'noopener,noreferrer');
 };
 
+
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData)); document.getElementById('dirtyBadge').classList.remove('hidden'); }
 function clearDirty() { document.getElementById('dirtyBadge').classList.add('hidden'); }
+
 
 function showConfirm(productName) {
   return new Promise((resolve) => {
@@ -726,10 +772,12 @@ function showConfirm(productName) {
 }
 window.showConfirm = showConfirm;
 
+
 function resolveConfirm(answer) {
   document.getElementById('confirmModal').classList.add('hidden');
   if (_confirmResolver) { _confirmResolver(answer); _confirmResolver = null; }
 }
+
 
 function logoutAdmin() {
   if (!confirm('هل تريد تسجيل الخروج؟')) return;
@@ -739,6 +787,7 @@ function logoutAdmin() {
     location.reload(); 
   }
 }
+
 
 function resetIdleTimer() {
   if (_idleTimer) clearTimeout(_idleTimer);
@@ -750,11 +799,13 @@ function resetIdleTimer() {
   }, IDLE_TIMEOUT);
 }
 
+
 function startIdleWatcher() {
   ['click', 'keypress', 'touchstart', 'scroll', 'mousemove'].forEach(ev => { document.addEventListener(ev, resetIdleTimer, { passive: true }); });
   resetIdleTimer();
 }
 window.startIdleWatcher = startIdleWatcher;
+
 
 function loadInitialData() {
   return new Promise((resolve) => {
@@ -784,6 +835,7 @@ function loadInitialData() {
 }
 window.isDataReady = () => _dataReady;
 
+
 window.refreshFromServer = async function() {
   if (!confirm('سيتم مسح البيانات المحلية وإعادة تحميل آخر إصدار من السيرفر.\nأي تعديلات غير منشورة ستُفقد.\n\nمتابعة؟')) return;
   localStorage.removeItem(STORAGE_KEY);
@@ -792,8 +844,8 @@ window.refreshFromServer = async function() {
   location.reload();
 };
 
+
 function initAdmin() { 
-  // إذا لم تُحمّل البيانات بعد، أعد المحاولة
   if (!_dataReady) {
     setTimeout(initAdmin, 200);
     return;
@@ -804,6 +856,7 @@ function initAdmin() {
   renderStats(); 
 }
 window.initAdmin = initAdmin;
+
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -816,6 +869,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if(tab === 'orders' && typeof window.loadOrders === 'function') { window.loadOrders(); }
   });
 });
+
 
 function renderCategories() {
   const set = new Set(catalogData.categories || []);
@@ -830,6 +884,7 @@ function renderCategories() {
     filterSelect.value = current;
   }
 }
+
 
 function renderSettingsInputs() {
   const s = catalogData.settings;
@@ -848,6 +903,7 @@ function renderSettingsInputs() {
   if (s.logoUrl) { logo.src = s.logoUrl; logo.style.display = 'block'; } else logo.style.display = 'none';
 }
 
+
 ['setStoreName','setLogoUrl','setOrderWa','setInquiryWa','setAddress','setMapUrl','setGithubUser','setGithubRepo','setGithubBranch'].forEach(id => {
   const el = document.getElementById(id);
   if(el) {
@@ -864,8 +920,10 @@ function renderSettingsInputs() {
   }
 });
 
+
 const tokenInput = document.getElementById('setGithubToken');
 if (tokenInput) { tokenInput.addEventListener('input', () => { const val = tokenInput.value.trim(); if (val) { localStorage.setItem('ashour_github_token', val); clearDirty(); } }); }
+
 
 function saveOneSignalKey() {
   const key = document.getElementById('setOneSignalKey').value.trim();
@@ -881,6 +939,7 @@ function toggleTokenVisibility() {
   if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; } else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
+
 function getFilteredProducts() {
   const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
   const cat = document.getElementById('adminFilterCat').value; const status = document.getElementById('adminFilterStatus').value;
@@ -893,6 +952,7 @@ function getFilteredProducts() {
     return true;
   });
 }
+
 
 function renderProductList() {
   const list = document.getElementById('productList'); const empty = document.getElementById('emptyState');
@@ -926,13 +986,16 @@ function renderStats() {
   document.getElementById('statUnavailable').innerText = all.filter(p => p.available === false).length;
 }
 
+
 function setProductStatus(status) { document.querySelectorAll('input[name="fStatus"]').forEach(r => { r.checked = (r.value === status); }); }
 function getProductStatus() { const checked = document.querySelector('input[name="fStatus"]:checked'); return checked ? checked.value : 'available'; }
+
 
 function openProductModal(pid = null) {
   const modal = document.getElementById('productModal');
   editingFlavors = []; currentImageData = ''; currentGallery = []; currentReviews = []; currentReviewStars = 0;
   currentProductName = null;
+
 
   document.getElementById('fImage').value = ''; document.getElementById('fImagePreview').src = ''; document.getElementById('fImagePreview').classList.add('hidden');
   document.getElementById('fImagePlaceholder').classList.remove('hidden'); document.getElementById('imageSizeInfo').classList.add('hidden');
@@ -940,6 +1003,7 @@ function openProductModal(pid = null) {
   document.getElementById('fCompany').value = ''; document.getElementById('fConsumerPrice').value = ''; document.getElementById('fPiecesPerBox').value = ''; document.getElementById('fBoxesPerCarton').value = '';
   document.getElementById('fBarcode').value = '';
   renderGalleryImages();
+
 
   if (pid === null) {
     document.getElementById('modalTitle').innerText = 'إضافة منتج جديد';
@@ -983,12 +1047,14 @@ function openProductModal(pid = null) {
 }
 window.openProductModal = openProductModal;
 
+
 function closeProductModal() { 
   document.getElementById('productModal').classList.add('hidden'); 
   document.body.style.overflow = ''; 
   currentProductName = null;
 }
 window.closeProductModal = closeProductModal;
+
 
 function previewImage() {
   const url = document.getElementById('fImage').value.trim(); const preview = document.getElementById('fImagePreview'); const placeholder = document.getElementById('fImagePlaceholder');
@@ -1002,6 +1068,7 @@ function setRotation(rot) {
     b.className = 'rot-btn ' + (active ? 'bg-amber-500 text-slate-950 font-black border border-amber-400' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700') + ' px-3 py-1.5 rounded-lg text-xs';
   });
 }
+
 
 function renderFlavors() {
   const c = document.getElementById('flavorsContainer'); if (!c) return;
@@ -1021,6 +1088,7 @@ function renderFlavors() {
   }).join('');
 }
 
+
 function toggleFlavorStatus(i) {
   if (!editingFlavors[i]) return;
   if (typeof editingFlavors[i] === 'string') {
@@ -1029,6 +1097,7 @@ function toggleFlavorStatus(i) {
   editingFlavors[i].soldOut = !editingFlavors[i].soldOut;
   renderFlavors();
 }
+
 
 function addFlavor() {
   const input = document.getElementById('newFlavorInput'); const v = input.value.trim();
@@ -1039,6 +1108,7 @@ function addFlavor() {
   input.value = ''; renderFlavors(); input.focus();
 }
 function removeFlavor(i) { editingFlavors.splice(i, 1); renderFlavors(); }
+
 
 function toggleOfferFields() {
   const checked = document.getElementById('fHasOffer').checked;
@@ -1067,6 +1137,7 @@ function updateReviewStars(count) {
   });
 }
 
+
 async function saveReview() {
   if (currentReviewStars === 0) { showToast('يرجى اختيار عدد النجوم', 'error'); return; }
   const name = document.getElementById('reviewName').value.trim() || 'عميل';
@@ -1091,6 +1162,7 @@ async function saveReview() {
   showToast('تمت إضافة التقييم');
 }
 
+
 async function removeReview(i) {
   const rev = currentReviews[i];
   if (!rev) return;
@@ -1103,6 +1175,7 @@ async function removeReview(i) {
   renderReviews();
   showToast('تم حذف التقييم');
 }
+
 
 async function refreshReviewsFromCloud() {
   if (!currentProductName) { showToast('احفظ المنتج أولاً لجلب التقييمات', 'error'); return; }
@@ -1123,6 +1196,7 @@ async function refreshReviewsFromCloud() {
   }
 }
 window.refreshReviewsFromCloud = refreshReviewsFromCloud;
+
 
 function renderReviews() {
   const container = document.getElementById('reviewsList');
@@ -1148,6 +1222,7 @@ function renderReviews() {
   }).join('');
 }
 
+
 function saveProduct() {
   const name = document.getElementById('fName').value.trim(); const category = document.getElementById('fCategory').value.trim();
   if (!name) { showToast('اسم المنتج مطلوب', 'error'); return; }
@@ -1168,6 +1243,7 @@ function saveProduct() {
     const oldProduct = catalogData.products[Number(pidVal)];
     if (oldProduct && oldProduct.price !== newPriceStr) { oldPriceVal = oldProduct.price; }
   }
+
 
   const data = {
     name, category, price: newPriceStr,
@@ -1191,6 +1267,7 @@ function saveProduct() {
   persist(); renderCategories(); renderProductList(); renderStats(); closeProductModal();
 }
 
+
 async function deleteProductFromModal() {
   const pidVal = document.getElementById('fPid').value;
   if (pidVal === '') { closeProductModal(); return; }
@@ -1199,11 +1276,14 @@ async function deleteProductFromModal() {
   catalogData.products.splice(Number(pidVal), 1); persist(); renderProductList(); renderStats(); closeProductModal(); showToast('تم حذف المنتج بنجاح');
 }
 
+
 function saveAll() { persist(); clearDirty(); showToast('تم حفظ التغييرات محليًا'); }
+
 
 function buildCatalogJS() {
   const cleanSettings = { ...catalogData.settings };
   delete cleanSettings.password; delete cleanSettings.githubUser; delete cleanSettings.githubRepo; delete cleanSettings.githubBranch;
+
 
   const clean = {
     products: catalogData.products.map(p => { 
@@ -1222,6 +1302,7 @@ function buildCatalogJS() {
   clean.products.forEach(p => { jsContent += 'window.catalogData.products.push(' + JSON.stringify(p, null, 2) + ');\n\n'; });
   jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n'; return jsContent;
 }
+
 
 async function saveToGitHub() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour';
@@ -1243,6 +1324,7 @@ async function saveToGitHub() {
   } catch (err) { document.getElementById('publishOverlay').classList.add('hidden'); showToast('فشل النشر: ' + err.message, 'error'); }
 }
 
+
 async function testGithubConnection() {
   const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour'; const repo = catalogData.settings.githubRepo || 'Ashour';
   if (!token) { showToast('يرجى إدخال GitHub Token أولًا', 'error'); return; }
@@ -1250,11 +1332,13 @@ async function testGithubConnection() {
   try { const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, { headers: { 'Authorization': `token ${token}` } }); if (res.ok) { const data = await res.json(); showToast('✅ الاتصال ناجح: ' + data.full_name); } else { showToast('❌ فشل الاتصال: ' + res.status, 'error'); } } catch (err) { showToast('❌ خطأ: ' + err.message, 'error'); }
 }
 
+
 function exportData() {
   const content = buildCatalogJS(); const blob = new Blob([content], { type: 'application/javascript' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'catalog-data.js'; a.click();
   URL.revokeObjectURL(url); showToast('تم تنزيل الملف');
 }
+
 
 function importData(e) {
   const file = e.target.files[0]; if (!file) return;
@@ -1271,6 +1355,7 @@ function importData(e) {
   reader.readAsText(file); e.target.value = '';
 }
 
+
 function applyImportedData(data) {
   showConfirm('جميع البيانات الحالية').then(confirmed => {
     if (!confirmed) return;
@@ -1278,6 +1363,7 @@ function applyImportedData(data) {
     persist(); renderCategories(); renderSettingsInputs(); renderProductList(); renderStats(); showToast('تم استيراد البيانات بنجاح');
   });
 }
+
 
 function renderGalleryImages() {
   const container = document.getElementById('galleryContainer');
@@ -1295,6 +1381,7 @@ function removeImage() {
   document.getElementById('fImagePreview').classList.add('hidden'); document.getElementById('fImagePlaceholder').classList.remove('hidden');
   document.getElementById('imageSizeInfo').classList.add('hidden');
 }
+
 
 function handleImageUpload(event) {
   const file = event.target.files[0];
@@ -1342,6 +1429,7 @@ function handleImageUpload(event) {
   reader.readAsDataURL(file); event.target.value = '';
 }
 
+
 async function handleGalleryUpload(event) {
   const files = Array.from(event.target.files);
   if (files.length === 0) return;
@@ -1359,6 +1447,7 @@ async function handleGalleryUpload(event) {
   showToast('تم رفع الصور الإضافية بنجاح ✅');
   event.target.value = ''; 
 }
+
 
 function uploadSingleToImgBB(file) {
   return new Promise((resolve, reject) => {
@@ -1392,6 +1481,7 @@ function uploadSingleToImgBB(file) {
   });
 }
 
+
 // Barcode Scanner
 let html5QrCode;
 window.startScanner = function() {
@@ -1413,6 +1503,7 @@ window.startScanner = function() {
   });
 };
 
+
 window.stopScanner = function() {
   if (html5QrCode) {
     html5QrCode.stop().then(() => {
@@ -1426,6 +1517,7 @@ window.stopScanner = function() {
     document.getElementById('barcodeScannerModal').classList.add('hidden');
   }
 };
+
 
 // Invoice
 window.openInvoiceModal = function(orderId) {
@@ -1472,6 +1564,7 @@ window.openInvoiceModal = function(orderId) {
   document.body.style.overflow = 'hidden';
 };
 
+
 window.calculateInvoiceTotal = function() {
   let total = 0;
   document.querySelectorAll('.invoice-price-input').forEach(inp => {
@@ -1484,6 +1577,7 @@ window.calculateInvoiceTotal = function() {
   document.getElementById('invTotal').innerText = total.toLocaleString('en-US') + ' ل.س';
 };
 
+
 window.downloadInvoiceImage = function() {
   const btn = document.getElementById('downloadInvoiceBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التجهيز...';
@@ -1492,12 +1586,14 @@ window.downloadInvoiceImage = function() {
   const inputs = document.querySelectorAll('.invoice-price-input');
   inputs.forEach(inp => { inp.style.borderBottom = 'none'; inp.style.pointerEvents = 'none'; });
 
+
   html2canvas(document.getElementById('invoice-content'), {
     scale: 2,
     useCORS: true,
     backgroundColor: '#ffffff'
   }).then(canvas => {
     inputs.forEach(inp => { inp.style.borderBottom = '1px dashed #cbd5e1'; inp.style.pointerEvents = 'auto'; });
+
 
     const link = document.createElement('a');
     link.download = `فاتورة-عاشور-${currentInvoiceOrder.id.slice(-4)}.png`;
@@ -1514,11 +1610,13 @@ window.downloadInvoiceImage = function() {
   });
 };
 
+
 window.closeInvoiceModal = function() {
   document.getElementById('invoiceModal').classList.add('hidden');
   document.body.style.overflow = '';
   currentInvoiceOrder = null;
 };
+
 
 document.addEventListener('keydown', (e) => { 
   if (e.key === 'Escape') { 
@@ -1535,15 +1633,18 @@ document.addEventListener('keydown', (e) => {
   } 
 });
 
+
 (async function boot() {
   await loadInitialData();
 })();
 </script>
 
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, getDoc, addDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 
   const firebaseConfig = {
     apiKey: "AIzaSyBxx1QuW66PEzHVgRllday9uPn_V-4zwfs",
@@ -1554,14 +1655,17 @@ document.addEventListener('keydown', (e) => {
     appId: "1:198701450405:web:80275ed45ff3da7941f94c"
   };
 
+
   const ADMIN_UID = 'ywqKEtrTHjWD7B0xAgYVn4q7Ybi1';
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+
   function safeText(v) {
     return (typeof window.escapeHtml === 'function') ? window.escapeHtml(v) : String(v || '');
   }
+
 
   function normalizePhone(phone) {
     let p = String(phone || '').replace(/[^\d]/g, '');
@@ -1571,11 +1675,13 @@ document.addEventListener('keydown', (e) => {
     return p;
   }
 
+
   function phoneToInternalEmail(phone) {
     const normalized = normalizePhone(phone);
     if (!normalized) return '';
     return normalized + '@ashour.local';
   }
+
 
   let _currentRecoveryEmail = '';
   window.openCustomerRecovery = function(name, phone, email) {
@@ -1598,6 +1704,7 @@ document.addEventListener('keydown', (e) => {
       window.showToast('البريد: ' + _currentRecoveryEmail, 'info');
     }
   };
+
 
   window.tryAdminLogin = async function() {
     const email = document.getElementById('adminEmail').value.trim();
@@ -1641,10 +1748,12 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
+
   window.adminLogout = async function() {
     await signOut(auth);
     location.reload();
   };
+
 
   async function sendOneSignalNotification(playerId, title, message) {
     const appId = "bbd1717d-8f66-4ad0-a61e-e6d27c2e7284";
@@ -1659,7 +1768,9 @@ document.addEventListener('keydown', (e) => {
     } catch(e) { console.error(e); }
   }
 
+
   const audioAlert = new Audio('https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3');
+
 
   window.enableAdminNotifications = async function() {
     if (!("Notification" in window)) { alert("المتصفح لا يدعم الإشعارات"); return; }
@@ -1674,6 +1785,7 @@ document.addEventListener('keydown', (e) => {
       window.showToast('تم رفض الإشعارات', 'error');
     }
   };
+
 
   window.sendBroadcast = async function() {
     const title = document.getElementById('broadcastTitle').value.trim();
@@ -1728,10 +1840,12 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
+
   window.allOrdersCache = [];
   let knownOrderIds = new Set();
   let isFirstLoad = true;
   let ordersUnsubscribe = null;
+
 
   window.updateOrderStats = function(orders) {
     const newC = orders.filter(o => o.status === 'جديد' || !o.status).length;
@@ -1751,6 +1865,7 @@ document.addEventListener('keydown', (e) => {
       document.getElementById('statOrdersRevenue').innerText = revenue.toLocaleString('en-US');
     }
   };
+
 
   window.filterOrdersRender = function() {
     const search = (document.getElementById('ordersSearch')?.value || '').trim().toLowerCase();
@@ -1772,6 +1887,7 @@ document.addEventListener('keydown', (e) => {
     }
     renderOrdersList(filtered);
   };
+
 
   window.startOrdersListener = function() {
     if (ordersUnsubscribe) return;
@@ -1809,6 +1925,7 @@ document.addEventListener('keydown', (e) => {
       console.error("Orders listener error:", error);
     });
   }
+
 
   function renderOrdersList(orders) {
     const container = document.getElementById('ordersList');
@@ -1866,6 +1983,7 @@ document.addEventListener('keydown', (e) => {
     }).join('');
   }
 
+
   window.deleteOrder = async function(orderId) {
     if (typeof window.showConfirm === 'function') {
       const ok = await window.showConfirm('الطلب #' + orderId.slice(-4).toUpperCase());
@@ -1877,6 +1995,7 @@ document.addEventListener('keydown', (e) => {
     }
     catch(e) { window.showToast('تعذّر الحذف', 'error'); }
   };
+
 
   window.updateOrderStatus = async function(orderId, newStatus) {
     try {
@@ -1898,6 +2017,7 @@ document.addEventListener('keydown', (e) => {
       } catch(e) {}
     } catch(e) { window.showToast('حدث خطأ', 'error'); }
   };
+
 
   let currentDeliveringOrderId = null;
   window.markAsDelivered = function(orderId) {
@@ -1940,7 +2060,9 @@ document.addEventListener('keydown', (e) => {
     finally { btn.innerHTML = '<i class="fas fa-check-double"></i> تأكيد المبلغ'; btn.disabled = false; }
   };
 
+
   window.loadOrders = function() { window.showToast('محدّث تلقائياً'); };
+
 
   window.addReviewToFirebase = async function(productName, stars, name, comment) {
     if (stars < 1 || stars > 5) throw new Error('التقييم يجب أن يكون 1-5');
@@ -1962,6 +2084,7 @@ document.addEventListener('keydown', (e) => {
     snap.forEach(d => revs.push({ id: d.id, ...d.data() }));
     return revs;
   };
+
 
   window.loadCustomersAndOrders = async function() {
     const container = document.getElementById('customersList');
@@ -2045,6 +2168,7 @@ document.addEventListener('keydown', (e) => {
     }
   };
 
+
   onAuthStateChanged(auth, async (user) => {
     const loginScreen = document.getElementById('loginScreen');
     const adminApp = document.getElementById('adminApp');
@@ -2052,12 +2176,10 @@ document.addEventListener('keydown', (e) => {
     const btn = document.getElementById('adminLoginBtn');
     
     if (user && user.uid === ADMIN_UID) {
-      // ✅ تسجيل دخول ناجح → عرض اللوحة مباشرة (بدون PIN)
       loginScreen.classList.add('hidden');
       adminApp.classList.remove('hidden');
       if (errEl) errEl.classList.add('hidden');
       
-      // ✅ انتظر تحميل البيانات قبل بدء أي عرض
       const waitForData = setInterval(() => {
         if (typeof window.isDataReady === 'function' && window.isDataReady()) {
           clearInterval(waitForData);
@@ -2070,7 +2192,6 @@ document.addEventListener('keydown', (e) => {
       if (typeof startOrdersListener === 'function') startOrdersListener();
       
     } else if (user) {
-      // مستخدم آخر غير الأدمن
       await signOut(auth);
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
@@ -2084,7 +2205,6 @@ document.addEventListener('keydown', (e) => {
       }
       if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     } else {
-      // غير مسجل
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
       if (btn) {
