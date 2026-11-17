@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 14‏/11‏/2026، 12:36:27 ص
+   آخر تحديث: 17‏/11‏/2026، 11:29:28 ص
    ================================ */
 
 window.catalogData = {
@@ -91,13 +91,25 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/HftHvMKn/1791902790035.jpg",
   "description": "النكهات : لبنة والاعشاب - فليفلة حلوة - جبنة مشكلة ميكس - حار وليمون",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
-    "لبنة والاعشاب",
-    "فليفلة حلوة",
-    "جبنة مشكلة ميكس",
-    "حار وليمون"
+    {
+      "name": "لبنة والاعشاب",
+      "soldOut": false
+    },
+    {
+      "name": "فليفلة حلوة",
+      "soldOut": false
+    },
+    {
+      "name": "جبنة مشكلة ميكس",
+      "soldOut": false
+    },
+    {
+      "name": "حار وليمون",
+      "soldOut": false
+    }
   ],
   "company": "أربيكا",
   "consumerPrice": "100 ليرة جديدة",
@@ -184,7 +196,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fVD0CKR7/1791903879220.jpg",
   "description": "قهوة إكسترا هال 200 غرام",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -285,7 +297,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/5hY32Jrn/1791903416991.jpg",
   "description": "بسكويت مي تو المقرمش بحشوة الكريمة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "البشير",
   "consumerPrice": "5 ليرة جديده",
@@ -310,7 +322,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/1fhpsGzS/1791904344535.jpg",
   "description": "قهوة إكسترا هال 100 غرام",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "بن الحموي"
 });
@@ -371,7 +383,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/8ndm1FYy/1791299473026.jpg",
   "description": "بسكويت اورينو المميز عبوة 4 حبات",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "أمية كلاس",
   "consumerPrice": "10 ليرة جديدة"
@@ -431,11 +443,17 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "جبنة",
-    "مميزة"
+    {
+      "name": "جبنة",
+      "soldOut": false
+    },
+    {
+      "name": "مميزة",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "20 ليرة جديده"
+  "consumerPrice": "25 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -447,10 +465,13 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "باربكيو"
+    {
+      "name": "باربكيو",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "30 ليرة جديده"
+  "consumerPrice": "40 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -462,15 +483,33 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "خل",
-    "باربكيو",
-    "كتشب",
-    "ملح",
-    "جبنه",
-    "حار"
+    {
+      "name": "خل",
+      "soldOut": false
+    },
+    {
+      "name": "باربكيو",
+      "soldOut": false
+    },
+    {
+      "name": "كتشب",
+      "soldOut": false
+    },
+    {
+      "name": "ملح",
+      "soldOut": false
+    },
+    {
+      "name": "جبنه",
+      "soldOut": false
+    },
+    {
+      "name": "حار",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "30 ليرة جديده"
+  "consumerPrice": "40 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -482,15 +521,33 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "خل",
-    "باربكيو",
-    "كتشب",
-    "ملح",
-    "جبنه",
-    "حار"
+    {
+      "name": "خل",
+      "soldOut": false
+    },
+    {
+      "name": "باربكيو",
+      "soldOut": false
+    },
+    {
+      "name": "كتشب",
+      "soldOut": false
+    },
+    {
+      "name": "ملح",
+      "soldOut": false
+    },
+    {
+      "name": "جبنه",
+      "soldOut": false
+    },
+    {
+      "name": "حار",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "50 ليرة جديدة"
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -502,13 +559,25 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "جبنة",
-    "البصل",
-    "اليمون",
-    "الحار وحلو"
+    {
+      "name": "جبنة",
+      "soldOut": false
+    },
+    {
+      "name": "البصل",
+      "soldOut": false
+    },
+    {
+      "name": "اليمون",
+      "soldOut": false
+    },
+    {
+      "name": "الحار وحلو",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "40 ليرة جديدة"
+  "consumerPrice": "50ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -520,8 +589,14 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "جبنة",
-    "ليمون"
+    {
+      "name": "جبنة",
+      "soldOut": false
+    },
+    {
+      "name": "ليمون",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
   "consumerPrice": "50 ليرة جديدة"
@@ -648,11 +723,30 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "خل",
-    "حار",
-    "باربكيو",
-    "ملح",
-    "جبنة"
+    {
+      "name": "ملح",
+      "soldOut": false
+    },
+    {
+      "name": "جبنة",
+      "soldOut": true
+    },
+    {
+      "name": "كتشب",
+      "soldOut": false
+    },
+    {
+      "name": "حار",
+      "soldOut": true
+    },
+    {
+      "name": "باربكيو",
+      "soldOut": true
+    },
+    {
+      "name": "خل",
+      "soldOut": true
+    }
   ],
   "company": "فيفتي فايف",
   "consumerPrice": "10 ليرة جديدة",
@@ -717,7 +811,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/90cd111b-1524-49db-95e7-b900bce309aa.jpg",
   "description": "ويفر توب كورفيت الفاخر",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "Modern industeries",
   "consumerPrice": "10 ليرة جديدة"
@@ -970,13 +1064,27 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "سلفيتو بسكويت الكاكاو",
+  "name": "سلفيتو بسكويت 3",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/HLcS6Xsy/17903738068056955385858921003623.jpg",
   "description": "بسكويت فاخر بنكهة الكاكاو الغنية والشهية",
   "available": true,
   "lowStock": false,
+  "flavors": [
+    {
+      "name": "قرفه",
+      "soldOut": false
+    },
+    {
+      "name": "قهوه",
+      "soldOut": true
+    },
+    {
+      "name": "كاكاو",
+      "soldOut": true
+    }
+  ],
   "company": "ساما",
   "consumerPrice": "30 ليرة جديدة"
 });
@@ -1113,8 +1221,18 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "شوكالا"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    },
+    {
+      "name": "تشيز كيك",
+      "soldOut": false
+    }
   ],
   "company": "رولانا",
   "consumerPrice": "30 ليرة جديده"
@@ -1190,18 +1308,6 @@ window.catalogData.products.push({
 });
 
 window.catalogData.products.push({
-  "name": "بونو فرويت",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/4RwS0XsV/Screenshot-2026-09-25-13-15-30-438-com-miui-gallery.jpg",
-  "description": "النكهات فريز - مشمش - شوكالا",
-  "available": false,
-  "lowStock": false,
-  "company": "الينبوع المحدودة المسؤولية",
-  "consumerPrice": "5 ليرة جديده"
-});
-
-window.catalogData.products.push({
   "name": "بونو شوكو ستار",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
@@ -1210,17 +1316,25 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "فريز",
-    "اللوتس",
-    "شوكالا"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "فريز",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    }
   ],
   "company": "الينبوع المحدودة المسؤولية",
   "consumerPrice": "20 ليرة جديدة"
 });
 
 window.catalogData.products.push({
-  "name": "فيريتيكس ويفر",
+  "name": "فيريتكس ويفر",
   "category": "بسكويت",
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/v4cpDYtv/2ecad33c4021.jpg",
@@ -1228,9 +1342,14 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "الشوكالا",
-    "دارك شوكالا",
-    "حليب"
+    {
+      "name": "الشوكالا",
+      "soldOut": false
+    },
+    {
+      "name": "حليب",
+      "soldOut": false
+    }
   ],
   "company": "إينجوني",
   "consumerPrice": "20 ليرة جديدة"
@@ -1262,11 +1381,17 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "شوكالا"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    }
   ],
   "company": "أمية كلاس",
-  "consumerPrice": "25 ليرة جديدة"
+  "consumerPrice": "30 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1278,11 +1403,17 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "شوكالا"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    }
   ],
   "company": "أميه كلاس",
-  "consumerPrice": "25 ليرة جديدة"
+  "consumerPrice": "50 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1291,7 +1422,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/93swPjnW/17904424529327407959265093845926.jpg",
   "description": "أصابع شوكولاتة ويفر بريك ستا المقرمشة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "20 ليرة حديدة",
@@ -1304,7 +1435,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/twzYcr17/17904423362355578928225400528793.jpg",
   "description": "ويفر هابي بريك بالكريمة الغنية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "20 ليرة جديدة",
@@ -1400,7 +1531,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/LXpFyqDp/fdf709a78017.jpg",
   "description": "أصابع كاندي بار الشوكولاتة المغذية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "كمه",
   "consumerPrice": "10 ليرة جديدة",
@@ -1527,7 +1658,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/ycPQSFhn/58c130dcdcd1.jpg",
   "description": "بسكويت شاي سلفيتو المفضل مع الشاي والقهوة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "ساما",
   "consumerPrice": "10 ليرة جديده",
@@ -1635,7 +1766,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/35hvZCCr/10c94fb60b5f.jpg",
   "description": "بسكويت أرغو المغطى بشوكولاتة الحليب الغنية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "بونو",
   "consumerPrice": "20 ليرة جديدة",
@@ -2118,8 +2249,18 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "فريز"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "فريز",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    }
   ],
   "company": "أفاق الشام",
   "consumerPrice": "20 ليرة جديده",
@@ -2135,12 +2276,30 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "سادة",
-    "تفاخ",
-    "كولا",
-    "برتقال",
-    "برتقال وجزر",
-    "رمان"
+    {
+      "name": "سادة",
+      "soldOut": false
+    },
+    {
+      "name": "كولا",
+      "soldOut": false
+    },
+    {
+      "name": "برتقال",
+      "soldOut": true
+    },
+    {
+      "name": "برتقال وجزر",
+      "soldOut": false
+    },
+    {
+      "name": "رمان",
+      "soldOut": false
+    },
+    {
+      "name": "تفاح",
+      "soldOut": false
+    }
   ],
   "company": "الأصباشي",
   "consumerPrice": "20 ليره جديده",
@@ -2249,15 +2408,33 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/8LpRzLD1/434e2e18e09c.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
-    "منجا",
-    "أناناس",
-    "برتقال",
-    "كيوي",
-    "دراق",
-    "توت"
+    {
+      "name": "منجا",
+      "soldOut": false
+    },
+    {
+      "name": "أناناس",
+      "soldOut": false
+    },
+    {
+      "name": "برتقال",
+      "soldOut": false
+    },
+    {
+      "name": "كيوي",
+      "soldOut": false
+    },
+    {
+      "name": "دراق",
+      "soldOut": false
+    },
+    {
+      "name": "توت",
+      "soldOut": false
+    }
   ],
   "company": "بان سيلا",
   "consumerPrice": "85 ليره جديده",
@@ -2274,7 +2451,7 @@ window.catalogData.products.push({
   "lowStock": false,
   "isNew": true,
   "company": "دارنيتو",
-  "consumerPrice": "20 ليرة جديدة",
+  "consumerPrice": "25 ليرة جديدة",
   "boxesPerCarton": "24"
 });
 
@@ -2496,24 +2673,11 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MDCbqC1H/bfbde5b964a5.jpg",
   "description": "",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "حلى الشام",
   "consumerPrice": "30 ليرة جديدة",
   "piecesPerBox": "18"
-});
-
-window.catalogData.products.push({
-  "name": "كريم مغطس بالشوكالا",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/WvRYgpMW/0cf7523aee6c.jpg",
-  "description": "",
-  "available": true,
-  "lowStock": false,
-  "company": "حلى الشام",
-  "consumerPrice": "20 ليرة جديدة",
-  "piecesPerBox": "12"
 });
 
 window.catalogData.products.push({
@@ -2672,17 +2836,6 @@ window.catalogData.products.push({
   "company": "تشيلو",
   "consumerPrice": "20 ليرة جديدة",
   "piecesPerBox": "12"
-});
-
-window.catalogData.products.push({
-  "name": "99Aشوفي",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/6RNV8yMn/b92be0171f36.jpg",
-  "description": "",
-  "available": true,
-  "lowStock": false,
-  "isNew": true
 });
 
 console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");
