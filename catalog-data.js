@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 17‏/11‏/2026، 11:29:28 ص
+   آخر تحديث: 17‏/11‏/2026، 11:30:32 ص
    ================================ */
 
 window.catalogData = {
@@ -611,12 +611,38 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "كتشب",
-    "خل",
-    "باربكيو",
-    "حار",
-    "جبنه",
-    "ذرة حلوة"
+    {
+      "name": "كتشب",
+      "soldOut": false
+    },
+    {
+      "name": "خل",
+      "soldOut": false
+    },
+    {
+      "name": "باربكيو",
+      "soldOut": false
+    },
+    {
+      "name": "حار",
+      "soldOut": false
+    },
+    {
+      "name": "جبنه",
+      "soldOut": false
+    },
+    {
+      "name": "ذرة حلوة",
+      "soldOut": false
+    },
+    {
+      "name": "بيتزا",
+      "soldOut": false
+    },
+    {
+      "name": "حار وليمون",
+      "soldOut": false
+    }
   ],
   "company": "Modern Nutrition",
   "consumerPrice": "10 ليرة جديدة",
