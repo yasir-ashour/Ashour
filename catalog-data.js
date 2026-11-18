@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 18‏/11‏/2026، 7:17:23 م
+   آخر تحديث: 18‏/11‏/2026، 7:32:49 م
    ================================ */
 
 window.catalogData = {
@@ -2872,6 +2872,9 @@ window.catalogData.products.push({
   "description": "",
   "available": true,
   "lowStock": false,
+  "hasOffer": true,
+  "oldPrice": "تواصل مع المبيعات",
+  "isNew": true,
   "flavors": [
     {
       "name": "حليب",
