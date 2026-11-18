@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 18‏/11‏/2026، 7:32:49 م
+   آخر تحديث: 18‏/11‏/2026، 7:41:49 م
    ================================ */
 
 window.catalogData = {
@@ -218,7 +218,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/WpqwK1ck/1791903820791.jpg",
   "description": "سكاكر توب فريش ساور الحامضة والمنعشة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "زاهي",
   "consumerPrice": "5 ليرة جديده",
@@ -427,11 +427,17 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "جبنة",
-    "مميزة"
+    {
+      "name": "جبنة",
+      "soldOut": false
+    },
+    {
+      "name": "مميزة",
+      "soldOut": false
+    }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "50 ليرة جديدة"
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -599,7 +605,7 @@ window.catalogData.products.push({
     }
   ],
   "company": "دارنيتو",
-  "consumerPrice": "50 ليرة جديدة"
+  "consumerPrice": "60 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -675,7 +681,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/f3eab4b1-f7d8-46c3-92db-2745845bf938.jpg",
   "description": "النكهات : ذرة حلوة - حار وحلو - جبنة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "ذرة حلوة",
@@ -746,7 +752,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/7d8VY4Ff/0e910f40d993.jpg",
   "description": "بذور دوار الشمس المحمصة والمملحة بعناية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     {
@@ -913,7 +919,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/Qyp4pHF/cdc3665ba143.jpg",
   "description": "بسكويت موندو بريميوم الفاخر بالطعم الغني",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "جنتي",
   "consumerPrice": "10 ليرة جديدة",
@@ -998,7 +1004,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg",
   "description": "بسكويت سوبر اردو المغطى بشوكولاتة الحليب الغنية",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "60 ليرة جديدة"
@@ -1010,7 +1016,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.supaimg.com/bf889966-14fa-434d-a73a-0e1112e517ba/779afa82-3895-404d-ad2b-3637c0a31f9d.jpg",
   "description": "بسكويت سوبر اردو الفاخر والمقرمش بنكهة الحليب",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "حوريه",
   "consumerPrice": "60 ليرة جديدة"
@@ -1219,7 +1225,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/FLXxkwYh/23f18ce53917.jpg",
   "description": "8 قطع",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "تشيلو",
   "consumerPrice": "25 ليرة جديده",
@@ -1261,7 +1267,7 @@ window.catalogData.products.push({
     }
   ],
   "company": "رولانا",
-  "consumerPrice": "30 ليرة جديده"
+  "consumerPrice": "40 ليرة جديده"
 });
 
 window.catalogData.products.push({
@@ -1273,12 +1279,21 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "فانيلا",
-    "شوكالا",
-    "فريز"
+    {
+      "name": "فانيلا",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    },
+    {
+      "name": "فريز",
+      "soldOut": false
+    }
   ],
   "company": "بونو",
-  "consumerPrice": "10 ليرة جديدة"
+  "consumerPrice": "15 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1318,7 +1333,7 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "الينبوع المحدودة المسؤولية",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1356,7 +1371,7 @@ window.catalogData.products.push({
     }
   ],
   "company": "الينبوع المحدودة المسؤولية",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "15 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1527,7 +1542,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MkF34q88/8d03f87b9e3d.jpg",
   "description": "شوكالا - شوكالا داكنه",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "company": "الصناعات الحديثه",
   "consumerPrice": "10 ليرة جديدة"
@@ -1542,13 +1557,22 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "flavors": [
-    "حليب",
-    "دارك",
-    "شوكالا"
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "دارك",
+      "soldOut": false
+    },
+    {
+      "name": "شوكالا",
+      "soldOut": false
+    }
   ],
   "company": "عمار وأخوانه",
-  "consumerPrice": "20 ليرة جديده",
-  "piecesPerBox": "12"
+  "consumerPrice": "25 ليرة جديده",
+  "piecesPerBox": "24"
 });
 
 window.catalogData.products.push({
@@ -1767,7 +1791,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/5xz6mC8f/b20552197917.jpg",
   "description": "بسكويت كوكو موندو غني بالطعم اللذيذ",
-  "available": false,
+  "available": true,
   "lowStock": false,
   "rotateClass": "rot-270",
   "company": "جنتي",
@@ -2093,7 +2117,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/4w870Cnt/41a643524383.jpg",
   "description": "علكة بات بوي",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "فواكة",
@@ -2111,7 +2135,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/d4RvdpMm/b2624898388b.jpg",
   "description": "علكة الأكرمي المنعشة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "هيثم الأكرمي",
   "consumerPrice": "2 = 5 ليرة جديدة",
@@ -2152,7 +2176,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/qLc8gCjj/111341174bec.jpg",
   "description": "بيض مفاجآت ممتع للأطفال يحتوي على سكاكر وألعاب مميزة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "أتكيت لصناعه الألعاب",
   "consumerPrice": "10 ليرة جديدة",
@@ -2189,7 +2213,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/k75D4GB/c444cf1403d5.jpg",
   "description": "مشروب كاكاو غني ولذيذ للتقديم البارد أو الساخن",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "rotateClass": "rot-90",
   "company": "قرطبه",
@@ -2549,9 +2573,18 @@ window.catalogData.products.push({
   "lowStock": false,
   "isNew": true,
   "flavors": [
-    "توت",
-    "منجا",
-    "برتقال"
+    {
+      "name": "منجا",
+      "soldOut": false
+    },
+    {
+      "name": "برتقال",
+      "soldOut": false
+    },
+    {
+      "name": "برتقال وجزر",
+      "soldOut": false
+    }
   ],
   "company": "الكمال",
   "consumerPrice": "50 ليرة جديدة",
@@ -2564,7 +2597,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fdtCGLCS/a0219f8c496a.jpg",
   "description": "",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "كتشب",
