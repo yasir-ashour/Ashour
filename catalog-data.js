@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 17‏/11‏/2026، 11:30:32 ص
+   آخر تحديث: 18‏/11‏/2026، 7:17:23 م
    ================================ */
 
 window.catalogData = {
@@ -2862,6 +2862,38 @@ window.catalogData.products.push({
   "company": "تشيلو",
   "consumerPrice": "20 ليرة جديدة",
   "piecesPerBox": "12"
+});
+
+window.catalogData.products.push({
+  "name": "كورسا",
+  "category": "بسكويت",
+  "price": "التواصل مع المبيعات",
+  "image": "https://i.ibb.co/8L1vgyL3/fd1a87a05ca1.jpg",
+  "description": "",
+  "available": true,
+  "lowStock": false,
+  "flavors": [
+    {
+      "name": "حليب",
+      "soldOut": false
+    },
+    {
+      "name": "دارك فانيلا",
+      "soldOut": false
+    },
+    {
+      "name": "دارك شوكالا",
+      "soldOut": false
+    }
+  ],
+  "company": "كورسا",
+  "consumerPrice": "30 ليرة جديده",
+  "piecesPerBox": "12",
+  "images": [
+    "https://i.ibb.co/2YYpS7BV/c02a5ec1b3ae.jpg",
+    "https://i.ibb.co/DDyGTTF8/d909873d2462.jpg",
+    "https://i.ibb.co/PvfC8rtm/e1ac7a67f5dd.jpg"
+  ]
 });
 
 console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");
