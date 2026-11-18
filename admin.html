@@ -27,7 +27,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
 
 <!-- شاشة تسجيل الدخول -->
 <div id="loginScreen" class="fixed inset-0 z-50 bg-[#0a0e1a] flex items-center justify-center p-6">
-  <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
+  <div class="bg-slate-900 border border-amber-500/35 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
     <div class="w-20 h-20 rounded-full bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center mx-auto mb-5">
       <i class="fas fa-shield-halved text-3xl text-amber-400"></i>
     </div>
@@ -123,9 +123,9 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">إجمالي المنتجات</p><p id="statTotal" class="text-2xl font-black text-white">0</p></div>
-    <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">متوفرة</p><p id="statAvailable" class="text-2xl font-black text-emerald-400">0</p></div>
-    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">كمية محدودة</p><p id="statLow" class="text-2xl font-black text-amber-400">0</p></div>
-    <div class="bg-slate-900 border border-rose-500/30 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">غير متوفرة</p><p id="statUnavailable" class="text-2xl font-black text-rose-400">0</p></div>
+    <div class="bg-slate-900 border border-emerald-500/35 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">متوفرة</p><p id="statAvailable" class="text-2xl font-black text-emerald-400">0</p></div>
+    <div class="bg-slate-900 border border-amber-500/35 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">كمية محدودة</p><p id="statLow" class="text-2xl font-black text-amber-400">0</p></div>
+    <div class="bg-slate-900 border border-rose-500/35 rounded-2xl p-3"><p class="text-slate-400 text-xs mb-1">غير متوفرة</p><p id="statUnavailable" class="text-2xl font-black text-rose-400">0</p></div>
   </div>
 
   <div id="productList" class="grid grid-cols-2 lg:grid-cols-3 gap-3"></div>
@@ -152,7 +152,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <div><label class="block text-slate-300 font-bold mb-1.5 text-sm">رابط الموقع على الخرائط</label><input type="text" id="setMapUrl" class="w-full bg-slate-950 text-white p-3 rounded-xl border border-slate-700 text-xs font-mono"></div>
   </div>
 
-  <div class="bg-slate-900 border border-indigo-500/30 rounded-2xl p-5 space-y-4 mt-5">
+  <div class="bg-slate-900 border border-indigo-500/35 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-bell text-indigo-400"></i> إعدادات إشعارات OneSignal
     </h2>
@@ -171,7 +171,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </button>
   </div>
 
-  <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-5 space-y-4 mt-5">
+  <div class="bg-slate-900 border border-purple-500/35 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2">
       <i class="fas fa-bullhorn text-purple-400"></i> إرسال إشعار جماعي
     </h2>
@@ -191,7 +191,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     </button>
   </div>
 
-  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5 space-y-4 mt-5">
+  <div class="bg-slate-900 border border-sky-500/35 rounded-2xl p-5 space-y-4 mt-5">
     <h2 class="text-xl font-black text-white border-b border-slate-800 pb-3 flex items-center gap-2"><i class="fab fa-github text-sky-400"></i> إعدادات النشر إلى GitHub</h2>
     <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200"><i class="fas fa-lock mr-1"></i> الـ Token يُحفظ في متصفحك فقط. لا تشاركه مع أحد.</div>
     <div>
@@ -212,19 +212,19 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
 
 <div id="tab-orders" class="tab-content hidden max-w-7xl mx-auto px-3 sm:px-4 pb-16">
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-    <div class="bg-slate-900 border border-blue-500/30 rounded-2xl p-3">
+    <div class="bg-slate-900 border border-blue-500/35 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-inbox text-blue-400"></i> طلبات جديدة</p>
       <p id="statOrdersNew" class="text-2xl font-black text-blue-400">0</p>
     </div>
-    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-3">
+    <div class="bg-slate-900 border border-amber-500/35 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-box-open text-amber-400"></i> قيد التجهيز</p>
       <p id="statOrdersPreparing" class="text-2xl font-black text-amber-400">0</p>
     </div>
-    <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-3">
+    <div class="bg-slate-900 border border-sky-500/35 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-truck text-sky-400"></i> قيد التوصيل</p>
       <p id="statOrdersShipping" class="text-2xl font-black text-sky-400">0</p>
     </div>
-    <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-3">
+    <div class="bg-slate-900 border border-emerald-500/35 rounded-2xl p-3">
       <p class="text-slate-400 text-xs mb-1"><i class="fas fa-money-bill-wave text-emerald-400"></i> إجمالي الإيرادات</p>
       <p id="statOrdersRevenue" class="text-xl font-black text-emerald-400">0</p>
       <p class="text-[10px] text-slate-500 mt-0.5">ل.س (من المسلَّمة)</p>
@@ -276,7 +276,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
       </button>
     </div>
   </div>
-  <div class="bg-sky-950/40 border border-sky-500/30 rounded-2xl p-4 mb-5 text-sm">
+  <div class="bg-sky-950/40 border border-sky-500/35 rounded-2xl p-4 mb-5 text-sm">
     <p class="text-sky-200 font-bold mb-1"><i class="fas fa-info-circle"></i> ملاحظة</p>
     <p class="text-sky-300/90 text-xs leading-relaxed">
       العملاء المسجلون بنظام <span class="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-mono text-[10px]">📱 Phone+PIN</span> يدخلون برقم الهاتف + رمز سري (6 أرقام) بدلاً من البريد. لاستعادة رمزهم، استخدم زر <strong>🔑 استعادة</strong> بجانب كل عميل.
@@ -295,7 +295,7 @@ body { font-family: 'Tajawal', sans-serif; background: #0a0e1a; color: #f8fafc; 
     <input type="file" id="importFile" accept=".js,.json" class="hidden" onchange="importData(event)">
     <button onclick="document.getElementById('importFile').click()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-upload"></i> اختيار ملف للاستيراد</button>
   </div>
-  <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5">
+  <div class="bg-slate-900 border border-sky-500/35 rounded-2xl p-5">
     <h2 class="text-xl font-black text-white mb-3 flex items-center gap-2"><i class="fas fa-cloud-download-alt text-sky-400"></i> تحديث من السيرفر</h2>
     <p class="text-xs text-slate-400 mb-3 leading-relaxed">مسح البيانات المحلية (localStorage) وإعادة تحميل آخر إصدار من <code class="bg-slate-950 px-1.5 py-0.5 rounded font-mono text-amber-400">catalog-data.js</code> المنشور على GitHub. مفيد إذا حدّثت الملف من جهاز آخر ولا ترى التغييرات هنا.</p>
     <button onclick="refreshFromServer()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2"><i class="fas fa-sync-alt"></i> تحديث الآن</button>
@@ -793,7 +793,6 @@ window.refreshFromServer = async function() {
 };
 
 function initAdmin() { 
-  // إذا لم تُحمّل البيانات بعد، أعد المحاولة
   if (!_dataReady) {
     setTimeout(initAdmin, 200);
     return;
@@ -905,6 +904,7 @@ function renderProductList() {
     const reviewsBadge = (p.reviews && p.reviews.length > 0) ? `<span class="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded-md"><i class="fas fa-star"></i> ${p.reviews.length}</span>` : '';
     const offerBadge = p.hasOffer ? `<span class="text-[10px] text-rose-300 bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.5 rounded-md"><i class="fas fa-fire"></i> عرض</span>` : '';
     const newBadge = p.isNew ? `<span class="text-[10px] text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 rounded-md"><i class="fas fa-sparkles"></i> جديد</span>` : '';
+    
     return `<div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition">
         <div class="aspect-square bg-slate-950 relative overflow-hidden">
           <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" loading="lazy" class="w-full h-full object-cover ${escapeHtml(p.rotateClass || '')}" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-slate-600\\'><i class=\\'fas fa-image text-3xl\\'></i></div>'">
@@ -913,11 +913,50 @@ function renderProductList() {
         <div class="p-2 sm:p-3">
           <h3 class="text-white font-black text-xs sm:text-sm leading-snug mb-2 line-clamp-2">${escapeHtml(p.name)}</h3>
           ${(offerBadge || newBadge) ? `<div class="flex gap-1 flex-wrap mb-2">${offerBadge}${newBadge}</div>` : ''}
-          <button onclick="openProductModal(${pid})" class="w-full bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1"><i class="fas fa-edit"></i> تعديل</button>
+          <div class="grid grid-cols-3 gap-1">
+            <button onclick="openProductModal(${pid})" class="bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 col-span-1"><i class="fas fa-edit"></i> تعديل</button>
+            <button onclick="duplicateProduct(${pid})" class="bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 col-span-1" title="نسخ المنتج"><i class="fas fa-copy"></i> نسخ</button>
+            <button onclick="quickToggleStatus(${pid})" class="bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-slate-300 py-1.5 rounded-lg text-xs flex items-center justify-center col-span-1" title="تبديل الحالة سريعاً"><i class="fas fa-bolt"></i></button>
+          </div>
         </div>
       </div>`;
   }).join('');
 }
+
+window.duplicateProduct = function(pid) {
+  const p = catalogData.products[pid];
+  if (!p) return;
+  const clone = JSON.parse(JSON.stringify(p));
+  clone.name = (p.name || '') + ' (نسخة)';
+  delete clone.reviews;
+  catalogData.products.unshift(clone);
+  persist();
+  renderProductList();
+  renderStats();
+  showToast('✅ تم نسخ المنتج بنجاح — يمكنك تعديله الآن');
+  openProductModal(0);
+};
+
+window.quickToggleStatus = function(pid) {
+  const p = catalogData.products[pid];
+  if (!p) return;
+  if (p.available === false) {
+    p.available = true;
+    p.lowStock = false;
+    showToast('الحالة: متوفر ✅');
+  } else if (!p.lowStock) {
+    p.lowStock = true;
+    showToast('الحالة: كمية محدودة ⚠️', 'error');
+  } else {
+    p.available = false;
+    p.lowStock = false;
+    showToast('الحالة: غير متوفر ❌', 'error');
+  }
+  persist();
+  renderProductList();
+  renderStats();
+};
+
 function renderStats() {
   const all = catalogData.products; const elTotal = document.getElementById('statTotal'); if(!elTotal) return;
   elTotal.innerText = all.length;
@@ -1223,24 +1262,79 @@ function buildCatalogJS() {
   jsContent += 'console.log("تم تحميل " + window.catalogData.products.length + " منتجًا");\n'; return jsContent;
 }
 
+// دالة النشر المحسنة مع معالجة مهلة الاتصال والتعليق النهائي
 async function saveToGitHub() {
-  const token = localStorage.getItem('ashour_github_token') || ''; const user = catalogData.settings.githubUser || 'yasir-ashour';
-  const repo = catalogData.settings.githubRepo || 'Ashour'; const branch = catalogData.settings.githubBranch || 'main'; const filePath = 'catalog-data.js';
+  const token = localStorage.getItem('ashour_github_token') || '';
+  const user = catalogData.settings.githubUser || 'yasir-ashour';
+  const repo = catalogData.settings.githubRepo || 'Ashour';
+  const branch = catalogData.settings.githubBranch || 'main';
+  const filePath = 'catalog-data.js';
+
   if (!token) { showToast('يرجى إدخال GitHub Token في الإعدادات أولًا', 'error'); return; }
   if (!Array.isArray(catalogData.products)) { showToast('خطأ في بيانات المنتجات', 'error'); return; }
-  document.getElementById('publishOverlay').classList.remove('hidden'); document.getElementById('publishStatusText').innerText = 'جاري التحضير...';
+
+  const overlay = document.getElementById('publishOverlay');
+  const statusText = document.getElementById('publishStatusText');
+  overlay.classList.remove('hidden');
+  statusText.innerText = 'جاري التحضير...';
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
+
   try {
-    document.getElementById('publishStatusText').innerText = 'جاري قراءة الملف الحالي...';
-    const getRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}?ref=${branch}`, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
-    let sha = null; if (getRes.ok) { const data = await getRes.json(); sha = data.sha; } else if (getRes.status !== 404) { throw new Error('فشل الاتصال بـ GitHub: ' + getRes.status); }
-    document.getElementById('publishStatusText').innerText = 'جاري الرفع إلى GitHub...';
-    const content = buildCatalogJS(); const base64Content = btoa(unescape(encodeURIComponent(content)));
-    const body = { message: `تحديث الكتالوج - ${new Date().toLocaleString('ar-SY', { numberingSystem: 'latn' })}`, content: base64Content, branch: branch }; if (sha) body.sha = sha;
-    const putRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}`, { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    document.getElementById('publishOverlay').classList.add('hidden');
-    if (putRes.ok) { clearDirty(); showToast('✅ تم النشر بنجاح — الموقع سيُحدَّث خلال دقيقة'); }
-    else { const errData = await putRes.json(); throw new Error(errData.message || 'فشل الرفع'); }
-  } catch (err) { document.getElementById('publishOverlay').classList.add('hidden'); showToast('فشل النشر: ' + err.message, 'error'); }
+    statusText.innerText = 'جاري قراءة الملف الحالي...';
+    const getRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}?ref=${branch}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
+      signal: controller.signal
+    });
+
+    let sha = null;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    } else if (getRes.status !== 404) {
+      throw new Error('فشل الاتصال بـ GitHub: ' + getRes.status);
+    }
+
+    statusText.innerText = 'جاري الرفع إلى GitHub...';
+    const content = buildCatalogJS();
+    const base64Content = btoa(unescape(encodeURIComponent(content)));
+    const body = {
+      message: `تحديث الكتالوج - ${new Date().toLocaleString('ar-SY', { numberingSystem: 'latn' })}`,
+      content: base64Content,
+      branch: branch
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (putRes.ok) {
+      clearDirty();
+      showToast('✅ تم النشر بنجاح — الموقع سيُحدَّث خلال دقيقة');
+    } else {
+      const errData = await putRes.json();
+      throw new Error(errData.message || 'فشل الرفع');
+    }
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      showToast('انتهت مهلة الاتصال بـ GitHub (بطء في الشبكة)', 'error');
+    } else {
+      showToast('فشل النشر: ' + err.message, 'error');
+    }
+  } finally {
+    overlay.classList.add('hidden');
+  }
 }
 
 async function testGithubConnection() {
@@ -1392,38 +1486,56 @@ function uploadSingleToImgBB(file) {
   });
 }
 
-// Barcode Scanner
-let html5QrCode;
+// Barcode Scanner المصلح والمحسّن مع مهلة الرسم والتشغيل الآمن
+let html5QrCode = null;
+
 window.startScanner = function() {
-  document.getElementById('barcodeScannerModal').classList.remove('hidden');
-  html5QrCode = new Html5Qrcode("reader");
+  const modal = document.getElementById('barcodeScannerModal');
+  modal.classList.remove('hidden');
   
-  html5QrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: { width: 250, height: 150 } },
-    (decodedText) => {
-      document.getElementById('fBarcode').value = decodedText;
-      window.showToast('✅ تم قراءة الباركود');
-      window.stopScanner();
-    },
-    (errorMessage) => { }
-  ).catch(err => {
-    window.showToast('تعذر فتح الكاميرا: ' + err, 'error');
-    document.getElementById('barcodeScannerModal').classList.add('hidden');
-  });
+  setTimeout(() => {
+    try {
+      if (!html5QrCode) {
+        html5QrCode = new Html5Qrcode("reader");
+      }
+      
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { 
+          fps: 10, 
+          qrbox: { width: 250, height: 150 }
+        },
+        (decodedText) => {
+          document.getElementById('fBarcode').value = decodedText;
+          window.showToast('✅ تم قراءة الباركود بنجاح');
+          window.stopScanner();
+        },
+        (errorMessage) => {}
+      ).catch(err => {
+        console.error("Camera error:", err);
+        window.showToast('تعذر فتح الكاميرا: تأكد من إعطاء إذن الكاميرا أو فتح الموقع عبر رابط آمن HTTPS', 'error');
+        modal.classList.add('hidden');
+      });
+    } catch (e) {
+      console.error("Scanner exception:", e);
+      window.showToast('حدث خطأ أثناء تشغيل الماسح', 'error');
+      modal.classList.add('hidden');
+    }
+  }, 150);
 };
 
 window.stopScanner = function() {
+  const modal = document.getElementById('barcodeScannerModal');
   if (html5QrCode) {
     html5QrCode.stop().then(() => {
-      document.getElementById('barcodeScannerModal').classList.add('hidden');
-      html5QrCode.clear();
+      modal.classList.add('hidden');
+      try { html5QrCode.clear(); } catch (e) {}
     }).catch(err => {
-      console.log(err);
-      document.getElementById('barcodeScannerModal').classList.add('hidden');
+      console.log("Stop error:", err);
+      modal.classList.add('hidden');
     });
   } else {
-    document.getElementById('barcodeScannerModal').classList.add('hidden');
+    modal.classList.add('hidden');
   }
 };
 
@@ -2052,12 +2164,10 @@ document.addEventListener('keydown', (e) => {
     const btn = document.getElementById('adminLoginBtn');
     
     if (user && user.uid === ADMIN_UID) {
-      // ✅ تسجيل دخول ناجح → عرض اللوحة مباشرة (بدون PIN)
       loginScreen.classList.add('hidden');
       adminApp.classList.remove('hidden');
       if (errEl) errEl.classList.add('hidden');
       
-      // ✅ انتظر تحميل البيانات قبل بدء أي عرض
       const waitForData = setInterval(() => {
         if (typeof window.isDataReady === 'function' && window.isDataReady()) {
           clearInterval(waitForData);
@@ -2070,7 +2180,6 @@ document.addEventListener('keydown', (e) => {
       if (typeof startOrdersListener === 'function') startOrdersListener();
       
     } else if (user) {
-      // مستخدم آخر غير الأدمن
       await signOut(auth);
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
@@ -2084,7 +2193,6 @@ document.addEventListener('keydown', (e) => {
       }
       if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     } else {
-      // غير مسجل
       loginScreen.classList.remove('hidden');
       adminApp.classList.add('hidden');
       if (btn) {
