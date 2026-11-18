@@ -1486,7 +1486,7 @@ function uploadSingleToImgBB(file) {
   });
 }
 
-// Barcode Scanner المصلح والمحسّن مع مهلة الرسم والتشغيل الآمن
+// Barcode Scanner المحسّن مع البحث الذكي التلقائي
 let html5QrCode = null;
 
 window.startScanner = function() {
@@ -1507,8 +1507,19 @@ window.startScanner = function() {
         },
         (decodedText) => {
           document.getElementById('fBarcode').value = decodedText;
-          window.showToast('✅ تم قراءة الباركود بنجاح');
           window.stopScanner();
+
+          // البحث الذكي: هل المنتج موجود مسبقاً بهذا الباركود؟
+          const existingIndex = catalogData.products.findIndex(p => p.barcode === decodedText);
+          
+          if (existingIndex !== -1) {
+            window.showToast('⚠️ هذا المنتج موجود مسبقاً، جاري فتح بياناته...');
+            setTimeout(() => {
+              openProductModal(existingIndex);
+            }, 300);
+          } else {
+            window.showToast('✅ تم التقاط الباركود الجديد بنجاح');
+          }
         },
         (errorMessage) => {}
       ).catch(err => {
@@ -1747,7 +1758,7 @@ document.addEventListener('keydown', (e) => {
       } else {
         errEl.innerText = '❌ خطأ: ' + (e.message || 'غير معروف');
       }
-      errEl.classList.remove('hidden');
+      errEl.classList.add('hidden');
       btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول آمن';
       btn.disabled = false;
     }
