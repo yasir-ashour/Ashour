@@ -1,7 +1,7 @@
 /* ================================
    ملف بيانات الكتالوج
    مركز عاشور للتجارة
-   آخر تحديث: 18‏/11‏/2026، 7:41:49 م
+   آخر تحديث: 19‏/11‏/2026، 8:52:35 م
    ================================ */
 
 window.catalogData = {
@@ -336,7 +336,7 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "جنتي",
-  "consumerPrice": "20 ليرة جديدة",
+  "consumerPrice": "25ليرة جديدة",
   "piecesPerBox": "12"
 });
 
@@ -349,7 +349,7 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "جنتي",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1106,15 +1106,15 @@ window.catalogData.products.push({
   "flavors": [
     {
       "name": "قرفه",
-      "soldOut": false
+      "soldOut": true
     },
     {
       "name": "قهوه",
-      "soldOut": true
+      "soldOut": false
     },
     {
       "name": "كاكاو",
-      "soldOut": true
+      "soldOut": false
     }
   ],
   "company": "ساما",
@@ -1142,7 +1142,7 @@ window.catalogData.products.push({
   "available": true,
   "lowStock": false,
   "company": "ساما",
-  "consumerPrice": "20 ليرة جديدة"
+  "consumerPrice": "25 ليرة جديدة"
 });
 
 window.catalogData.products.push({
@@ -1525,7 +1525,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/9H3PWB4H/d0a2f0e4f021.jpg",
   "description": "النكهات : حليب - شوكالا",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "flavors": [
     "حليب",
@@ -1542,7 +1542,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/MkF34q88/8d03f87b9e3d.jpg",
   "description": "شوكالا - شوكالا داكنه",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "الصناعات الحديثه",
   "consumerPrice": "10 ليرة جديدة"
@@ -1739,7 +1739,7 @@ window.catalogData.products.push({
   "lowStock": false,
   "rotateClass": "rot-90",
   "company": "ساما",
-  "consumerPrice": "20 ليرة حديدة",
+  "consumerPrice": "25 ليرة حديدة",
   "piecesPerBox": "12"
 });
 
@@ -2019,7 +2019,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/fwRN44d/17905881539073259721267290530679.jpg",
   "description": "مشروب القهوة الباردة بنكهة الموكا اللذيذة من سيتي كافيه",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "سيتي كافية الإمارتيه",
   "consumerPrice": "80 ليرة جديدة"
@@ -2163,7 +2163,7 @@ window.catalogData.products.push({
   "price": "التواصل مع المبيعات",
   "image": "https://i.ibb.co/XZ0fv8Pm/1fb124076506.jpg",
   "description": "علكة سمارة",
-  "available": true,
+  "available": false,
   "lowStock": false,
   "company": "يحيى المصري",
   "consumerPrice": "2 = 5 ليرة جديدة",
@@ -2367,19 +2367,6 @@ window.catalogData.products.push({
   "company": "شموط",
   "consumerPrice": "20 ليرة جديدة",
   "piecesPerBox": "24"
-});
-
-window.catalogData.products.push({
-  "name": "جيلي رماز كبيرة",
-  "category": "عصائر ومشروبات",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/mVfkL7rG/IMG-20260928-124421.jpg",
-  "description": "عصير جيلي رماز المنعش بمختلف طعمات الفواكه",
-  "available": true,
-  "lowStock": false,
-  "company": "رمازه",
-  "consumerPrice": "10 ليرة جديدة",
-  "piecesPerBox": "50 قطعة"
 });
 
 window.catalogData.products.push({
@@ -2697,19 +2684,6 @@ window.catalogData.products.push({
   "lowStock": false,
   "company": "تيفاني",
   "consumerPrice": "40 ليرة جديدة",
-  "piecesPerBox": "12"
-});
-
-window.catalogData.products.push({
-  "name": "لاتيلا",
-  "category": "بسكويت",
-  "price": "التواصل مع المبيعات",
-  "image": "https://i.ibb.co/3YMPGfmh/68d66630af0a.jpg",
-  "description": "",
-  "available": false,
-  "lowStock": false,
-  "isNew": true,
-  "consumerPrice": "20 ليرة جديدة",
   "piecesPerBox": "12"
 });
 
